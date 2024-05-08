@@ -4,17 +4,16 @@
   align-items: center;
   padding: 1em;
   font-weight: 600;
-  background-color: var(--secondary);
 
 }
 .start{
   display: flex;
   flex:1;
   justify-content: start;
-
   font-family: "Orbitron", sans-serif;
   font-optical-sizing: auto;
   font-size: 1.5em;
+  color: #fff;
 }
 .menu{
   display: flex;
@@ -27,4 +26,11 @@
   display: flex;
   flex:1;
   justify-content: end;
+}
+
+.footerHeader{
+  font-weight: 600;
+  font-size: 20px;
+  color: #fff;
+  padding-bottom: 0.5em;
 }

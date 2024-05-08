@@ -58,8 +58,21 @@ button{
 }
 
 
-/* Custom */
+/* Utils */
+.flex{
+  display: flex;
+}
 
+.column{
+  flex-direction: column;
+}
+
+.row{
+  flex-direction: row;
+}
+.space-around{
+  justify-content: space-around;
+}
 .outline{
   background-color: transparent;
   border: 2px solid #000;
@@ -71,9 +84,75 @@ button{
   border: none;
 }
 
+.center{
+  justify-content: center;
+}
+/* General */
+footer{
+  padding: 2em;
+  background-color: #141414;
+  
+}
+
+footer a{
+  color: #fff;
+}
+
+.hero{
+  background-color: var(--secondary);
+}
+.hero, .features{
+  padding: 2em 4em;
+}
+.title{
+  line-height: 1.5;
+  font-size: 3em;
+  font-weight: bold;
+}
+.subtitle{
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 1.2em;
+}
 .button-group{
   display: flex;
   flex-direction: row;
   column-gap: 16px;
-  
+}
+.hero-image{
+  flex: 1 1 auto;
+  width: 100%;
+  border: 2px #000 solid;
+  border-radius: 4px;
+}
+.hero-text{
+  flex: 1 1 auto;
+  width: 100%;
+  padding: 1em 2em;
+  row-gap: 1em;
+}
+.features{
+  column-gap: 3em;
+}
+.feature{
+  padding: 2em;
+  align-items: center;
+}
+.feature-image{
+  flex: 1 1 auto;
+  width: 100%;
+  border: 2px #000 solid;
+  border-radius: 4px;
+}
+.feature-text{
+  flex: 1 1 auto;
+  padding: 1em 2em;
+  width: 100%;
+}
+.header-buttons{
+  padding: 1em 0;
+}
+.hero-buttons .button{
+  padding: 16px 24px;
+  font-weight: 600;
 }
