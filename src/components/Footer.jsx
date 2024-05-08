@@ -14,10 +14,8 @@ export default function Footer() {
     { name: "Report an Issue", href: "#" },
   ];
   const contact = [
-    { name: "Reverse Calculator", href: "#" },
-    { name: "Mini Calculator", href: "#" },
-    { name: "Pricing", href: "#" },
-    { name: "About", href: "#" },
+    { name: "support@rester.com", href: "#" },
+    { name: "050 xxx xxxx", href: "#" },
   ];
   return (
     <footer className="flex row space-around">
