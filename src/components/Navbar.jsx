@@ -9,7 +9,9 @@ export default function Navbar() {
   ];
   return (
     <nav className={styles.nav}>
-      <div className={styles.start}>Rester</div>
+      <div className={styles.start}>
+        <b>R</b>ester
+      </div>
       <div className={styles.menu}>
         {navigation.map((item) => (
           <a key={item.name} href={item.href}>
@@ -19,8 +21,8 @@ export default function Navbar() {
       </div>
       <div className={styles.end}>
         <div className="button-group">
-          <button className="button outline">Log in</button>
-          <button className="button primary">Sign up</button>
+          <button className="button clear">Log in</button>
+          <button className="button primary">Get Started</button>
         </div>
       </div>
     </nav>

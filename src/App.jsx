@@ -1,6 +1,9 @@
 import "./App.css";
 import Navbar from "@/components/Navbar";
+import IncomeTaxCalculator from "@/components/IncomeTaxCalculator";
+import GrossIncomeCalculator from "@/components/GrossIncomeCalculator";
 import Footer from "@/components/Footer";
+import { BsQuestionCircleFill } from "react-icons/bs";
 
 function App() {
   return (
@@ -11,15 +14,16 @@ function App() {
           <div className="flex row hero">
             <div className="flex column hero-text">
               <p className="title">
-                Simple Tax Calculation for Ghanaian Businesses
+                Simple Tax Calculation for{" "}
+                <div className="cursive">Ghanaian Businesses</div>
               </p>
-              <p>
+              <p className="subtitle">
                 Empower your business with Rester, the ultimate tool to
                 effortlessly compute PAYE and generate reports compliant with
                 Ghanaian tax laws.
               </p>
               <div className="button-group hero-buttons">
-                <button className="button primary">Get Started</button>
+                <button className="button primary">Get Started &#8599;</button>
               </div>
             </div>
 
@@ -29,11 +33,16 @@ function App() {
           </div>
         </header>
         <section className="features flex column">
+          <div className="calculators flex row">
+            <IncomeTaxCalculator />
+            <GrossIncomeCalculator />
+          </div>
+
           <p className=" flex title center ">Features</p>
 
           <div className="feature flex row">
             <div className="flex column feature-text">
-              <p className="subtitle">Tax Calculation</p>
+              <p className="smallTitle">Tax Calculation</p>
               <p>
                 Streamline your HR processes by efficiently onboarding,
                 offboarding, and managing your employees with our user-friendly
@@ -51,7 +60,7 @@ function App() {
               <img alt="dashboard image" src="/dashboard.png" />
             </div>
             <div className="flex column feature-text">
-              <p className="subtitle">Manage Employees</p>
+              <p className="smallTitle">Manage Employees</p>
               <p>
                 Streamline your HR processes by efficiently onboarding,
                 offboarding, and managing your employees with our user-friendly
@@ -63,7 +72,7 @@ function App() {
 
           <div className="feature flex row">
             <div className="flex column feature-text">
-              <p className="subtitle">Collaboration</p>
+              <p className="smallTitle">Collaboration</p>
               <p>
                 Enhance teamwork and efficiency by inviting co-admins to
                 entities for seamless collaboration and precise access control.
@@ -81,7 +90,7 @@ function App() {
               <img alt="dashboard image" src="/dashboard.png" />
             </div>
             <div className="flex column feature-text">
-              <p className="subtitle">Statutory and Financial Reporting</p>
+              <p className="smallTitle">Statutory and Financial Reporting</p>
               <p>
                 Stay compliant and informed by generating statutory and
                 financial reports effortlessly. Rester makes it easy to create
