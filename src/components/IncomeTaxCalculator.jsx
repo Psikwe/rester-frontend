@@ -77,7 +77,6 @@ export default function IncomeTaxCalculator() {
             min="0"
             placeholder="Cash Allowances"
             step="0.01"
-            required
           />
         </div>
         <div className="flex row">
@@ -87,7 +86,6 @@ export default function IncomeTaxCalculator() {
             min="0"
             placeholder="Bonus"
             step="0.01"
-            required
           />
         </div>
 
@@ -98,7 +96,6 @@ export default function IncomeTaxCalculator() {
             min="0"
             placeholder="Overtime"
             step="0.01"
-            required
           />
         </div>
 
@@ -110,7 +107,6 @@ export default function IncomeTaxCalculator() {
             placeholder="Tier 1"
             value={(parseFloat(basicSalary) * 0.05).toFixed(2)}
             step="0.01"
-            required
           />
         </div>
         <div className="flex row">
@@ -120,7 +116,6 @@ export default function IncomeTaxCalculator() {
             min="0"
             placeholder="Tier 2"
             step="0.01"
-            required
           />
         </div>
         <div className="flex row">
