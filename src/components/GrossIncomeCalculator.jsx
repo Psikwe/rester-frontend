@@ -3,7 +3,7 @@ import { FaCediSign } from "react-icons/fa6";
 export default function GrossIncomeCalculator() {
   return (
     <div className="calculator flex column">
-      <div className="smallTitle center"> Income Tax Calculator</div>
+      <div className="smallTitle center"> Gross Income Calculator</div>
 
       <div className="flex row">
         <button className="outline ">

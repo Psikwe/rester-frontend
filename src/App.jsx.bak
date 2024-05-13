@@ -1,12 +1,12 @@
 import "./App.css";
-import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import IncomeTaxCalculator from "@/components/IncomeTaxCalculator";
 import GrossIncomeCalculator from "@/components/GrossIncomeCalculator";
 import Footer from "@/components/Footer";
 
+import { BsQuestionCircleFill } from "react-icons/bs";
+
 function App() {
-  const [calculator, setCalculator] = useState("incomeTax");
   return (
     <>
       <section>
@@ -15,7 +15,7 @@ function App() {
           <div className="flex row hero">
             <div className="flex column hero-text">
               <p className="title">
-                Simple Tax Calculation for
+                Simple Tax Calculation for{" "}
                 <div className="cursive">Ghanaian Businesses</div>
               </p>
               <p className="subtitle">
@@ -38,23 +38,9 @@ function App() {
           </div>
         </header>
         <section className="features flex column">
-          <div className="flex row center">
-            <button
-              className={calculator === "incomeTax" ? "inverse" : "outline"}
-              onClick={() => setCalculator("incomeTax")}
-            >
-              Income Tax Calculator
-            </button>
-            <button
-              className={calculator === "grossIncome" ? "inverse" : "outline"}
-              onClick={() => setCalculator("grossIncome")}
-            >
-              Gross Income Calculator
-            </button>
-          </div>
           <div className="calculators flex row">
-            {calculator === "incomeTax" && <IncomeTaxCalculator />}
-            {calculator === "grossIncome" && <GrossIncomeCalculator />}
+            <IncomeTaxCalculator />
+            <GrossIncomeCalculator />
           </div>
 
           <p className=" flex title center ">Features</p>
