@@ -176,6 +176,11 @@ export default function IncomeTaxCalculator() {
         <div className="results">
           <div className="smallTitle center">Results</div>
           <div className="result">
+            <p>Basic Salary</p>
+            {result.basic_salary}
+          </div>
+
+          <div className="result">
             <p>Overtime Minimum Tax</p>
             {result.overtime_minimum_tax}
           </div>
@@ -183,14 +188,14 @@ export default function IncomeTaxCalculator() {
             <p>Bonus Minimum Tax</p>
             {result.bonus_minimum_tax}
           </div>
-          <div className="result">
-            {" "}
-            <p>Tax Graduated Rates</p>
-            {result.tax_graduated_rates}
-          </div>
+          {/* <div className="result"> */}
+          {/*   {" "} */}
+          {/*   <p>Tax Graduated Rates</p> */}
+          {/*   {result.tax_graduated_rates} */}
+          {/* </div> */}
           <div className="result bold">
-            <p> Total Tax</p>
-            {result.total_tax}
+            <p> Cumulative Tax</p>
+            {result.cumulative_tax}
           </div>
         </div>
       )}
