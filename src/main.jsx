@@ -6,6 +6,7 @@ import Layout from "@/components/Layout";
 
 import Home from "@/pages/home";
 import Signup from "@/pages/signup";
+import Login from "@/pages/login";
 import "@/styles/globals.css";
 // import Root, { rootLoader } from "./routes/root";
 // import Team, { teamLoader } from "./routes/team";
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
       {
         path: "signup",
         element: <Signup />,
+        // loader: teamLoader,
+      },
+      {
+        path: "login",
+        element: <Login />,
         // loader: teamLoader,
       },
     ],

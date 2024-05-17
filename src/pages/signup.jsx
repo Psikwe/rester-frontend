@@ -4,8 +4,8 @@ function Signup() {
       <section>
         <header></header>
         <div className="signup-container">
+          <p className="title">Signup</p>
           <form className="signup-form">
-            <p className="title">Signup</p>
             <div className="field">
               <label className="label bold">First Name</label>
               <div className="control">
@@ -52,6 +52,9 @@ function Signup() {
               </div>
               {/* <p className="help">This is a help text</p> */}
             </div>
+            <button type="submit" className="inverse">
+              Sign up
+            </button>
           </form>
         </div>
       </section>
