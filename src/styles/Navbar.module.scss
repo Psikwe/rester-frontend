@@ -2,14 +2,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2em 4em;
+  padding: 1em 4em;
   // font-weight: 600;
-  background-color: var(--secondary);
+  background-color: transparent;
+  position: absolute;
+  width: 100%;
 
 }
 .start{
   display: flex;
-
   justify-content: start;
   padding-right: 1em ;
   font-family: "Rubik", sans-serif;

@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styles from "@/styles/Navbar.module.scss";
 
 export default function Navbar() {
@@ -10,19 +11,25 @@ export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <div className={styles.start}>
-        <b>R</b>ester
+        <NavLink to="/" style={{ color: "#000" }}>
+          <b>R</b>ester
+        </NavLink>
       </div>
       <div className={styles.menu}>
-        {navigation.map((item) => (
-          <a key={item.name} href={item.href}>
-            {item.name}
-          </a>
+        {navigation.map((link, i) => (
+          <NavLink key={i} to={link.href}>
+            {link.name}
+          </NavLink>
         ))}
       </div>
       <div className={styles.end}>
         <div className="button-group">
-          <button className="button clear">Log in</button>
-          <button className="button primary">Get Started</button>
+          <button className="button clear">
+            <NavLink to="/login">Log in</NavLink>
+          </button>
+          <button className="button primary">
+            <NavLink to="/signup">Get Started</NavLink>
+          </button>
         </div>
       </div>
     </nav>
