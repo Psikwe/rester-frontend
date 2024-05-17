@@ -55,10 +55,11 @@ export default function IncomeTaxCalculator() {
       <form className="calculator flex column" onSubmit={handleSubmit}>
         <div className="smallTitle center"> Income Tax Calculator</div>
 
-        <div className="flex row">
+        <div className="flex column">
           {/* <button className="outline "> */}
           {/*   <FaCediSign /> */}
           {/* </button> */}
+          <b>Basic Salary</b>
           <input
             name="basic_salary"
             type="number"
@@ -70,7 +71,8 @@ export default function IncomeTaxCalculator() {
             required
           />
         </div>
-        <div className="flex row">
+        <div className="flex column">
+          <b>Cash Allowances</b>
           <input
             name="cash_allowances"
             type="number"
@@ -79,7 +81,8 @@ export default function IncomeTaxCalculator() {
             step="0.01"
           />
         </div>
-        <div className="flex row">
+        <div className="flex column">
+          <b>Bonus</b>
           <input
             name="bonus"
             type="number"
@@ -89,7 +92,8 @@ export default function IncomeTaxCalculator() {
           />
         </div>
 
-        <div className="flex row">
+        <div className="flex column">
+          <b>Overtime</b>
           <input
             name="overtime"
             type="number"
@@ -99,7 +103,8 @@ export default function IncomeTaxCalculator() {
           />
         </div>
 
-        <div className="flex row">
+        <div className="flex column">
+          <b>Tier 1</b>
           <input
             name="tier_1"
             type="number"
@@ -109,7 +114,8 @@ export default function IncomeTaxCalculator() {
             step="0.01"
           />
         </div>
-        <div className="flex row">
+        <div className="flex column">
+          <b>Tier 2</b>
           <input
             name="tier_2"
             type="number"
@@ -118,7 +124,8 @@ export default function IncomeTaxCalculator() {
             step="0.01"
           />
         </div>
-        <div className="flex row">
+        <div className="flex column">
+          <b>Tier 3</b>
           <input
             name="tier_3"
             type="number"
@@ -128,28 +135,28 @@ export default function IncomeTaxCalculator() {
           />
         </div>
 
-        {/* <div className="flex row"> */}
+        {/* <div className="flex column"> */}
         {/*   <select id="" name="" placeholder="Per year"> */}
         {/*     <option value="" disabled selected> */}
         {/*       Per Year */}
         {/*     </option> */}
         {/*   </select> */}
         {/* </div> */}
-        {/* <div className="flex row"> */}
+        {/* <div className="flex column"> */}
         {/*   <select id="" name="" placeholder="Per year"> */}
         {/*     <option value="" disabled selected> */}
         {/*       2024/2025 */}
         {/*     </option> */}
         {/*   </select> */}
         {/* </div> */}
-        {/* <div className="flex row"> */}
+        {/* <div className="flex column"> */}
         {/*   <select id="" name="" placeholder="Per year"> */}
         {/*     <option value="" disabled selected> */}
         {/*       Under 65 */}
         {/*     </option> */}
         {/*   </select> */}
         {/* </div> */}
-        {/* <div className="flex row"> */}
+        {/* <div className="flex column"> */}
         {/*   <div className="inputContainer"> */}
         {/*     <input name="" type="text" placeholder="Pension contribution" /> */}
         {/*   </div> */}
@@ -159,7 +166,7 @@ export default function IncomeTaxCalculator() {
         {/*   </button> */}
         {/*   <button className="outline">%</button> */}
         {/* </div> */}
-        <div className="flex row">
+        <div className="flex column">
           <button type="submit" className="inverse">
             Calculate Income Tax
           </button>
