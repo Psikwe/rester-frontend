@@ -31,7 +31,7 @@ function App() {
             <div className="flex hero-image-container">
               <img
                 alt="dashboard image"
-                src="/black_man_laptop_2.png"
+                src="/african-woman.jpg"
                 className="hero-image"
               />
             </div>
