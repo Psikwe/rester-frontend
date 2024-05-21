@@ -11,7 +11,7 @@ function Login() {
               <div className="control">
                 <input className="input" type="email" placeholder="Email" />
               </div>
-              {/* <p className="help">This is a help text</p> */}
+   
             </div>
 
             <div className="field">

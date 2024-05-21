@@ -17,6 +17,7 @@ export default function Footer() {
     { name: "support@rester.com", href: "#" },
     { name: "050 xxx xxxx", href: "#" },
   ];
+  
   return (
     <footer className="flex row space-around">
       <div className="flex column">

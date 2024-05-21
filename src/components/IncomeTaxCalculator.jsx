@@ -52,10 +52,12 @@ export default function IncomeTaxCalculator() {
   // console.log("server url", import.meta.env.VITE_SERVER_URL);
   return (
     <>
-      <form className="calculator flex column" onSubmit={handleSubmit}>
-        <div className="smallTitle center"> Income Tax Calculator</div>
+      <form className="flex calculator column" onSubmit={handleSubmit}>
+        <div className="mt-12 mobile:mt-14 smallTitle center mobile:text-xl">
+          Income Tax Calculator
+        </div>
 
-        <div className="flex column">
+        <div className="flex w-1/2 mobile:w-full column">
           {/* <button className="outline "> */}
           {/*   <FaCediSign /> */}
           {/* </button> */}
@@ -67,43 +69,47 @@ export default function IncomeTaxCalculator() {
             placeholder="Basic Salary"
             value={basicSalary}
             onChange={handleChange}
+            className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
             required
           />
         </div>
-        <div className="flex column">
+        <div className="flex w-1/2 column mobile:w-full">
           <b>Cash Allowances</b>
           <input
             name="cash_allowances"
             type="number"
             min="0"
             placeholder="Cash Allowances"
+            className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
           />
         </div>
-        <div className="flex column">
+        <div className="flex w-1/2 column mobile:w-full">
           <b>Bonus</b>
           <input
             name="bonus"
             type="number"
             min="0"
             placeholder="Bonus"
+            className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
           />
         </div>
 
-        <div className="flex column">
+        <div className="flex w-1/2 column mobile:w-full">
           <b>Overtime</b>
           <input
             name="overtime"
             type="number"
             min="0"
             placeholder="Overtime"
+            className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
           />
         </div>
 
-        <div className="flex column">
+        <div className="flex w-1/2 column mobile:w-full">
           <b>Tier 1</b>
           <input
             name="tier_1"
@@ -111,26 +117,29 @@ export default function IncomeTaxCalculator() {
             min="0"
             placeholder="Tier 1"
             value={(parseFloat(basicSalary) * 0.05).toFixed(2)}
+            className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
           />
         </div>
-        <div className="flex column">
+        <div className="flex w-1/2 column mobile:w-full">
           <b>Tier 2</b>
           <input
             name="tier_2"
             type="number"
             min="0"
             placeholder="Tier 2"
+            className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
           />
         </div>
-        <div className="flex column">
+        <div className="flex w-1/2 column mobile:w-full">
           <b>Tier 3</b>
           <input
             name="tier_3"
             type="number"
             min="0"
             placeholder="Tier 3"
+            className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
           />
         </div>
@@ -166,8 +175,8 @@ export default function IncomeTaxCalculator() {
         {/*   </button> */}
         {/*   <button className="outline">%</button> */}
         {/* </div> */}
-        <div className="flex column">
-          <button type="submit" className="inverse">
+        <div className="flex p-3 from-laptop-to-laptop-xl:w-1/2 column">
+          <button className="w-full py-3 text-white bg-black">
             Calculate Income Tax
           </button>
         </div>

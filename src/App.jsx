@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import IncomeTaxCalculator from "@/components/IncomeTaxCalculator";
 import GrossIncomeCalculator from "@/components/GrossIncomeCalculator";
 import Footer from "@/components/Footer";
+import "tw-elements";
 
 function App() {
   const [calculator, setCalculator] = useState("incomeTax");
@@ -15,7 +16,7 @@ function App() {
           <div className="flex row hero">
             <div className="flex column hero-text">
               <p className="title">
-                Simple Tax Calculation for
+                Simple Tax Calculation For
                 <div className="cursive">Ghanaian Businesses</div>
               </p>
               <p className="subtitle">
@@ -37,7 +38,7 @@ function App() {
             </div>
           </div>
         </header>
-        <section className="features flex column">
+        <section className="flex features column">
           <div className="flex row center">
             <button
               className={calculator === "incomeTax" ? "inverse" : "outline"}
@@ -52,14 +53,14 @@ function App() {
               Gross Income Calculator
             </button>
           </div>
-          <div className="calculators flex row">
+          <div className="flex calculators row">
             {calculator === "incomeTax" && <IncomeTaxCalculator />}
             {calculator === "grossIncome" && <GrossIncomeCalculator />}
           </div>
 
-          <p className=" flex title center ">Features</p>
+          <p className="flex title center">Features</p>
 
-          <div className="feature flex row">
+          <div className="flex feature row">
             <div className="flex column feature-text">
               <p className="smallTitle">Tax Calculation</p>
               <p>
@@ -74,7 +75,7 @@ function App() {
             </div>
           </div>
 
-          <div className="feature flex row">
+          <div className="flex feature row">
             <div className="flex feature-image">
               <img alt="dashboard image" src="/dashboard.png" />
             </div>
@@ -89,7 +90,7 @@ function App() {
             </div>
           </div>
 
-          <div className="feature flex row">
+          <div className="flex feature row">
             <div className="flex column feature-text">
               <p className="smallTitle">Collaboration</p>
               <p>
@@ -104,7 +105,7 @@ function App() {
             </div>
           </div>
 
-          <div className="feature flex row">
+          <div className="flex feature row">
             <div className="flex feature-image">
               <img alt="dashboard image" src="/dashboard.png" />
             </div>

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Layout from "@/components/Layout";
-
+import "tw-elements";
 import Home from "@/pages/home";
 import Signup from "@/pages/signup";
 import Login from "@/pages/login";
@@ -41,5 +41,5 @@ const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </StrictMode>
 );

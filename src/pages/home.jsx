@@ -8,11 +8,14 @@ function Home() {
   const [calculator, setCalculator] = useState("incomeTax");
   return (
     <>
-      <header className="flex column" style={{ backgroundColor: "#EEEEEE" }}>
-        <div className="flex row hero">
-          <div className="flex column hero-text">
-            <p className="title">
-              Simple Tax Calculation for
+      <header
+        className="from-laptop-to-laptop-xl:px-72"
+        style={{ backgroundColor: "#EEEEEE" }}
+      >
+        <div className="container flex items-center mx-auto from-laptop-to-laptop-xl:my-16 mobile:flex-col pb-28 from-nav-laptop-to-laptop-xl:hero">
+          <div className="mt-8 from-laptop-to-laptop-xl:hero-text">
+            <p className="mb-8 text-5xl font-bold">
+              Simple Tax Calculation For
               <div className="cursive">Ghanaian Businesses</div>
             </p>
             <p className="subtitle">
@@ -20,43 +23,56 @@ function Home() {
               effortlessly compute PAYE and generate reports compliant with
               Ghanaian tax laws.
             </p>
-            <div className="button-group hero-buttons">
-              <button className="button primary">Get Started &#8599;</button>
+            <div className="flex from-laptop-to-laptop-xl:hidden hero-image-container">
+              <img alt="dashboard image" src="/african-woman.jpg" />
+            </div>
+            <div className="mt-8 button-group hero-buttons">
+              <button className=" mobile:w-full button primary">
+                Get Started &#8599;
+              </button>
             </div>
           </div>
 
-          <div className="flex hero-image-container">
+          <div className="flex mobile:hidden hero-image-container">
             <img
               alt="dashboard image"
+              className="w-[30rem] h-[30rem]"
               src="/african-woman.jpg"
-              className="hero-image"
             />
           </div>
         </div>
       </header>
-      <section className="features flex column">
-        <div className="flex row center">
+      <section className="flex from-laptop-to-laptop-xl:px-72 features mobile:p-9 column">
+        <div className="flex mobile:flex-col row center">
           <button
-            className={calculator === "incomeTax" ? "inverse" : "outline"}
+            className={
+              calculator === "incomeTax"
+                ? "bg-black mobile:w-full text-white p-3"
+                : "border-2 mobile:w-full border-black p-3"
+            }
             onClick={() => setCalculator("incomeTax")}
           >
             Income Tax Calculator
           </button>
           <button
-            className={calculator === "grossIncome" ? "inverse" : "outline"}
+            className={
+              calculator === "grossIncome"
+                ? "bg-black mobile:mt-6 mobile:w-full text-white p-3"
+                : "border-2 mobile:mt-6 mobile:w-full border-black p-3"
+            }
             onClick={() => setCalculator("grossIncome")}
           >
             Gross Income Calculator
           </button>
         </div>
-        <div className="calculators flex row">
+        <div className="flex from-laptop-to-laptop-xl:calculators row">
           {calculator === "incomeTax" && <IncomeTaxCalculator />}
           {calculator === "grossIncome" && <GrossIncomeCalculator />}
         </div>
 
-        <p className=" flex title center ">Features</p>
+        <p className="flex mt-16 title center">Features</p>
 
-        <div className="feature flex row">
+        <div className="flex feature row">
           <div className="flex column feature-text">
             <p className="smallTitle">Tax Calculation</p>
             <p>
@@ -70,7 +86,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="feature flex row">
+        <div className="flex feature row">
           <div className="flex feature-image">
             <img alt="dashboard image" src="/dashboard.png" />
           </div>
@@ -84,7 +100,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="feature flex row">
+        <div className="flex feature row">
           <div className="flex column feature-text">
             <p className="smallTitle">Collaboration</p>
             <p>
@@ -99,7 +115,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="feature flex row">
+        <div className="flex feature row">
           <div className="flex feature-image">
             <img alt="dashboard image" src="/dashboard.png" />
           </div>
