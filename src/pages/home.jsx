@@ -243,7 +243,7 @@ function Home() {
           </svg>
                   
         </div>
-        <div className="flex items-center laptop-lg:px-44 from-laptop-to-laptop-xl:absolute from-laptop-to-laptop-xl:top-24 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16 mobile:flex-col pb-28 from-nav-laptop-to-laptop-xl:hero">
+        <div className="flex items-center mobile:p-4 laptop-lg:px-44 from-laptop-to-laptop-xl:absolute from-laptop-to-laptop-xl:top-24 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16 mobile:flex-col pb-28 from-nav-laptop-to-laptop-xl:hero">
           <div className="mt-8 from-laptop-to-laptop-xl:hero-text">
             <p className="mb-8 text-5xl font-bold">
               Simple Tax Calculation For
