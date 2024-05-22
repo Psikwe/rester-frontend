@@ -10,13 +10,22 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #fff;
-  --primary: #000;
+  --primary: #f67153;
   --secondary: #eeeeee;
   color: #000;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #262626;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f67153;
 }
 
 #root {

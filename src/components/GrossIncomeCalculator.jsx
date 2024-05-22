@@ -10,9 +10,12 @@ export default function GrossIncomeCalculator() {
   };
   return (
     <div className="flex calculator column">
-      <div className="mt-12 smallTitle center"> Gross Income Calculator</div>
+      <div className="mt-12 mobile:text-[26px] smallTitle center">
+        {" "}
+        Gross Income Calculator
+      </div>
 
-      <div className="flex w-1/2 mt-4 row">
+      <div className="flex w-1/2 mt-4 mobile:w-full row">
         {/* <div className="flex items-center w-16 h-12 p-3 border-2">
           <FaCediSign />
         </div> */}
@@ -26,7 +29,7 @@ export default function GrossIncomeCalculator() {
           placeholder="Net income"
         />
       </div>
-      <div className="flex w-1/2 mt-4 row">
+      <div className="flex w-1/2 mt-4 row mobile:w-full">
         <Select
           className="w-full"
           value={selectedOption}
@@ -42,7 +45,7 @@ export default function GrossIncomeCalculator() {
           </option>
         </select>
       </div> */}
-      <div className="flex w-1/2 mt-4 row">
+      <div className="flex w-1/2 mt-4 row mobile:w-full">
         <Select
           className="w-full"
           value={selectedOption}
@@ -58,7 +61,7 @@ export default function GrossIncomeCalculator() {
           </option>
         </select>
       </div> */}
-      <div className="flex w-1/2 mt-4 row">
+      <div className="flex w-1/2 mt-4 row mobile:w-full">
         <Select
           className="w-full"
           value={selectedOption}
@@ -67,25 +70,23 @@ export default function GrossIncomeCalculator() {
           placeholder="Under 65"
         />
       </div>
-      <div>
-        <div className="w-1/2 mt-3 inputContainer">
-          <input
-            className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-            name=""
-            type="text"
-            placeholder="Pension contribution"
-          />
+      <div className="w-1/2 mt-3 inputContainer mobile:w-full">
+        <input
+          className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+          name=""
+          type="text"
+          placeholder="Pension contribution"
+        />
 
-          <div className="flex items-center justify-center w-16 h-12 p-3 mr-3 text-white bg-black rounded-lg">
-            <FaCediSign />
-          </div>
-          <div className="flex items-center justify-center w-16 h-12 p-3 text-black border-2 border-black rounded-lg">
-            %
-          </div>
+        <div className="flex items-center justify-center w-16 h-12 p-3 mr-3 text-white bg-black rounded-lg">
+          <FaCediSign />
+        </div>
+        <div className="flex items-center justify-center w-16 h-12 p-3 text-black border-2 border-black rounded-lg">
+          %
         </div>
       </div>
       <div className="flex mt-4 row">
-        <button className="w-1/6 py-3 text-white bg-black">
+        <button className="w-1/6 py-3 text-white bg-black mobile:w-full">
           Calculate Gross Income
         </button>
         {/* <button className="inverse">Calculate Gross Income</button> */}

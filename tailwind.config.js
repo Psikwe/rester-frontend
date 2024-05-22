@@ -7,13 +7,13 @@ export default {
       tablet: { min: "641px", max: "1124px" },
       // => @media (min-width: 640px) { ... }
 
-      laptop: { min: "1125px", max: "1280px" },
+      laptop: { min: "1123px", max: "1190px" },
       // => @media (min-width: 1024px) { ... }
 
-      "laptop-lg": { min: "1281px", max: "1600px" },
+      "laptop-lg": { min: "1190px", max: "1600px" },
 
       "laptop-xl": { min: "1601px" },
-      "from-laptop-to-laptop-xl": { min: "1180px" },
+      "from-laptop-to-laptop-xl": { min: "1191px" },
       "from-nav-laptop-to-laptop-xl": { min: "1125px" },
       // => @media (min-width: 1280px) { ... }
     },
