@@ -30,7 +30,7 @@ export default function Navbar() {
     <>
       {/* ************** Desktop Nav ***************/}
       <nav
-        className={`${styles.nav}  laptop-lg:px-40  laptop-xl:px-72 mobile:hidden tablet:hidden`}
+        className={`${styles.nav}  laptop-lg:px-32  laptop-xl:px-72 mobile:hidden tablet:hidden`}
       >
         <div className={styles.start}>
           <NavLink to="/" style={{ color: "#000" }}>
