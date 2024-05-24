@@ -361,7 +361,6 @@ input[type="number"] {
   row-gap: 10px;
   width: 30vw;
   border: 1px #fff solid;
-  border-radius: 10px;
 }
 
 .custom-underline-on-hover:hover {

@@ -1,11 +1,16 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
+import { useNavigate } from "react-router-dom";
 import IncomeTaxCalculator from "@/components/IncomeTaxCalculator";
 import GrossIncomeCalculator from "@/components/GrossIncomeCalculator";
 import Footer from "@/components/Footer";
 
 function Home() {
   const [calculator, setCalculator] = useState("incomeTax");
+  const navigate = useNavigate();
+  const handleSignupNavigation = () => {
+    navigate("/signup");
+  };
   return (
     <>
       <header style={{ backgroundColor: "#EEEEEE" }}>
@@ -258,7 +263,10 @@ function Home() {
               <img alt="dashboard image" src="/african-woman.jpg" />
             </div>
             <div className="mt-8 button-group hero-buttons">
-              <button className=" hover:bg-[#db7660] duration-700 mobile:w-full button primary">
+              <button
+                onClick={handleSignupNavigation}
+                className=" hover:bg-[#db7660] duration-700 mobile:w-full button primary"
+              >
                 Get Started &#8599;
               </button>
             </div>

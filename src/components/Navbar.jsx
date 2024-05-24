@@ -1,8 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styles from "@/styles/Navbar.module.scss";
 import { IoMenu } from "react-icons/io5";
 import { Offcanvas, Ripple, Dropdown, initTWE } from "tw-elements";
 import "tw-elements";
+import { useNavigate } from "react-router-dom";
 import { CiLogin } from "react-icons/ci";
 import { Tooltip } from "tw-elements";
 import { IoCalculator } from "react-icons/io5";
@@ -11,6 +12,9 @@ import { BsFillInfoSquareFill } from "react-icons/bs";
 import { useEffect } from "react";
 
 export default function Navbar() {
+  const { pathname } = useLocation();
+  console.log("pathName: " + pathname);
+  const navigate = useNavigate();
   const navigation = [
     { name: "About", href: "#", logo: <BsFillInfoSquareFill /> },
     {
@@ -25,6 +29,10 @@ export default function Navbar() {
   useEffect(() => {
     initTWE({ Offcanvas, Ripple, Dropdown });
   }, []);
+
+  const handleLoginNavigation = () => {
+    navigate("/login");
+  };
 
   return (
     <>
@@ -52,13 +60,21 @@ export default function Navbar() {
 
         <div>
           <div className="flex gap-6">
-            <div className="h-12 p-3 hover:bg-[#db7660] duration-700 hover:text-white cursor-pointer text-white bg-[#f67153]">
-              <NavLink className="duration-700 hover:text-white" to="/signup">
-                Get Started
-              </NavLink>
-            </div>
+            {pathname === "/signup" ? (
+              ""
+            ) : (
+              <div className="animate-pulse hover:animate-none h-12 p-3 duration-700 hover:text-white cursor-pointer text-white bg-[#f67153]">
+                <NavLink className="duration-700 hover:text-white" to="/signup">
+                  Get Started
+                </NavLink>
+              </div>
+            )}
+
             <div className="inline-block -mt-12 h-[100px] w-0.5 bg-black"></div>
-            <div className="flex items-center h-12 button clear">
+            <div
+              onClick={handleLoginNavigation}
+              className="flex items-center h-12 cursor-pointer button clear"
+            >
               <CiLogin color="blue" size={50} title="Login" />
               {/* <NavLink to="/login">Login</NavLink> */}
             </div>
@@ -137,7 +153,10 @@ export default function Navbar() {
                 </NavLink>
               ))}
             </div>
-            <div className="absolute flex items-center h-12 bottom-2 button clear">
+            <div
+              onClick={handleLoginNavigation}
+              className="absolute flex items-center h-12 cursor-pointer bottom-2 button clear"
+            >
               <CiLogin color="blue" size={50} title="Login" />
               {/* <NavLink to="/login">Login</NavLink> */}
             </div>
