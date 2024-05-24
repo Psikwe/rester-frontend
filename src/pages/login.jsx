@@ -18,7 +18,7 @@ function Login() {
           </p>
           <div className="flex mb-24">
             <img className="h-[31rem] mobile:hidden" src={banner} />
-            <form className="mobile:border-2 bg-white mobile:border-red-600 mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30vw] h-[31rem]">
+            <form className="mobile:border-2 bg-white mobile:border-[primary] mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30vw] h-[31rem]">
               <div className="field">
                 <label className="label bold">Email</label>
                 <div className="control">
@@ -50,7 +50,7 @@ function Login() {
               </div>
               <button
                 type="submit"
-                className="w-full mt-9 py-3 text-white bg-[#f67153] mobile:w-full"
+                className="w-full py-3 text-white mt-9 primary mobile:w-full"
               >
                 Login
               </button>

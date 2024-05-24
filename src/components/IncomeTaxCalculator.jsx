@@ -53,7 +53,7 @@ export default function IncomeTaxCalculator() {
   return (
     <>
       <form className="flex calculator column" onSubmit={handleSubmit}>
-        <div className="mt-12 mobile:mt-14 smallTitle center mobile:text-xl">
+        <div className="mt-12 mobile:mt-14 smallTitle center mobile:text-xl  text-[#31708E]">
           Income Tax Calculator
         </div>
 
@@ -176,7 +176,7 @@ export default function IncomeTaxCalculator() {
         {/*   <button className="outline">%</button> */}
         {/* </div> */}
         <div className="flex p-3 from-laptop-to-laptop-xl:w-1/2 column">
-          <button className="w-full py-3 text-white bg-black">
+          <button className="w-full py-3 text-white primary">
             Calculate Income Tax
           </button>
         </div>

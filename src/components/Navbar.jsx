@@ -16,15 +16,27 @@ export default function Navbar() {
   console.log("pathName: " + pathname);
   const navigate = useNavigate();
   const navigation = [
-    { name: "About", href: "#", logo: <BsFillInfoSquareFill /> },
+    {
+      name: "About",
+      href: "#",
+      logo: <BsFillInfoSquareFill className="icon-color" />,
+    },
     {
       name: "Reverse Calculator",
       href: "#",
-      logo: <IoCalculator />,
+      logo: <IoCalculator className="icon-color" />,
     },
-    { name: "Pricing", href: "#", logo: <MdOutlinePriceChange /> },
+    {
+      name: "Pricing",
+      href: "#",
+      logo: <MdOutlinePriceChange className="icon-color" />,
+    },
 
-    { name: "Mini Calculator", href: "#", logo: <IoCalculator /> },
+    {
+      name: "Mini Calculator",
+      href: "#",
+      logo: <IoCalculator className="icon-color" />,
+    },
   ];
   useEffect(() => {
     initTWE({ Offcanvas, Ripple, Dropdown });
@@ -38,7 +50,7 @@ export default function Navbar() {
     <>
       {/* ************** Desktop Nav ***************/}
       <nav
-        className={`${styles.nav}  laptop-lg:px-32  laptop-xl:px-72 mobile:hidden tablet:hidden`}
+        className={`${styles.nav}  laptop-lg:px-32 py-2 laptop-xl:px-72 mobile:hidden tablet:hidden`}
       >
         <div className={styles.start}>
           <NavLink to="/" style={{ color: "#000" }}>
@@ -50,7 +62,7 @@ export default function Navbar() {
             <NavLink key={i} to={link.href}>
               <div className="flex items-center mr-6">
                 <div className="mr-1 text-blue-400">{link.logo}</div>
-                <span className="hover:text-[#f56342] duration-700">
+                <span className="hover:text-[#31708E] duration-700">
                   {link.name}
                 </span>
               </div>
@@ -63,19 +75,19 @@ export default function Navbar() {
             {pathname === "/signup" ? (
               ""
             ) : (
-              <div className="animate-pulse hover:animate-none h-12 p-3 duration-700 hover:text-white cursor-pointer text-white bg-[#f67153]">
+              <div className="animate-pulse hover:animate-none h-12 p-3 duration-700 hover:text-white cursor-pointer text-white bg-[#687864]">
                 <NavLink className="duration-700 hover:text-white" to="/signup">
                   Get Started
                 </NavLink>
               </div>
             )}
 
-            <div className="inline-block -mt-12 h-[100px] w-0.5 bg-black"></div>
+            <div className="inline-block -mt-12 h-[100px] w-0.5 bg-[#31708E]"></div>
             <div
               onClick={handleLoginNavigation}
               className="flex items-center h-12 cursor-pointer button clear"
             >
-              <CiLogin color="blue" size={50} title="Login" />
+              <CiLogin className="text-[#31708E]" size={50} title="Login" />
               {/* <NavLink to="/login">Login</NavLink> */}
             </div>
           </div>
@@ -146,7 +158,7 @@ export default function Navbar() {
                 <NavLink key={i} to={link.href}>
                   <div className="flex items-center mr-6">
                     <div className="mr-1 text-blue-400">{link.logo}</div>
-                    <span className="hover:text-[#f56342] duration-700">
+                    <span className="hover:text-[#31708E] duration-700">
                       {link.name}
                     </span>
                   </div>
@@ -157,7 +169,7 @@ export default function Navbar() {
               onClick={handleLoginNavigation}
               className="absolute flex items-center h-12 cursor-pointer bottom-2 button clear"
             >
-              <CiLogin color="blue" size={50} title="Login" />
+              <CiLogin color="#31708E" size={50} title="Login" />
               {/* <NavLink to="/login">Login</NavLink> */}
             </div>
           </div>

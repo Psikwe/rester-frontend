@@ -10,7 +10,8 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #fff;
-  --primary: #f67153;
+  --primary: #687864;
+  --icon-color: #687864;
   --secondary: #eeeeee;
   color: #000;
   font-synthesis: none;
@@ -25,7 +26,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #f67153;
+  background-color: var(--primary);
 }
 
 #root {
@@ -145,6 +146,10 @@ select {
 }
 .primary a {
   color: #fff;
+}
+
+.icon-color {
+  color: #8fc1e3;
 }
 
 .center {
