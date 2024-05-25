@@ -1,5 +1,8 @@
 import React from "react";
 import { FaPhone } from "react-icons/fa6";
+import { GrUserWorker } from "react-icons/gr";
+import { PiBuildingOfficeLight } from "react-icons/pi";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 export const options = [
   { value: "chocolate", label: "Per Anum" },
@@ -35,4 +38,39 @@ export const menus = [
       // },
     ],
   },
+];
+
+export const adminDashboardMenus = [
+  {
+    title: "Employees",
+    icon: <GrUserWorker color="#687864" />,
+    subMenu: [
+      {
+        menu: "Manage Employee",
+        url: "/dashboard",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+      },
+    ],
+  },
+  {
+    title: "Company",
+    icon: <PiBuildingOfficeLight color="#687864" />,
+    subMenu: [
+      {
+        menu: "Manage Company",
+        url: "/manage-company",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+      },
+    ],
+  },
+];
+
+export const employeeColumns = [
+  { key: "id", name: "ID" },
+  { key: "title", name: "Title" },
+];
+
+export const employeeRows = [
+  { id: 0, title: "Dennis Boateng" },
+  { id: 1, title: "Kwesi Boateng" },
 ];

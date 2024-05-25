@@ -8,8 +8,9 @@ import Home from "@/pages/home";
 import Signup from "@/pages/signup";
 import Login from "@/pages/login";
 import "@/styles/globals.css";
-// import Root, { rootLoader } from "./routes/root";
-// import Team, { teamLoader } from "./routes/team";
+import DashboardLayout from "./pages/dashboard_layout/_page";
+import ManageEmployees from "./pages/manage_employees/_page";
+import ManageCompany from "./pages/manage_company/_page";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,21 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login />,
         // loader: teamLoader,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <DashboardLayout />,
+    errorElement: <ErrorBoundary />,
+    children: [
+      {
+        path: "dashboard",
+        element: <ManageEmployees />,
+      },
+      {
+        path: "manage-company",
+        element: <ManageCompany />,
       },
     ],
   },
