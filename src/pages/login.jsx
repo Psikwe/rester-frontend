@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import banner from "../assets/dashboard.jpg";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
+import axios from "axios";
 import React from "react";
 import { formToJSON } from "axios";
 function Login() {
@@ -11,11 +12,21 @@ function Login() {
     setShowNewPasswordType(!showNewPasswordType);
   };
 
-  const handleLogin = () => {
+  const handleLogin = (event) => {
+    event.preventDefault();
     const loginForm = document.getElementById("login-form");
     const loginData = {
       ...formToJSON(loginForm),
     };
+
+    axios
+      .post("https://rester-82c60dc37022.herokuapp.com/login", loginData)
+      .then((res) => {
+        console.log("res: ", res);
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      });
   };
   return (
     <>

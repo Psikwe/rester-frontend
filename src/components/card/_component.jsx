@@ -4,7 +4,7 @@ import { IoEyeSharp } from "react-icons/io5";
 
 function CompanyCard(props) {
   return (
-    <div className="block p-6 bg-white rounded-lg text-slate-400 shadow-secondary-1 dark:bg-surface-dark dark:text-white">
+    <div className="block p-6 bg-white rounded-lg drop-shadow-2xl text-slate-400 ">
       <img className="w-24 h-24" src={companyIcon} />
       <p className="mb-4 text-base">Company Name: {props.companyName}</p>
       <p className="mb-4 text-base">
