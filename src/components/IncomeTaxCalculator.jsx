@@ -49,7 +49,7 @@ export default function IncomeTaxCalculator() {
       console.error("Error calculating income tax", data);
     }
   };
-  // console.log("server url", import.meta.env.VITE_SERVER_URL);
+  console.log("server url", import.meta.env.VITE_SERVER_URL);
   return (
     <>
       <form className="flex calculator column" onSubmit={handleSubmit}>

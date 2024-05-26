@@ -3,11 +3,19 @@ import banner from "../assets/dashboard.jpg";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
 import React from "react";
+import { formToJSON } from "axios";
 function Login() {
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
 
   const newPasswordToggle = () => {
     setShowNewPasswordType(!showNewPasswordType);
+  };
+
+  const handleLogin = () => {
+    const loginForm = document.getElementById("login-form");
+    const loginData = {
+      ...formToJSON(loginForm),
+    };
   };
   return (
     <>
@@ -18,7 +26,11 @@ function Login() {
           </p>
           <div className="flex mb-24">
             <img className="h-[31rem] mobile:hidden" src={banner} />
-            <form className="mobile:border-2 bg-white mobile:border-[primary] mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30vw] h-[31rem]">
+            <form
+              id="login-form"
+              onSubmit={handleLogin}
+              className="mobile:border-2 bg-white mobile:border-[#687864] mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30vw] h-[31rem] mobile-h-full"
+            >
               <div className="field">
                 <label className="label bold">Email</label>
                 <div className="control">

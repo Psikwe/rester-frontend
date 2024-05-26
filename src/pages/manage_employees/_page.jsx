@@ -39,9 +39,9 @@ function ManageEmployees() {
     const { id, name } = data.row;
     return (
       <div className="flex mt-1">
-        <button title="Delete" onClick={() => handleDeleteClick(id, name)}>
+        {/* <button title="Delete" onClick={() => handleDeleteClick(id, name)}>
           <MdDelete color="red" size={18} />
-        </button>
+        </button> */}
         <button
           className="ml-2"
           title="Update"

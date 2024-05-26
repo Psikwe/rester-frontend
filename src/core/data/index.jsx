@@ -3,6 +3,7 @@ import { FaPhone } from "react-icons/fa6";
 import { GrUserWorker } from "react-icons/gr";
 import { PiBuildingOfficeLight } from "react-icons/pi";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { RxDashboard } from "react-icons/rx";
 
 export const options = [
   { value: "chocolate", label: "Per Anum" },
@@ -21,26 +22,18 @@ export const noOfEmployees = [
   { value: "strawberry", label: "200 and above" },
 ];
 
-export const menus = [
+export const adminDashboardMenus = [
   {
-    submenu: [
+    title: "Overview",
+    icon: <RxDashboard />,
+    subMenu: [
       {
-        title: "Msisdn for draw",
-        url: "/",
-        group: "Upload",
-        icon: <FaPhone />,
+        menu: "View Company",
+        url: "/view-company",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
-      // {
-      //   title: "Spin for winner",
-      //   url: "/spin",
-      //   group: "Get winner",
-      //   icon: <ImSpinner9 />,
-      // },
     ],
   },
-];
-
-export const adminDashboardMenus = [
   {
     title: "Employees",
     icon: <GrUserWorker color="#687864" />,
@@ -73,4 +66,22 @@ export const employeeColumns = [
 export const employeeRows = [
   { id: 0, title: "Dennis Boateng" },
   { id: 1, title: "Kwesi Boateng" },
+];
+
+export const companies = [
+  {
+    companyName: "Mtn",
+    noOfEmployees: 23,
+    href: "/dashboard",
+  },
+  {
+    companyName: "Mtn",
+    noOfEmployees: 23,
+    href: "/dashboard",
+  },
+  {
+    companyName: "Mtn",
+    noOfEmployees: 23,
+    href: "/dashboard",
+  },
 ];

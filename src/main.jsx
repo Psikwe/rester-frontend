@@ -11,6 +11,7 @@ import "@/styles/globals.css";
 import DashboardLayout from "./pages/dashboard_layout/_page";
 import ManageEmployees from "./pages/manage_employees/_page";
 import ManageCompany from "./pages/manage_company/_page";
+import ViewCompany from "./pages/view_company/_page";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "manage-company",
         element: <ManageCompany />,
+      },
+      {
+        path: "view-company",
+        element: <ViewCompany />,
       },
     ],
   },

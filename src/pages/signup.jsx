@@ -27,7 +27,7 @@ function Signup() {
         <p className="mt-24 mb-8 text-3xl">Signup</p>
         <div className="flex mb-24">
           <img className="mobile:hidden h-[40rem]" src={banner} />
-          <form className="mobile:border-2 bg-white mobile:border-red-600 mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-2 from-laptop-to-laptop-xl:w-[30vw] h-full mobile:h-[34rem]">
+          <form className="mobile:border-2 bg-white mobile:border-[#687864] mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-2 from-laptop-to-laptop-xl:w-[30vw] h-full">
             <div className="field">
               <label className="label bold">Enter Company Name</label>
               <div className="control">
@@ -119,7 +119,7 @@ function Signup() {
               type="submit"
               className="w-full py-3 mt-8 text-white primary mobile:w-full"
             >
-              Sign up
+              Signup
             </button>
             <small>
               Already having an accout?
