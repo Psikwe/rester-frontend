@@ -6,10 +6,8 @@ function CompanyCard(props) {
   return (
     <div className="block p-6 bg-white rounded-lg drop-shadow-2xl text-slate-400 ">
       <img className="w-24 h-24" src={companyIcon} />
-      <p className="mb-4 text-base">Company Name: {props.companyName}</p>
-      <p className="mb-4 text-base">
-        Number of employees: {props.noOfEmployees}
-      </p>
+      <p className="mb-4 text-sm">Company Name: {props.companyName}</p>
+      <p className="mb-4 text-sm">Number of employees: {props.noOfEmployees}</p>
       <a href={props.href}>
         <button
           type="button"

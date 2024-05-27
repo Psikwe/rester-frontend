@@ -5,6 +5,8 @@ import { IoEyeSharp } from "react-icons/io5";
 import axios from "axios";
 import React from "react";
 import { formToJSON } from "axios";
+import { showToast } from "../core/hooks/alert";
+
 function Login() {
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
 
@@ -22,10 +24,11 @@ function Login() {
     axios
       .post("https://rester-82c60dc37022.herokuapp.com/login", loginData)
       .then((res) => {
-        console.log("res: ", res);
+        showToast(res.data.message, true);
+        loginForm?.reset();
       })
       .catch((error) => {
-        console.log("error: ", error);
+        showToast(error.response.data.error, false);
       });
   };
   return (
@@ -49,6 +52,7 @@ function Login() {
                     className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
                     type="email"
                     placeholder="Email"
+                    name="email"
                   />
                 </div>
               </div>
@@ -59,6 +63,7 @@ function Login() {
                     className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                     type={showNewPasswordType ? "text" : "password"}
                     placeholder="Password"
+                    name="password"
                   />
                 </div>
                 <div className="absolute top-9 right-3">

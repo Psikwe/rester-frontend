@@ -85,12 +85,12 @@ function ManageEmployees() {
           />
         </div>
       </div>
-      <button
+      {/* <button
         type="submit"
         className="w-1/4 py-2 my-3 text-white primary mobile:w-full"
       >
         View Payroll
-      </button>
+      </button> */}
       {filteredData.length === 0 ? (
         <div className="flex flex-col items-center justify-center">
           <VscSearchStop color="#687864" size={40} className="animate-bounce" />

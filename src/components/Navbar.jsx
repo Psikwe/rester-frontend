@@ -60,8 +60,8 @@ export default function Navbar() {
         <div className="flex">
           {navigation.map((link, i) => (
             <NavLink key={i} to={link.href}>
-              <div className="flex items-center mr-6">
-                <div className="mr-1 text-blue-400">{link.logo}</div>
+              <div className="flex items-center mr-9">
+                {/* <div className="mr-1 text-blue-400">{link.logo}</div> */}
                 <span className="hover:text-[#31708E] duration-700">
                   {link.name}
                 </span>

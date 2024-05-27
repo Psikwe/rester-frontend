@@ -17,9 +17,9 @@ export const yearOptions = [
 ];
 
 export const noOfEmployees = [
-  { value: "chocolate", label: "0-50" },
-  { value: "strawberry", label: "51-200" },
-  { value: "strawberry", label: "200 and above" },
+  { value: "0-50", label: "0-50" },
+  { value: "51-500", label: "51-200" },
+  { value: "200 and above", label: "200 and above" },
 ];
 
 export const adminDashboardMenus = [
@@ -40,7 +40,12 @@ export const adminDashboardMenus = [
     subMenu: [
       {
         menu: "Manage Employee",
-        url: "/dashboard",
+        url: "/manage-employees",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+      },
+      {
+        menu: "Run Payroll",
+        url: "/manage-employees",
         icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
     ],
@@ -72,16 +77,16 @@ export const companies = [
   {
     companyName: "Mtn",
     noOfEmployees: 23,
-    href: "/dashboard",
+    href: "/manage-employees",
   },
   {
     companyName: "Mtn",
     noOfEmployees: 23,
-    href: "/dashboard",
+    href: "/manage-employees",
   },
   {
     companyName: "Mtn",
     noOfEmployees: 23,
-    href: "/dashboard",
+    href: "/manage-employees",
   },
 ];

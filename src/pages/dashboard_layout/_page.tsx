@@ -130,7 +130,7 @@ const DashboardLayout = (props: Props) => {
       </Modal>
 
       <div className="flex w-full h-screen mb-8 overflow-x-hidden">
-        <div className="w-80 px-3 m-8 border-r-[1px] bg-[#e3f0ff] border-slate-100 rounded-2xl">
+        <div className="text-sm w-80 pt-3 px-3 m-8 border-r-[1px] bg-[#e3f0ff] border-slate-100 rounded-2xl">
           <b>R</b>ester
           <ul className="mt-12">
             {adminDashboardMenus.map((ad, i) => (
@@ -201,7 +201,7 @@ const DashboardLayout = (props: Props) => {
                   </span>
                 </button>
                 <ul
-                  className="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-base shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
+                  className="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
                   aria-labelledby="dropdownMenuButton1"
                   data-twe-dropdown-menu-ref
                 >
