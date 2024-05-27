@@ -165,7 +165,7 @@ const DashboardLayout = (props: Props) => {
         </div>
 
         <div className="w-full bg-[#f5f9fe] overflow-auto h-screen">
-          <div className="flex justify-between px-40 mt-4">
+          <div className="flex justify-between px-40 mt-4 laptop-lg:px-20">
             <div className="flex items-center justify-between ">
               <MdAdminPanelSettings color="#687864" size={30} />
 
@@ -233,7 +233,7 @@ const DashboardLayout = (props: Props) => {
               </div>
             </div>
           </div>
-          <div className="px-40 mt-16">
+          <div className="px-40 mt-16 laptop-lg:px-20">
             <Outlet />
           </div>
         </div>
