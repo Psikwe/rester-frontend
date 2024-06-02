@@ -81,6 +81,7 @@ function Signup() {
               </div>
               {/* <p className="help">This is a help text</p> */}
             </div>
+
             <div className="field">
               <label className="text-sm label bold">Enter Company Name</label>
               <div className="control">

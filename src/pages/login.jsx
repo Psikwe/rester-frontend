@@ -6,33 +6,73 @@ import axios from "axios";
 import React from "react";
 import { formToJSON } from "axios";
 import { showToast } from "../core/hooks/alert";
+import Modal from "../components/modal/_component";
+import { useDispatch } from "react-redux";
+import { cacheUserSession } from "../core/utilities";
 
 function Login() {
+  const dispatch = useDispatch();
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
-
+  const [isForgotPassowrdModalOpen, setIsForgotPassowrdModalOpen] =
+    React.useState(false);
   const newPasswordToggle = () => {
     setShowNewPasswordType(!showNewPasswordType);
   };
-
+  44;
   const handleLogin = (event) => {
     event.preventDefault();
     const loginForm = document.getElementById("login-form");
     const loginData = {
       ...formToJSON(loginForm),
     };
+    console.log("data: ", loginData);
 
     axios
       .post("https://rester-82c60dc37022.herokuapp.com/login", loginData)
       .then((res) => {
-        showToast(res.data.message, true);
+        console.log(res);
+        cacheUserSession(res?.data.access_token);
+        showToast("Login successful", true);
         loginForm?.reset();
       })
       .catch((error) => {
         showToast(error.response.data.error, false);
       });
   };
+  const openForgotPasswordModal = () => {
+    setIsForgotPassowrdModalOpen(true);
+  };
+
+  const closeForgotPasswordModal = () => {
+    setIsForgotPassowrdModalOpen(false);
+  };
+
+  //  email: testt@gmail.com
+  //  pass: KAKAY1212?!?@test
   return (
     <>
+      <Modal open={isForgotPassowrdModalOpen} close={closeForgotPasswordModal}>
+        <form className="p-16 bg-white">
+          <div className="relative">
+            <label className="text-sm label bold">Enter Email</label>
+            <div className="control">
+              <input
+                required
+                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-[30rem] pl-10 p-2.5"
+                type={showNewPasswordType ? "text" : "password"}
+                placeholder="Email"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-3 text-white mt-9 primary mobile:w-full"
+          >
+            Submit
+          </button>
+        </form>
+      </Modal>
       <section className="bg-slate-200">
         <div className="login-container">
           <p className="mt-16 text-3xl mb-9 from-laptop-to-laptop-xl:title">
@@ -49,6 +89,7 @@ function Login() {
                 <label className="label bold">Email</label>
                 <div className="control">
                   <input
+                    required
                     className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
                     type="email"
                     placeholder="Email"
@@ -60,6 +101,7 @@ function Login() {
                 <label className="label bold">Password</label>
                 <div className="control">
                   <input
+                    required
                     className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                     type={showNewPasswordType ? "text" : "password"}
                     placeholder="Password"
@@ -83,10 +125,20 @@ function Login() {
                 Login
               </button>
               <small>
-                Don't have an account yet?
-                <NavLink to="/signup">
-                  <span className="ml-1 font-bold underline">Signup</span>
-                </NavLink>
+                <span className="flex justify-between">
+                  <NavLink to="/signup">
+                    Don't have an account yet?
+                    <span className="ml-1 font-bold underline">Signup</span>
+                  </NavLink>
+                  <span
+                    className="cursor-pointer"
+                    onClick={openForgotPasswordModal}
+                  >
+                    <span className="font-bold underline">
+                      Forgot password?
+                    </span>
+                  </span>
+                </span>
               </small>
             </form>
           </div>

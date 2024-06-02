@@ -35,9 +35,30 @@ export const adminDashboardMenus = [
     ],
   },
   {
+    title: "Company",
+    icon: <PiBuildingOfficeLight color="#687864" />,
+    subMenu: [
+      {
+        menu: "Create Company",
+        url: "/create-company",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+      },
+      {
+        menu: "Manage Company",
+        url: "/manage-company",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+      },
+    ],
+  },
+  {
     title: "Employees",
     icon: <GrUserWorker color="#687864" />,
     subMenu: [
+      {
+        menu: "Create Employee",
+        url: "/create-employee",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+      },
       {
         menu: "Manage Employee",
         url: "/manage-employees",
@@ -50,13 +71,43 @@ export const adminDashboardMenus = [
       },
     ],
   },
+];
+
+export const employeeDashboardMenus = [
+  // {
+  //   title: "Overview",
+  //   icon: <RxDashboard />,
+  //   subMenu: [
+  //     {
+  //       menu: "View Company",
+  //       url: "/view-company",
+  //       icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Company",
+  //   icon: <PiBuildingOfficeLight color="#687864" />,
+  //   subMenu: [
+  //     {
+  //       menu: "Create Company",
+  //       url: "/create-company",
+  //       icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+  //     },
+  //     {
+  //       menu: "Manage Company",
+  //       url: "/manage-company",
+  //       icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+  //     },
+  //   ],
+  // },
   {
-    title: "Company",
-    icon: <PiBuildingOfficeLight color="#687864" />,
+    title: "Employees",
+    icon: <GrUserWorker color="#687864" />,
     subMenu: [
       {
-        menu: "Manage Company",
-        url: "/manage-company",
+        menu: "Update Employee",
+        url: "/employee/update-employee",
         icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
     ],

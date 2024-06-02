@@ -1,5 +1,5 @@
 import React from "react";
-import { adminDashboardMenus } from "../../core/data";
+import { adminDashboardMenus, employeeDashboardMenus } from "../../core/data";
 import { NavLink, Outlet } from "react-router-dom";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RxAvatar } from "react-icons/rx";
@@ -12,12 +12,9 @@ import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "../../components/modal/_component";
 import moment from "moment";
 
-type Props = {};
-
-const DashboardLayout = (props: Props) => {
+const EmployeeDashboardLayout = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
-  const [selectedMenu, setSelectedMenu] = React.useState(0);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
 
@@ -133,7 +130,7 @@ const DashboardLayout = (props: Props) => {
         <div className="text-sm w-80 pt-3 px-3 m-8 border-r-[1px] bg-[#e3f0ff] border-slate-100 rounded-2xl">
           <b>R</b>ester
           <ul className="mt-12">
-            {adminDashboardMenus.map((ad, i) => (
+            {employeeDashboardMenus.map((ad, i) => (
               <React.Fragment key={i}>
                 <div className="flex items-center mt-9">
                   <span>{ad.icon}</span>
@@ -170,7 +167,7 @@ const DashboardLayout = (props: Props) => {
               <MdAdminPanelSettings color="#687864" size={30} />
 
               <div className="flex items-center justify-between">
-                <small className="ml-1 ">Hello Admin</small>
+                <small className="ml-1 ">Hello Employee</small>
               </div>
             </div>
             <div className="m-auto text-slate-400">{showDate}</div>
@@ -219,6 +216,18 @@ const DashboardLayout = (props: Props) => {
                   </li>
                   <li>
                     <span
+                      className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
+                      data-twe-dropdown-item-ref
+                      onClick={openModal}
+                    >
+                      <span className="mr-1">
+                        <RiLockPasswordLine color="#687864" size={20} />
+                      </span>
+                      Reset
+                    </span>
+                  </li>
+                  <li>
+                    <span
                       onClick={openLogoutModal}
                       className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
                       data-twe-dropdown-item-ref
@@ -242,4 +251,4 @@ const DashboardLayout = (props: Props) => {
   );
 };
 
-export default DashboardLayout;
+export default EmployeeDashboardLayout;

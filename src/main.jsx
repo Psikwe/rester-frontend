@@ -15,6 +15,9 @@ import ViewCompany from "./pages/view_company/_page";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AppRoutes from "./pages/appRoutes";
+import store from "./core/stores";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "react-redux";
 
 // const router = createBrowserRouter([
 //   {
@@ -61,10 +64,14 @@ import AppRoutes from "./pages/appRoutes";
 // ]);
 
 const root = createRoot(document.getElementById("root"));
-
+const queryClient = new QueryClient();
 root.render(
   <StrictMode>
     <ToastContainer progressClassName="toast-progress" />
-    <AppRoutes />
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <AppRoutes />
+      </QueryClientProvider>
+    </Provider>
   </StrictMode>
 );
