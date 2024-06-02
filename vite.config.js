@@ -11,4 +11,7 @@ export default defineConfig({
   resolve: {
     alias: [{ find: "@", replacement: root }],
   },
+  build: {
+    outDir: "dist", // output directory
+  },
 });
