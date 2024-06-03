@@ -9,6 +9,7 @@ import { showToast } from "../core/hooks/alert";
 import Modal from "../components/modal/_component";
 import { useDispatch } from "react-redux";
 import { cacheUserSession } from "../core/utilities";
+import { setUser } from "../core/stores/slices/user_slice";
 
 function Login() {
   const dispatch = useDispatch();
@@ -33,6 +34,11 @@ function Login() {
         console.log(res);
         cacheUserSession(res?.data.access_token);
         showToast("Login successful", true);
+        dispatch(setUser({ roles: [], username: res?.data.email }));
+        setTimeout(() => {
+          window.location.href = "/view-company";
+        }, 2000);
+
         loginForm?.reset();
       })
       .catch((error) => {

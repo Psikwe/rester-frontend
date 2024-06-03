@@ -140,7 +140,7 @@ const DashboardLayout = () => {
                 </div>
 
                 {ad.subMenu.map((sub, i) => (
-                  <NavLink to={sub.url}>
+                  <NavLink key={i} to={sub.url}>
                     <li
                       className="flex items-center mt-3 font-thin hover:text-black"
                       key={i}
@@ -192,9 +192,9 @@ const DashboardLayout = () => {
                       fill="currentColor"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   </span>

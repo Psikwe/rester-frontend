@@ -1,15 +1,41 @@
 import React from "react";
 import "flatpickr/dist/flatpickr.css";
 import Flatpickr from "react-flatpickr";
+import { showToast } from "../../core/hooks/alert";
+import axios, { formToJSON } from "axios";
 
 function CreateEmployee() {
   const fp = React.useRef(null);
   const handleCreateEmployeeSubmit = (e) => {
     e.preventDefault();
+    const employeeForm = document.getElementById("employee-form");
+    const payload = {
+      ...formToJSON(employeeForm),
+    };
+
+    axios
+      .post(
+        "https://rester-82c60dc37022.herokuapp.com/create_employee",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("u_token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        showToast(res?.data.message, true);
+        companyForm?.reset();
+      })
+      .catch((error) => {
+        showToast(error.response.data.error, false);
+      });
   };
   return (
     <>
-      <form onSubmit={handleCreateEmployeeSubmit}>
+      <form id="employee-form" onSubmit={handleCreateEmployeeSubmit}>
         <div className="grid grid-cols-3 gap-3">
           <div className="field">
             <label className="text-sm label bold">Enter First Name</label>
@@ -78,6 +104,20 @@ function CreateEmployee() {
             </div>
           </div>
           <div className="mt-3 field">
+            <label className="text-sm label bold">
+              Enter Permanent Address
+            </label>
+            <div className="control">
+              <input
+                required
+                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                type="text"
+                placeholder="Permanent Address"
+                name="permanent_address"
+              />
+            </div>
+          </div>
+          <div className=" field">
             <label className="text-sm label bold">Enter Email</label>
             <div className="control">
               <input
@@ -97,7 +137,7 @@ function CreateEmployee() {
                 className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                 type="number"
                 placeholder="Phone Number"
-                name="email"
+                name="phone"
               />
             </div>
           </div>
@@ -113,7 +153,7 @@ function CreateEmployee() {
               />
             </div>
           </div>
-          <div className="field">
+          <div className="mt-3 field">
             <label className="text-sm label bold">Enter Tin</label>
             <div className="control">
               <input
@@ -135,7 +175,7 @@ function CreateEmployee() {
                 className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                 type="text"
                 placeholder="Ghana Card Number"
-                name="tin"
+                name="ghana_card_id"
               />
             </div>
           </div>

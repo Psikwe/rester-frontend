@@ -2,6 +2,9 @@ import React from "react";
 import Select from "react-select";
 import { noOfEmployees } from "../../core/data";
 import { PiBuildingOfficeDuotone } from "react-icons/pi";
+import axios from "axios";
+import { formToJSON } from "axios";
+import { showToast } from "../../core/hooks/alert";
 
 function CreateCompany() {
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
@@ -11,13 +14,40 @@ function CreateCompany() {
 
   const handleCompanySubmit = (e) => {
     e.preventDefault();
+    const companyForm = document.getElementById("company-form");
+    const payload = {
+      ...formToJSON(companyForm),
+    };
+    axios
+      .post(
+        "https://rester-82c60dc37022.herokuapp.com/create_entity",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("u_token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        showToast(res?.data.message, true);
+        companyForm?.reset();
+      })
+      .catch((error) => {
+        showToast(error.response.data.error, false);
+      });
   };
   return (
     <>
       <div className="flex">
-        <form className="w-full" onSubmit={handleCompanySubmit}>
+        <form
+          id="company-form"
+          className="w-full"
+          onSubmit={handleCompanySubmit}
+        >
           <div className="grid-cols-2 gap-3">
-            <div className="9field">
+            <div className="field">
               <label className="text-sm label bold">Enter Company Name</label>
               <div className="control">
                 <input
@@ -25,7 +55,7 @@ function CreateCompany() {
                   className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                   type="text"
                   placeholder="Company Name"
-                  name="company_name"
+                  name="name"
                 />
               </div>
               {/* <p className="help">This is a help text</p> */}
