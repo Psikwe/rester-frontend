@@ -36,7 +36,7 @@ const DashboardLayout = () => {
 
   const handleLogout = () => {
     clearUserSession();
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   const closeModal = () => {
