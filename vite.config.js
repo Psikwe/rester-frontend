@@ -12,6 +12,6 @@ export default defineConfig({
     alias: [{ find: "@", replacement: root }],
   },
   build: {
-    outDir: "dist", // output directory
+    outDir: path.resolve(__dirname, "dist"), // Explicitly set the output directory
   },
 });
