@@ -54,7 +54,7 @@ export default function Navbar() {
       >
         <div className={styles.start}>
           <NavLink to="/" style={{ color: "#000" }}>
-            <b>R</b>ester.
+            <b>R</b>ester
           </NavLink>
         </div>
         <div className="flex">
