@@ -19,7 +19,7 @@ function Login() {
   const newPasswordToggle = () => {
     setShowNewPasswordType(!showNewPasswordType);
   };
-  44;
+
   const handleLogin = (event) => {
     event.preventDefault();
     const loginForm = document.getElementById("login-form");
@@ -36,7 +36,7 @@ function Login() {
         showToast("Login successful", true);
         dispatch(setUser({ roles: [], username: res?.data.email }));
         setTimeout(() => {
-          window.location.href = "/view-company";
+          window.location.href = "/";
         }, 2000);
 
         loginForm?.reset();
