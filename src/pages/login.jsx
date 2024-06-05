@@ -36,7 +36,7 @@ function Login() {
         showToast("Login successful", true);
         dispatch(setUser({ roles: [], username: res?.data.email }));
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = "/view-company";
         }, 2000);
 
         loginForm?.reset();
