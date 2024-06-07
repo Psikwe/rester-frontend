@@ -236,7 +236,7 @@ function CreateEmployee() {
         <>
           <form id="employee-form" onSubmit={handleCreateEmployeeSubmit}>
             <div className="grid grid-cols-3 gap-3">
-              <div className="field">
+              <div className="mt-3 field">
                 <label className="text-sm label bold">Enter Employee</label>
                 <div className="control">
                   <input
@@ -249,7 +249,7 @@ function CreateEmployee() {
                 </div>
               </div>
               <div className="mt-3 field">
-                <label className="text-sm label bold">Start Date</label>
+                <label className="text-sm label bold">Select Start Date</label>
                 <Flatpickr
                   className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                   placeholder="Date of Birth"
@@ -267,10 +267,10 @@ function CreateEmployee() {
                 </button>
               </div>
               <div className="mt-3 field">
-                <label className="text-sm label bold">End Date</label>
+                <label className="text-sm label bold">Select End Date</label>
                 <Flatpickr
                   className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  placeholder="Date of Birth"
+                  placeholder="End Date"
                   ref={fp}
                 />
                 <button
@@ -334,51 +334,53 @@ function CreateEmployee() {
                     required
                     className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                     type="text"
-                    placeholder="First Name"
+                    placeholder="Full Name"
                     name="first_name"
                   />
                 </div>
               </div>
-              <div className="flex w-1/2 mt-4 row mobile:w-full">
-                <Select
-                  className="w-full"
-                  value={selectedOption}
-                  onChange={handleChange}
-                  options={options}
-                  placeholder="Per Year "
-                />
+              <div>
+                <label className="text-sm label bold">
+                  Select type of income
+                </label>
+                <div className="flex w-full row mobile:w-full">
+                  <Select
+                    className="w-full"
+                    value={selectedOption}
+                    onChange={handleChange}
+                    options={options}
+                    placeholder="Income Type"
+                  />
+                </div>
               </div>
-              <div className="mt-3 field">
-                <label className="text-sm label bold">End Date</label>
-                <Flatpickr
-                  className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  placeholder="Date of Birth"
-                  ref={fp}
-                />
-                <button
-                  type="button"
-                  className="text-xs"
-                  onClick={() => {
-                    if (!fp?.current?.flatpickr) return;
-                    fp.current.flatpickr.clear();
-                  }}
-                >
-                  Clear
-                </button>
-              </div>
+
               <div className="field">
-                <label className="text-sm label bold">Job Title</label>
+                <label className="text-sm label bold">Enter Amount</label>
                 <div className="control">
                   <input
                     required
                     className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                     type="text"
-                    placeholder="Other Names"
-                    name="other_names"
+                    placeholder="Amount"
+                    name="amount"
                   />
                 </div>
               </div>
-              <div className="field">
+              <div className="mt-3 field">
+                <label className="text-sm label bold">
+                  Enter Frequency of Income
+                </label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Frequency of Income"
+                    name="frequency_of_income"
+                  />
+                </div>
+              </div>
+              <div className="mt-3 field">
                 <label className="text-sm label bold">
                   Nature of Employment
                 </label>
@@ -389,6 +391,144 @@ function CreateEmployee() {
                     type="text"
                     placeholder="Other Names"
                     name="other_names"
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="w-full py-3 text-white mt-9 primary mobile:w-full"
+            >
+              Submit
+            </button>
+          </form>
+        </>
+      ),
+    },
+    {
+      label: "Income Type",
+      content: (
+        <>
+          <form id="employee-form" onSubmit={handleCreateEmployeeSubmit}>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="field">
+                <label className="text-sm label bold">Enter Income Name</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Income Name"
+                    name="income_name"
+                  />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="text-sm label bold">
+                  Enter Income Description
+                </label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Income Description"
+                    name="income_description"
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="text-sm label bold">Enter Tax 1</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Tax 1"
+                    name="tax_1"
+                  />
+                </div>
+              </div>
+              <div className="mt-3 field">
+                <label className="text-sm label bold">Enter Tax 2</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Tax 2"
+                    name="tax_2"
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="w-full py-3 text-white mt-9 primary mobile:w-full"
+            >
+              Submit
+            </button>
+          </form>
+        </>
+      ),
+    },
+    {
+      label: "Allowable Deducations",
+      content: (
+        <>
+          <form id="employee-form" onSubmit={handleCreateEmployeeSubmit}>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="field">
+                <label className="text-sm label bold">
+                  Enter Deduction Name
+                </label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Deduction Name"
+                    name="income_name"
+                  />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="text-sm label bold">
+                  Enter Deduction Description
+                </label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Deduction Description"
+                    name="income_description"
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="text-sm label bold">Enter Tax 1</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Tax 1"
+                    name="tax_1"
+                  />
+                </div>
+              </div>
+              <div className="mt-3 field">
+                <label className="text-sm label bold">Enter Tax 2</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Tax 2"
+                    name="tax_2"
                   />
                 </div>
               </div>

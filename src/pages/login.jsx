@@ -10,9 +10,11 @@ import Modal from "../components/modal/_component";
 import { useDispatch } from "react-redux";
 import { cacheUserSession } from "../core/utilities";
 import { setUser } from "../core/stores/slices/user_slice";
+import Loader from "../components/loader/_component";
 
 function Login() {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = React.useState(false);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [isForgotPassowrdModalOpen, setIsForgotPassowrdModalOpen] =
     React.useState(false);
@@ -21,6 +23,7 @@ function Login() {
   };
 
   const handleLogin = (event) => {
+    setIsLoading(true);
     event.preventDefault();
     const loginForm = document.getElementById("login-form");
     const loginData = {
@@ -31,12 +34,13 @@ function Login() {
     axios
       .post("https://rester-82c60dc37022.herokuapp.com/login", loginData)
       .then((res) => {
+        setIsLoading(false);
         console.log(res);
         cacheUserSession(res?.data.access_token);
         showToast("Login successful", true);
         dispatch(setUser({ roles: [], username: res?.data.email }));
         setTimeout(() => {
-          window.location.href = "/dashboard/view-company";
+          // window.location.href = "/dashboard/view-company";
         }, 2000);
 
         loginForm?.reset();
@@ -124,11 +128,13 @@ function Login() {
                   </span>
                 </div>
               </div>
+
               <button
+                disabled={isLoading}
                 type="submit"
                 className="w-full py-3 text-white mt-9 primary mobile:w-full"
               >
-                Login
+                {isLoading ? <Loader /> : "Login"}
               </button>
               <small>
                 <span className="flex justify-between">

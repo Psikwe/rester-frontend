@@ -29,7 +29,7 @@ export const adminDashboardMenus = [
     subMenu: [
       {
         menu: "View Company",
-        url: "/dashboard/view-company",
+        url: "/view-company",
         icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
     ],

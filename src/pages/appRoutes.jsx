@@ -5,7 +5,6 @@ import Home from "../pages/home";
 import Signup from "./signup";
 import Login from "./login";
 import DashboardLayout from "./dashboard_layout/_page";
-import ManageCompany from "./manage_company/_page";
 import ManageEmployees from "./manage_employees/_page";
 import ViewCompany from "./view_company/_page";
 import Layout from "@/components/Layout";
@@ -18,6 +17,7 @@ import EmployeeDashboardLayout from "./employee_dashboard/_page";
 import CreateCompany from "./create_company/_page";
 import UpdateEmployee from "./update_employee/_page";
 import { getUserSession } from "../core/utilities";
+import ManageCompany from "./manage_company/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -33,14 +33,13 @@ export default function AppRoutes() {
           </Route>
         ) : (
           <>
+            <Route path="view-company" element={<ViewCompany />} />
             <Route path="dashboard/" element={<DashboardLayout />}>
               <Route path="create-company" element={<CreateCompany />} />
               <Route path="create-employee" element={<CreateEmployee />} />
               <Route path="manage-company" element={<ManageCompany />} />
               <Route path="manage-employees" element={<ManageEmployees />} />
-              <Route path="view-company" element={<ViewCompany />} />
             </Route>
-
             <Route path="/employee" element={<EmployeeDashboardLayout />}>
               <Route path="update-employee" element={<UpdateEmployee />} />
             </Route>

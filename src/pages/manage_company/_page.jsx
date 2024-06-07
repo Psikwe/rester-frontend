@@ -7,12 +7,17 @@ import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import { CiLock } from "react-icons/ci";
 import { VscSearchStop } from "react-icons/vsc";
+import { useEntity } from "../../core/hooks/entity";
 
 function ManageCompany() {
   const [query, setQuery] = React.useState("");
-  const filteredData = employeeRows?.filter((e) => {
+  const { entityQuery } = useEntity();
+  const allEntities = entityQuery?.data?.data?.entities;
+  console.log("all: ", allEntities);
+
+  const filteredData = allEntities?.filter((e) => {
     if (query == "") return e;
-    else if (e?.title?.toLowerCase().includes(query.toLocaleLowerCase()))
+    else if (e?.name?.toLowerCase().includes(query.toLocaleLowerCase()))
       return e;
   });
   const summaryRows = React.useMemo(() => {
@@ -65,10 +70,8 @@ function ManageCompany() {
       key: "update",
       name: "Actions",
       renderCell: renderActionsRow,
-      width: "100px",
     },
-    { key: "title", name: "Company Name" },
-    { key: "title", name: "Created At" },
+    { key: "name", name: "Company Name" },
   ];
   return (
     <>
@@ -85,28 +88,13 @@ function ManageCompany() {
           />
         </div>
       </div>
-      {/* <button
-        type="submit"
-        className="w-1/4 py-2 my-3 text-white primary mobile:w-full"
-      >
-        View Payroll
-      </button> */}
-      {filteredData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center">
-          <VscSearchStop color="#687864" size={40} className="animate-bounce" />
-          <h3 className="text-slate-400">No match</h3>
-        </div>
-      ) : (
-        <>
-          <DataGrid
-            className="text-sm rdg-light grid-container"
-            columns={columns}
-            rows={filteredData || []}
-            bottomSummaryRows={summaryRows}
-          />
-          <strong>Totals: {filteredData?.length} records</strong>
-        </>
-      )}
+
+      <DataGrid
+        className="text-sm rdg-light grid-container"
+        columns={columns}
+        rows={filteredData || []}
+        bottomSummaryRows={summaryRows}
+      />
     </>
   );
 }
