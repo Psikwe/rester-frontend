@@ -29,7 +29,7 @@ export const adminDashboardMenus = [
     subMenu: [
       {
         menu: "View Company",
-        url: "/view-company",
+        url: "/dashboard/view-company",
         icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
     ],
@@ -40,12 +40,12 @@ export const adminDashboardMenus = [
     subMenu: [
       {
         menu: "Create Company",
-        url: "/create-company",
+        url: "/dashboard/create-company",
         icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
       {
         menu: "Manage Company",
-        url: "/manage-company",
+        url: "/dashboard/manage-company",
         icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
     ],
@@ -56,17 +56,17 @@ export const adminDashboardMenus = [
     subMenu: [
       {
         menu: "Create Employee",
-        url: "/create-employee",
+        url: "/dashboard/create-employee",
         icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
       {
         menu: "Manage Employee",
-        url: "/manage-employees",
+        url: "/dashboard/manage-employees",
         icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
       {
         menu: "Run Payroll",
-        url: "/manage-employees",
+        url: "/dashboard/manage-employees",
         icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
       },
     ],

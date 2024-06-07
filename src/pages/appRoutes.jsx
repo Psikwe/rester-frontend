@@ -33,7 +33,7 @@ export default function AppRoutes() {
           </Route>
         ) : (
           <>
-            <Route path="/" element={<DashboardLayout />}>
+            <Route path="dashboard/" element={<DashboardLayout />}>
               <Route path="create-company" element={<CreateCompany />} />
               <Route path="create-employee" element={<CreateEmployee />} />
               <Route path="manage-company" element={<ManageCompany />} />
