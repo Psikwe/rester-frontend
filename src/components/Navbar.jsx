@@ -75,10 +75,14 @@ export default function Navbar() {
             {pathname === "/signup" ? (
               ""
             ) : (
-              <div className="animate-pulse hover:animate-none h-12 p-3 duration-700 hover:text-white cursor-pointer text-white bg-[#687864]">
+              <div className="h-12 p-3 duration-700 hover:text-white cursor-pointer text-white bg-[#687864]">
                 <NavLink className="duration-700 hover:text-white" to="/signup">
                   Get Started
                 </NavLink>
+                <span className="relative flex w-3 h-3 left-[5.7rem] bottom-10">
+                  <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-sky-400"></span>
+                  <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500"></span>
+                </span>
               </div>
             )}
 

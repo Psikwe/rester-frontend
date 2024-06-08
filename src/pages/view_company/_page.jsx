@@ -95,23 +95,32 @@ function ViewCompany() {
           <CiLogout size={40} />
         </div>
       </nav>
-      <div className="grid grid-cols-3 gap-6 mx-48 mt-10">
-        {isSkeletonLoading ? (
-          [1, 2, 3].map((e, i) => <SkeletonLoader key={i} />)
-        ) : (
-          <>
-            {company.map((c, i) => (
-              <div key={i}>
-                <CompanyCard
-                  // passage={c.passage}
-                  noOfEmployees={23}
-                  companyName={c.name}
-                  href="/dashboard/manage-company"
-                />
-              </div>
-            ))}
-          </>
-        )}
+      <div className="mx-48 mt-10 laptop-lg:mx-20">
+        <div className="flex items-center">
+          <div className="inline-block  h-14 w-3 bg-[#87bdd5]"></div>
+          <h3 className="ml-3 text-gray-500">
+            Please select company you want to operate.
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-3 gap-6 mt-10 slide-in-right">
+          {isSkeletonLoading ? (
+            [1, 2, 3].map((e, i) => <SkeletonLoader key={i} />)
+          ) : (
+            <>
+              {company.map((c, i) => (
+                <div className="slide-in-right" key={i}>
+                  <CompanyCard
+                    // passage={c.passage}
+                    noOfEmployees={23}
+                    companyName={c.name}
+                    href="/dashboard/manage-company"
+                  />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
       </div>
     </>
   );
