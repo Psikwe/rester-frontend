@@ -2,19 +2,16 @@ import React from "react";
 import "react-data-grid/lib/styles.css";
 import DataGrid from "react-data-grid";
 import { FcSearch } from "react-icons/fc";
-import { employeeColumns, employeeRows } from "../../core/data";
-import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import { CiLock } from "react-icons/ci";
-import { VscSearchStop } from "react-icons/vsc";
 import { useEntity } from "../../core/hooks/entity";
+import TableLoader from "../../components/table_loader/_component";
 
 function ManageCompany() {
   const [query, setQuery] = React.useState("");
   const { entityQuery } = useEntity();
+  const { isLoading } = entityQuery;
   const allEntities = entityQuery?.data?.data?.entities;
-  console.log("all: ", allEntities);
-
   const filteredData = allEntities?.filter((e) => {
     if (query == "") return e;
     else if (e?.name?.toLowerCase().includes(query.toLocaleLowerCase()))
@@ -88,13 +85,20 @@ function ManageCompany() {
           />
         </div>
       </div>
-
-      <DataGrid
-        className="text-sm rdg-light grid-container"
-        columns={columns}
-        rows={filteredData || []}
-        bottomSummaryRows={summaryRows}
-      />
+      {isLoading ? (
+        <>
+          <TableLoader />
+        </>
+      ) : (
+        <>
+          <DataGrid
+            className="text-sm rdg-light grid-container"
+            columns={columns}
+            rows={filteredData || []}
+            bottomSummaryRows={summaryRows}
+          />
+        </>
+      )}
     </>
   );
 }

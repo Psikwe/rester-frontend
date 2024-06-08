@@ -222,7 +222,7 @@ function CreateEmployee() {
             </div>
             <button
               type="submit"
-              className="w-full py-3 text-white mt-9 primary mobile:w-full"
+              className="w-full py-3 text-white bg-purple-400 mt-9 mobile:w-full"
             >
               Add Employee
             </button>

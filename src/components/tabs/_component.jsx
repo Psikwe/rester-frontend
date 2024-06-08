@@ -14,7 +14,9 @@ const Tabs = ({ tabs }) => {
           <li
             key={index}
             className={`py-2 px-4 text-sm border rounded cursor-pointer ${
-              index === activeTab ? "bg-black text-white" : "border-gray-300"
+              index === activeTab
+                ? "bg-[#eb7134] text-white"
+                : "border-gray-300"
             }`}
             onClick={() => handleTabClick(index)}
           >

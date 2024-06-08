@@ -7,11 +7,13 @@ import Select from "react-select";
 import { noOfEmployees, yearOptions } from "../core/data";
 import axios, { formToJSON } from "axios";
 import { showToast } from "../core/hooks/alert";
+import Loader from "../components/loader/_component";
+import { UserSignUp } from "../core/services/auth.service";
 
 function Signup() {
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
-
+  const [isLoading, setIsLoading] = React.useState(false);
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
   const oldPasswordToggle = () => {
     setShowOldPasswordType(!showOldPasswordType);
@@ -26,20 +28,21 @@ function Signup() {
   };
 
   const handleSignup = (event) => {
-    console.log(event);
+    setIsLoading(true);
     event.preventDefault();
     const signupForm = document.getElementById("signup-form");
     const signupData = {
       ...formToJSON(signupForm),
       company_size: selectedRangeOption.value,
     };
-    axios
-      .post("https://rester-82c60dc37022.herokuapp.com/signup", signupData)
+    UserSignUp(signupData)
       .then((res) => {
+        setIsLoading(false);
         showToast(res.data.message, true);
         signupForm?.reset();
       })
       .catch((error) => {
+        setIsLoading(false);
         showToast(error.response.data.error, false);
       });
   };
@@ -183,7 +186,7 @@ function Signup() {
               type="submit"
               className="w-full py-3 mt-8 text-white primary mobile:w-full"
             >
-              Signup
+              {isLoading ? <Loader /> : "Signup"}
             </button>
             <small>
               Already having an accout?

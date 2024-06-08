@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { cacheUserSession } from "../core/utilities";
 import { setUser } from "../core/stores/slices/user_slice";
 import Loader from "../components/loader/_component";
+import { UserLogin } from "../core/services/auth.service";
 
 function Login() {
   const dispatch = useDispatch();
@@ -30,9 +31,7 @@ function Login() {
       ...formToJSON(loginForm),
     };
     console.log("data: ", loginData);
-
-    axios
-      .post("https://rester-82c60dc37022.herokuapp.com/login", loginData)
+    UserLogin(loginData)
       .then((res) => {
         setIsLoading(false);
         console.log(res);
@@ -46,6 +45,7 @@ function Login() {
         loginForm?.reset();
       })
       .catch((error) => {
+        setIsLoading(false);
         showToast(error.response.data.error, false);
       });
   };
