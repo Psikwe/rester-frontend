@@ -25,49 +25,49 @@ export const noOfEmployees = [
 export const adminDashboardMenus = [
   {
     title: "Overview",
-    icon: <RxDashboard />,
+    icon: <RxDashboard color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "View Company",
-        url: "/view-company",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+        menu: "View Entity",
+        url: "/view-entity",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],
   },
   {
-    title: "Company",
-    icon: <PiBuildingOfficeLight color="#687864" />,
+    title: "Entity",
+    icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "Create Company",
-        url: "/dashboard/create-company",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+        menu: "Create Entity",
+        url: "/dashboard/create-entity",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
-        menu: "Manage Company",
-        url: "/dashboard/manage-company",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+        menu: "Manage Entity",
+        url: "/dashboard/manage-entity",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],
   },
   {
     title: "Employees",
-    icon: <GrUserWorker color="#687864" />,
+    icon: <GrUserWorker color="#0DCAF0" size={16} />,
     subMenu: [
       {
         menu: "Create Employee",
         url: "/dashboard/create-employee",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
         menu: "Manage Employee",
         url: "/dashboard/manage-employees",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
         menu: "Run Payroll",
         url: "/dashboard/manage-employees",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],
   },
@@ -79,36 +79,36 @@ export const employeeDashboardMenus = [
   //   icon: <RxDashboard />,
   //   subMenu: [
   //     {
-  //       menu: "View Company",
-  //       url: "/view-company",
-  //       icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+  //       menu: "View entity",
+  //       url: "/view-entity",
+  //       icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
   //     },
   //   ],
   // },
   // {
-  //   title: "Company",
-  //   icon: <PiBuildingOfficeLight color="#687864" />,
+  //   title: "entity",
+  //   icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
   //   subMenu: [
   //     {
-  //       menu: "Create Company",
-  //       url: "/create-company",
-  //       icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+  //       menu: "Create entity",
+  //       url: "/create-entity",
+  //       icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
   //     },
   //     {
-  //       menu: "Manage Company",
-  //       url: "/manage-company",
-  //       icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+  //       menu: "Manage entity",
+  //       url: "/manage-entity",
+  //       icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
   //     },
   //   ],
   // },
   {
     title: "Employees",
-    icon: <GrUserWorker color="#687864" />,
+    icon: <GrUserWorker color="#0DCAF0" size={16} />,
     subMenu: [
       {
         menu: "Update Employee",
         url: "/employee/update-employee",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="white" />,
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],
   },
@@ -126,17 +126,17 @@ export const employeeRows = [
 
 export const companies = [
   {
-    companyName: "Mtn",
+    entityName: "Mtn",
     noOfEmployees: 23,
     href: "/manage-employees",
   },
   {
-    companyName: "Mtn",
+    entityName: "Mtn",
     noOfEmployees: 23,
     href: "/manage-employees",
   },
   {
-    companyName: "Mtn",
+    entityName: "Mtn",
     noOfEmployees: 23,
     href: "/manage-employees",
   },

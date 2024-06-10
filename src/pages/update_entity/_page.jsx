@@ -6,7 +6,7 @@ import axios from "axios";
 import { formToJSON } from "axios";
 import { showToast } from "../../core/hooks/alert";
 
-function CreateCompany() {
+function UpdateEntity() {
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
   const handleChange = (selectedRangeOption) => {
     setSelectedRangeOption(selectedRangeOption);
@@ -17,6 +17,7 @@ function CreateCompany() {
     const companyForm = document.getElementById("company-form");
     const payload = {
       ...formToJSON(companyForm),
+      size: selectedRangeOption.value,
     };
     axios
       .post(
@@ -48,7 +49,7 @@ function CreateCompany() {
         >
           <div className="grid-cols-2 gap-3">
             <div className="field">
-              <label className="text-sm label bold">Enter Company Name</label>
+              <label className="text-sm label bold">Enter Entity Name</label>
               <div className="control">
                 <input
                   required
@@ -69,7 +70,7 @@ function CreateCompany() {
                   className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                   type="text"
                   placeholder="Address"
-                  name="company_address"
+                  name="address"
                 />
               </div>
               {/* <p className="help">This is a help text</p> */}
@@ -105,7 +106,7 @@ function CreateCompany() {
             type="submit"
             className="w-full py-3 mt-8 text-white primary mobile:w-full"
           >
-            Add Company
+            Update Entity
           </button>
         </form>
 
@@ -121,4 +122,4 @@ function CreateCompany() {
   );
 }
 
-export default CreateCompany;
+export default UpdateEntity;

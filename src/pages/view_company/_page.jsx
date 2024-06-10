@@ -17,6 +17,9 @@ function ViewCompany() {
     {
       id: "",
       name: "",
+      size: "",
+      email: "",
+      address: "",
     },
   ]);
   React.useEffect(() => {
@@ -99,7 +102,7 @@ function ViewCompany() {
         <div className="flex items-center">
           <div className="inline-block  h-14 w-3 bg-[#87bdd5]"></div>
           <h3 className="ml-3 text-gray-500">
-            Please select company you want to operate.
+            Please select entity you want to operate.
           </h3>
         </div>
 
@@ -112,9 +115,9 @@ function ViewCompany() {
                 <div className="slide-in-right" key={i}>
                   <CompanyCard
                     // passage={c.passage}
-                    noOfEmployees={23}
+                    noOfEmployees={c.size}
                     companyName={c.name}
-                    href="/dashboard/manage-company"
+                    href="/dashboard/manage-entity"
                   />
                 </div>
               ))}

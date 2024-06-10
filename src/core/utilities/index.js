@@ -1,6 +1,9 @@
 export const cacheUserSession = (token) => {
   localStorage.setItem("u_token", token);
-  //   localStorage.setItem("u_expiry", expiry);
+};
+
+export const cacheUserRole = (role) => {
+  localStorage.setItem("u_role", role);
 };
 
 export const getUserSession = () => {
@@ -16,5 +19,6 @@ export const getUserSession = () => {
 
 export const clearUserSession = () => {
   localStorage.removeItem("u_token");
+  localStorage.removeItem("u_role");
   window.location.reload();
 };

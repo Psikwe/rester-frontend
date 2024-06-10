@@ -1,14 +1,13 @@
 import { NavLink } from "react-router-dom";
-import banner from "../assets/dashboard.jpg";
+import banner from "../assets/login.webp";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
-import axios from "axios";
 import React from "react";
 import { formToJSON } from "axios";
 import { showToast } from "../core/hooks/alert";
 import Modal from "../components/modal/_component";
 import { useDispatch } from "react-redux";
-import { cacheUserSession } from "../core/utilities";
+import { cacheUserRole, cacheUserSession } from "../core/utilities";
 import { setUser } from "../core/stores/slices/user_slice";
 import Loader from "../components/loader/_component";
 import { UserLogin } from "../core/services/auth.service";
@@ -30,23 +29,24 @@ function Login() {
     const loginData = {
       ...formToJSON(loginForm),
     };
-    console.log("data: ", loginData);
     UserLogin(loginData)
       .then((res) => {
         setIsLoading(false);
         console.log(res);
         cacheUserSession(res?.data.access_token);
+        cacheUserRole(res?.data.roles);
         showToast("Login successful", true);
         dispatch(setUser({ roles: [], username: res?.data.email }));
         setTimeout(() => {
-          window.location.href = "/view-company";
+          res?.data.roles === "admin"
+            ? (window.location.href = "/view-entity")
+            : (window.location.href = "/employee/update-employee");
         }, 2000);
-
         loginForm?.reset();
       })
       .catch((error) => {
         setIsLoading(false);
-        showToast(error.response.data.error, false);
+        // showToast(error.response.data.error, false);
       });
   };
   const openForgotPasswordModal = () => {
@@ -73,6 +73,27 @@ function Login() {
                 placeholder="Email"
               />
             </div>
+            <div className="relative mt-6 field">
+              <label className="text-sm label bold">Password</label>
+              <div className="control">
+                <input
+                  required
+                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                  type={showNewPasswordType ? "text" : "password"}
+                  placeholder="Password"
+                  name="password"
+                />
+              </div>
+              <div className="absolute top-9 right-3">
+                <span onClick={newPasswordToggle} className="cursor-pointer">
+                  {showNewPasswordType ? (
+                    <HiMiniEyeSlash size={20} />
+                  ) : (
+                    <IoEyeSharp size={20} />
+                  )}
+                </span>
+              </div>
+            </div>
           </div>
 
           <button
@@ -89,7 +110,10 @@ function Login() {
             Login
           </p>
           <div className="flex mb-24">
-            <img className="h-[31rem] mobile:hidden" src={banner} />
+            <img
+              className="h-[31rem]  brightness-75 mobile:hidden"
+              src={banner}
+            />
             <form
               id="login-form"
               onSubmit={handleLogin}
@@ -132,10 +156,15 @@ function Login() {
               <button
                 disabled={isLoading}
                 type="submit"
-                className="w-full py-3 text-white mt-9 primary mobile:w-full"
+                className={
+                  isLoading
+                    ? `animate-pulse w-full py-3 text-white mt-9 primary mobile:w-full`
+                    : `w-full py-3 text-white mt-9 primary mobile:w-full`
+                }
               >
                 {isLoading ? <Loader /> : "Login"}
               </button>
+
               <small>
                 <span className="flex justify-between">
                   <NavLink to="/signup">

@@ -212,67 +212,6 @@ function Home() {
           {calculator === "incomeTax" && <IncomeTaxCalculator />}
           {calculator === "grossIncome" && <GrossIncomeCalculator />}
         </div>
-
-        <p className="flex mt-16 title center text-[#31708E]">Features</p>
-        <hr className="flex justify-center m-auto -mt-2 border-2 border-[primary] w-36" />
-
-        <div className="flex items-center mt-12 mobile:flex-col from-laptop-to-laptop-xl:feature">
-          <div className="flex column from-laptop-to-laptop-xl:feature-text mobile:mb-4">
-            <p className="smallTitle">Tax Calculation</p>
-            <p>
-              Streamline your HR processes by efficiently onboarding,
-              offboarding, and managing your employees with our user-friendly
-              tools. Keep your team organized and focused on what matters most.
-            </p>
-          </div>
-          <div className="flex feature-image">
-            <img alt="dashboard image" src="/dashboard.png" />
-          </div>
-        </div>
-
-        <div className="flex items-center mobile:mt-16 mt-44 mobile:flex-col-reverse from-laptop-to-laptop-xl:feature row">
-          <div className="flex mobile:mt-4 feature-image">
-            <img alt="dashboard image" src="/dashboard.png" />
-          </div>
-          <div className="flex column from-laptop-to-laptop-xl:feature-text">
-            <p className="smallTitle">Manage Employees</p>
-            <p>
-              Streamline your HR processes by efficiently onboarding,
-              offboarding, and managing your employees with our user-friendly
-              tools. Keep your team organized and focused on what matters most.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center mobile:mt-16 mt-44 mobile:flex-col from-laptop-to-laptop-xl:feature">
-          <div className="flex column from-laptop-to-laptop-xl:feature-text mobile:mb-4">
-            <p className="smallTitle">Collaboration</p>
-            <p>
-              Enhance teamwork and efficiency by inviting co-admins to entities
-              for seamless collaboration and precise access control. Work
-              together effortlessly, ensuring everyone has the right level of
-              access.
-            </p>
-          </div>
-          <div className="flex feature-image">
-            <img alt="dashboard image" src="/dashboard.png" />
-          </div>
-        </div>
-
-        <div className="flex items-center mobile:mt-16 mt-44 mobile:flex-col-reverse from-laptop-to-laptop-xl:feature row">
-          <div className="flex mobile:mt-4 feature-image">
-            <img alt="dashboard image" src="/dashboard.png" />
-          </div>
-          <div className="flex column from-laptop-to-laptop-xl:feature-text">
-            <p className="smallTitle">Statutory and Financial Reporting</p>
-            <p>
-              Stay compliant and informed by generating statutory and financial
-              reports effortlessly. Rester makes it easy to create accurate and
-              compliant reports, giving you peace of mind and saving you time
-              and effort.
-            </p>
-          </div>
-        </div>
       </section>
       {/* <div className="absolute top-[21rem]">
         <div>

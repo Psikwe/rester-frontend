@@ -1,6 +1,6 @@
 import React from "react";
 import { adminDashboardMenus } from "../../core/data";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RxAvatar } from "react-icons/rx";
 import { Dropdown, Ripple, initTWE } from "tw-elements";
@@ -54,6 +54,8 @@ const DashboardLayout = () => {
   const openLogoutModal = () => {
     setIsLogoutModalOpen(true);
   };
+  const { pathname } = useLocation();
+  console.log(pathname);
   return (
     <>
       <Modal open={isModalOpen} close={closeModal}>
@@ -115,13 +117,13 @@ const DashboardLayout = () => {
           <div className="flex">
             <button
               onClick={closeLogoutModal}
-              className="w-full py-3 mr-2 text-white mt-9 primary mobile:w-full"
+              className="w-full mr-2 text-white mt-9 bg-[#0DCAF0] mobile:w-full"
             >
               No
             </button>
             <button
               onClick={handleLogout}
-              className="w-full py-3 text-white bg-red-500 mt-9 mobile:w-full"
+              className="w-full py-2 text-white bg-red-500 mt-9 mobile:w-full"
             >
               Yes
             </button>
@@ -130,9 +132,9 @@ const DashboardLayout = () => {
       </Modal>
 
       <div className="flex w-full h-screen mb-8 overflow-x-hidden">
-        <div className="text-sm  w-80 pt-3 px-3 m-8 border-r-[1px] bg-gradient-to-r from-indigo-500 bg-[#eb7134] border-slate-100 rounded-2xl">
+        <div className="px-3 pt-3 m-8 text-sm w-72">
           <b>R</b>ester
-          <ul className="mt-12 text-white">
+          <ul className="mt-12 text-slate-600">
             {adminDashboardMenus.map((ad, i) => (
               <React.Fragment key={i}>
                 <div className="flex items-center mt-9">
@@ -147,7 +149,15 @@ const DashboardLayout = () => {
                       key={i}
                     >
                       <span className="mr-1">{sub.icon}</span>
-                      <span>{sub.menu}</span>
+                      <span
+                        className={`${
+                          pathname === sub.url
+                            ? "bg-[#1A55E3] rounded-md font-normal w-full p-2 text-white"
+                            : "w-full p-2 "
+                        }`}
+                      >
+                        {sub.menu}
+                      </span>
                     </li>
                   </NavLink>
                 ))}
@@ -165,15 +175,15 @@ const DashboardLayout = () => {
         </div>
 
         <div className="w-full bg-[#f5f9fe] overflow-auto h-screen">
-          <div className="flex justify-between px-40 mt-4 laptop-lg:px-20">
+          <div className="flex justify-between px-40 bg-[#1A55E3] laptop-lg:px-20">
             <div className="flex items-center justify-between ">
-              <MdAdminPanelSettings className="text-purple-600" size={30} />
+              <MdAdminPanelSettings className="text-slate-200" size={30} />
 
               <div className="flex items-center justify-between">
-                <small className="ml-1 ">Hello Admin</small>
+                <small className="ml-1 text-slate-200">Hello Admin</small>
               </div>
             </div>
-            <div className="m-auto text-slate-400">{showDate}</div>
+            <div className="m-auto text-slate-200">{showDate}</div>
             <div className="flex items-center cursor-pointer">
               <div className="relative" data-twe-dropdown-ref>
                 <button
@@ -185,7 +195,7 @@ const DashboardLayout = () => {
                   data-twe-ripple-init
                   data-twe-ripple-color="light"
                 >
-                  <RxAvatar className="text-purple-600" size={30} />
+                  <RxAvatar className="text-white" size={30} />
                   <span className="ms-2 w-2 [&>svg]:h-5 [&>svg]:w-5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
