@@ -51,7 +51,10 @@ function Signup() {
       <div className="flex flex-col items-center justify-center w-full bg-slate-200 p-9">
         <p className="mt-24 mb-8 text-3xl">Signup</p>
         <div className="flex mb-24">
-          <img className="mobile:hidden h-[48rem] brightness-75" src={banner} />
+          <img
+            className="mobile:hidden w-[38rem] h-[52.8rem] brightness-75"
+            src={banner}
+          />
           <form
             id="signup-form"
             onSubmit={handleSignup}
@@ -137,7 +140,19 @@ function Signup() {
               </div>
               {/* <p className="help">This is a help text</p> */}
             </div>
-
+            <div className="field">
+              <label className="text-sm label bold">Enter Admin Email</label>
+              <div className="control">
+                <input
+                  required
+                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                />
+              </div>
+              {/* <p className="help">This is a help text</p> */}
+            </div>
             <div className="relative field">
               <label className="text-sm label bold">Enter Password</label>
               <div className="control">
