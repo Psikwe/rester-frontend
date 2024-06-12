@@ -60,13 +60,18 @@ export const adminDashboardMenus = [
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
+        menu: "Create Income Type",
+        url: "/dashboard/create-income-type",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
         menu: "Manage Employees",
         url: "/dashboard/manage-employees",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
         menu: "Run Payroll",
-        url: "/dashboard/manage-employees",
+        url: "/dashboard/run-payroll",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],
@@ -140,4 +145,11 @@ export const companies = [
     noOfEmployees: 23,
     href: "/manage-employees",
   },
+];
+
+export const columnLabels = ["Flavour", "Food"];
+export const rowLabels = ["Item 1", "Item 2"];
+export const data = [
+  [{ value: "Vanilla" }, { value: "Chocolate" }],
+  [{ value: "Strawberry" }, { value: "Cookies" }],
 ];

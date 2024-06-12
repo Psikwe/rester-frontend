@@ -20,6 +20,8 @@ import "@/styles/globals.css";
 import "tw-elements";
 import "react-toastify/dist/ReactToastify.css";
 import MobileScreen from "./mobile_screen/_page";
+import RunPayroll from "./run_payroll/_page";
+import CreateIncomeType from "./create_income_type/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -44,6 +46,11 @@ export default function AppRoutes() {
                   <Route path="create-entity" element={<CreateEntity />} />
                   <Route path="update-entity/:id" element={<UpdateEntity />} />
                   <Route path="create-employee" element={<CreateEmployee />} />
+                  <Route
+                    path="create-income-type"
+                    element={<CreateIncomeType />}
+                  />
+                  <Route path="run-payroll" element={<RunPayroll />} />
                   <Route path="manage-entity/:id" element={<ManageEntity />} />
                   <Route
                     path="manage-employees"

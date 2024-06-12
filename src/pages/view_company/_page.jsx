@@ -1,5 +1,5 @@
 import React from "react";
-import { companies } from "../../core/data";
+import { FaCircleInfo } from "react-icons/fa6";
 import axios from "axios";
 import { CiLogout } from "react-icons/ci";
 import CompanyCard from "../../components/card/_component";
@@ -100,9 +100,10 @@ function ViewCompany() {
         </div>
       </nav>
       <div className="mx-48 mt-10 laptop-lg:mx-20">
-        <div className="flex items-center">
-          <div className="inline-block  h-14 w-3 bg-[#87bdd5]"></div>
-          <h3 className="ml-3 text-gray-500">
+        <div className="flex items-center w-1/3 bg-[#d4f2ff]">
+          <div className="inline-block  h-24 w-1 bg-[#6ccef5]"></div>
+          <h3 className="flex items-center ml-3 text-gray-500">
+            <FaCircleInfo size={25} className="mr-2" />
             Please select entity you want to operate.
           </h3>
         </div>

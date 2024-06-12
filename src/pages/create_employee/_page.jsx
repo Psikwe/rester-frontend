@@ -4,11 +4,10 @@ import Flatpickr from "react-flatpickr";
 import { showToast } from "../../core/hooks/alert";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
-import axios, { formToJSON } from "axios";
 import Select from "react-select";
-import Tabs from "../../components/tabs/_component";
 import { options } from "../../core/data";
 import { CreateEmployeeForm } from "../../core/services/employee.service";
+import { formToJSON } from "axios";
 
 function CreateEmployee() {
   const fp = React.useRef(null);
@@ -843,116 +842,6 @@ function CreateEmployee() {
                 type="text"
                 placeholder="Other Names"
                 name="other_names"
-              />
-            </div>
-          </div>
-        </div>
-
-        <h3 className="text-sm mt-9">Income Type</h3>
-        <div className="grid grid-cols-3 gap-3">
-          <div className="field">
-            <label className="text-sm label bold">Enter Income Name</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Income Name"
-                name="income_name"
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="text-sm label bold">
-              Enter Income Description
-            </label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Income Description"
-                name="income_description"
-              />
-            </div>
-          </div>
-          <div className="field">
-            <label className="text-sm label bold">Enter Tax 1</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Tax 1"
-                name="tax_1"
-              />
-            </div>
-          </div>
-          <div className="mt-3 field">
-            <label className="text-sm label bold">Enter Tax 2</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Tax 2"
-                name="tax_2"
-              />
-            </div>
-          </div>
-        </div>
-
-        <h3 className="text-sm mt-9">Allowable Deductions</h3>
-        <div className="grid grid-cols-3 gap-3">
-          <div className="field">
-            <label className="text-sm label bold">Enter Deduction Name</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Deduction Name"
-                name="income_name"
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="text-sm label bold">
-              Enter Deduction Description
-            </label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Deduction Description"
-                name="income_description"
-              />
-            </div>
-          </div>
-          <div className="field">
-            <label className="text-sm label bold">Enter Tax 1</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Tax 1"
-                name="tax_1"
-              />
-            </div>
-          </div>
-          <div className="mt-3 field">
-            <label className="text-sm label bold">Enter Tax 2</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Tax 2"
-                name="tax_2"
               />
             </div>
           </div>
