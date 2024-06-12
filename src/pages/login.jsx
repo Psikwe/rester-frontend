@@ -73,7 +73,7 @@ function Login() {
                 placeholder="Email"
               />
             </div>
-            <div className="relative mt-6 field">
+            {/* <div className="relative mt-6 field">
               <label className="text-sm label bold">Password</label>
               <div className="control">
                 <input
@@ -93,7 +93,7 @@ function Login() {
                   )}
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <button

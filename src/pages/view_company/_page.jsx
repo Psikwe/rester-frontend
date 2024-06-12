@@ -32,6 +32,7 @@ function ViewCompany() {
       .then((res) => {
         setSkeletonLoading(false);
         setCompany(res.data.entities);
+        localStorage.setItem("entity_id", id);
       })
       .catch((error) => {
         console.log("comp: ", error);
@@ -117,7 +118,7 @@ function ViewCompany() {
                     // passage={c.passage}
                     noOfEmployees={c.size}
                     companyName={c.name}
-                    href="/dashboard/manage-entity"
+                    href={`/dashboard/manage-entity/${c.id}`}
                   />
                 </div>
               ))}

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const cacheUserSession = (token) => {
   localStorage.setItem("u_token", token);
 };
@@ -20,5 +22,41 @@ export const getUserSession = () => {
 export const clearUserSession = () => {
   localStorage.removeItem("u_token");
   localStorage.removeItem("u_role");
+  localStorage.removeItem("entity_id");
   window.location.reload();
+};
+
+export const getAxios = (URL) => {
+  const instance = axios.create({ URL });
+  let token = localStorage.getItem("u_token");
+  if (token != null && token !== "") {
+    instance.defaults.headers.common["Authorization"] = "Bearer " + token;
+  }
+
+  instance.interceptors.response.use(
+    (response) => {
+      if (response.status === 200 && response.data.data == 401) {
+        clearUserSession();
+        window.location.reload();
+      }
+      return response;
+    },
+    (error) => {
+      if (error?.response?.status === 401) {
+        clearUserSession();
+        window.location.reload();
+      }
+      if (error?.response?.status === 429) {
+        return Promise.resolve(error);
+      }
+      return Promise.reject(error);
+    }
+  );
+  return instance;
+};
+
+export const isMobileDevice = () => {
+  return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
 };

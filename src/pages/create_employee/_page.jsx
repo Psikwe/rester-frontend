@@ -8,6 +8,7 @@ import axios, { formToJSON } from "axios";
 import Select from "react-select";
 import Tabs from "../../components/tabs/_component";
 import { options } from "../../core/data";
+import { CreateEmployeeForm } from "../../core/services/employee.service";
 
 function CreateEmployee() {
   const fp = React.useRef(null);
@@ -21,33 +22,24 @@ function CreateEmployee() {
   };
   const handleCreateEmployeeSubmit = (e) => {
     e.preventDefault();
+    const entity_id = localStorage.getItem("entity_id");
     const employeeForm = document.getElementById("employee-form");
     const payload = {
       ...formToJSON(employeeForm),
+      entity_id: entity_id,
     };
 
-    axios
-      .post(
-        "https://rester-82c60dc37022.herokuapp.com/create_employee",
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("u_token")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    CreateEmployeeForm(payload)
       .then((res) => {
         console.log(res);
         showToast(res?.data.message, true);
-        companyForm?.reset();
+        // companyForm?.reset();
       })
       .catch((error) => {
         showToast(error.response.data.error, false);
       });
   };
 
-  // const tabsContent = [
   //   {
   //     label: "Basic Information",
   //     content: (

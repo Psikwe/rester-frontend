@@ -7,9 +7,9 @@ export const GetAllEntities = async () => {
   );
 };
 
-export const CreateEntityForm = async (payload) => {
+export const CreateEmployeeForm = async (payload) => {
   return await getAxios().post(
-    `https://rester-82c60dc37022.herokuapp.com/create_entity`,
+    `https://rester-82c60dc37022.herokuapp.com/create_employee`,
     payload
   );
 };

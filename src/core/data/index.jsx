@@ -28,7 +28,7 @@ export const adminDashboardMenus = [
     icon: <RxDashboard color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "View Entity",
+        menu: "View Entity Profile",
         url: "/view-entity",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
@@ -39,13 +39,13 @@ export const adminDashboardMenus = [
     icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "Create Entity",
+        menu: "Setup an Entity",
         url: "/dashboard/create-entity",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
         menu: "Manage Entity",
-        url: "/dashboard/manage-entity",
+        url: "/view-entity",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],
@@ -55,12 +55,12 @@ export const adminDashboardMenus = [
     icon: <GrUserWorker color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "Create Employee",
+        menu: "Onboard Employee",
         url: "/dashboard/create-employee",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
-        menu: "Manage Employee",
+        menu: "Manage Employees",
         url: "/dashboard/manage-employees",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },

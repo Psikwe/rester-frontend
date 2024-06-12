@@ -1,29 +1,36 @@
 import React from "react";
 import "react-data-grid/lib/styles.css";
-import DataGrid from "react-data-grid";
 import { FcSearch } from "react-icons/fc";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { BsExclamationCircle } from "react-icons/bs";
+import EntityCard from "../../components/entity_card/_component";
 import { useEntity } from "../../core/hooks/entity";
-import TableLoader from "../../components/table_loader/_component";
 import Modal from "../../components/modal/_component";
-import { DeleteEntity } from "../../core/services/entity.service";
+import { DeleteEntity, GetOneEntity } from "../../core/services/entity.service";
 import { showToast } from "../../core/hooks/alert";
+import { useParams } from "react-router-dom";
 
 function ManageEntity() {
+  const { id } = useParams();
   const [query, setQuery] = React.useState("");
   const { entityQuery } = useEntity();
   const [deleteId, setDeleteId] = React.useState("");
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
+
+  const [populateEntity, setPopulateEntity] = React.useState({
+    name: "",
+    address: "",
+    size: "",
+    email: "",
+  });
   const { isLoading } = entityQuery;
   const allEntities = entityQuery?.data?.data?.entities;
   const filteredData = allEntities?.filter((e) => {
-    if (query == "") return e;
-    else if (e?.name?.toLowerCase().includes(query.toLocaleLowerCase()))
-      return e;
+    if (query === "") return e;
+    else if (e?.id === id) return e;
   });
   const summaryRows = React.useMemo(() => {
     return [
@@ -33,16 +40,26 @@ function ManageEntity() {
       },
     ];
   }, [filteredData]);
+  React.useEffect(() => {
+    GetOneEntity(id)
+      .then((response) => {
+        console.log(response);
+        setPopulateEntity(response.data.entity);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-  const handleUpdateClick = (id, name) => {
-    window.location.href = "/dashboard/update-entity/" + id;
-  };
   const handleDelete = (id, name) => {
     setDeleteId(id);
     setDeleteModalOpen(true);
     setItemToDelete(name);
   };
 
+  const handleUpdate = () => {
+    window.location.href = "/dashboard/update-entity/" + id;
+  };
   const renderActionsRow = (data) => {
     const { id, name } = data.row;
     return (
@@ -68,13 +85,33 @@ function ManageEntity() {
     );
   };
 
+  const renderEntityNameRow = () => {
+    return <span>{populateEntity.name}</span>;
+  };
+  const renderAddressRow = () => {
+    return <span>{populateEntity.address}</span>;
+  };
+  const renderNumberofEmployeesRow = () => {
+    return <span>{populateEntity.size}</span>;
+  };
+  const renderEmailRow = () => {
+    return <span>{populateEntity.email}</span>;
+  };
+
   const columns = [
     {
       key: "update",
       name: "Actions",
       renderCell: renderActionsRow,
     },
-    { key: "name", name: "Entity Name" },
+    { key: "name", name: "Entity Name", renderCell: renderEntityNameRow },
+    { key: "address", name: "Address", renderCell: renderAddressRow },
+    {
+      key: "employees",
+      name: "Number of Employees",
+      renderCell: renderNumberofEmployeesRow,
+    },
+    { key: "email", name: "Email", renderCell: renderEmailRow },
   ];
 
   const closeDeleteModal = () => {
@@ -84,13 +121,14 @@ function ManageEntity() {
   const confirmDelete = () => {
     setDeleteModalOpen(false);
     setOperationLoading(true);
-    DeleteEntity(deleteId)
+    DeleteEntity(id)
       .then((res) => {
         console.log(res);
         showToast(res?.data.message, true);
-        entityQuery.refetch().then(() => {
-          setOperationLoading(false);
-        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       })
       .catch((error) => {
         showToast(error.response.data.error, false);
@@ -106,9 +144,9 @@ function ManageEntity() {
             <BsExclamationCircle size={70} color="red" />
           </div>
           <div>
-            <h3 className="mt-3 text-black">
+            <h3 className="mt-3 text-sm">
               Are you sure you want to delete {""}
-              <b className="font-bold">{itemToDelete}</b>?
+              <span className="font-bold">{populateEntity.name}</span>?
             </h3>
             <div className="flex mx-2 mt-6">
               <button
@@ -141,7 +179,7 @@ function ManageEntity() {
           />
         </div>
       </div>
-      {isLoading ? (
+      {/* {isLoading ? (
         <>
           <TableLoader />
         </>
@@ -158,10 +196,22 @@ function ManageEntity() {
                 columns={columns}
                 rows={filteredData || []}
                 bottomSummaryRows={summaryRows}
-              />
+              />  
             </>
           )}
         </>
+      )} */}
+      {populateEntity.name == "" ? (
+        <h3 className="text-gray-300">Entity Deleted</h3>
+      ) : (
+        <EntityCard
+          companyName={populateEntity.name}
+          noOfEmployees={populateEntity.size}
+          email={populateEntity.email}
+          address={populateEntity.address}
+          handleDelete={handleDelete}
+          handleUpdate={handleUpdate}
+        />
       )}
     </>
   );

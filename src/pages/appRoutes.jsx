@@ -8,16 +8,18 @@ import ManageEmployees from "./manage_employees/_page";
 import ManageEntity from "./manage_entity/_page";
 import ViewCompany from "./view_company/_page";
 import Layout from "@/components/Layout";
-import "tw-elements";
 import { ToastContainer } from "react-toastify";
-import "@/styles/globals.css";
-import "react-toastify/dist/ReactToastify.css";
 import CreateEmployee from "./create_employee/_page";
 import EmployeeDashboardLayout from "./employee_dashboard/_page";
 import UpdateEmployee from "./update_employee/_page";
 import { getUserSession } from "../core/utilities";
 import CreateEntity from "./create_entity/_page";
 import UpdateEntity from "./update_entity/_page";
+import { isMobile } from "react-device-detect";
+import "@/styles/globals.css";
+import "tw-elements";
+import "react-toastify/dist/ReactToastify.css";
+import MobileScreen from "./mobile_screen/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -33,17 +35,26 @@ export default function AppRoutes() {
           </Route>
         ) : (
           <>
-            <Route path="view-entity" element={<ViewCompany />} />
-            <Route path="dashboard/" element={<DashboardLayout />}>
-              <Route path="create-entity" element={<CreateEntity />} />
-              <Route path="update-entity/:id" element={<UpdateEntity />} />
-              <Route path="create-employee" element={<CreateEmployee />} />
-              <Route path="manage-entity" element={<ManageEntity />} />
-              <Route path="manage-employees" element={<ManageEmployees />} />
-            </Route>
-            <Route path="/employee" element={<EmployeeDashboardLayout />}>
-              <Route path="update-employee" element={<UpdateEmployee />} />
-            </Route>
+            {isMobile ? (
+              <Route path="view-entity" element={<MobileScreen />} />
+            ) : (
+              <>
+                <Route path="view-entity" element={<ViewCompany />} />
+                <Route path="dashboard/" element={<DashboardLayout />}>
+                  <Route path="create-entity" element={<CreateEntity />} />
+                  <Route path="update-entity/:id" element={<UpdateEntity />} />
+                  <Route path="create-employee" element={<CreateEmployee />} />
+                  <Route path="manage-entity/:id" element={<ManageEntity />} />
+                  <Route
+                    path="manage-employees"
+                    element={<ManageEmployees />}
+                  />
+                </Route>
+                <Route path="/employee" element={<EmployeeDashboardLayout />}>
+                  <Route path="update-employee" element={<UpdateEmployee />} />
+                </Route>
+              </>
+            )}
           </>
         )}
       </Routes>

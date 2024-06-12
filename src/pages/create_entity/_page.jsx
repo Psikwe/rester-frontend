@@ -5,6 +5,7 @@ import { PiBuildingOfficeDuotone } from "react-icons/pi";
 import axios from "axios";
 import { formToJSON } from "axios";
 import { showToast } from "../../core/hooks/alert";
+import { CreateEntityForm } from "../../core/services/entity.service";
 
 function CreateEntity() {
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
@@ -19,17 +20,8 @@ function CreateEntity() {
       ...formToJSON(companyForm),
       size: selectedRangeOption.value,
     };
-    axios
-      .post(
-        "https://rester-82c60dc37022.herokuapp.com/create_entity",
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("u_token")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    console.log(payload);
+    CreateEntityForm(payload)
       .then((res) => {
         console.log(res);
         showToast(res?.data.message, true);
