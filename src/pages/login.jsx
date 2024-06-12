@@ -46,7 +46,7 @@ function Login() {
       })
       .catch((error) => {
         setIsLoading(false);
-        // showToast(error.response.data.error, false);
+        showToast(error.response.data.error, false);
       });
   };
   const openForgotPasswordModal = () => {
