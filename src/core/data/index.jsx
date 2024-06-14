@@ -60,15 +60,21 @@ export const adminDashboardMenus = [
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
+        menu: "Manage Employees",
+        url: "/dashboard/manage-employees",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
         menu: "Create Income Type",
         url: "/dashboard/create-income-type",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
-        menu: "Manage Employees",
-        url: "/dashboard/manage-employees",
+        menu: "Create Allowable Deductions",
+        url: "/dashboard/create-allowable-deductions",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
+
       {
         menu: "Run Payroll",
         url: "/dashboard/run-payroll",

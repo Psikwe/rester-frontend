@@ -1,48 +1,48 @@
 import React from "react";
 import "react-data-grid/lib/styles.css";
-import DataGrid from "react-data-grid";
-import { FcSearch } from "react-icons/fc";
-import { BsExclamationCircle } from "react-icons/bs";
-import { employeeColumns, employeeRows } from "../../core/data";
-import { MdDelete } from "react-icons/md";
+import { BsExclamationCircleFill } from "react-icons/bs";
+
 import { FiEdit } from "react-icons/fi";
 import { CiLock } from "react-icons/ci";
-import { VscSearchStop } from "react-icons/vsc";
 import Modal from "../../components/modal/_component";
-import { DeleteEntity } from "../../core/services/entity.service";
-import { useEntity } from "../../core/hooks/entity";
 import TableLoader from "../../components/table_loader/_component";
+import Tabs from "../../components/tabs/_component";
+import { SiCashapp } from "react-icons/si";
+import {
+  DeactivateEmployee,
+  GetAllEmployees,
+} from "../../core/services/employee.service";
+import { FcSearch } from "react-icons/fc";
+import "react-data-grid/lib/styles.css";
+import DataGrid from "react-data-grid";
+import DeactivatedEmployees from "../deactivated_employees/_page";
+import { showToast } from "../../core/hooks/alert";
 
 function ManageEmployees() {
-  const { entityQuery } = useEntity();
+  const entity_id = localStorage.getItem("entity_id");
   const [query, setQuery] = React.useState("");
   const [deleteId, setDeleteId] = React.useState("");
+  const [employees, setEmployees] = React.useState([]);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
-  const filteredData = employeeRows?.filter((e) => {
-    if (query == "") return e;
-    else if (e?.title?.toLowerCase().includes(query.toLocaleLowerCase()))
-      return e;
-  });
-  const summaryRows = React.useMemo(() => {
-    return [
-      {
-        id: "total_0",
-        totalCount: 4,
-      },
-    ];
-  }, [filteredData]);
 
-  const handleUpdateClick = (id, name) => {
-    alert("test update");
+  const handleUpdateClick = (id) => {
+    window.location.href = "/dashboard/update-employee/" + id;
   };
-  const handleDelete = (id) => {
+
+  const handleNavigateToEmployeeLoan = (id) => {
+    window.location.href = "/dashboard/create-employee-loan/" + id;
+  };
+
+  const handleDelete = (id, first_name) => {
     setDeleteId(id);
+    setDeleteModalOpen(true);
+    setItemToDelete(first_name);
   };
 
   const renderActionsRow = (data) => {
-    const { id, name } = data.row;
+    const { id, first_name } = data.row;
     return (
       <div className="flex mt-1">
         {/* <button title="Delete" onClick={() => handleDeleteClick(id, name)}>
@@ -51,16 +51,23 @@ function ManageEmployees() {
         <button
           className="ml-2"
           title="Update"
-          onClick={() => handleUpdateClick(id, name)}
+          onClick={() => handleUpdateClick(id)}
         >
           <FiEdit color="green" size={18} />
         </button>
         <button
           className="ml-2"
           title="Deactivate"
-          onClick={() => handleDelete(id, name)}
+          onClick={() => handleDelete(id, first_name)}
         >
-          <CiLock color="green" size={18} />
+          <CiLock color="red" size={18} />
+        </button>
+        <button
+          className="ml-2"
+          title="Create Employee Loan"
+          onClick={() => handleNavigateToEmployeeLoan(id, first_name)}
+        >
+          <SiCashapp color="blue" size={18} />
         </button>
       </div>
     );
@@ -73,37 +80,136 @@ function ManageEmployees() {
       renderCell: renderActionsRow,
       width: "100px",
     },
-    { key: "id", name: "ID" },
-    { key: "title", name: "Title" },
+    { key: "first_name", name: "First Name" },
+    { key: "last_name", name: "Last Name" },
+    { key: "other_names", name: "Other Names" },
+    { key: "email", name: "Email" },
+    { key: "address", name: "Address" },
+    { key: "permanent_address", name: "Permanent Address" },
+    { key: "phone", name: "phone" },
+    { key: "tin", name: "Tin" },
+    { key: "ghana_card_id", name: "Ghana Card Number" },
   ];
 
   const closeDeleteModal = () => {
     setDeleteModalOpen(false);
   };
 
-  const confirmDelete = () => {
+  const confirmDeactivate = () => {
+    setOperationLoading(true);
     setDeleteModalOpen(false);
-    DeleteEntity(deleteId)
-      .then(() => {
-        entityQuery.refetch().then(() => {
-          setOperationLoading(false);
-        });
+    DeactivateEmployee(deleteId)
+      .then((response) => {
+        console.log(response);
+        setOperationLoading(false);
+        showToast(response.data.message, true);
+        setTimeout(() => {
+          window.location.reload();
+        }, [2500]);
+      })
+      .catch((error) => {
+        showToast(error.response.data.error, false);
+      });
+  };
+
+  React.useEffect(() => {
+    GetAllEmployees(entity_id)
+      .then((response) => {
+        setEmployees(response?.data.employees);
       })
       .catch((error) => {
         console.log(error);
       });
-  };
+  }, []);
+  const filteredData = employees?.filter((e) => {
+    if (query === "" && e.is_disabled == false) return e;
+    else if (
+      e?.first_name?.toLowerCase().includes(query.toLocaleLowerCase()) &&
+      e.is_disabled == false
+    )
+      return e;
+  });
 
+  const summaryRows = React.useMemo(() => {
+    return [
+      {
+        id: "total_0",
+        totalCount: 4,
+      },
+    ];
+  }, [filteredData]);
+
+  const content = [
+    {
+      label: "Active",
+      content: (
+        <>
+          <div className="flex flex-wrap w-full gap-3 px-4 py-3 mb-6 bg-slate-200">
+            <div className="relative w-full mb-2">
+              <div className="absolute left-0 flex items-center pl-3 pointer-events-none top-5">
+                <FcSearch />
+              </div>
+              <input
+                type="text"
+                className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                placeholder="Search by Employee First Name..."
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {filteredData.length === 0 ? (
+            <div className="flex flex-col items-center justify-center">
+              {/* <VscSearchStop
+                color="#687864"
+                size={40}
+                className="animate-bounce"
+              /> */}
+              <h3 className="text-slate-400">No match</h3>
+            </div>
+          ) : (
+            <>
+              {isOperationLoading ? (
+                <>
+                  <TableLoader />
+                </>
+              ) : (
+                <>
+                  <DataGrid
+                    className="text-sm rdg-light grid-container"
+                    columns={columns}
+                    rows={filteredData || []}
+                    bottomSummaryRows={summaryRows}
+                  />
+                  <strong className="text-sm">
+                    Totals: {filteredData?.length} records
+                  </strong>
+                </>
+              )}
+            </>
+          )}
+        </>
+      ),
+    },
+    {
+      label: "Deactivated",
+      content: (
+        <>
+          <DeactivatedEmployees />
+        </>
+      ),
+    },
+  ];
   return (
     <>
       <Modal open={deleteModalOpen} close={closeDeleteModal} closeOnOverlay>
         <div className="p-10 bg-white">
           <div className="w-16 m-auto">
-            <BsExclamationCircle size={70} color="red" />
+            <BsExclamationCircleFill size={70} color="red" />
           </div>
           <div>
             <h3 className="mt-3 text-black">
-              Are you sure you want to delete {""}
+              Are you sure you want to deactivate {""}
               <b className="font-bold">{itemToDelete}</b>?
             </h3>
             <div className="flex mx-2 mt-6">
@@ -114,7 +220,7 @@ function ManageEmployees() {
                 No
               </button>
               <button
-                onClick={confirmDelete}
+                onClick={confirmDeactivate}
                 className="w-full py-3 text-white bg-red-500 mt-9 mobile:w-full"
               >
                 Yes
@@ -124,49 +230,7 @@ function ManageEmployees() {
         </div>
       </Modal>
 
-      <div className="flex flex-wrap w-full gap-3 px-4 py-3 mb-6 bg-slate-200">
-        <div className="relative w-full mb-2">
-          <div className="absolute left-0 flex items-center pl-3 pointer-events-none top-5">
-            <FcSearch />
-          </div>
-          <input
-            type="text"
-            className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-            placeholder="Search by Employee..."
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </div>
-      </div>
-      {/* <button
-        type="submit"
-        className="w-1/4 py-2 my-3 text-white primary mobile:w-full"
-      >
-        View Payroll
-      </button> */}
-      {filteredData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center">
-          <VscSearchStop color="#687864" size={40} className="animate-bounce" />
-          <h3 className="text-slate-400">No match</h3>
-        </div>
-      ) : (
-        <>
-          {isOperationLoading ? (
-            <>
-              <TableLoader />
-            </>
-          ) : (
-            <>
-              <DataGrid
-                className="text-sm rdg-light grid-container"
-                columns={columns}
-                rows={filteredData || []}
-                bottomSummaryRows={summaryRows}
-              />
-              <strong>Totals: {filteredData?.length} records</strong>
-            </>
-          )}
-        </>
-      )}
+      <Tabs tabs={content} />
     </>
   );
 }

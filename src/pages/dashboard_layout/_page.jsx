@@ -58,7 +58,7 @@ const DashboardLayout = () => {
   console.log(pathname);
   return (
     <>
-      <Modal open={isModalOpen} close={closeModal}>
+      <Modal showCloseBtn={true} open={isModalOpen} close={closeModal}>
         <form className="p-16 bg-white">
           <div className="relative">
             <label className="label bold">Enter Old Password</label>
@@ -107,7 +107,11 @@ const DashboardLayout = () => {
         </form>
       </Modal>
 
-      <Modal open={isLogoutModalOpen} close={closeLogoutModal}>
+      <Modal
+        showCloseBtn={true}
+        open={isLogoutModalOpen}
+        close={closeLogoutModal}
+      >
         <div className="w-full bg-white p-14">
           <div className="flex justify-center mb-2">
             <BsExclamationCircle size={70} color="red" />
@@ -152,7 +156,7 @@ const DashboardLayout = () => {
                       <span
                         className={`${
                           pathname === sub.url
-                            ? "bg-[#1A55E3] rounded-md font-normal w-full p-2 text-white"
+                            ? "bg-[#1A55E3] rounded-md w-full p-2 text-white"
                             : "w-full p-2 "
                         }`}
                       >

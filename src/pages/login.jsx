@@ -11,6 +11,7 @@ import { cacheUserRole, cacheUserSession } from "../core/utilities";
 import { setUser } from "../core/stores/slices/user_slice";
 import Loader from "../components/loader/_component";
 import { UserLogin } from "../core/services/auth.service";
+import { FaCircleInfo } from "react-icons/fa6";
 
 function Login() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function Login() {
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [isForgotPassowrdModalOpen, setIsForgotPassowrdModalOpen] =
     React.useState(false);
+  const [confirmRole, setConfirmRole] = React.useState(false);
   const newPasswordToggle = () => {
     setShowNewPasswordType(!showNewPasswordType);
   };
@@ -35,13 +37,24 @@ function Login() {
         console.log(res);
         cacheUserSession(res?.data.access_token);
         cacheUserRole(res?.data.roles);
-        showToast("Login successful", true);
         dispatch(setUser({ roles: [], username: res?.data.email }));
-        setTimeout(() => {
-          res?.data.roles === "admin"
-            ? (window.location.href = "/view-entity")
-            : (window.location.href = "/employee/update-employee");
-        }, 2000);
+        if (res?.data.roles.length > 1) {
+          setConfirmRole(true);
+          return;
+        } else {
+          if (res?.data.roles[0] === "admin") {
+            showToast("Login Successful", true);
+            setTimeout(() => {
+              window.location.href = "/employee/update-employee";
+            }, 2000);
+          } else if (res?.data.roles[0] === "employee") {
+            showToast("Login Successful", true);
+            setTimeout(() => {
+              window.location.href = "/view-entity";
+            }, 2000);
+          }
+        }
+
         loginForm?.reset();
       })
       .catch((error) => {
@@ -55,6 +68,23 @@ function Login() {
 
   const closeForgotPasswordModal = () => {
     setIsForgotPassowrdModalOpen(false);
+  };
+
+  const closeConfirmRoleModal = () => {
+    setConfirmRole(false);
+  };
+
+  const handleAdminNavigation = () => {
+    showToast("Login Successful", true);
+    setTimeout(() => {
+      window.location.href = "/view-entity";
+    }, 2000);
+  };
+  const handleEmployeeNavigation = () => {
+    showToast("Login Successful", true);
+    setTimeout(() => {
+      window.location.href = "/employee/update-employee";
+    }, 2000);
   };
 
   //  email: testt@gmail.com
@@ -103,6 +133,36 @@ function Login() {
             Submit
           </button>
         </form>
+      </Modal>
+
+      <Modal
+        showCloseBtn={false}
+        open={confirmRole}
+        close={closeConfirmRoleModal}
+      >
+        <div className="w-full bg-white p-14">
+          <div className="flex justify-center mb-2">
+            <FaCircleInfo color="gray" size={70} className="mr-2" />
+          </div>
+          <p className="text-gray-500">
+            Multiple roles are detected for this user. <br /> Do you want to
+            login as employee or admin?
+          </p>
+          <div className="flex">
+            <button
+              onClick={handleEmployeeNavigation}
+              className="w-full mr-2 text-white mt-9 bg-[#0DCAF0] mobile:w-full"
+            >
+              As Employee
+            </button>
+            <button
+              onClick={handleAdminNavigation}
+              className="w-full py-2 text-white bg-red-500 mt-9 mobile:w-full"
+            >
+              As Admin
+            </button>
+          </div>
+        </div>
       </Modal>
       <section className="bg-slate-200">
         <div className="login-container">

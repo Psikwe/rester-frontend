@@ -1,4 +1,3 @@
-import axios from "axios";
 import { getAxios } from "../utilities";
 
 export const GetAllEntities = async () => {

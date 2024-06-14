@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 
 function ManageEntity() {
   const { id } = useParams();
+  localStorage.setItem("entity_id", id);
   const [query, setQuery] = React.useState("");
   const { entityQuery } = useEntity();
   const [deleteId, setDeleteId] = React.useState("");

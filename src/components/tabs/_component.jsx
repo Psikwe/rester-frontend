@@ -8,15 +8,13 @@ const Tabs = ({ tabs }) => {
   };
 
   return (
-    <div className="mt-5 tabs">
-      <ul className="flex space-x-8">
+    <div className="mt-5">
+      <ul className="flex justify-center w-1/3 p-3 space-x-8 rounded-full bg-[#ccf6ff]">
         {tabs.map((tab, index) => (
           <li
             key={index}
-            className={`py-2 px-4 text-sm border rounded cursor-pointer ${
-              index === activeTab
-                ? "bg-[#eb7134] text-white"
-                : "border-gray-300"
+            className={`py-2  px-4 text-sm  rounded cursor-pointer ${
+              index === activeTab ? "bg-[#7da0fa] text-white" : ""
             }`}
             onClick={() => handleTabClick(index)}
           >

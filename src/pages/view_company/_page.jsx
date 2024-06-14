@@ -5,7 +5,6 @@ import { CiLogout } from "react-icons/ci";
 import CompanyCard from "../../components/card/_component";
 import SkeletonLoader from "../../components/skeleton_loading/_component";
 import { BsExclamationCircle } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
 import Modal from "../../components/modal/_component";
 import { clearUserSession } from "../../core/utilities";
 
@@ -32,7 +31,6 @@ function ViewCompany() {
       .then((res) => {
         setSkeletonLoading(false);
         setCompany(res.data.entities);
-        localStorage.setItem("entity_id", id);
       })
       .catch((error) => {
         console.log("comp: ", error);

@@ -22,6 +22,8 @@ import "react-toastify/dist/ReactToastify.css";
 import MobileScreen from "./mobile_screen/_page";
 import RunPayroll from "./run_payroll/_page";
 import CreateIncomeType from "./create_income_type/_page";
+import CreateAllowableDeductions from "./create_allowable_deductions/_page";
+import CreateEmployeeLoan from "./create_employee_loan/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -45,9 +47,25 @@ export default function AppRoutes() {
                 <Route path="dashboard/" element={<DashboardLayout />}>
                   <Route path="create-entity" element={<CreateEntity />} />
                   <Route path="update-entity/:id" element={<UpdateEntity />} />
+                  <Route
+                    path="update-employee/:id"
+                    element={<UpdateEmployee />}
+                  />
                   <Route path="create-employee" element={<CreateEmployee />} />
                   <Route
+                    path="create-employee-loan/:id"
+                    element={<CreateEmployeeLoan />}
+                  />
+                  <Route
+                    path="create-allowable-deductions"
+                    element={<CreateAllowableDeductions />}
+                  />
+                  <Route
                     path="create-income-type"
+                    element={<CreateIncomeType />}
+                  />
+                  <Route
+                    path="create-allowable-deductions"
                     element={<CreateIncomeType />}
                   />
                   <Route path="run-payroll" element={<RunPayroll />} />

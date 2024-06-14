@@ -13,7 +13,6 @@ import { useParams } from "react-router-dom";
 
 function UpdateEntity() {
   const { id } = useParams();
-  localStorage.setItem("entity_id", id);
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
   const [populateEntity, setPopulateEnty] = React.useState({
     name: "",
