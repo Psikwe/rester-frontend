@@ -69,13 +69,13 @@ function ViewCompany() {
           <div className="flex">
             <button
               onClick={closeLogoutModal}
-              className="w-full py-3 mr-2 text-white mt-9 primary mobile:w-full"
+              className="w-full py-2 mr-2 text-white mt-9 primary mobile:w-full"
             >
               No
             </button>
             <button
               onClick={handleLogout}
-              className="w-full py-3 text-white bg-red-500 mt-9 mobile:w-full"
+              className="w-full py-2 text-white bg-red-500 mt-9 mobile:w-full"
             >
               Yes
             </button>
