@@ -37,6 +37,7 @@ function UpdateEmployee() {
   }, []);
 
   const handleUpdateEmployee = (e) => {
+    setIsLoading(true);
     e.preventDefault();
     const entity_id = localStorage.getItem("entity_id");
     const employeeForm = document.getElementById("employee-form");
@@ -48,6 +49,7 @@ function UpdateEmployee() {
     SubmitUpdateEmployee(payload)
       .then((res) => {
         console.log(res);
+        setIsLoading(false);
         showToast(res?.data.message, true);
         // companyForm?.reset();
       })

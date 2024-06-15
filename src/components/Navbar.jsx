@@ -50,7 +50,7 @@ export default function Navbar() {
     <>
       {/* ************** Desktop Nav ***************/}
       <nav
-        className={`from-laptop-to-laptop-xl:flex from-laptop-to-laptop-xl:justify-between from-laptop-to-laptop-xl:items-center from-laptop-to-laptop-xl:pt-[1rem] from-laptop-to-laptop-xl:pr-[4rem] from-laptop-to-laptop-xl:bg-transparent from-laptop-to-laptop-xl:absolute from-laptop-to-laptop-xl:w-full laptop-lg:px-32 py-2 laptop-xl:px-72 mobile:hidden tablet:hidden -mt-2`}
+        className={`text-sm from-laptop-to-laptop-xl:flex from-laptop-to-laptop-xl:justify-between from-laptop-to-laptop-xl:items-center from-laptop-to-laptop-xl:pt-[1rem] from-laptop-to-laptop-xl:bg-transparent from-laptop-to-laptop-xl:absolute from-laptop-to-laptop-xl:w-full laptop-lg:px-32 py-2 laptop-xl:px-72 mobile:hidden tablet:hidden -mt-2`}
       >
         <div className={styles.start}>
           <NavLink to="/" style={{ color: "#000" }}>
@@ -70,29 +70,38 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="flex gap-6">
+        <div className="flex items-center gap-6">
           {pathname === "/signup" ? (
             ""
           ) : (
-            <div className="pt-3 px-3 duration-700 hover:text-white cursor-pointer text-white bg-[#74866f]">
-              <NavLink className="duration-700 hover:text-white" to="/signup">
+            <NavLink className="duration-700 hover:text-white" to="/signup">
+              <div className="rounded-full py-[9px] px-[25px] duration-700 cursor-pointer text-white bg-[#74866f]">
                 Sign up
-              </NavLink>
-              <span className="relative flex w-3 h-3 left-[3.7rem] bottom-10">
+                {/* <span className="relative flex w-3 h-3 left-[3.7rem] bottom-10">
                 <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-sky-400"></span>
                 <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500"></span>
-              </span>
-            </div>
+              </span> */}
+              </div>{" "}
+            </NavLink>
           )}
 
-          <div className="inline-block -mt-12 h-[100px] w-0.5 bg-[#31708E]"></div>
-          <div
-            onClick={handleLoginNavigation}
-            className="flex items-center h-12 underline cursor-pointer button clear"
-          >
-            <CiLogin className="text-[#31708E] mr-1" size={25} title="Login" />
-            <h3 className="font-medium">Login</h3>
-          </div>
+          {pathname === "/login" ? (
+            ""
+          ) : (
+            <>
+              <div className="inline-block -mt-12 h-[100px] w-0.5 bg-[#31708E]"></div>
+              <NavLink className="duration-700 hover:text-white" to="/login">
+                {" "}
+                <div className="rounded-full py-[9px] px-[25px] duration-700 cursor-pointer text-white bg-[#74866f]">
+                  Login
+                  {/* <span className="relative flex w-3 h-3 left-[3.7rem] bottom-10">
+                <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-sky-400"></span>
+                <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500"></span>
+              </span> */}
+                </div>
+              </NavLink>
+            </>
+          )}
         </div>
       </nav>
 

@@ -22,6 +22,7 @@ function UpdateEntity() {
   });
   const handleChange = (selectedRangeOption) => {
     setSelectedRangeOption(selectedRangeOption);
+    console.log(selectedRangeOption);
   };
 
   React.useEffect(() => {
@@ -34,20 +35,23 @@ function UpdateEntity() {
         console.log(error);
       });
   }, []);
-
+  const noOfEmployeess = selectedRangeOption && selectedRangeOption.value;
   const handleEntityForm = (e) => {
     e.preventDefault();
     const updateEntityForm = document.getElementById("update-entity-form");
     const payload = {
       ...formToJSON(updateEntityForm),
-      size: populateEntity.size,
+      size:
+        noOfEmployeess === null || noOfEmployees === ""
+          ? populateEntity.size
+          : noOfEmployeess,
       entity_id: id,
     };
     UpdateEntityForm(payload)
       .then((res) => {
         showToast(res?.data.message, true);
         setTimeout(() => {
-          window.location.href = "/dashboard/manage-entity";
+          // window.location.href = "/dashboard/view-entity";
         }, 2000);
       })
       .catch((error) => {
@@ -98,9 +102,9 @@ function UpdateEntity() {
             <div className="flex w-full row mobile:w-full">
               <Select
                 className="w-full"
-                value={selectedRangeOption}
                 onChange={handleChange}
                 options={noOfEmployees}
+                name="size"
                 placeholder={populateEntity ? populateEntity.size : ""}
               />
             </div>

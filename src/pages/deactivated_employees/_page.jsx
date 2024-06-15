@@ -16,7 +16,6 @@ import DataGrid from "react-data-grid";
 import { showToast } from "../../core/hooks/alert";
 
 function DeactivatedEmployees() {
-  const { entityQuery } = useEntity();
   const entity_id = localStorage.getItem("entity_id");
   const [query, setQuery] = React.useState("");
   const [deleteId, setDeleteId] = React.useState("");
