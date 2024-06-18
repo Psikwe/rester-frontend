@@ -7,6 +7,7 @@ import DashboardLayout from "./dashboard_layout/_page";
 import ManageEmployees from "./manage_employees/_page";
 import ManageEntity from "./manage_entity/_page";
 import ViewCompany from "./view_company/_page";
+import ViewEmployees from "./view_employees/_page";
 import Layout from "@/components/Layout";
 import { ToastContainer } from "react-toastify";
 import CreateEmployee from "./create_employee/_page";
@@ -24,9 +25,15 @@ import RunPayroll from "./run_payroll/_page";
 import CreateIncomeType from "./create_income_type/_page";
 import CreateAllowableDeductions from "./create_allowable_deductions/_page";
 import CreateEmployeeLoan from "./create_employee_loan/_page";
+import TerminateEmployee from "./terminate_employee/_page";
+import TerminatedEmployees from "./terminated_employees/_page";
+import ManageEmployeeLoans from "./manage_employee_loans/_page";
+import UpdateEmployeeLoan from "./update_employee_loan/_page";
+import MySpreadsheet from "./run_payroll/another";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
+
   return (
     <BrowserRouter>
       <ToastContainer progressClassName="toast-progress" />
@@ -44,7 +51,9 @@ export default function AppRoutes() {
             ) : (
               <>
                 <Route path="view-entity" element={<ViewCompany />} />
+
                 <Route path="dashboard/" element={<DashboardLayout />}>
+                  <Route path="view-employees" element={<ViewEmployees />} />
                   <Route path="create-entity" element={<CreateEntity />} />
                   <Route path="update-entity/:id" element={<UpdateEntity />} />
                   <Route
@@ -55,6 +64,22 @@ export default function AppRoutes() {
                   <Route
                     path="create-employee-loan/:id"
                     element={<CreateEmployeeLoan />}
+                  />
+                  <Route
+                    path="terminate-employee/:id"
+                    element={<TerminateEmployee />}
+                  />
+                  <Route
+                    path="terminated-employees/:id"
+                    element={<TerminatedEmployees />}
+                  />
+                  <Route
+                    path="manage-employee-loans/:id"
+                    element={<ManageEmployeeLoans />}
+                  />
+                  <Route
+                    path="update-employee-loan/:id"
+                    element={<UpdateEmployeeLoan />}
                   />
                   <Route
                     path="create-allowable-deductions"
@@ -68,7 +93,7 @@ export default function AppRoutes() {
                     path="create-allowable-deductions"
                     element={<CreateIncomeType />}
                   />
-                  <Route path="run-payroll" element={<RunPayroll />} />
+                  <Route path="run-payroll" element={<MySpreadsheet />} />
                   <Route path="manage-entity/:id" element={<ManageEntity />} />
                   <Route
                     path="manage-employees"

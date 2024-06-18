@@ -5,6 +5,7 @@ import { PiBuildingOfficeLight } from "react-icons/pi";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 
+const entity_id = localStorage.getItem("entity_id");
 export const options = [
   { value: "chocolate", label: "Per Anum" },
   { value: "strawberry", label: "Per Month" },
@@ -62,6 +63,11 @@ export const adminDashboardMenus = [
       {
         menu: "Manage Employees",
         url: "/dashboard/manage-employees",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
+        menu: "Manage Employee Loans",
+        url: "/dashboard/view-employees",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {

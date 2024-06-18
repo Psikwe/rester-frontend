@@ -1,18 +1,37 @@
 import { formToJSON } from "axios";
 import React from "react";
 import { showToast } from "../../core/hooks/alert";
+import { CreateIncomeTypeForm } from "../../core/services/income.service";
 import Loader from "../../components/loader/_component";
-import { SubmitEmployeeLoan } from "../../core/services/employee.service";
+import {
+  GetOneEmployeeLoan,
+  SubmitEmployeeLoan,
+} from "../../core/services/employee.service";
 import { useParams } from "react-router-dom";
 
-function CreateEmployeeLoan() {
+function UpdateEmployeeLoan() {
   const { id } = useParams();
+  const entity_id = localStorage.getItem("entity_id");
+  const employee_id = localStorage.getItem("employee_id");
   const [isChecked, setIsChecked] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [employeeLoan, setEmployeeLoan] = React.useState();
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
   };
+
+  React.useEffect(() => {
+    GetOneEmployeeLoan(id, entity_id, employee_id)
+      .then((response) => {
+        setEmployeeLoan(response.data.employee);
+        console.log("ee: ", response);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   const handleCreateEmployeeSubmit = (e) => {
     setIsLoading(true);
     const entity_id = localStorage.getItem("entity_id");
@@ -51,6 +70,7 @@ function CreateEmployeeLoan() {
                 type="number"
                 placeholder="Annual Interest Rate"
                 name="annual_interest_rate"
+                defaultValue={employeeLoan.annual_interest_rate}
               />
             </div>
           </div>
@@ -75,6 +95,7 @@ function CreateEmployeeLoan() {
                 type="number"
                 placeholder="Loan Amount"
                 name="loan_amount"
+                defaultValue={employeeLoan.loan_amount}
               />
             </div>
           </div>
@@ -87,6 +108,7 @@ function CreateEmployeeLoan() {
                 type="text"
                 placeholder="Loan Provider"
                 name="loan_provider"
+                defaultValue={employeeLoan.loan_provider}
               />
             </div>
           </div>
@@ -99,6 +121,7 @@ function CreateEmployeeLoan() {
                 type="number"
                 placeholder="Loan Term"
                 name="loan_term"
+                defaultValue={employeeLoan.loan_term}
               />
             </div>
           </div>
@@ -111,6 +134,7 @@ function CreateEmployeeLoan() {
                 type="number"
                 placeholder="Monthly Interest"
                 name="monthly_interest"
+                defaultValue={employeeLoan.monthly_interest}
               />
             </div>
           </div>
@@ -145,4 +169,4 @@ function CreateEmployeeLoan() {
   );
 }
 
-export default CreateEmployeeLoan;
+export default UpdateEmployeeLoan;

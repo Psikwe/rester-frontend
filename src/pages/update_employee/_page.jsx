@@ -2,7 +2,7 @@ import React from "react";
 import "flatpickr/dist/flatpickr.css";
 import Flatpickr from "react-flatpickr";
 import { showToast } from "../../core/hooks/alert";
-import { HiMiniEyeSlash } from "react-icons/hi2";
+import Loader from "../../components/loader/_component";
 import { IoEyeSharp } from "react-icons/io5";
 import Select from "react-select";
 import { options } from "../../core/data";
@@ -21,6 +21,7 @@ function UpdateEmployee() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [employeeDetails, setEmployeeDetails] = React.useState({});
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
+
   const newPasswordToggle = () => {
     setShowNewPasswordType(!showNewPasswordType);
   };
@@ -54,6 +55,7 @@ function UpdateEmployee() {
         // companyForm?.reset();
       })
       .catch((error) => {
+        setIsLoading(false);
         showToast(error.response.data.error, false);
       });
   };

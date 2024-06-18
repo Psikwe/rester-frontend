@@ -1,7 +1,7 @@
 import React from "react";
 import "react-data-grid/lib/styles.css";
 import { BsExclamationCircleFill } from "react-icons/bs";
-
+import { RiIndeterminateCircleLine } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { CiLock } from "react-icons/ci";
 import Modal from "../../components/modal/_component";
@@ -22,6 +22,7 @@ function ManageEmployees() {
   const entity_id = localStorage.getItem("entity_id");
   const [query, setQuery] = React.useState("");
   const [deleteId, setDeleteId] = React.useState("");
+  const [employeeId, setEmployeeId] = React.useState("");
   const [employees, setEmployees] = React.useState([]);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
@@ -35,6 +36,10 @@ function ManageEmployees() {
     window.location.href = "/dashboard/create-employee-loan/" + id;
   };
 
+  const handleNavigateToTerminateEmployee = (id) => {
+    window.location.href = "/dashboard/terminate-employee/" + id;
+  };
+
   const handleDelete = (id, first_name) => {
     setDeleteId(id);
     setDeleteModalOpen(true);
@@ -43,27 +48,35 @@ function ManageEmployees() {
 
   const renderActionsRow = (data) => {
     const { id, first_name } = data.row;
+    setEmployeeId(id);
     return (
-      <div className="flex mt-1">
+      <div className="grid grid-cols-2 mt-1">
         {/* <button title="Delete" onClick={() => handleDeleteClick(id, name)}>
           <MdDelete color="red" size={18} />
         </button> */}
         <button
-          className="ml-2"
+          className="mb-2 ml-3"
           title="Update"
           onClick={() => handleUpdateClick(id)}
         >
           <FiEdit color="green" size={18} />
         </button>
         <button
-          className="ml-2"
+          className="mb-2 ml-3"
           title="Deactivate"
           onClick={() => handleDelete(id, first_name)}
         >
           <CiLock color="red" size={18} />
+        </button>{" "}
+        <button
+          className="mb-2 ml-3"
+          title="Terminate Employee"
+          onClick={() => handleNavigateToTerminateEmployee(id, first_name)}
+        >
+          <RiIndeterminateCircleLine color="red" size={18} />
         </button>
         <button
-          className="ml-2"
+          className="mb-2 ml-3"
           title="Create Employee Loan"
           onClick={() => handleNavigateToEmployeeLoan(id, first_name)}
         >
@@ -121,6 +134,7 @@ function ManageEmployees() {
         console.log(error);
       });
   }, []);
+
   const filteredData = employees?.filter((e) => {
     if (query === "" && e.is_disabled == false) return e;
     else if (
@@ -180,6 +194,7 @@ function ManageEmployees() {
                     columns={columns}
                     rows={filteredData || []}
                     bottomSummaryRows={summaryRows}
+                    rowHeight={50}
                   />
                   <strong className="text-sm">
                     Totals: {filteredData?.length} records
@@ -200,6 +215,10 @@ function ManageEmployees() {
       ),
     },
   ];
+
+  const handleNavigateToManageEmployeeLoans = () => {
+    window.location.href = "/dashboard/manage-employee-loans/" + employeeId;
+  };
   return (
     <>
       <Modal open={deleteModalOpen} close={closeDeleteModal} closeOnOverlay>
@@ -229,7 +248,6 @@ function ManageEmployees() {
           </div>
         </div>
       </Modal>
-
       <Tabs tabs={content} />
     </>
   );

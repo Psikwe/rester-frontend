@@ -368,6 +368,14 @@ input[type="number"] {
   border: 1px #fff solid;
 }
 
+.grid-container {
+  z-index: 1 !important;
+}
+
+.z-index-dropdown {
+  z-index: 99 !important;
+}
+
 .custom-underline-on-hover:hover {
   color: #000;
 }

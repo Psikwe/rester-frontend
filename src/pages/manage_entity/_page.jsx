@@ -14,11 +14,7 @@ import { useParams } from "react-router-dom";
 function ManageEntity() {
   const { id } = useParams();
   localStorage.setItem("entity_id", id);
-  const [query, setQuery] = React.useState("");
-  const { entityQuery } = useEntity();
-  const [deleteId, setDeleteId] = React.useState("");
   const [isOperationLoading, setOperationLoading] = React.useState(false);
-  const [itemToDelete, setItemToDelete] = React.useState("");
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
 
   const [populateEntity, setPopulateEntity] = React.useState({
@@ -27,20 +23,7 @@ function ManageEntity() {
     size: "",
     email: "",
   });
-  const { isLoading } = entityQuery;
-  const allEntities = entityQuery?.data?.data?.entities;
-  const filteredData = allEntities?.filter((e) => {
-    if (query === "") return e;
-    else if (e?.id === id) return e;
-  });
-  const summaryRows = React.useMemo(() => {
-    return [
-      {
-        id: "total_0",
-        totalCount: 4,
-      },
-    ];
-  }, [filteredData]);
+
   React.useEffect(() => {
     GetOneEntity(id)
       .then((response) => {
@@ -53,14 +36,17 @@ function ManageEntity() {
   }, []);
 
   const handleDelete = (id, name) => {
-    setDeleteId(id);
     setDeleteModalOpen(true);
-    setItemToDelete(name);
   };
 
   const handleUpdate = () => {
     window.location.href = "/dashboard/update-entity/" + id;
   };
+
+  const handleViewTerminatedEmployees = () => {
+    window.location.href = "/dashboard/terminated-employees/" + id;
+  };
+
   const renderActionsRow = (data) => {
     const { id, name } = data.row;
     return (
@@ -167,7 +153,7 @@ function ManageEntity() {
         </div>
       </Modal>
 
-      <div className="flex flex-wrap w-full gap-3 px-4 py-3 mb-6 bg-slate-200">
+      {/* <div className="flex flex-wrap w-full gap-3 px-4 py-3 mb-6 bg-slate-200">
         <div className="relative w-full mb-2">
           <div className="absolute left-0 flex items-center pl-3 pointer-events-none top-5">
             <FcSearch />
@@ -179,7 +165,7 @@ function ManageEntity() {
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-      </div>
+      </div> */}
       {/* {isLoading ? (
         <>
           <TableLoader />
@@ -212,6 +198,7 @@ function ManageEntity() {
           address={populateEntity.address}
           handleDelete={handleDelete}
           handleUpdate={handleUpdate}
+          handleViewTerminatedEmployees={handleViewTerminatedEmployees}
         />
       )}
     </>
