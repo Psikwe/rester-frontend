@@ -6,6 +6,7 @@ import Loader from "../../components/loader/_component";
 import {
   GetOneEmployeeLoan,
   SubmitEmployeeLoan,
+  UpdateEmployeeLoanForm,
 } from "../../core/services/employee.service";
 import { useParams } from "react-router-dom";
 
@@ -15,7 +16,7 @@ function UpdateEmployeeLoan() {
   const employee_id = localStorage.getItem("employee_id");
   const [isChecked, setIsChecked] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [employeeLoan, setEmployeeLoan] = React.useState();
+  const [employeeLoan, setEmployeeLoan] = React.useState([]);
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
@@ -24,7 +25,7 @@ function UpdateEmployeeLoan() {
   React.useEffect(() => {
     GetOneEmployeeLoan(id, entity_id, employee_id)
       .then((response) => {
-        setEmployeeLoan(response.data.employee);
+        setEmployeeLoan(response.data.employee_loan);
         console.log("ee: ", response);
       })
       .catch((err) => {
@@ -32,18 +33,19 @@ function UpdateEmployeeLoan() {
       });
   }, []);
 
-  const handleCreateEmployeeSubmit = (e) => {
+  const handleUpdateEmployeeLoan = (e) => {
     setIsLoading(true);
     const entity_id = localStorage.getItem("entity_id");
     e.preventDefault();
     const loanForm = document.getElementById("employee-loan-form");
     const payload = {
       ...formToJSON(loanForm),
-      employee_id: id,
+      employee_id: employee_id,
+      employee_loan_id: id,
       entity_id: entity_id,
       is_compounding_interest: isChecked,
     };
-    SubmitEmployeeLoan(payload)
+    UpdateEmployeeLoanForm(payload)
       .then((res) => {
         setIsLoading(false);
         showToast(res?.data.message, true);
@@ -56,7 +58,7 @@ function UpdateEmployeeLoan() {
   };
   return (
     <>
-      <form id="employee-loan-form" onSubmit={handleCreateEmployeeSubmit}>
+      <form id="employee-loan-form" onSubmit={handleUpdateEmployeeLoan}>
         <h3 className="text-sm mt-9">Income Type</h3>
         <div className="grid grid-cols-3 gap-3">
           <div className="field">
@@ -74,7 +76,7 @@ function UpdateEmployeeLoan() {
               />
             </div>
           </div>
-          <div className="field">
+          {/* <div className="field">
             <label className="text-sm label bold">Enter Income Name</label>
             <div className="control">
               <input
@@ -85,8 +87,8 @@ function UpdateEmployeeLoan() {
                 name="income_name"
               />
             </div>
-          </div>
-          <div className="mt- field">
+          </div> */}
+          <div className=" field">
             <label className="text-sm label bold">Enter Loan Amount</label>
             <div className="control">
               <input
@@ -99,7 +101,7 @@ function UpdateEmployeeLoan() {
               />
             </div>
           </div>
-          <div className="mt-3 field">
+          <div className=" field">
             <label className="text-sm label bold">Enter Loan Provider</label>
             <div className="control">
               <input
@@ -145,6 +147,7 @@ function UpdateEmployeeLoan() {
             <label className="relative inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
+                checked={employeeLoan.is_compounded_interest}
                 onChange={handleCheckboxChange}
                 className="sr-only peer"
               />

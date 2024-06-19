@@ -10,18 +10,64 @@ import { useDispatch } from "react-redux";
 import { cacheUserRole, cacheUserSession } from "../core/utilities";
 import { setUser } from "../core/stores/slices/user_slice";
 import Loader from "../components/loader/_component";
-import { UserLogin } from "../core/services/auth.service";
+import { UserForgotPassword, UserLogin } from "../core/services/auth.service";
 import { FaCircleInfo } from "react-icons/fa6";
 
 function Login() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isForgotLoading, setForgotIsLoading] = React.useState(false);
+  const [isResetLoading, setResetIsLoading] = React.useState(false);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [isForgotPassowrdModalOpen, setIsForgotPassowrdModalOpen] =
+    React.useState(false);
+  const [isResetPassowrdModalOpen, setIsResetPassowrdModalOpen] =
     React.useState(false);
   const [confirmRole, setConfirmRole] = React.useState(false);
   const newPasswordToggle = () => {
     setShowNewPasswordType(!showNewPasswordType);
+  };
+
+  const handleForgotPassword = (event) => {
+    setForgotIsLoading(true);
+    event.preventDefault();
+    const forgotPasswordForm = document.getElementById("forgot-password-form");
+    const forgotPasswordData = {
+      ...formToJSON(forgotPasswordForm),
+    };
+    UserForgotPassword(forgotPasswordData)
+      .then((res) => {
+        setForgotIsLoading(false);
+        console.log(res);
+        forgotPasswordForm?.reset();
+        showToast(res?.data.message, true);
+      })
+      .catch((error) => {
+        console.log(error);
+        setForgotIsLoading(false);
+        showToast(error.response.data.error, false);
+      });
+  };
+
+  const handleResetPassword = (event) => {
+    setResetIsLoading(true);
+    event.preventDefault();
+    const resetPasswordForm = document.getElementById("reset-password-form");
+    const forgotPasswordData = {
+      ...formToJSON(resetPasswordForm),
+      verification_key: key,
+    };
+    UserForgotPassword(forgotPasswordData)
+      .then((res) => {
+        console.log(res);
+        setResetIsLoading(false);
+        resetPasswordForm?.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+        setResetIsLoading(false);
+        showToast(error.response.data.error, false);
+      });
   };
 
   const handleLogin = (event) => {
@@ -69,6 +115,9 @@ function Login() {
   const closeForgotPasswordModal = () => {
     setIsForgotPassowrdModalOpen(false);
   };
+  const closeResetPasswordModal = () => {
+    setIsResetPassowrdModalOpen(false);
+  };
 
   const closeConfirmRoleModal = () => {
     setConfirmRole(false);
@@ -91,50 +140,108 @@ function Login() {
   //  pass: KAKAY1212?!?@test
   return (
     <>
-      <Modal open={isForgotPassowrdModalOpen} close={closeForgotPasswordModal}>
-        <form className="p-16 bg-white">
+      <Modal
+        showCloseBtn={true}
+        open={isForgotPassowrdModalOpen}
+        close={closeForgotPasswordModal}
+      >
+        <form
+          id="forgot-password-form"
+          onSubmit={handleForgotPassword}
+          className="p-16 bg-white"
+        >
           <div className="relative">
             <label className="text-sm label bold">Enter Email</label>
             <div className="control">
               <input
                 required
                 className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-[30rem] pl-10 p-2.5"
-                type={showNewPasswordType ? "text" : "password"}
+                type="email"
                 placeholder="Email"
+                name="email"
               />
             </div>
-            {/* <div className="relative mt-6 field">
-              <label className="text-sm label bold">Password</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type={showNewPasswordType ? "text" : "password"}
-                  placeholder="Password"
-                  name="password"
-                />
-              </div>
-              <div className="absolute top-9 right-3">
-                <span onClick={newPasswordToggle} className="cursor-pointer">
-                  {showNewPasswordType ? (
-                    <HiMiniEyeSlash size={20} />
-                  ) : (
-                    <IoEyeSharp size={20} />
-                  )}
-                </span>
-              </div>
-            </div> */}
           </div>
-
           <button
+            disabled={isForgotLoading}
             type="submit"
-            className="w-full py-3 text-white mt-9 primary mobile:w-full"
+            className={
+              isForgotLoading
+                ? `animate-pulse w-full py-3 text-white mt-9 primary mobile:w-full`
+                : `w-full py-3 text-white mt-9 primary mobile:w-full`
+            }
           >
-            Submit
+            {isForgotLoading ? <Loader /> : "Submit"}
           </button>
         </form>
       </Modal>
 
+      <Modal
+        showCloseBtn={true}
+        open={isResetPassowrdModalOpen}
+        close={closeResetPasswordModal}
+      >
+        <form
+          id="reset-password-form"
+          onSubmit={handleResetPassword}
+          className="p-16 bg-white"
+        >
+          <div className="relative w-96">
+            <label className="text-sm label bold">New Password</label>
+            <div className="control">
+              <input
+                required
+                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                type={showNewPasswordType ? "text" : "password"}
+                placeholder="Password"
+                name="password"
+              />
+            </div>
+            <div className="absolute top-9 right-3">
+              <span onClick={newPasswordToggle} className="cursor-pointer">
+                {showNewPasswordType ? (
+                  <HiMiniEyeSlash size={20} />
+                ) : (
+                  <IoEyeSharp size={20} />
+                )}
+              </span>
+            </div>
+          </div>
+
+          <div className="relative mt-8 w-96">
+            <label className="text-sm label bold">Confirm Password</label>
+            <div className="control">
+              <input
+                required
+                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                type={showNewPasswordType ? "text" : "password"}
+                placeholder="Password"
+                name="password_confirmation"
+              />
+            </div>
+            <div className="absolute top-9 right-3">
+              <span onClick={newPasswordToggle} className="cursor-pointer">
+                {showNewPasswordType ? (
+                  <HiMiniEyeSlash size={20} />
+                ) : (
+                  <IoEyeSharp size={20} />
+                )}
+              </span>
+            </div>
+          </div>
+          <button
+            disabled={isLoading}
+            type="submit"
+            className={
+              isLoading
+                ? `animate-pulse w-full py-3 text-white mt-9 primary mobile:w-full`
+                : `w-full py-3 text-white mt-9 primary mobile:w-full`
+            }
+          >
+            {isResetLoading ? <Loader /> : "Submit"}
+          </button>
+        </form>
+      </Modal>
       <Modal
         showCloseBtn={false}
         open={confirmRole}
@@ -180,7 +287,7 @@ function Login() {
               className="mobile:border-2 bg-white mobile:border-[#687864] mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30vw] h-[31rem] mobile-h-full"
             >
               <div className="field">
-                <label className="label bold">Email</label>
+                <label className="text-sm label bold">Email</label>
                 <div className="control">
                   <input
                     required
@@ -192,7 +299,7 @@ function Login() {
                 </div>
               </div>
               <div className="relative field">
-                <label className="label bold">Password</label>
+                <label className="text-sm label bold">Password</label>
                 <div className="control">
                   <input
                     required

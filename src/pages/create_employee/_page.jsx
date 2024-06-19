@@ -310,18 +310,12 @@ function CreateEmployee() {
               />
             </div>
           </div>
-          <div className=" field">
+          <div>
             <label className="text-sm label bold">
-              Enter Frequency of Income
+              Select frequency of income
             </label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Frequency of Income"
-                name="income_frequency"
-              />
+            <div className="flex w-full row mobile:w-full">
+              <Select className="w-full" options={options} />
             </div>
           </div>
         </div>

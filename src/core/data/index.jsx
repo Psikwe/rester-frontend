@@ -7,9 +7,12 @@ import { RxDashboard } from "react-icons/rx";
 
 const entity_id = localStorage.getItem("entity_id");
 export const options = [
-  { value: "chocolate", label: "Per Anum" },
-  { value: "strawberry", label: "Per Month" },
-  { value: "vanilla", label: "Vanilla" },
+  { value: "yearly", label: "Yearly" },
+  { value: "monthly", label: "Monthly" },
+  { value: "fortnightly", label: "Fortnightly" },
+  { value: "weekly", label: "Weekly" },
+  { value: "daily", label: "Daily" },
+  { value: "hourly", label: "Hourly" },
 ];
 
 export const yearOptions = [
