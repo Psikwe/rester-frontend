@@ -173,10 +173,10 @@ function Home() {
               {/* <div className="flex from-laptop-to-laptop-xl:hidden hero-image-container">
                 <img alt="dashboard image" src="/african-woman.jpg" />
               </div> */}
-              <div className="mt-8 button-group hero-buttons">
+              <div className="mt-8 rounded-full button-group hero-buttons">
                 <button
                   onClick={handleSignupNavigation}
-                  className="duration-700 mobile:w-1/2 button primary"
+                  className="text-sm duration-700 rounded-full mobile:w-1/2 button primary"
                 >
                   Get Started &#8599;
                 </button>
@@ -190,8 +190,8 @@ function Home() {
           <button
             className={
               calculator === "incomeTax"
-                ? "primary mobile:w-full text-white p-3"
-                : "border-2 mobile:w-full border-[primary] p-3"
+                ? "primary rounded-full mobile:w-full text-white p-3"
+                : "border-2 rounded-full mobile:w-full border-[primary] p-3"
             }
             onClick={() => setCalculator("incomeTax")}
           >
@@ -200,8 +200,8 @@ function Home() {
           <button
             className={
               calculator === "grossIncome"
-                ? "primary mobile:mt-6 mobile:w-full text-white p-3"
-                : "border-2 mobile:mt-6 mobile:w-full border-[primary] p-3"
+                ? "primary rounded-full mobile:mt-6 mobile:w-full text-white p-3"
+                : "border-2 rounded-full mobile:mt-6 mobile:w-full border-[primary] p-3"
             }
             onClick={() => setCalculator("grossIncome")}
           >

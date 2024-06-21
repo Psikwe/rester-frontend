@@ -10,7 +10,11 @@ import { useDispatch } from "react-redux";
 import { cacheUserRole, cacheUserSession } from "../core/utilities";
 import { setUser } from "../core/stores/slices/user_slice";
 import Loader from "../components/loader/_component";
-import { UserForgotPassword, UserLogin } from "../core/services/auth.service";
+import {
+  UserForgotPassword,
+  UserLogin,
+  UserResetPassword,
+} from "../core/services/auth.service";
 import { FaCircleInfo } from "react-icons/fa6";
 
 function Login() {
@@ -53,11 +57,11 @@ function Login() {
     setResetIsLoading(true);
     event.preventDefault();
     const resetPasswordForm = document.getElementById("reset-password-form");
-    const forgotPasswordData = {
+    const resetPasswordData = {
       ...formToJSON(resetPasswordForm),
       verification_key: key,
     };
-    UserForgotPassword(forgotPasswordData)
+    UserResetPassword(resetPasswordData)
       .then((res) => {
         console.log(res);
         setResetIsLoading(false);
@@ -167,8 +171,8 @@ function Login() {
             type="submit"
             className={
               isForgotLoading
-                ? `animate-pulse w-full py-3 text-white mt-9 primary mobile:w-full`
-                : `w-full py-3 text-white mt-9 primary mobile:w-full`
+                ? `animate-pulse rounded-full w-full py-3 text-white mt-9 primary mobile:w-full`
+                : `w-full rounded-full py-3 text-white mt-9 primary mobile:w-full`
             }
           >
             {isForgotLoading ? <Loader /> : "Submit"}
@@ -258,13 +262,13 @@ function Login() {
           <div className="flex">
             <button
               onClick={handleEmployeeNavigation}
-              className="w-full mr-2 text-white mt-9 bg-[#0DCAF0] mobile:w-full"
+              className="w-full mr-2 rounded-full text-white mt-9 bg-[#0DCAF0] mobile:w-full"
             >
               As Employee
             </button>
             <button
               onClick={handleAdminNavigation}
-              className="w-full py-2 text-white bg-red-500 mt-9 mobile:w-full"
+              className="w-full py-2 text-white bg-red-500 rounded-full mt-9 mobile:w-full"
             >
               As Admin
             </button>

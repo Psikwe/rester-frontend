@@ -176,7 +176,7 @@ export default function IncomeTaxCalculator() {
         {/*   <button className="outline">%</button> */}
         {/* </div> */}
         <div className="flex p-3 from-laptop-to-laptop-xl:w-1/2 column">
-          <button className="w-full py-3 text-white primary">
+          <button className="w-full py-3 text-white rounded-full primary">
             Calculate Income Tax
           </button>
         </div>

@@ -19,8 +19,8 @@ export const UserForgotPassword = async (payload) => {
 };
 
 export const UserResetPassword = async (payload) => {
-  return await axios.post(
-    "https://rester-82c60dc37022.herokuapp.com/forgot_password",
+  return await axios.patch(
+    "https://rester-82c60dc37022.herokuapp.com/reset_password",
     payload
   );
 };

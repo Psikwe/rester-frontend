@@ -85,7 +85,7 @@ export default function GrossIncomeCalculator() {
         </div>
       </div>
       <div className="flex mt-4 row">
-        <button className="w-1/6 py-3 text-white primary mobile:w-full">
+        <button className="w-1/6 py-3 text-sm text-white rounded-full primary mobile:w-full">
           Calculate Gross Income
         </button>
         {/* <button className="inverse">Calculate Gross Income</button> */}
