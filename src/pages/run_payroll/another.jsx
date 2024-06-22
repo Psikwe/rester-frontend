@@ -1,11 +1,16 @@
 import React from "react";
 import { Spreadsheet } from "react-spreadsheet";
-import { GetTaxReport } from "../../core/services/report.service";
+import {
+  DownloadTaxReport,
+  GetTaxReport,
+  SaveTaxReport,
+} from "../../core/services/report.service";
 import Flatpickr from "react-flatpickr";
 import moment from "moment";
 import Modal from "../../components/modal/_component";
 import { showToast } from "../../core/hooks/alert";
 import DataGrid from "react-data-grid";
+import { SiCashapp } from "react-icons/si";
 
 const MySpreadsheet = () => {
   const entity_id = localStorage.getItem("entity_id");
@@ -195,35 +200,63 @@ const MySpreadsheet = () => {
 
     return [...extendedData, ...additionalRows];
   }
+  const handleNavigateToEmployeeLoan = (id) => {
+    // window.location.href = "/dashboard/create-employee-loan/" + id;
+  };
+  const renderActionsRow = (data) => {
+    const { id, first_name } = data.row;
+    console.log(id);
+    return (
+      <div className="grid grid-cols-2 mt-1">
+        {/* <button title="Delete" onClick={() => handleDeleteClick(id, name)}>
+          <MdDelete color="red" size={18} />
+        </button> */}
+
+        <button
+          className="mb-2 ml-3"
+          title="Create Employee Loan"
+          onClick={() => handleNavigateToEmployeeLoan(id, first_name)}
+        >
+          <SiCashapp color="blue" size={18} />
+        </button>
+      </div>
+    );
+  };
 
   const columns = [
-    { key: "accomodation_element", name: "Accomodation Element" },
+    // {
+    //   key: "update",
+    //   name: "Actions",
+    //   renderCell: renderActionsRow,
+    //   width: "100px",
+    // },
+    { key: "serial_no", name: "Serial No." },
+    { key: "tin", name: "Tin" },
+    { key: "name_of_employee", name: "Name Of Employee" },
+    { key: "position", name: "Position" },
+    { key: "non_resident", name: "Non Resident" },
     { key: "basic_salary", name: "Basic Salary" },
-    { key: "bonus_income", name: "Bonus Income" },
+    { key: "secondary_employment", name: "Secondary Employment" },
+    { key: "social_security_fund", name: "Social Security Fund" },
+    { key: "third_tier", name: "Third Tier" },
     { key: "cash_allowances", name: "Cash Allowances" },
+    { key: "bonus_income", name: "Bonus Income" },
+    { key: "final_tax_on_bonus", name: "Final Tax On Bonus" },
+    { key: "excess_bonus", name: "Excess Bonus" },
+    { key: "total_cash_emolument", name: "Total Cash Employment" },
+    { key: "accomodation_element", name: "Accomodation Element" },
+    { key: "vehicle_element", name: "Vehicle Element" },
+    { key: "non_cash_benefit", name: "Non Cash Benefit" },
+    { key: "total_assessable_income", name: "Total Assemble Income" },
+    { key: "tax_deductible", name: "Tax Deductible" },
+    { key: "total_reliefs", name: "Total Reliefs" },
     { key: "chargeable_income", name: "Chargeable Income" },
     { key: "deductible_reliefs", name: "Deductible Reliefs" },
-    { key: "excess_bonus", name: "Excess Bonus" },
-    { key: "final_tax_on_bonus", name: "Final Tax On Bonus" },
-    { key: "name_of_employee", name: "Name Of Employee" },
-    { key: "non_cash_benefit", name: "Non Cash Benefit" },
-    { key: "non_resident", name: "Non Resident" },
     { key: "overtime_income", name: "Overtime Income" },
     { key: "overtime_tax", name: "Overtime Tax" },
-    { key: "position", name: "Position" },
-    { key: "remarks", name: "Remarks" },
-    { key: "secondary_employment", name: "Secondary Employment" },
-    { key: "serial_no", name: "Serial No." },
-    { key: "severance_pay_paid", name: "Serverance Pay Paid" },
-    { key: "social_security_fund", name: "Social Security Fund" },
-    { key: "tax_deductible", name: "Tax Deductible" },
-    { key: "third_tier", name: "Third Tier" },
-    { key: "tin", name: "Tin" },
-    { key: "total_assessable_income", name: "Total Assemble Income" },
-    { key: "total_cash_emolument", name: "Total Cash Employment" },
-    { key: "total_reliefs", name: "Total Reliefs" },
     { key: "total_tax_payable_to_gra", name: "Total Tax Payable To GRA" },
-    { key: "vehicle_element", name: "Vehicle Element" },
+    { key: "severance_pay_paid", name: "Serverance Pay Paid" },
+    { key: "remarks", name: "Remarks" },
   ];
 
   React.useEffect(() => {
@@ -237,8 +270,35 @@ const MySpreadsheet = () => {
         console.log(error);
       });
   }, []);
+
+  React.useEffect(() => {
+    DownloadTaxReport(entity_id, formattedStartDate, formattedEndDate)
+      .then((response) => {
+        console.log("oh: ", response?.data.entries);
+        let result = response.data.entries;
+        setReport(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const saveReport = () => {
+    const payload = {
+      entity_id: entity_id,
+      start_date: formattedStartDate,
+      end_date: formattedEndDate,
+      entries: report,
+    };
+    SaveTaxReport(payload)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const hello = transformArray(report);
-  console.log("hellllll", hello);
   const transposedData = reshapeArray(hello, 11);
   const extendedData = extendDataWithEmptyCells(transposedData, 5, 10);
 
@@ -307,6 +367,18 @@ const MySpreadsheet = () => {
 
       {durationIsConfirmed && (
         <div className="overflow-y-hidden">
+          <button
+            onClick={saveReport}
+            className="w-1/6 py-3 mb-3 mr-4 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
+          >
+            Save Payroll
+          </button>
+          <button
+            // onClick={() => setIsCreateIncomeTypeModalOpen(true)}
+            className="w-1/6 py-3 mb-3 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
+          >
+            Download Payroll
+          </button>
           {/* <Spreadsheet data={extendedData} /> */}
 
           <DataGrid
