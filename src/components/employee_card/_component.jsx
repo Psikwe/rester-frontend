@@ -10,13 +10,13 @@ function EmployeeCard(props) {
       <div className="flex items-center justify-between">
         <div>
           <p className="mb-4 text-sm">
-            Full Name: <span className="text-[#0DCAF0]">{props.fullName}</span>{" "}
+            <span className="text-[#0DCAF0]">{props.fullName}</span>{" "}
           </p>
           <p className="mb-4 text-sm">
-            Email: <span className="text-[#0DCAF0]">{props.email}</span>
+            <span className="text-[#0DCAF0]">{props.email}</span>
           </p>
           <p className="mb-4 text-sm">
-            Ghana Card Number:{" "}
+            {" "}
             <span className="text-[#0DCAF0]">{props.ghanaCardNo}</span>{" "}
           </p>
 

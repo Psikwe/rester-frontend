@@ -1,16 +1,25 @@
 import React from "react";
 import { FaCircleInfo } from "react-icons/fa6";
-import axios from "axios";
+import axios, { formToJSON } from "axios";
 import { CiLogout } from "react-icons/ci";
+import Select from "react-select";
 import CompanyCard from "../../components/card/_component";
+import { IoMdAdd } from "react-icons/io";
 import SkeletonLoader from "../../components/skeleton_loading/_component";
 import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "../../components/modal/_component";
 import { clearUserSession } from "../../core/utilities";
+import { CreateEntityForm } from "../../core/services/entity.service";
+import { noOfEmployees } from "../../core/data";
+import Loader from "../../components/loader/_component";
+import { showToast } from "../../core/hooks/alert";
 
 function ViewCompany() {
   const [isSkeletonLoading, setSkeletonLoading] = React.useState(true);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
+  const [createEntityModal, setCreateEntityModal] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
 
   const [company, setCompany] = React.useState([
     {
@@ -57,6 +66,38 @@ function ViewCompany() {
   const closeLogoutModal = () => {
     setIsLogoutModalOpen(false);
   };
+  const closeEntityModal = () => {
+    setCreateEntityModal(false);
+  };
+
+  const handleChange = (selectedRangeOption) => {
+    setSelectedRangeOption(selectedRangeOption);
+  };
+
+  const handleCompanySubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const companyForm = document.getElementById("company-form");
+    const payload = {
+      ...formToJSON(companyForm),
+      size: selectedRangeOption.value,
+    };
+    console.log(payload);
+    CreateEntityForm(payload)
+      .then((res) => {
+        console.log(res);
+        setIsLoading(false);
+        showToast(res?.data.message, true);
+        companyForm?.reset();
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        showToast(error.response.data.error, false);
+      });
+  };
   return (
     <>
       <Modal open={isLogoutModalOpen} close={closeLogoutModal}>
@@ -80,6 +121,81 @@ function ViewCompany() {
               Yes
             </button>
           </div>
+        </div>
+      </Modal>
+      <Modal
+        showCloseBtn={true}
+        open={createEntityModal}
+        close={closeEntityModal}
+      >
+        <div className="w-full bg-white p-14">
+          <form
+            id="company-form"
+            className="w-full"
+            onSubmit={handleCompanySubmit}
+          >
+            <div className="grid-cols-2 gap-3">
+              <div className="field w-96">
+                <label className="text-sm label bold">Enter Entity Name</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Company Name"
+                    name="name"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
+              </div>
+
+              <div className="my-6 field">
+                <label className="text-sm label bold">Enter Address(GPS)</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Address"
+                    name="address"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
+              </div>
+              <label className="text-sm label bold">
+                Select number of employees
+              </label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={selectedRangeOption}
+                  onChange={handleChange}
+                  options={noOfEmployees}
+                  placeholder="Number of employees"
+                />
+              </div>
+              <div className="mt-6 field">
+                <label className="text-sm label bold">Enter Email</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full  py-3 mt-8 text-white bg-[#0DCAF0] mobile:w-full"
+            >
+              {isLoading ? <Loader /> : " Add Company"}
+            </button>
+          </form>
         </div>
       </Modal>
       <nav className="sticky top-0 z-10 flex justify-between p-6 text-gray-500 bg-white shadow-2xl">
@@ -123,6 +239,12 @@ function ViewCompany() {
               ))}
             </>
           )}
+          <div
+            onClick={() => setCreateEntityModal(true)}
+            className="flex items-center cursor-pointer"
+          >
+            <IoMdAdd size={30} />
+          </div>
         </div>
       </div>
     </>

@@ -56,6 +56,7 @@ const DashboardLayout = () => {
   };
   const { pathname } = useLocation();
   console.log(pathname);
+  const entityName = localStorage.getItem("entity_name");
   return (
     <>
       <Modal showCloseBtn={true} open={isModalOpen} close={closeModal}>
@@ -184,7 +185,7 @@ const DashboardLayout = () => {
               <MdAdminPanelSettings className="text-slate-200" size={30} />
 
               <div className="flex items-center justify-between">
-                <small className="ml-1 text-slate-200">Hello Admin</small>
+                <small className="ml-1 text-slate-200">{entityName}</small>
               </div>
             </div>
             <div className="m-auto text-slate-200">{showDate}</div>

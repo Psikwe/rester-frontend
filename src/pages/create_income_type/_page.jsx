@@ -3,6 +3,7 @@ import React from "react";
 import { showToast } from "../../core/hooks/alert";
 import {
   CreateIncomeTypeForm,
+  DeleteIncomeType,
   GetIncomeTypes,
 } from "../../core/services/income.service";
 import Loader from "../../components/loader/_component";
@@ -12,7 +13,8 @@ import Modal from "../../components/modal/_component";
 import TableLoader from "../../components/table_loader/_component";
 import { FcSearch } from "react-icons/fc";
 import { FiEdit } from "react-icons/fi";
-import { CiLock } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
+import { BsExclamationCircleFill } from "react-icons/bs";
 
 function CreateIncomeType() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -20,7 +22,10 @@ function CreateIncomeType() {
   const [isCreateIncomeTypeModalOpen, setIsCreateIncomeTypeModalOpen] =
     React.useState(false);
   const [incomeTypes, setIncomeTypes] = React.useState([]);
+  const [deleteId, setDeleteId] = React.useState("");
   const [isOperationLoading, setOperationLoading] = React.useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
+  const [itemToDelete, setItemToDelete] = React.useState("");
 
   const entity_id = localStorage.getItem("entity_id");
   const handleCreateEmployeeSubmit = (e) => {
@@ -47,13 +52,16 @@ function CreateIncomeType() {
       });
   };
 
+  const handleDelete = (id, income_name) => {
+    setDeleteId(id);
+    setDeleteModalOpen(true);
+    setItemToDelete(income_name);
+  };
+
   const renderActionsRow = (data) => {
-    const { id, first_name } = data.row;
+    const { id, income_name } = data.row;
     return (
-      <div className="flex items-center mt-1">
-        {/* <button title="Delete" onClick={() => handleDeleteClick(id, name)}>
-          <MdDelete color="red" size={18} />
-        </button> */}
+      <div className="flex items-center mt-4">
         <button
           className="mb-2 ml-3"
           title="Update"
@@ -64,9 +72,9 @@ function CreateIncomeType() {
         <button
           className="mb-2 ml-3"
           title="Deactivate"
-          onClick={() => handleDelete(id, first_name)}
+          onClick={() => handleDelete(id, income_name)}
         >
-          <CiLock color="red" size={18} />
+          <MdDelete color="red" size={18} />
         </button>{" "}
       </div>
     );
@@ -88,7 +96,6 @@ function CreateIncomeType() {
   React.useEffect(() => {
     GetIncomeTypes(entity_id)
       .then((response) => {
-        console.log("it: ", response);
         setIncomeTypes(response?.data.income_types);
       })
       .catch((error) => {
@@ -115,8 +122,58 @@ function CreateIncomeType() {
     setIsCreateIncomeTypeModalOpen(false);
   };
 
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
+  };
+
+  const confirmDeactivate = () => {
+    setOperationLoading(true);
+    setDeleteModalOpen(false);
+    DeleteIncomeType(deleteId, entity_id)
+      .then((response) => {
+        console.log(response);
+
+        showToast(response.data.message, true);
+        setTimeout(() => {
+          window.location.reload();
+          setOperationLoading(false);
+        }, 2000);
+      })
+      .catch((error) => {
+        showToast(error.response.data.error, false);
+      });
+  };
+
   return (
     <>
+      <Modal open={deleteModalOpen} close={closeDeleteModal} closeOnOverlay>
+        <div className="p-10 bg-white">
+          <div className="w-16 m-auto">
+            <BsExclamationCircleFill size={70} color="red" />
+          </div>
+          <div>
+            <h3 className="mt-3 text-black">
+              Are you sure you want to delete <br />
+              {""}
+              <b className="font-bold">{itemToDelete}</b>?
+            </h3>
+            <div className="flex mx-2 mt-6">
+              <button
+                onClick={closeDeleteModal}
+                className="w-full py-2 mr-2 text-white mt-9 primary mobile:w-full"
+              >
+                No
+              </button>
+              <button
+                onClick={confirmDeactivate}
+                className="w-full py-2 text-white bg-red-500 mt-9 mobile:w-full"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
       <Modal
         showCloseBtn={true}
         open={isCreateIncomeTypeModalOpen}

@@ -92,3 +92,17 @@ export const UpdateEmployeeLoanForm = async (payload) => {
     payload
   );
 };
+
+// Employee Dashboard
+export const GetEmployeeProfile = async () => {
+  return await getAxios().get(
+    "https://rester-82c60dc37022.herokuapp.com/get_employee_profile/"
+  );
+};
+
+export const UpdateEmployeeProfile = async (payload) => {
+  return await getAxios().patch(
+    "https://rester-82c60dc37022.herokuapp.com/update_employee_profile",
+    payload
+  );
+};

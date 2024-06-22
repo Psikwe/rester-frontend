@@ -2,19 +2,20 @@ import React from "react";
 import Select from "react-select";
 import { noOfEmployees } from "../../core/data";
 import { PiBuildingOfficeDuotone } from "react-icons/pi";
-import axios from "axios";
 import { formToJSON } from "axios";
 import { showToast } from "../../core/hooks/alert";
 import { CreateEntityForm } from "../../core/services/entity.service";
 
 function CreateEntity() {
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
   const handleChange = (selectedRangeOption) => {
     setSelectedRangeOption(selectedRangeOption);
   };
 
   const handleCompanySubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const companyForm = document.getElementById("company-form");
     const payload = {
       ...formToJSON(companyForm),
@@ -24,10 +25,12 @@ function CreateEntity() {
     CreateEntityForm(payload)
       .then((res) => {
         console.log(res);
+        setIsLoading(false);
         showToast(res?.data.message, true);
         companyForm?.reset();
       })
       .catch((error) => {
+        setIsLoading(false);
         showToast(error.response.data.error, false);
       });
   };
@@ -98,7 +101,7 @@ function CreateEntity() {
             type="submit"
             className="w-full  py-3 mt-8 text-white bg-[#0DCAF0] mobile:w-full"
           >
-            Add Company
+            {isLoading ? <Loader /> : " Add Company"}
           </button>
         </form>
 

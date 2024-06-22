@@ -29,6 +29,7 @@ function ManageEntity() {
       .then((response) => {
         console.log(response);
         setPopulateEntity(response.data.entity);
+        localStorage.setItem("entity_name", response.data.entity.name);
       })
       .catch((error) => {
         console.log(error);
@@ -132,7 +133,12 @@ function ManageEntity() {
           </div>
           <div>
             <h3 className="mt-3 text-sm">
-              Are you sure you want to delete {""}
+              <span className="-mt-6 font-bold text-red-500">
+                Once you delete an entity, there is no going back! <br /> Please
+                be certain.
+              </span>
+              <br />{" "}
+              <span className="mt-8">Are you sure you want to delete</span> {""}
               <span className="font-bold">{populateEntity.name}</span>?
             </h3>
             <div className="flex mx-2 mt-6">

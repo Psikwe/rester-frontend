@@ -11,6 +11,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "../../components/modal/_component";
 import moment from "moment";
+import { clearUserSession } from "../../core/utilities";
 
 const EmployeeDashboardLayout = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -33,7 +34,7 @@ const EmployeeDashboardLayout = () => {
   };
 
   const handleLogout = () => {
-    alert("not implemented yet");
+    clearUserSession();
   };
 
   const closeModal = () => {

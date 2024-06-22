@@ -43,15 +43,15 @@ export const adminDashboardMenus = [
     icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "Setup an Entity",
+        menu: "Setup a new Entity",
         url: "/dashboard/create-entity",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
-      {
-        menu: "Manage Entity",
-        url: "/view-entity",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
-      },
+      // {
+      //   menu: "Manage Entity",
+      //   url: "/view-entity",
+      //   icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      // },
     ],
   },
   {

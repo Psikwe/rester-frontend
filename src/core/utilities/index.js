@@ -23,6 +23,7 @@ export const clearUserSession = () => {
   localStorage.removeItem("u_token");
   localStorage.removeItem("u_role");
   localStorage.removeItem("entity_id");
+  localStorage.removeItem("entity_name");
   window.location.reload();
 };
 

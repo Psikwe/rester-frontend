@@ -3,13 +3,9 @@ import "flatpickr/dist/flatpickr.css";
 import Flatpickr from "react-flatpickr";
 import { showToast } from "../../core/hooks/alert";
 import Loader from "../../components/loader/_component";
-import { IoEyeSharp } from "react-icons/io5";
-import Select from "react-select";
-import { options } from "../../core/data";
 import {
-  CreateEmployeeForm,
-  GetOneEmployee,
-  SubmitUpdateEmployee,
+  GetEmployeeProfile,
+  UpdateEmployeeProfile,
 } from "../../core/services/employee.service";
 import { formToJSON } from "axios";
 import { useParams } from "react-router-dom";
@@ -20,14 +16,9 @@ function UpdateEmployee() {
   const { id } = useParams();
   const [isLoading, setIsLoading] = React.useState(false);
   const [employeeDetails, setEmployeeDetails] = React.useState({});
-  const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
-
-  const newPasswordToggle = () => {
-    setShowNewPasswordType(!showNewPasswordType);
-  };
 
   React.useEffect(() => {
-    GetOneEmployee(id)
+    GetEmployeeProfile()
       .then((response) => {
         setEmployeeDetails(response.data.employee);
         console.log("ee: ", response);
@@ -37,17 +28,19 @@ function UpdateEmployee() {
       });
   }, []);
 
+  let dateOfBirth = moment(employeeDetails.data_of_birth).format("YYYY-MM-DD");
+
   const handleUpdateEmployee = (e) => {
+    let dobValue = document.getElementById("date-of-birth");
     setIsLoading(true);
     e.preventDefault();
-    const entity_id = localStorage.getItem("entity_id");
     const employeeForm = document.getElementById("employee-form");
     const payload = {
       ...formToJSON(employeeForm),
-      employee_id: id,
+      date_of_birth: dobValue.value.length === 0 ? dateOfBirth : dobValue.value,
     };
 
-    SubmitUpdateEmployee(payload)
+    UpdateEmployeeProfile(payload)
       .then((res) => {
         console.log(res);
         setIsLoading(false);
@@ -59,7 +52,6 @@ function UpdateEmployee() {
         showToast(error.response.data.error, false);
       });
   };
-  let dateOfBirth = moment(employeeDetails.data_of_birth).format("L");
 
   return (
     <>
@@ -112,6 +104,7 @@ function UpdateEmployee() {
               placeholder={dateOfBirth}
               ref={fp}
               name="date_of_birth"
+              id="date-of-birth"
             />
             <button
               type="button"
@@ -219,94 +212,7 @@ function UpdateEmployee() {
               />
             </div>
           </div>
-          <div className="mt-3 field">
-            <label className="text-sm label bold">Enter remarks</label>
-            <div className="control">
-              <textarea
-                rows={5}
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Remarks"
-                name="remarks"
-                defaultValue={employeeDetails.remarks}
-              />
-            </div>
-          </div>
         </div>
-        <h3 className="text-sm mt-9">Details</h3>
-        <div className="grid grid-cols-3 gap-3">
-          <div className="mt-3 field">
-            <label className="text-sm label bold">Job Title</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Job Title"
-                name="job_title"
-                defaultValue={employeeDetails.job_title}
-              />
-            </div>
-          </div>
-          <div className="mt-3 field">
-            <label className="text-sm label bold">Nature of Employment</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Other Names"
-                name="nature_of_employment"
-                defaultValue={employeeDetails.nature_of_employment}
-              />
-            </div>
-          </div>
-        </div>
-
-        <h3 className="text-sm mt-9">Income</h3>
-        <div className="grid grid-cols-3 gap-3">
-          {/* <div>
-            <label className="text-sm label bold">Select type of income</label>
-            <div className="flex w-full row mobile:w-full">
-              <Select
-                className="w-full"
-                value={selectedOption}
-                onChange={handleChange}
-                options={incomeTypeOptions}
-                placeholder="Income Type"
-              />
-            </div>
-          </div> */}
-
-          {/* <div className="field">
-            <label className="text-sm label bold">Enter Amount</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="number"
-                placeholder="Amount"
-                name="income_amount"
-              />
-            </div>
-          </div>
-          <div className=" field">
-            <label className="text-sm label bold">
-              Enter Frequency of Income
-            </label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="text"
-                placeholder="Frequency of Income"
-                name="income_frequency"
-              />
-            </div>
-          </div> */}
-        </div>
-
         <button
           disabled={isLoading}
           type="submit"
@@ -316,7 +222,7 @@ function UpdateEmployee() {
               : `w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
           }
         >
-          {isLoading ? <Loader /> : "Update Employee"}
+          {isLoading ? <Loader /> : "Update"}
         </button>
       </form>
     </>

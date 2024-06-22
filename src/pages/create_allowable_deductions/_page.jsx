@@ -56,7 +56,7 @@ function CreateAllowableDeductions() {
             </div>
           </div>
           <div className="field">
-            <label className="text-sm label bold">Enter Tax 1</label>
+            <label className="text-sm label bold">Enter Cat 1</label>
             <div className="control">
               <input
                 required
@@ -68,7 +68,7 @@ function CreateAllowableDeductions() {
             </div>
           </div>
           <div className="mt-3 field">
-            <label className="text-sm label bold">Enter Tax 2</label>
+            <label className="text-sm label bold">Enter Cat 2</label>
             <div className="control">
               <input
                 required

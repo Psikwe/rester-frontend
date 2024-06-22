@@ -4,6 +4,8 @@ import Flatpickr from "react-flatpickr";
 import { showToast } from "../../core/hooks/alert";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
+import { IoAddOutline } from "react-icons/io5";
+import { GrFormSubtract } from "react-icons/gr";
 import Select from "react-select";
 import { options } from "../../core/data";
 import { CreateEmployeeForm } from "../../core/services/employee.service";
@@ -21,20 +23,56 @@ function CreateEmployee() {
     setShowNewPasswordType(!showNewPasswordType);
   };
   const [selectedOption, setSelectedOption] = React.useState(null);
+  const [selectedFrequencyOption, setSelectedFrequencyOption] =
+    React.useState(null);
+  const [incomeSection, setIncomeSection] = React.useState([
+    { incomeType: null, amount: "", incomeFrequency: null },
+  ]);
 
-  const handleChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
-    console.log("sel: ", selectedOption.value, selectedOption.name);
+  const handleChange = (index, selectedOption) => {
+    const updatedIncomeSection = [...incomeSection];
+    updatedIncomeSection[index].incomeType = selectedOption;
+    console.log("upp: ", updatedIncomeSection);
+    setIncomeSection(updatedIncomeSection);
   };
+
+  const handleFrequencyChange = (index, selectedOption) => {
+    const updatedIncomeSection = [...incomeSection];
+    updatedIncomeSection[index].incomeFrequency = selectedOption;
+    console.log("uppfff: ", updatedIncomeSection);
+    setIncomeSection(updatedIncomeSection);
+  };
+
+  const handleRemoveOptionsField = (index) => {
+    const updatedIncomeSection = incomeSection.filter((_, i) => i !== index);
+    setIncomeSection(updatedIncomeSection);
+  };
+
+  const handleAddOptionsField = () => {
+    setIncomeSection([
+      ...incomeSection,
+      { incomeType: null, amount: "", incomeFrequency: null },
+    ]);
+  };
+
   const handleCreateEmployeeSubmit = (e) => {
     setIsLoading(true);
     e.preventDefault();
+
+    const transformedData = incomeSection.map((entry) => ({
+      incomeType: entry.incomeType.value,
+      amount: entry.amount,
+      incomeFrequency: entry.incomeFrequency.value,
+    }));
+
     const employeeForm = document.getElementById("employee-form");
     const payload = {
       ...formToJSON(employeeForm),
       entity_id: entity_id,
-      income_type_id: selectedOption.value,
+      incomeSection: transformedData,
     };
+
+    console.log("pay: ", payload);
 
     CreateEmployeeForm(payload)
       .then((res) => {
@@ -282,42 +320,72 @@ function CreateEmployee() {
             </div>
           </div>
         </div>
-
-        <h3 className="text-sm mt-9">Income</h3>
-        <div className="grid grid-cols-3 gap-3">
-          <div>
-            <label className="text-sm label bold">Select type of income</label>
-            <div className="flex w-full row mobile:w-full">
-              <Select
-                className="w-full"
-                value={selectedOption}
-                onChange={handleChange}
-                options={incomeTypeOptions}
-                placeholder="Income Type"
-              />
+        {incomeSection.map((to, index) => (
+          <div key={index} className="flex items-center mt-8">
+            <div className="w-full mr-3">
+              <label className="text-sm label bold">
+                Select type of income
+              </label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={to.incomeType}
+                  onChange={(selectedOption) =>
+                    handleChange(index, selectedOption)
+                  }
+                  options={incomeTypeOptions}
+                  placeholder="Income Type"
+                />
+              </div>
+            </div>
+            <div className="w-full mr-3">
+              <label className="text-sm label bold">Enter Amount</label>
+              <div className="control">
+                <input
+                  required
+                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
+                  type="number"
+                  placeholder="Amount"
+                  value={to.amount}
+                  onChange={(e) => {
+                    const updatedIncomeSection = [...incomeSection];
+                    updatedIncomeSection[index].amount = e.target.value;
+                    setIncomeSection(updatedIncomeSection);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <label className="text-sm label bold">
+                Select frequency of income
+              </label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={to.incomeFrequency}
+                  onChange={(selectedOption) =>
+                    handleFrequencyChange(index, selectedOption)
+                  }
+                  options={options}
+                  id="income-frequency"
+                />
+              </div>
+            </div>
+            <div
+              title="Remove fields"
+              className="w-12 px-3 py-1 mt-3 ml-3 text-white bg-black cursor-pointer"
+              onClick={() => handleRemoveOptionsField(index)}
+            >
+              <GrFormSubtract />
             </div>
           </div>
-
-          <div className="field">
-            <label className="text-sm label bold">Enter Amount</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type="number"
-                placeholder="Amount"
-                name="income_amount"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="text-sm label bold">
-              Select frequency of income
-            </label>
-            <div className="flex w-full row mobile:w-full">
-              <Select className="w-full" options={options} />
-            </div>
-          </div>
+        ))}
+        <div
+          title="Add fields"
+          className="flex items-center w-10 px-3 py-1 mt-3 text-white bg-black cursor-pointer"
+          onClick={handleAddOptionsField}
+        >
+          <IoAddOutline />
         </div>
 
         <button

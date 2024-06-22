@@ -5,6 +5,7 @@ import Flatpickr from "react-flatpickr";
 import moment from "moment";
 import Modal from "../../components/modal/_component";
 import { showToast } from "../../core/hooks/alert";
+import DataGrid from "react-data-grid";
 
 const MySpreadsheet = () => {
   const entity_id = localStorage.getItem("entity_id");
@@ -12,6 +13,7 @@ const MySpreadsheet = () => {
   const [report, setReport] = React.useState([]);
   const [selectedStartDate, setSelectedStartDate] = React.useState(null);
   const [selectedEndDate, setSelectedEndDate] = React.useState(null);
+  const [payroll, setPayroll] = React.useState([]);
   const [durationIsConfirmed, setDurationIsConfirmed] = React.useState(false);
   const [openDurationModal, setOpenDurationModal] = React.useState(true);
 
@@ -194,6 +196,36 @@ const MySpreadsheet = () => {
     return [...extendedData, ...additionalRows];
   }
 
+  const columns = [
+    { key: "accomodation_element", name: "Accomodation Element" },
+    { key: "basic_salary", name: "Basic Salary" },
+    { key: "bonus_income", name: "Bonus Income" },
+    { key: "cash_allowances", name: "Cash Allowances" },
+    { key: "chargeable_income", name: "Chargeable Income" },
+    { key: "deductible_reliefs", name: "Deductible Reliefs" },
+    { key: "excess_bonus", name: "Excess Bonus" },
+    { key: "final_tax_on_bonus", name: "Final Tax On Bonus" },
+    { key: "name_of_employee", name: "Name Of Employee" },
+    { key: "non_cash_benefit", name: "Non Cash Benefit" },
+    { key: "non_resident", name: "Non Resident" },
+    { key: "overtime_income", name: "Overtime Income" },
+    { key: "overtime_tax", name: "Overtime Tax" },
+    { key: "position", name: "Position" },
+    { key: "remarks", name: "Remarks" },
+    { key: "secondary_employment", name: "Secondary Employment" },
+    { key: "serial_no", name: "Serial No." },
+    { key: "severance_pay_paid", name: "Serverance Pay Paid" },
+    { key: "social_security_fund", name: "Social Security Fund" },
+    { key: "tax_deductible", name: "Tax Deductible" },
+    { key: "third_tier", name: "Third Tier" },
+    { key: "tin", name: "Tin" },
+    { key: "total_assessable_income", name: "Total Assemble Income" },
+    { key: "total_cash_emolument", name: "Total Cash Employment" },
+    { key: "total_reliefs", name: "Total Reliefs" },
+    { key: "total_tax_payable_to_gra", name: "Total Tax Payable To GRA" },
+    { key: "vehicle_element", name: "Vehicle Element" },
+  ];
+
   React.useEffect(() => {
     GetTaxReport(entity_id, formattedStartDate, formattedEndDate)
       .then((response) => {
@@ -275,7 +307,14 @@ const MySpreadsheet = () => {
 
       {durationIsConfirmed && (
         <div className="overflow-y-hidden">
-          <Spreadsheet data={extendedData} />
+          {/* <Spreadsheet data={extendedData} /> */}
+
+          <DataGrid
+            className="text-sm rdg-light grid-container"
+            columns={columns}
+            rows={report || []}
+            rowHeight={50}
+          />
         </div>
       )}
     </>

@@ -165,7 +165,7 @@ function UpdateEmployeeLoan() {
               : `w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
           }
         >
-          {isLoading ? <Loader /> : " Add Employee Income Type"}
+          {isLoading ? <Loader /> : " Update Employee Loan"}
         </button>
       </form>
     </>
