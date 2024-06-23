@@ -84,7 +84,7 @@ function CreateAllowableDeductions() {
           type="submit"
           className="w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full"
         >
-          Add Employee Income Type
+          Create Allowable Deduction
         </button>
       </form>
     </>

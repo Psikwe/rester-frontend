@@ -2,7 +2,7 @@ import React from "react";
 import { Spreadsheet } from "react-spreadsheet";
 import {
   DownloadTaxReport,
-  GetTaxReport,
+  GenerateTaxReport,
   SaveTaxReport,
 } from "../../core/services/report.service";
 import Flatpickr from "react-flatpickr";
@@ -11,19 +11,18 @@ import Modal from "../../components/modal/_component";
 import { showToast } from "../../core/hooks/alert";
 import DataGrid from "react-data-grid";
 import { SiCashapp } from "react-icons/si";
+import Loader from "../../components/loader/_component";
 
 const MySpreadsheet = () => {
   const entity_id = localStorage.getItem("entity_id");
   const fp = React.useRef(null);
   const [report, setReport] = React.useState([]);
   const [selectedStartDate, setSelectedStartDate] = React.useState(null);
+  const [grandReport, setGrandReport] = React.useState();
   const [selectedEndDate, setSelectedEndDate] = React.useState(null);
-  const [payroll, setPayroll] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [durationIsConfirmed, setDurationIsConfirmed] = React.useState(false);
   const [openDurationModal, setOpenDurationModal] = React.useState(true);
-
-  let start_date = "2024-06-05";
-  let end_date = "2024-06-06";
 
   const anothers = [
     [{ value: "0.00" }, { value: "0.00" }],
@@ -260,21 +259,24 @@ const MySpreadsheet = () => {
   ];
 
   React.useEffect(() => {
-    GetTaxReport(entity_id, formattedStartDate, formattedEndDate)
-      .then((response) => {
-        console.log("oh: ", response?.data.entries);
-        let result = response.data.entries;
-        setReport(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    if (durationIsConfirmed) {
+      GenerateTaxReport(entity_id, formattedStartDate, formattedEndDate)
+        .then((response) => {
+          console.log("oh: ", response?.data);
+          setGrandReport(response?.data);
+          let result = response.data.entries;
+          setReport(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [durationIsConfirmed]);
 
   React.useEffect(() => {
     DownloadTaxReport(entity_id, formattedStartDate, formattedEndDate)
       .then((response) => {
-        console.log("oh: ", response?.data.entries);
+        console.log("ffoh: ", response?.data.entries);
         let result = response.data.entries;
         setReport(result);
       })
@@ -284,18 +286,21 @@ const MySpreadsheet = () => {
   }, []);
 
   const saveReport = () => {
+    setIsLoading(true);
     const payload = {
       entity_id: entity_id,
-      start_date: formattedStartDate,
-      end_date: formattedEndDate,
-      entries: report,
+      ...grandReport,
     };
+    console.log("pay: ", payload);
     SaveTaxReport(payload)
       .then((response) => {
+        setIsLoading(false);
         console.log(response);
+        showToast(response.data.message, true);
       })
       .catch((error) => {
-        console.log(error);
+        setIsLoading(false);
+        showToast(error.response.data.error, false);
       });
   };
   const hello = transformArray(report);
@@ -369,17 +374,10 @@ const MySpreadsheet = () => {
         <div className="overflow-y-hidden">
           <button
             onClick={saveReport}
-            className="w-1/6 py-3 mb-3 mr-4 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
+            className="w-1/6 h-10 py-3 mb-3 mr-4 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
           >
-            Save Payroll
+            {isLoading ? <Loader /> : "Save Payroll"}
           </button>
-          <button
-            // onClick={() => setIsCreateIncomeTypeModalOpen(true)}
-            className="w-1/6 py-3 mb-3 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
-          >
-            Download Payroll
-          </button>
-          {/* <Spreadsheet data={extendedData} /> */}
 
           <DataGrid
             className="text-sm rdg-light grid-container"

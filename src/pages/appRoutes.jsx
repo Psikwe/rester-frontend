@@ -30,6 +30,8 @@ import TerminatedEmployees from "./terminated_employees/_page";
 import ManageEmployeeLoans from "./manage_employee_loans/_page";
 import UpdateEmployeeLoan from "./update_employee_loan/_page";
 import MySpreadsheet from "./run_payroll/another";
+import SavedReports from "./saved_reports/_page";
+import TaxReportDetails from "./tax_report_details/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -94,6 +96,11 @@ export default function AppRoutes() {
                     element={<CreateIncomeType />}
                   />
                   <Route path="run-payroll" element={<MySpreadsheet />} />
+                  <Route path="saved-reports" element={<SavedReports />} />
+                  <Route
+                    path="tax-report-details/:id"
+                    element={<TaxReportDetails />}
+                  />
                   <Route path="manage-entity/:id" element={<ManageEntity />} />
                   <Route
                     path="manage-employees"

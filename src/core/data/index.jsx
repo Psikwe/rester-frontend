@@ -89,6 +89,11 @@ export const adminDashboardMenus = [
         url: "/dashboard/run-payroll",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
+      {
+        menu: "Saved Reports",
+        url: "/dashboard/saved-reports",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
     ],
   },
 ];

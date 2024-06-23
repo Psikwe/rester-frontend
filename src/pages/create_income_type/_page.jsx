@@ -89,8 +89,8 @@ function CreateIncomeType() {
     },
     { key: "income_name", name: "Income Name" },
     { key: "income_description", name: "Income Description" },
-    { key: "tax_class1", name: "Tax Class 1" },
-    { key: "tax_class2", name: "Tax Class 2" },
+    { key: "tax_class1", name: "Cat 1" },
+    { key: "tax_class2", name: "Cat 2" },
   ];
 
   React.useEffect(() => {
