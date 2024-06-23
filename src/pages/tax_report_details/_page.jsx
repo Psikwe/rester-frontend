@@ -62,39 +62,23 @@ const TaxReportDetails = () => {
       });
   }, []);
   const download = () => {
-    const formattedStartDate = moment(selectedStartDate).format("YYYY-MM-DD");
-    const formattedEndDate = moment(selectedEndDate).format("YYYY-MM-DD");
-
+    let formattedStartDate = moment(selectedStartDate).format("YYYY-MM-DD");
+    let formattedEndDate = moment(selectedEndDate).format("YYYY-MM-DD");
     DownloadTaxReport(entity_id, id, formattedStartDate, formattedEndDate)
       .then((response) => {
-        if (
-          response.headers["content-type"] === "application/pdf" ||
-          response.headers["content-type"] ===
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        ) {
-          const contentDisposition = response.headers["content-disposition"];
-          const fileName = contentDisposition
-            ? contentDisposition.split("filename=")[1]
-            : "report.pdf";
-
-          const blob = new Blob([response.data], { type: response.data.type });
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", fileName); // Use the correct file name
-          document.body.appendChild(link);
-          link.click();
-          link.parentNode.removeChild(link);
-        } else {
-          console.error(
-            "Invalid file type received:",
-            response.headers["content-type"]
-          );
-        }
+        console.log(response);
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "report.xlsx");
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+        showToast(response.data.message, true);
       })
       .catch((error) => {
-        console.log("Error downloading the file:", error);
         showToast(error.response.data.error, false);
+        console.log(error);
       });
   };
 
