@@ -2,10 +2,13 @@ import { formToJSON } from "axios";
 import React from "react";
 import { CreateEmployeeForm } from "../../core/services/employee.service";
 import { showToast } from "../../core/hooks/alert";
+import Loader from "../../components/loader/_component";
 
 function CreateAllowableDeductions() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const handleCreateEmployeeSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const entity_id = localStorage.getItem("entity_id");
     const incomeForm = document.getElementById("income-form");
     const payload = {
@@ -16,10 +19,12 @@ function CreateAllowableDeductions() {
     CreateEmployeeForm(payload)
       .then((res) => {
         console.log(res);
+        setIsLoading(false);
         showToast(res?.data.message, true);
         // companyForm?.reset();
       })
       .catch((error) => {
+        setIsLoading(false);
         showToast(error.response.data.error, false);
       });
   };
@@ -82,9 +87,9 @@ function CreateAllowableDeductions() {
         </div>
         <button
           type="submit"
-          className="w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full"
+          className="w-1/2 py-3 mb-3 text-white rounded-full primary mt-9 mobile:w-full"
         >
-          Create Allowable Deduction
+          {isLoading ? <Loader /> : "  Create Allowable Deduction"}
         </button>
       </form>
     </>

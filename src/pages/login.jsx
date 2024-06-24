@@ -329,8 +329,8 @@ function Login() {
                 type="submit"
                 className={
                   isLoading
-                    ? `animate-pulse w-1/2 m-auto py-3 text-white mt-3 primary mobile:w-full`
-                    : `w-1/2 m-auto py-3 text-white mt-3 primary mobile:w-full`
+                    ? `animate-pulse w-1/2 rounded-full m-auto py-3 text-white mt-3 primary mobile:w-full`
+                    : `w-1/2 m-auto py-3 rounded-full text-white mt-3 primary mobile:w-full`
                 }
               >
                 {isLoading ? <Loader /> : "Login"}

@@ -22,9 +22,6 @@ function CreateEmployee() {
   const newPasswordToggle = () => {
     setShowNewPasswordType(!showNewPasswordType);
   };
-  const [selectedOption, setSelectedOption] = React.useState(null);
-  const [selectedFrequencyOption, setSelectedFrequencyOption] =
-    React.useState(null);
   const [incomeSection, setIncomeSection] = React.useState([
     { incomeType: null, amount: "", incomeFrequency: null },
   ]);
@@ -32,7 +29,6 @@ function CreateEmployee() {
   const handleChange = (index, selectedOption) => {
     const updatedIncomeSection = [...incomeSection];
     updatedIncomeSection[index].incomeType = selectedOption;
-    console.log("upp: ", updatedIncomeSection);
     setIncomeSection(updatedIncomeSection);
   };
 
@@ -280,7 +276,7 @@ function CreateEmployee() {
             <label className="text-sm label bold">Select Start Date</label>
             <Flatpickr
               className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-              placeholder="Date of Birth"
+              placeholder="Start Date"
               ref={fp}
               name="start_date"
             />
@@ -393,11 +389,11 @@ function CreateEmployee() {
           type="submit"
           className={
             isLoading
-              ? `animate-pulse w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
-              : `w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
+              ? `animate-pulse m-auto rounded-full w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
+              : `w-1/2 m-auto rounded-full py-3 mb-3 text-white primary mt-9 mobile:w-full`
           }
         >
-          {isLoading ? <Loader /> : "Add Employee"}
+          {isLoading ? <Loader /> : "Create Employee"}
         </button>
       </form>
     </>

@@ -99,9 +99,9 @@ function CreateEntity() {
 
           <button
             type="submit"
-            className="w-full  py-3 mt-8 text-white bg-[#0DCAF0] mobile:w-full"
+            className="w-1/2 py-3 mt-8 text-white rounded-full primary mobile:w-full"
           >
-            {isLoading ? <Loader /> : " Add Company"}
+            {isLoading ? <Loader /> : "Create Company"}
           </button>
         </form>
 

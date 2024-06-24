@@ -308,8 +308,8 @@ function ManageEmployeeLoans() {
               type="submit"
               className={
                 isLoading
-                  ? `animate-pulse w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
-                  : `w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
+                  ? `animate-pulse w-1/2 py-3 mb-3 rounded-full text-white primary mt-9 mobile:w-full`
+                  : `w-1/2 py-3 mb-3 rounded-full text-white primary mt-9 mobile:w-full`
               }
             >
               {isLoading ? <Loader /> : " Add Employee Loan"}

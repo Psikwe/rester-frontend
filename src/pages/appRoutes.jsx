@@ -32,6 +32,7 @@ import UpdateEmployeeLoan from "./update_employee_loan/_page";
 import MySpreadsheet from "./run_payroll/another";
 import SavedReports from "./saved_reports/_page";
 import TaxReportDetails from "./tax_report_details/_page";
+import UpdateAdminEmployee from "./update_admin_employee/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -60,7 +61,7 @@ export default function AppRoutes() {
                   <Route path="update-entity/:id" element={<UpdateEntity />} />
                   <Route
                     path="update-employee/:id"
-                    element={<UpdateEmployee />}
+                    element={<UpdateAdminEmployee />}
                   />
                   <Route path="create-employee" element={<CreateEmployee />} />
                   <Route

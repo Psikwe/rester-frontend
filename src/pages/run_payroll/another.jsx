@@ -362,7 +362,7 @@ const MySpreadsheet = () => {
           <div className="flex">
             <button
               onClick={validate}
-              className="w-full py-2 text-white bg-red-500 mt-9 mobile:w-full"
+              className="w-1/2 py-2 text-white rounded-full primary mt-9 mobile:w-full"
             >
               Submit
             </button>

@@ -10,9 +10,11 @@ import {
   UpdateEntityForm,
 } from "../../core/services/entity.service";
 import { useParams } from "react-router-dom";
+import Loader from "../../components/loader/_component";
 
 function UpdateEntity() {
   const { id } = useParams();
+  const [isLoading, setIsLoading] = React.useState(false);
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
   const [populateEntity, setPopulateEnty] = React.useState({
     name: "",
@@ -38,6 +40,7 @@ function UpdateEntity() {
   const noOfEmployeess = selectedRangeOption && selectedRangeOption.value;
   const handleEntityForm = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const updateEntityForm = document.getElementById("update-entity-form");
     const payload = {
       ...formToJSON(updateEntityForm),
@@ -49,12 +52,14 @@ function UpdateEntity() {
     };
     UpdateEntityForm(payload)
       .then((res) => {
+        setIsLoading(false);
         showToast(res?.data.message, true);
         setTimeout(() => {
           // window.location.href = "/dashboard/view-entity";
         }, 2000);
       })
       .catch((error) => {
+        setIsLoading(false);
         showToast(error.response.data.error, false);
       });
   };
@@ -126,9 +131,9 @@ function UpdateEntity() {
 
           <button
             type="submit"
-            className="w-full py-3 mt-8 text-white primary mobile:w-full"
+            className="w-1/2 py-3 m-auto mt-8 text-center text-white rounded-full  primary mobile:w-full"
           >
-            Update Entity
+            {isLoading ? <Loader /> : "   Update Entity"}
           </button>
         </form>
 

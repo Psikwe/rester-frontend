@@ -204,7 +204,7 @@ function Signup() {
             </div>
             <button
               type="submit"
-              className="w-1/2 py-3 m-auto mt-8 text-white primary mobile:w-full"
+              className="w-1/2 py-3 m-auto mt-8 text-white rounded-full primary mobile:w-full"
             >
               {isLoading ? <Loader /> : "Signup"}
             </button>

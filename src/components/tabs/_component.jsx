@@ -9,7 +9,7 @@ const Tabs = ({ tabs }) => {
 
   return (
     <div className="mt-5">
-      <ul className="flex justify-center w-1/3 p-3 space-x-8 bg-[#ccf6ff]">
+      <ul className="flex justify-center w-1/3 p-3 space-x-8 bg-[#f4ffd8]">
         {tabs.map((tab, index) => (
           <li
             key={index}
