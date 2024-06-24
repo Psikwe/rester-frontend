@@ -49,11 +49,10 @@ export default function IncomeTaxCalculator() {
       console.error("Error calculating income tax", data);
     }
   };
-  console.log("server url", import.meta.env.VITE_SERVER_URL);
   return (
     <>
       <form className="flex calculator column" onSubmit={handleSubmit}>
-        <div className="mt-12 mobile:mt-14 smallTitle center mobile:text-xl  text-[#31708E]">
+        <div className="mt-12 mobile:mt-14 smallTitle center mobile:text-xl  text-[#25476A]">
           Income Tax Calculator
         </div>
 

@@ -11,6 +11,7 @@ import Modal from "../../components/modal/_component";
 import { clearUserSession } from "../../core/utilities";
 import { CreateEntityForm } from "../../core/services/entity.service";
 import { noOfEmployees } from "../../core/data";
+import logo from "../../assets/rester.png";
 import Loader from "../../components/loader/_component";
 import { showToast } from "../../core/hooks/alert";
 
@@ -198,10 +199,10 @@ function ViewCompany() {
           </form>
         </div>
       </Modal>
-      <nav className="sticky top-0 z-10 flex justify-between p-6 text-gray-500 bg-white shadow-2xl">
+      <nav className="sticky top-0 z-10 flex justify-between h-20 p-6 text-gray-500 bg-white shadow-2xl">
         <div className="flex items-center ml-4 text-left">
           <div className="w-full mr-4 text-2xl font-semibold text-black mobile:text-xs">
-            <b>R</b>ester
+            <img className="w-24" src={logo} />
           </div>
         </div>
 

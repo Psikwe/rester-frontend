@@ -10,6 +10,7 @@ import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
 import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "../../components/modal/_component";
+import logo from "../../assets/rester.png";
 import moment from "moment";
 import { clearUserSession } from "../../core/utilities";
 
@@ -122,7 +123,7 @@ const DashboardLayout = () => {
           <div className="flex">
             <button
               onClick={closeLogoutModal}
-              className="w-full mr-2 text-white mt-9 bg-[#0DCAF0] mobile:w-full"
+              className="w-full mr-2 text-white mt-9 bg-[#2062fe] mobile:w-full"
             >
               No
             </button>
@@ -138,7 +139,7 @@ const DashboardLayout = () => {
 
       <div className="flex w-full h-screen mb-8 overflow-x-hidden">
         <div className="px-3 pt-3 m-8 text-sm w-72">
-          <b>R</b>ester
+          <img className="w-24 -mt-16 -ml-16" src={logo} />
           <ul className="mt-12 text-slate-600">
             {adminDashboardMenus.map((ad, i) => (
               <React.Fragment key={i}>

@@ -262,13 +262,13 @@ function Login() {
           <div className="flex">
             <button
               onClick={handleEmployeeNavigation}
-              className="w-full mr-2 rounded-full text-white mt-9 bg-[#0DCAF0] mobile:w-full"
+              className="w-full mr-2 rounded-full text-white mt-9 bg-[#2062fe] mobile:w-full"
             >
               As Employee
             </button>
             <button
               onClick={handleAdminNavigation}
-              className="w-full py-2 text-white bg-red-500 rounded-full mt-9 mobile:w-full"
+              className="w-full py-2 text-white bg-[#33b655] rounded-full mt-9 mobile:w-full"
             >
               As Admin
             </button>
@@ -277,14 +277,14 @@ function Login() {
       </Modal>
       <section className="bg-slate-200">
         <div className="login-container">
-          <p className="mt-16 text-3xl mb-9 from-laptop-to-laptop-xl:title">
+          {/* <p className="mt-16 text-3xl mb-9 from-laptop-to-laptop-xl:title">
             Login
-          </p>
+          </p> */}
           <div className="flex mb-24">
-            <img
+            {/* <img
               className="h-[31rem]  brightness-75 mobile:hidden"
               src={banner}
-            />
+            /> */}
             <form
               id="login-form"
               onSubmit={handleLogin}
@@ -329,8 +329,8 @@ function Login() {
                 type="submit"
                 className={
                   isLoading
-                    ? `animate-pulse w-full py-3 text-white mt-9 primary mobile:w-full`
-                    : `w-full py-3 text-white mt-9 primary mobile:w-full`
+                    ? `animate-pulse w-1/2 m-auto py-3 text-white mt-3 primary mobile:w-full`
+                    : `w-1/2 m-auto py-3 text-white mt-3 primary mobile:w-full`
                 }
               >
                 {isLoading ? <Loader /> : "Login"}
@@ -338,10 +338,13 @@ function Login() {
 
               <small>
                 <span className="flex justify-between">
-                  <NavLink to="/signup">
+                  <div>
                     Don't have an account yet?
-                    <span className="ml-1 font-bold underline">Signup</span>
-                  </NavLink>
+                    <NavLink to="/signup">
+                      <span className="ml-1 font-bold underline">Signup</span>
+                    </NavLink>
+                  </div>
+
                   <span
                     className="cursor-pointer"
                     onClick={openForgotPasswordModal}

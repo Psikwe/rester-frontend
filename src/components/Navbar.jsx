@@ -5,7 +5,7 @@ import { Offcanvas, Ripple, Dropdown, initTWE } from "tw-elements";
 import "tw-elements";
 import { useNavigate } from "react-router-dom";
 import { CiLogin } from "react-icons/ci";
-import { Tooltip } from "tw-elements";
+import logo from "../assets/rester.png";
 import { IoCalculator } from "react-icons/io5";
 import { MdOutlinePriceChange } from "react-icons/md";
 import { BsFillInfoSquareFill } from "react-icons/bs";
@@ -50,11 +50,11 @@ export default function Navbar() {
     <>
       {/* ************** Desktop Nav ***************/}
       <nav
-        className={`text-sm from-laptop-to-laptop-xl:flex from-laptop-to-laptop-xl:justify-between from-laptop-to-laptop-xl:items-center from-laptop-to-laptop-xl:pt-[1rem] from-laptop-to-laptop-xl:bg-transparent from-laptop-to-laptop-xl:absolute from-laptop-to-laptop-xl:w-full laptop-lg:px-32 py-2 laptop-xl:px-72 mobile:hidden tablet:hidden -mt-2`}
+        className={`text-sm from-laptop-to-laptop-xl:h-20 from-laptop-to-laptop-xl:flex from-laptop-to-laptop-xl:justify-between from-laptop-to-laptop-xl:items-center from-laptop-to-laptop-xl:w-full laptop-lg:px-32 laptop-xl:px-72 mobile:hidden tablet:hidden -mt-2`}
       >
-        <div className={styles.start}>
+        <div className="-ml-11 w-36">
           <NavLink to="/" style={{ color: "#000" }}>
-            <b>R</b>ester
+            <img src={logo} />
           </NavLink>
         </div>
         <div className="flex">
@@ -75,7 +75,7 @@ export default function Navbar() {
             ""
           ) : (
             <NavLink className="duration-700 hover:text-white" to="/signup">
-              <div className="rounded-full py-[9px] px-[25px] duration-700 cursor-pointer text-white bg-[#74866f]">
+              <div className="rounded-full py-[9px] px-[25px] duration-700 cursor-pointer text-white bg-[#03A9FA]  hover:bg-[#afe4ff]">
                 Sign up
                 {/* <span className="relative flex w-3 h-3 left-[3.7rem] bottom-10">
                 <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-sky-400"></span>
@@ -89,10 +89,10 @@ export default function Navbar() {
             ""
           ) : (
             <>
-              <div className="inline-block -mt-12 h-[100px] w-0.5 bg-[#31708E]"></div>
+              <div className="inline-block -mt-12 h-[100px] w-0.5 bg-[#33b655]"></div>
               <NavLink className="duration-700 hover:text-white" to="/login">
                 {" "}
-                <div className="rounded-full py-[9px] px-[25px] duration-700 cursor-pointer text-white bg-[#74866f]">
+                <div className="rounded-full py-[8px] px-[25px] duration-700 cursor-pointer border-2 border-[#03A9FA] text-[#1d3145]">
                   Login
                   {/* <span className="relative flex w-3 h-3 left-[3.7rem] bottom-10">
                 <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-sky-400"></span>

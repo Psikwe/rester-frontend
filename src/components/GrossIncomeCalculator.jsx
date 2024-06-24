@@ -77,7 +77,7 @@ export default function GrossIncomeCalculator() {
           placeholder="Pension contribution"
         />
 
-        <div className="flex items-center justify-center w-16 h-12 p-3 mr-3 text-white rounded-lg primary">
+        <div className="flex items-center justify-center w-16 h-12 p-3 mr-3 text-white rounded-lg bg-[#33b655]">
           <FaCediSign />
         </div>
         <div className="flex items-center justify-center w-16 h-12 p-3 text-black border-2 border-[primary] rounded-lg">

@@ -10,8 +10,9 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #fff;
-  --primary: #687864;
-  --icon-color: #687864;
+  --primary: #03a9fa;
+  --sprimary: #164e6c;
+  --icon-color: #03a9fa;
   --secondary: #eeeeee;
   color: #000;
   font-synthesis: none;
@@ -26,7 +27,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--primary);
+  background-color: var(--sprimary);
 }
 
 #root {

@@ -15,10 +15,7 @@ function Home() {
   };
   return (
     <>
-      <header
-        className="mobile:-p-[4rem]"
-        style={{ backgroundColor: "#EEEEEE" }}
-      >
+      <div style={{ backgroundColor: "#EEEEEE" }}>
         {/* <div className="absolute top-[5rem] right-0 z-50">
           <div>
             <svg
@@ -173,7 +170,7 @@ function Home() {
               {/* <div className="flex from-laptop-to-laptop-xl:hidden hero-image-container">
                 <img alt="dashboard image" src="/african-woman.jpg" />
               </div> */}
-              <div className="mt-8 rounded-full button-group hero-buttons">
+              <div className="mt-8 rounded-full hero-buttons">
                 <button
                   onClick={handleSignupNavigation}
                   className="text-sm duration-700 rounded-full mobile:w-1/2 button primary"
@@ -184,13 +181,24 @@ function Home() {
             </div>
           </div>
         </div>
-      </header>
+      </div>
+      <section className="bg-[#f0f6ff] laptop-lg:px-40 laptop-xl:px-72 features mobile:p-9 flex flex-col justify-center text-4xl">
+        <div className="flex justify-center">
+          Find the ideal payroll solution for your business:
+        </div>
+        <div className="flex justify-center">
+          <ul className="text-lg list-disc">
+            <li>Create up to 1 company for free</li>
+            <li>Onboard up to 10 employees for free</li>
+          </ul>
+        </div>
+      </section>
       <section className="flex laptop-lg:px-40 laptop-xl:px-72 features mobile:p-9 column">
         <div className="flex mobile:flex-col row center">
           <button
             className={
               calculator === "incomeTax"
-                ? "primary rounded-full mobile:w-full text-white p-3"
+                ? "border-[#33b655] border-2 rounded-full mobile:w-full text-black p-3"
                 : "border-2 rounded-full mobile:w-full border-[primary] p-3"
             }
             onClick={() => setCalculator("incomeTax")}
@@ -200,7 +208,7 @@ function Home() {
           <button
             className={
               calculator === "grossIncome"
-                ? "primary rounded-full mobile:mt-6 mobile:w-full text-white p-3"
+                ? "border-[#33b655] border-2 rounded-full mobile:mt-6 mobile:w-full text-black p-3"
                 : "border-2 rounded-full mobile:mt-6 mobile:w-full border-[primary] p-3"
             }
             onClick={() => setCalculator("grossIncome")}

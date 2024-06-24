@@ -49,71 +49,101 @@ function Signup() {
   return (
     <>
       <div className="flex flex-col items-center justify-center w-full bg-slate-200 p-9">
-        <p className="mt-24 mb-8 text-3xl">Signup</p>
-        <div className="flex mb-24">
-          <img
+        <div className="flex mb-2">
+          {/* <img
             className="mobile:hidden w-[38rem] h-[52.8rem] brightness-75"
             src={banner}
-          />
+          /> */}
           <form
             id="signup-form"
             onSubmit={handleSignup}
             className="mobile:border-2 bg-white mobile:border-[#687864] mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-2 from-laptop-to-laptop-xl:w-[30vw] h-full"
           >
-            <div className="field">
-              <label className="text-sm label bold">Enter First Name</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="text"
-                  placeholder="First Name"
-                  name="first_name"
-                />
+            <div className="flex w-full">
+              <div className="w-full mr-3 field">
+                <label className="text-sm label bold">Enter First Name</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="First Name"
+                    name="first_name"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
               </div>
-              {/* <p className="help">This is a help text</p> */}
-            </div>
 
-            <div className="field">
-              <label className="text-sm label bold">Enter Last Name</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="text"
-                  placeholder="Last Name"
-                  name="last_name"
-                />
+              <div className="w-full field">
+                <label className="text-sm label bold">Enter Last Name</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Last Name"
+                    name="last_name"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
               </div>
-              {/* <p className="help">This is a help text</p> */}
             </div>
-
-            <div className="field">
-              <label className="text-sm label bold">Enter Company Name</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="text"
-                  placeholder="Company Name"
-                  name="company_name"
-                />
+            <div className="flex">
+              <div className="mr-3 field">
+                <label className="text-sm label bold">Enter Company Name</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Company Name"
+                    name="company_name"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
               </div>
-              {/* <p className="help">This is a help text</p> */}
+
+              <div className="field">
+                <label className="text-sm label bold">Enter Address(GPS)</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Last name"
+                    name="company_address"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
+              </div>
             </div>
-
-            <div className="field">
-              <label className="text-sm label bold">Enter Address(GPS)</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="text"
-                  placeholder="Last name"
-                  name="company_address"
-                />
+            <div className="flex">
+              <div className="mr-3 field">
+                <label className="text-sm label bold">Enter Email</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="email"
+                    placeholder="Email"
+                    name="company_email"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
               </div>
-              {/* <p className="help">This is a help text</p> */}
+              <div className="field">
+                <label className="text-sm label bold">Enter Admin Email</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
+              </div>
             </div>
             <label className="text-sm label bold">
               Select number of employees
@@ -127,32 +157,7 @@ function Signup() {
                 placeholder="Number of employees"
               />
             </div>
-            <div className="field">
-              <label className="text-sm label bold">Enter Email</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="email"
-                  placeholder="Email"
-                  name="company_email"
-                />
-              </div>
-              {/* <p className="help">This is a help text</p> */}
-            </div>
-            <div className="field">
-              <label className="text-sm label bold">Enter Admin Email</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                />
-              </div>
-              {/* <p className="help">This is a help text</p> */}
-            </div>
+
             <div className="relative field">
               <label className="text-sm label bold">Enter Password</label>
               <div className="control">
@@ -199,7 +204,7 @@ function Signup() {
             </div>
             <button
               type="submit"
-              className="w-full py-3 mt-8 text-white primary mobile:w-full"
+              className="w-1/2 py-3 m-auto mt-8 text-white primary mobile:w-full"
             >
               {isLoading ? <Loader /> : "Signup"}
             </button>
