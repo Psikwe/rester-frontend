@@ -96,14 +96,14 @@ function Login() {
         } else {
           if (res?.data.roles[0] === "admin") {
             showToast("Login Successful", true);
-            // setTimeout(() => {
-            //   window.location.href = "/employee/update-employee";
-            // }, 2000);
+            setTimeout(() => {
+              window.location.href = "/employee/update-employee";
+            }, 2000);
           } else if (res?.data.roles[0] === "employee") {
             showToast("Login Successful", true);
-            // setTimeout(() => {
-            //   window.location.href = "/view-entity";
-            // }, 2000);
+            setTimeout(() => {
+              window.location.href = "/view-entity";
+            }, 2000);
           }
         }
 
