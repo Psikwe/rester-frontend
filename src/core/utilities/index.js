@@ -27,6 +27,7 @@ export const clearUserSession = () => {
   localStorage.removeItem("entity_id");
   localStorage.removeItem("entity_name");
   localStorage.removeItem("u_token_expiry");
+  localStorage.clear();
   window.location.reload();
 };
 
