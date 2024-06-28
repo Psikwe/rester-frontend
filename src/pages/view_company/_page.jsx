@@ -9,7 +9,10 @@ import SkeletonLoader from "../../components/skeleton_loading/_component";
 import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "../../components/modal/_component";
 import { clearUserSession } from "../../core/utilities";
-import { CreateEntityForm } from "../../core/services/entity.service";
+import {
+  CreateEntityForm,
+  GetAllEntities,
+} from "../../core/services/entity.service";
 import { noOfEmployees } from "../../core/data";
 import logo from "../../assets/rester.png";
 import Loader from "../../components/loader/_component";
@@ -32,12 +35,7 @@ function ViewCompany() {
     },
   ]);
   React.useEffect(() => {
-    axios
-      .get("https://rester-82c60dc37022.herokuapp.com/get_entities", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("u_token")}`,
-        },
-      })
+    GetAllEntities()
       .then((res) => {
         setSkeletonLoading(false);
         setCompany(res.data.entities);
