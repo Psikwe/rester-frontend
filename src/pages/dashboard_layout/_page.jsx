@@ -11,6 +11,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "../../components/modal/_component";
 import logo from "../../assets/rester.png";
+import { IoArrowBackCircle } from "react-icons/io5";
 import moment from "moment";
 import { clearUserSession } from "../../core/utilities";
 
@@ -58,6 +59,10 @@ const DashboardLayout = () => {
   const { pathname } = useLocation();
   console.log(pathname);
   const entityName = localStorage.getItem("entity_name");
+
+  const goback = () => {
+    window.history.back();
+  };
   return (
     <>
       <Modal showCloseBtn={true} open={isModalOpen} close={closeModal}>
@@ -262,6 +267,13 @@ const DashboardLayout = () => {
             </div>
           </div>
           <div className="px-40 mt-16 laptop-lg:px-20">
+            <div
+              onClick={goback}
+              title="Go back"
+              className="flex items-center mb-6 cursor-pointer"
+            >
+              <IoArrowBackCircle size={40} />
+            </div>
             <Outlet />
           </div>
         </div>

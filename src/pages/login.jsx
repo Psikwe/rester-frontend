@@ -15,6 +15,7 @@ import {
   UserLogin,
   UserResetPassword,
 } from "../core/services/auth.service";
+import moment from "moment";
 import { FaCircleInfo } from "react-icons/fa6";
 
 function Login() {
@@ -84,7 +85,11 @@ function Login() {
     UserLogin(loginData)
       .then((res) => {
         setIsLoading(false);
-        console.log(res);
+        console.log("login", res);
+
+        let expiryDate = moment(res?.data.expiry).format("lll");
+        console.log("expiryDate", expiryDate);
+
         cacheUserSession(res?.data.access_token);
         cacheUserRole(res?.data.roles);
         dispatch(setUser({ roles: [], username: res?.data.email }));
@@ -94,14 +99,14 @@ function Login() {
         } else {
           if (res?.data.roles[0] === "admin") {
             showToast("Login Successful", true);
-            setTimeout(() => {
-              window.location.href = "/employee/update-employee";
-            }, 2000);
+            // setTimeout(() => {
+            //   window.location.href = "/employee/update-employee";
+            // }, 2000);
           } else if (res?.data.roles[0] === "employee") {
             showToast("Login Successful", true);
-            setTimeout(() => {
-              window.location.href = "/view-entity";
-            }, 2000);
+            // setTimeout(() => {
+            //   window.location.href = "/view-entity";
+            // }, 2000);
           }
         }
 

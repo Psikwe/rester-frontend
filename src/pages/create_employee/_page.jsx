@@ -67,14 +67,18 @@ function CreateEmployee() {
       entity_id: entity_id,
       incomeSection: transformedData,
     };
-
-    console.log("pay: ", payload);
-
     CreateEmployeeForm(payload)
       .then((res) => {
         setIsLoading(false);
+        console.log("reees: ", res);
         showToast(res?.data.message, true);
         employeeForm?.reset();
+        setIncomeSection([
+          { incomeType: null, amount: "", incomeFrequency: null },
+        ]);
+        setTimeout(() => {
+          window.location.href = "/dashboard/manage-employees";
+        }, 2000);
       })
       .catch((error) => {
         showToast(error.response.data.error, false);
@@ -330,7 +334,7 @@ function CreateEmployee() {
                     handleChange(index, selectedOption)
                   }
                   options={incomeTypeOptions}
-                  placeholder="Income Type"
+                  placeholder="Select Income Type"
                 />
               </div>
             </div>
@@ -364,6 +368,7 @@ function CreateEmployee() {
                   }
                   options={options}
                   id="income-frequency"
+                  placeholder="Select Frequency of Income"
                 />
               </div>
             </div>
@@ -389,7 +394,7 @@ function CreateEmployee() {
           type="submit"
           className={
             isLoading
-              ? `animate-pulse m-auto rounded-full w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
+              ? `animate-pulse rounded-full w-1/2 m-auto py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
               : `w-1/2 m-auto rounded-full py-3 mb-3 text-white primary mt-9 mobile:w-full`
           }
         >

@@ -10,12 +10,18 @@ import Modal from "../../components/modal/_component";
 import { DeleteEntity, GetOneEntity } from "../../core/services/entity.service";
 import { showToast } from "../../core/hooks/alert";
 import { useParams } from "react-router-dom";
+import { useEmployees } from "../../core/hooks/employees";
 
 function ManageEntity() {
+  const entity_id = localStorage.getItem("entity_id");
   const { id } = useParams();
+
   localStorage.setItem("entity_id", id);
+
+  const { employeesQuery } = useEmployees(entity_id);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
+  const [noOfEmployees, setNoOfEmployees] = React.useState(0);
 
   const [populateEntity, setPopulateEntity] = React.useState({
     name: "",
@@ -27,7 +33,6 @@ function ManageEntity() {
   React.useEffect(() => {
     GetOneEntity(id)
       .then((response) => {
-        console.log(response);
         setPopulateEntity(response.data.entity);
         localStorage.setItem("entity_name", response.data.entity.name);
       })
@@ -35,6 +40,12 @@ function ManageEntity() {
         console.log(error);
       });
   }, []);
+
+  React.useEffect(() => {
+    if (employeesQuery && employeesQuery.data && employeesQuery.data.data) {
+      setNoOfEmployees(employeesQuery.data.data.employees.length);
+    }
+  }, [employeesQuery]);
 
   const handleDelete = (id, name) => {
     setDeleteModalOpen(true);
@@ -146,13 +157,13 @@ function ManageEntity() {
                 onClick={closeDeleteModal}
                 className="w-full mr-2 text-white rounded-full mt-9 primary mobile:w-full"
               >
-                No
+                Cancel
               </button>
               <button
                 onClick={confirmDelete}
                 className="w-full py-2 text-white bg-red-500 rounded-full mt-9 mobile:w-full"
               >
-                Yes
+                Delete
               </button>
             </div>
           </div>
@@ -199,7 +210,7 @@ function ManageEntity() {
       ) : (
         <EntityCard
           companyName={populateEntity.name}
-          noOfEmployees={populateEntity.size}
+          noOfEmployees={noOfEmployees}
           email={populateEntity.email}
           address={populateEntity.address}
           handleDelete={handleDelete}

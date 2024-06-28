@@ -10,18 +10,18 @@ function EntityCard(props) {
       <div className="flex items-center justify-between">
         <div>
           <p className="mb-4 text-sm">
-            Company Name:{" "}
+            {/* Company Name:{" "} */}
             <span className="text-[#0DCAF0]">{props.companyName}</span>{" "}
           </p>
           <p className="mb-4 text-sm">
-            Number of employees:{" "}
+            {/* Number of employees:{" "} */}
             <span className="text-[#0DCAF0]">{props.noOfEmployees}</span>
           </p>
           <p className="mb-4 text-sm">
-            Email: <span className="text-[#0DCAF0]">{props.email}</span>{" "}
+            <span className="text-[#0DCAF0]">{props.email}</span>{" "}
           </p>
           <p className="mb-4 text-sm">
-            Address: <span className="text-[#0DCAF0]">{props.address}</span>{" "}
+            <span className="text-[#0DCAF0]">{props.address}</span>{" "}
           </p>
           <hr className="my-4" />
           <div className="flex items-center text-sm">

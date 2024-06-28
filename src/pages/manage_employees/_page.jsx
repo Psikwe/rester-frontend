@@ -128,6 +128,7 @@ function ManageEmployees() {
   React.useEffect(() => {
     GetAllEmployees(entity_id)
       .then((response) => {
+        console.log("res: ", response);
         setEmployees(response?.data.employees);
       })
       .catch((error) => {
@@ -219,8 +220,18 @@ function ManageEmployees() {
   const handleNavigateToManageEmployeeLoans = () => {
     window.location.href = "/dashboard/manage-employee-loans/" + employeeId;
   };
+
+  const createEmployee = () => {
+    window.location.href = "/dashboard/create-employee";
+  };
   return (
     <>
+      <button
+        onClick={createEmployee}
+        className="rounded-full w-1/6 m-auto py-3 text-white bg-[#0DCAF0] mobile:w-full"
+      >
+        Create Employee
+      </button>
       <Modal open={deleteModalOpen} close={closeDeleteModal} closeOnOverlay>
         <div className="p-10 bg-white">
           <div className="w-16 m-auto">

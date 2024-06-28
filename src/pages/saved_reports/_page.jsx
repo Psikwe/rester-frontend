@@ -7,7 +7,7 @@ import {
 import moment from "moment";
 import { showToast } from "../../core/hooks/alert";
 import DataGrid from "react-data-grid";
-import { CgPlayListSearch } from "react-icons/cg";
+import { IoEyeOutline } from "react-icons/io5";
 
 const SavedReports = () => {
   const entity_id = localStorage.getItem("entity_id");
@@ -93,7 +93,7 @@ const SavedReports = () => {
           title="View details"
           onClick={() => handleNavigationToDetails(id)}
         >
-          <CgPlayListSearch color="blue" size={18} />
+          <IoEyeOutline color="blue" size={18} />
         </button>
       </div>
     );
@@ -106,34 +106,33 @@ const SavedReports = () => {
       renderCell: renderActionsRow,
       width: "100px",
     },
-    { key: "created_at", name: "Created At" },
-    { key: "serial_no", name: "Serial No." },
-    { key: "tin", name: "Tin" },
-    { key: "name_of_employee", name: "Name Of Employee" },
-    { key: "position", name: "Position" },
-    { key: "non_resident", name: "Non Resident" },
-    { key: "basic_salary", name: "Basic Salary" },
-    { key: "secondary_employment", name: "Secondary Employment" },
-    { key: "social_security_fund", name: "Social Security Fund" },
-    { key: "third_tier", name: "Third Tier" },
-    { key: "cash_allowances", name: "Cash Allowances" },
-    { key: "bonus_income", name: "Bonus Income" },
-    { key: "final_tax_on_bonus", name: "Final Tax On Bonus" },
-    { key: "excess_bonus", name: "Excess Bonus" },
-    { key: "total_cash_emolument", name: "Total Cash Employment" },
-    { key: "accomodation_element", name: "Accomodation Element" },
-    { key: "vehicle_element", name: "Vehicle Element" },
-    { key: "non_cash_benefit", name: "Non Cash Benefit" },
-    { key: "total_assessable_income", name: "Total Assemble Income" },
-    { key: "tax_deductible", name: "Tax Deductible" },
-    { key: "total_reliefs", name: "Total Reliefs" },
-    { key: "chargeable_income", name: "Chargeable Income" },
-    { key: "deductible_reliefs", name: "Deductible Reliefs" },
-    { key: "overtime_income", name: "Overtime Income" },
-    { key: "overtime_tax", name: "Overtime Tax" },
-    { key: "total_tax_payable_to_gra", name: "Total Tax Payable To GRA" },
-    { key: "severance_pay_paid", name: "Serverance Pay Paid" },
-    { key: "remarks", name: "Remarks" },
+    { key: "created_ats", name: "Report Id" },
+    { key: "serial_nos", name: "Report Name" },
+    { key: "created_at", name: "Date Created" },
+    { key: "name_of_employees", name: "Description" },
+    { key: "positions", name: "Period" },
+    // { key: "basic_salary", name: "Basic Salary" },
+    // { key: "secondary_employment", name: "Secondary Employment" },
+    // { key: "social_security_fund", name: "Social Security Fund" },
+    // { key: "third_tier", name: "Third Tier" },
+    // { key: "cash_allowances", name: "Cash Allowances" },
+    // { key: "bonus_income", name: "Bonus Income" },
+    // { key: "final_tax_on_bonus", name: "Final Tax On Bonus" },
+    // { key: "excess_bonus", name: "Excess Bonus" },
+    // { key: "total_cash_emolument", name: "Total Cash Employment" },
+    // { key: "accomodation_element", name: "Accomodation Element" },
+    // { key: "vehicle_element", name: "Vehicle Element" },
+    // { key: "non_cash_benefit", name: "Non Cash Benefit" },
+    // { key: "total_assessable_income", name: "Total Assemble Income" },
+    // { key: "tax_deductible", name: "Tax Deductible" },
+    // { key: "total_reliefs", name: "Total Reliefs" },
+    // { key: "chargeable_income", name: "Chargeable Income" },
+    // { key: "deductible_reliefs", name: "Deductible Reliefs" },
+    // { key: "overtime_income", name: "Overtime Income" },
+    // { key: "overtime_tax", name: "Overtime Tax" },
+    // { key: "total_tax_payable_to_gra", name: "Total Tax Payable To GRA" },
+    // { key: "severance_pay_paid", name: "Serverance Pay Paid" },
+    // { key: "remarks", name: "Remarks" },
   ];
 
   React.useEffect(() => {
