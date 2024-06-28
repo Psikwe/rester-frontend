@@ -40,7 +40,7 @@ export const getAxios = (URL) => {
   if (token != null && token !== "") {
     instance.defaults.headers.common["Authorization"] = "Bearer " + token;
   }
-  if (expiry > formattedCurrentDate) {
+  if (expiry < formattedCurrentDate) {
     clearUserSession();
   }
   instance.interceptors.response.use(
