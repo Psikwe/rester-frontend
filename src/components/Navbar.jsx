@@ -5,7 +5,7 @@ import { Offcanvas, Ripple, Dropdown, initTWE } from "tw-elements";
 import "tw-elements";
 import { useNavigate } from "react-router-dom";
 import { CiLogin } from "react-icons/ci";
-import logo from "../assets/rester.png";
+import logo from "../assets/Rester.svg";
 import { IoCalculator } from "react-icons/io5";
 import { MdOutlinePriceChange } from "react-icons/md";
 import { BsFillInfoSquareFill } from "react-icons/bs";
@@ -13,7 +13,7 @@ import { useEffect } from "react";
 
 export default function Navbar() {
   const { pathname } = useLocation();
-  console.log("pathName: " + pathname);
+  // console.log("pathName: " + pathname);
   const navigate = useNavigate();
   const navigation = [
     {
@@ -52,7 +52,7 @@ export default function Navbar() {
       <nav
         className={`text-sm from-laptop-to-laptop-xl:h-20 from-laptop-to-laptop-xl:flex from-laptop-to-laptop-xl:justify-between from-laptop-to-laptop-xl:items-center from-laptop-to-laptop-xl:w-full laptop-lg:px-32 laptop-xl:px-72 mobile:hidden tablet:hidden -mt-2`}
       >
-        <div className="-ml-11 w-36">
+        <div className="w-32 -ml-11">
           <NavLink to="/" style={{ color: "#000" }}>
             <img src={logo} />
           </NavLink>

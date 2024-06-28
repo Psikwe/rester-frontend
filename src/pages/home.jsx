@@ -141,7 +141,7 @@ function Home() {
           <div className="flex justify-end animate-pulse mobile:hidden"></div>
           <div className="absolute top-0 flex items-center mobile:p-4 laptop-lg:px-32 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16 mobile:flex-col pb-28 from-nav-laptop-to-laptop-xl:hero">
             <div className="mt-8 from-laptop-to-laptop-xl:hero-text">
-              <p className="mb-8 text-5xl font-bold mobile:text-2xl">
+              <p className="mb-8 text-5xl font-bold text-white mobile:text-2xl">
                 {
                   <Typewriter
                     words={[

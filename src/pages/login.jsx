@@ -85,12 +85,9 @@ function Login() {
     UserLogin(loginData)
       .then((res) => {
         setIsLoading(false);
-        console.log("login", res);
+        let expiryDate = moment.unix(res?.data.expiry).format("lll");
 
-        let expiryDate = moment(res?.data.expiry).format("lll");
-        console.log("expiryDate", expiryDate);
-
-        cacheUserSession(res?.data.access_token);
+        cacheUserSession(res?.data.access_token, expiryDate);
         cacheUserRole(res?.data.roles);
         dispatch(setUser({ roles: [], username: res?.data.email }));
         if (res?.data.roles.length > 1) {
