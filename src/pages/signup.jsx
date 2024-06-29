@@ -41,6 +41,9 @@ function Signup() {
         setIsLoading(false);
         showToast(res.data.message, true);
         signupForm?.reset();
+        setTimeout(() => {
+          window.location.href = "/setup-organization";
+        }, 2000);
       })
       .catch((error) => {
         setIsLoading(false);
@@ -52,6 +55,7 @@ function Signup() {
     console.log(e.target.checked);
     setIsChecked(e.target.checked);
   };
+
   return (
     <>
       <div className="flex flex-col items-center justify-center w-full bg-slate-200 p-9">
@@ -221,13 +225,13 @@ function Signup() {
                 htmlFor="checkboxDefault"
               >
                 I agree to the{" "}
-                <span>
+                <span className="underline">
                   <a href="#" target="_blank">
                     Terms of Service
                   </a>
                 </span>{" "}
                 and{" "}
-                <span>
+                <span className="underline">
                   <a href="#" target="_blank">
                     Privacy Policy
                   </a>{" "}

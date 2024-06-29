@@ -49,6 +49,7 @@ export default function Navbar() {
   return (
     <>
       {/* ************** Desktop Nav ***************/}
+
       <nav
         className={`text-sm from-laptop-to-laptop-xl:h-20 from-laptop-to-laptop-xl:flex from-laptop-to-laptop-xl:justify-between from-laptop-to-laptop-xl:items-center from-laptop-to-laptop-xl:w-full laptop-lg:px-32 laptop-xl:px-72 mobile:hidden tablet:hidden -mt-2`}
       >
@@ -57,52 +58,60 @@ export default function Navbar() {
             <img src={logo} />
           </NavLink>
         </div>
-        <div className="flex">
-          {navigation.map((link, i) => (
-            <NavLink key={i} to={link.href}>
-              <div className="flex items-center mr-9">
-                {/* <div className="mr-1 text-blue-400">{link.logo}</div> */}
-                <span className="hover:text-[#31708E] duration-700">
-                  {link.name}
-                </span>
-              </div>
-            </NavLink>
-          ))}
-        </div>
+        {pathname !== "/setup-organization" ? (
+          <div className="flex">
+            {navigation.map((link, i) => (
+              <NavLink key={i} to={link.href}>
+                <div className="flex items-center mr-9">
+                  {/* <div className="mr-1 text-blue-400">{link.logo}</div> */}
+                  <span className="hover:text-[#31708E] duration-700">
+                    {link.name}
+                  </span>
+                </div>
+              </NavLink>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
 
-        <div className="flex items-center gap-6">
-          {pathname === "/signup" ? (
-            ""
-          ) : (
-            <NavLink className="duration-700 hover:text-white" to="/signup">
-              <div className="rounded-full py-[9px] px-[25px] duration-700 cursor-pointer text-white bg-[#03A9FA]  hover:bg-[#afe4ff]">
-                Sign up
-                {/* <span className="relative flex w-3 h-3 left-[3.7rem] bottom-10">
-                <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-sky-400"></span>
-                <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500"></span>
-              </span> */}
-              </div>{" "}
-            </NavLink>
-          )}
-
-          {pathname === "/login" ? (
-            ""
-          ) : (
-            <>
-              <div className="inline-block -mt-12 h-[100px] w-0.5 bg-[#33b655]"></div>
-              <NavLink className="duration-700 hover:text-white" to="/login">
-                {" "}
-                <div className="rounded-full py-[8px] px-[25px] duration-700 cursor-pointer border-2 border-[#03A9FA] text-[#1d3145]">
-                  Login
+        {pathname !== "/setup-organization" ? (
+          <div className="flex items-center gap-6">
+            {pathname === "/signup" ? (
+              ""
+            ) : (
+              <NavLink className="duration-700 hover:text-white" to="/signup">
+                <div className="rounded-full py-[9px] px-[25px] duration-700 cursor-pointer text-white bg-[#03A9FA]  hover:bg-[#afe4ff]">
+                  Sign up
                   {/* <span className="relative flex w-3 h-3 left-[3.7rem] bottom-10">
                 <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-sky-400"></span>
                 <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500"></span>
               </span> */}
-                </div>
+                </div>{" "}
               </NavLink>
-            </>
-          )}
-        </div>
+            )}
+
+            {pathname === "/login" ? (
+              ""
+            ) : (
+              <>
+                <div className="inline-block -mt-12 h-[100px] w-0.5 bg-[#33b655]"></div>
+                <NavLink className="duration-700 hover:text-white" to="/login">
+                  {" "}
+                  <div className="rounded-full py-[8px] px-[25px] duration-700 cursor-pointer border-2 border-[#03A9FA] text-[#1d3145]">
+                    Login
+                    {/* <span className="relative flex w-3 h-3 left-[3.7rem] bottom-10">
+                <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-sky-400"></span>
+                <span className="relative inline-flex w-3 h-3 rounded-full bg-sky-500"></span>
+              </span> */}
+                  </div>
+                </NavLink>
+              </>
+            )}
+          </div>
+        ) : (
+          ""
+        )}
       </nav>
 
       {/* ************** Mobile Nav ***************/}

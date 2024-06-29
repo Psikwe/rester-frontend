@@ -306,7 +306,9 @@ const MySpreadsheet = () => {
   const hello = transformArray(report);
   const transposedData = reshapeArray(hello, 11);
   const extendedData = extendDataWithEmptyCells(transposedData, 5, 10);
-
+  const handleIndustryChange = (selectedRangeOption) => {
+    setSelectedIndustry(selectedRangeOption);
+  };
   return (
     <>
       <Modal
@@ -358,7 +360,20 @@ const MySpreadsheet = () => {
               </button>
             </div>
           </div>
-
+          <div className="flex">
+            <div className="mt-3 ">
+              <label className="text-sm label">Select Industry</label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={selectedIndustry}
+                  onChange={handleIndustryChange}
+                  options={industries}
+                  placeholder="Industry"
+                />
+              </div>
+            </div>
+          </div>
           <div className="flex">
             <button
               onClick={validate}

@@ -37,6 +37,11 @@ export const industries = [
   { value: "Real Estate", label: "Real Estate" },
 ];
 
+export const languages = [
+  { value: "en", label: "English" },
+  { value: "fr", label: "French" },
+];
+
 export const regions = [
   { value: "Greater Accra", label: "Greater Accra" },
   { value: "Ashanti", label: "Ashanti" },
@@ -54,6 +59,43 @@ export const regions = [
   { value: "Ahafo", label: "Ahafo" },
   { value: "Savannah", label: "Savannah" },
   { value: "North East", label: "North East" },
+];
+
+export const countries = [
+  { value: "Ghana", label: "Ghana" },
+  { value: "South Africa", label: "South Africa" },
+  { value: "Nigeria", label: "Nigeria" },
+  { value: "Ivory Coast", label: "Ivory Coast" },
+  { value: "Senegal", label: "Senegal" },
+  { value: "Mali", label: "Mali" },
+  { value: "Burkina Faso", label: "Burkina Faso" },
+  { value: "France", label: "France" },
+  { value: "Germany", label: "Germany" },
+  { value: "United Kingdom", label: "United Kingdom" },
+  { value: "Spain", label: "Spain" },
+  { value: "Italy", label: "Italy" },
+  { value: "Netherlands", label: "Netherlands" },
+  { value: "Sweden", label: "Sweden" },
+  { value: "Portugal", label: "Portugal" },
+  { value: "Switzerland", label: "Switzerland" },
+];
+
+export const currencies = [
+  { value: "GHS", label: "Ghanaian Cedi" },
+  { value: "ZAR", label: "South African Rand" },
+  { value: "NGN", label: "Nigerian Naira" },
+  { value: "XOF", label: "West African CFA Franc" },
+  { value: "EUR", label: "Euro" },
+  { value: "GBP", label: "British Pound Sterling" },
+  { value: "USD", label: "United States Dollar" },
+  { value: "XAF", label: "Central African CFA Franc" },
+  { value: "CHF", label: "Swiss Franc" },
+  { value: "SEK", label: "Swedish Krona" },
+  { value: "NOK", label: "Norwegian Krone" },
+  { value: "DZD", label: "Algerian Dinar" },
+  { value: "MAD", label: "Moroccan Dirham" },
+  { value: "TND", label: "Tunisian Dinar" },
+  { value: "EGP", label: "Egyptian Pound" },
 ];
 
 export const adminDashboardMenus = [

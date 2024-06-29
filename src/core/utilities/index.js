@@ -23,9 +23,15 @@ export const clearUserSession = () => {
 export const getUserSession = () => {
   try {
     var token = localStorage.getItem("u_token");
+    let currentDate = new Date();
+    let formattedCurrentDate = moment(currentDate).format("lll");
+    let expiry = localStorage.getItem("u_token_expiry");
     if (token === "" || token === null) {
       localStorage.clear();
       return undefined;
+    }
+    if (expiry < formattedCurrentDate) {
+      clearUserSession();
     }
     return token;
   } catch (error) {
