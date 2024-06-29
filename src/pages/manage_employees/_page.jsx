@@ -3,6 +3,7 @@ import "react-data-grid/lib/styles.css";
 import { BsExclamationCircleFill } from "react-icons/bs";
 import { RiIndeterminateCircleLine } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import { CiLock } from "react-icons/ci";
 import Modal from "../../components/modal/_component";
 import TableLoader from "../../components/table_loader/_component";
@@ -226,12 +227,12 @@ function ManageEmployees() {
   };
   return (
     <>
-      <button
+      <div
         onClick={createEmployee}
-        className="rounded-full w-1/6 m-auto py-3 text-white bg-[#0DCAF0] mobile:w-full"
+        className="flex items-center py-3 text-xs text-black underline cursor-pointer w-36"
       >
-        Create Employee
-      </button>
+        <FiPlus size={20} color="black" /> Create Employee
+      </div>
       <Modal open={deleteModalOpen} close={closeDeleteModal} closeOnOverlay>
         <div className="p-10 bg-white">
           <div className="w-16 m-auto">

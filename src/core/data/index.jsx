@@ -1,5 +1,5 @@
 import React from "react";
-import { FaPhone } from "react-icons/fa6";
+import { FaRegFileLines } from "react-icons/fa6";
 import { GrUserWorker } from "react-icons/gr";
 import { PiBuildingOfficeLight } from "react-icons/pi";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
@@ -35,6 +35,23 @@ export const industries = [
   { value: "Financial", label: "Financial" },
   { value: "Manufactoring", label: "Manufactoring" },
   { value: "Real Estate", label: "Real Estate" },
+];
+
+export const categories = [
+  { value: "monthly", label: "Monthly" },
+  { value: "fortnightly", label: "Fortnightly" },
+  { value: "weekly", label: "Weekly" },
+];
+
+export const categoriesNumber = [
+  { value: "54weeks", label: "52 weeks" },
+  { value: "12months", label: "12 months" },
+  { value: "26fortnights", label: "26 fortnights" },
+];
+
+export const payrollDuration = [
+  { value: "cat1", label: "Weekly" },
+  { value: "cat2", label: "Monthly" },
 ];
 
 export const languages = [
@@ -130,11 +147,11 @@ export const adminDashboardMenus = [
     title: "Employees",
     icon: <GrUserWorker color="#0DCAF0" size={16} />,
     subMenu: [
-      {
-        menu: "Onboard Employee",
-        url: "/dashboard/create-employee",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
-      },
+      // {
+      //   menu: "Onboard Employee",
+      //   url: "/dashboard/create-employee",
+      //   icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      // },
       {
         menu: "Manage Employees",
         url: "/dashboard/manage-employees",
@@ -161,11 +178,22 @@ export const adminDashboardMenus = [
         url: "/dashboard/run-payroll",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
+    ],
+  },
+  {
+    title: "Reports",
+    icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
+    subMenu: [
       {
         menu: "Saved Reports",
         url: "/dashboard/saved-reports",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+        icon: <FaRegFileLines color="#00D284" />,
       },
+      // {
+      //   menu: "Manage Entity",
+      //   url: "/view-entity",
+      //   icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      // },
     ],
   },
 ];

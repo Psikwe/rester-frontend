@@ -8,10 +8,11 @@ import {
   noOfEmployees,
   regions,
 } from "../../core/data";
-import { PiBuildingOfficeDuotone } from "react-icons/pi";
 import { formToJSON } from "axios";
 import { showToast } from "../../core/hooks/alert";
 import { CreateEntityForm } from "../../core/services/entity.service";
+import Confetti from "react-confetti";
+import Modal from "../../components/modal/_component";
 
 function SetupOrganization() {
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
@@ -19,6 +20,7 @@ function SetupOrganization() {
   const [selectedLanguage, setSelectedLanguage] = React.useState(null);
   const [selectedIndustry, setSelectedIndustry] = React.useState(null);
   const [selectedRegion, setSelectedRegion] = React.useState(null);
+  const [openDurationModal, setOpenDurationModal] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleChange = (selectedRangeOption) => {
@@ -60,11 +62,69 @@ function SetupOrganization() {
         showToast(error.response.data.error, false);
       });
   };
+
+  const closeDurationModal = () => {
+    setOpenDurationModal(false);
+  };
+
+  const gotoLogin = () => {
+    window.location.href = "/login";
+  };
+
+  const show = () => {
+    setOpenDurationModal(true);
+  };
+
   return (
     <>
+      {openDurationModal && (
+        <>
+          <Confetti
+            drawShape={(ctx) => {
+              ctx.beginPath();
+              for (let i = 0; i < 22; i++) {
+                const angle = 0.35 * i;
+                const x = (0.2 + 1.5 * angle) * Math.cos(angle);
+                const y = (0.2 + 1.5 * angle) * Math.sin(angle);
+                ctx.lineTo(x, y);
+              }
+              ctx.stroke();
+              ctx.closePath();
+            }}
+          />
+          <Modal open={openDurationModal} close={closeDurationModal}>
+            <div className="m-auto bg-white p-14">
+              <h3 className="text-xl">Welcome On Board! 🎉 </h3>
+              <div className="text-gray-400">
+                <p>
+                  Congratulations on setting up your organization! We're
+                  thrilled to have you with us. To help you get started, would
+                  you like to begin by adding your team members? Creating new
+                  employee profiles will allow you to manage your team
+                  efficiently and get everyone on the same page.
+                </p>
+                <br /> Please{" "}
+                <span
+                  className="text-black underline cursor-pointer"
+                  onClick={gotoLogin}
+                >
+                  login
+                </span>{" "}
+                to get started🚀🚀🚀
+              </div>
+            </div>
+          </Modal>
+        </>
+      )}
       <h3 className="mb-5 text-2xl text-center text-gray-500">
         Set up your organization profile
       </h3>
+      <div
+        className="flex justify-center w-24 m-auto bg-red-400 "
+        onClick={show}
+      >
+        showme
+      </div>
       <div className="flex w-1/2 p-10 m-auto my-16 bg-slate-100">
         <form
           id="company-form"
@@ -217,7 +277,7 @@ function SetupOrganization() {
             {isLoading ? <Loader /> : "Create Company"}
           </button>
         </form>
-      </div>
+      </div>{" "}
     </>
   );
 }

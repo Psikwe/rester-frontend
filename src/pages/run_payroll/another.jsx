@@ -12,6 +12,13 @@ import { showToast } from "../../core/hooks/alert";
 import DataGrid from "react-data-grid";
 import { SiCashapp } from "react-icons/si";
 import Loader from "../../components/loader/_component";
+import Select from "react-select";
+import {
+  categories,
+  categoriesNumber,
+  industries,
+  payrollDuration,
+} from "../../core/data";
 
 const MySpreadsheet = () => {
   const entity_id = localStorage.getItem("entity_id");
@@ -19,6 +26,12 @@ const MySpreadsheet = () => {
   const [report, setReport] = React.useState([]);
   const [selectedStartDate, setSelectedStartDate] = React.useState(null);
   const [grandReport, setGrandReport] = React.useState();
+  const [selectedIndustry, setSelectedIndustry] = React.useState(null);
+  const [selectedCategory, setSelectedCategory] = React.useState(null);
+  const [selectedCategoryNumber, setSelectedCategoryNumber] =
+    React.useState(null);
+  const [selectedPayrollDuration, setSelectedPayrollDuration] =
+    React.useState(null);
   const [selectedEndDate, setSelectedEndDate] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [durationIsConfirmed, setDurationIsConfirmed] = React.useState(false);
@@ -291,7 +304,6 @@ const MySpreadsheet = () => {
       entity_id: entity_id,
       ...grandReport,
     };
-    console.log("pay: ", payload);
     SaveTaxReport(payload)
       .then((response) => {
         setIsLoading(false);
@@ -309,6 +321,15 @@ const MySpreadsheet = () => {
   const handleIndustryChange = (selectedRangeOption) => {
     setSelectedIndustry(selectedRangeOption);
   };
+  const handleCategoryChange = (selectedRangeOption) => {
+    setSelectedCategory(selectedRangeOption);
+  };
+  const handleCategoryNumberChange = (selectedRangeOption) => {
+    setSelectedCategoryNumber(selectedRangeOption);
+  };
+  const handlePayrollDurationChange = (selectedRangeOption) => {
+    setSelectedPayrollDuration(selectedRangeOption);
+  };
   return (
     <>
       <Modal
@@ -318,7 +339,7 @@ const MySpreadsheet = () => {
       >
         <div className="w-full bg-white p-14">
           <div className="flex">
-            <div className="mt-3 mr-5 field">
+            {/* <div className="mt-3 mr-5 field">
               <label className="text-sm label bold">Select Start Date</label>
               <Flatpickr
                 className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
@@ -358,22 +379,37 @@ const MySpreadsheet = () => {
               >
                 Clear
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="flex">
-            <div className="mt-3 ">
-              <label className="text-sm label">Select Industry</label>
+            <div className="mt-3 w-96">
+              <label className="text-sm label">Select Category</label>
               <div className="flex w-full row mobile:w-full">
                 <Select
                   className="w-full"
-                  value={selectedIndustry}
-                  onChange={handleIndustryChange}
-                  options={industries}
-                  placeholder="Industry"
+                  value={selectedCategory}
+                  onChange={handleCategoryChange}
+                  options={categories}
+                  placeholder="Category"
                 />
               </div>
             </div>
           </div>
+          <div className="flex">
+            <div className="w-full mt-3 ">
+              <label className="text-sm label">Select Category Number</label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={selectedCategoryNumber}
+                  onChange={handleCategoryNumberChange}
+                  options={categoriesNumber}
+                  placeholder="Category Number"
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="flex">
             <button
               onClick={validate}
