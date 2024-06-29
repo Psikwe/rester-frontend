@@ -1,6 +1,6 @@
 import React from "react";
 import Select from "react-select";
-import { noOfEmployees } from "../../core/data";
+import { industries, noOfEmployees, regions } from "../../core/data";
 import { PiBuildingOfficeDuotone } from "react-icons/pi";
 import { formToJSON } from "axios";
 import { showToast } from "../../core/hooks/alert";
@@ -8,9 +8,20 @@ import { CreateEntityForm } from "../../core/services/entity.service";
 
 function CreateEntity() {
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
+  const [selectedIndustry, setSelectedIndustry] = React.useState(null);
+  const [selectedRegion, setSelectedRegion] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+
   const handleChange = (selectedRangeOption) => {
     setSelectedRangeOption(selectedRangeOption);
+  };
+
+  const handleIndustryChange = (selectedRangeOption) => {
+    setSelectedIndustry(selectedRangeOption);
+  };
+
+  const handleRegionsChange = (selectedRangeOption) => {
+    setSelectedRegion(selectedRangeOption);
   };
 
   const handleCompanySubmit = (e) => {
@@ -44,7 +55,9 @@ function CreateEntity() {
         >
           <div className="grid-cols-2 gap-3">
             <div className="field">
-              <label className="text-sm label bold">Enter Entity Name</label>
+              <label className="text-sm label">
+                Enter Entity Name <span className="text-red-600">*</span>
+              </label>
               <div className="control">
                 <input
                   required
@@ -56,7 +69,47 @@ function CreateEntity() {
               </div>
               {/* <p className="help">This is a help text</p> */}
             </div>
+            <div className="mt-3 ">
+              <label className="text-sm label bold">Select Industry</label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={selectedRangeOption}
+                  onChange={handleIndustryChange}
+                  options={industries}
+                  placeholder="Industry"
+                />
+              </div>
+            </div>
 
+            <div className="my-6 field">
+              <label className="text-sm label bold">Enter Location</label>
+              <div className="control">
+                <input
+                  required
+                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                  type="text"
+                  placeholder="Location"
+                  name="location"
+                />
+              </div>
+              {/* <p className="help">This is a help text</p> */}
+            </div>
+
+            <div className="mt-3 ">
+              <label className="text-sm label bold">
+                Select State/Province
+              </label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={selectedRegion}
+                  onChange={handleRegionsChange}
+                  options={regions}
+                  placeholder="Region"
+                />
+              </div>
+            </div>
             <div className="my-6 field">
               <label className="text-sm label bold">Enter Address(GPS)</label>
               <div className="control">

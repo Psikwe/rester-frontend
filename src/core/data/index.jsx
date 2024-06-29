@@ -26,6 +26,36 @@ export const noOfEmployees = [
   { value: "200 and above", label: "200 and above" },
 ];
 
+export const industries = [
+  { value: "Health", label: "Health" },
+  { value: "Agency or Sales House", label: "Agency or Sales House" },
+  { value: "Food Services", label: "Food Services" },
+  { value: "Construction", label: "Construction" },
+  { value: "Engineering", label: "Engineering" },
+  { value: "Financial", label: "Financial" },
+  { value: "Manufactoring", label: "Manufactoring" },
+  { value: "Real Estate", label: "Real Estate" },
+];
+
+export const regions = [
+  { value: "Greater Accra", label: "Greater Accra" },
+  { value: "Ashanti", label: "Ashanti" },
+  { value: "Western", label: "Western" },
+  { value: "Eastern", label: "Eastern" },
+  { value: "Northern", label: "Northern" },
+  { value: "Brong-Ahafo", label: "Brong-Ahafo" },
+  { value: "Volta", label: "Volta" },
+  { value: "Upper East", label: "Upper East" },
+  { value: "Upper West", label: "Upper West" },
+  { value: "Central", label: "Central" },
+  { value: "Western North", label: "Western North" },
+  { value: "Oti", label: "Oti" },
+  { value: "Bono East", label: "Bono East" },
+  { value: "Ahafo", label: "Ahafo" },
+  { value: "Savannah", label: "Savannah" },
+  { value: "North East", label: "North East" },
+];
+
 export const adminDashboardMenus = [
   {
     title: "Overview",
