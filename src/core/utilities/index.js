@@ -10,17 +10,6 @@ export const cacheUserRole = (role) => {
   localStorage.setItem("u_role", role);
 };
 
-export const getUserSession = () => {
-  try {
-    var token = localStorage.getItem("u_token");
-    if (token === "" || token === null) return undefined;
-    return token;
-  } catch (error) {
-    console.error(error);
-    return undefined;
-  }
-};
-
 export const clearUserSession = () => {
   localStorage.removeItem("u_token");
   localStorage.removeItem("u_role");
@@ -31,6 +20,19 @@ export const clearUserSession = () => {
   window.location.reload();
 };
 
+export const getUserSession = () => {
+  try {
+    var token = localStorage.getItem("u_token");
+    if (token === "" || token === null) {
+      localStorage.clear();
+      return undefined;
+    }
+    return token;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+};
 export const getAxios = (URL) => {
   const instance = axios.create({ URL });
   let token = localStorage.getItem("u_token");
