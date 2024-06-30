@@ -172,12 +172,6 @@ export const adminDashboardMenus = [
         url: "/dashboard/create-allowable-deductions",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
-
-      {
-        menu: "Run Payroll",
-        url: "/dashboard/run-payroll",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
-      },
     ],
   },
   {
@@ -185,9 +179,14 @@ export const adminDashboardMenus = [
     icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
     subMenu: [
       {
+        menu: "Run Payroll",
+        url: "/dashboard/run-payroll",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
         menu: "Saved Reports",
         url: "/dashboard/saved-reports",
-        icon: <FaRegFileLines color="#00D284" />,
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       // {
       //   menu: "Manage Entity",

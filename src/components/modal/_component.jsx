@@ -11,7 +11,7 @@ function Modal(props) {
           props.open ? "block" : "hidden"
         } grid place-items-center duration-500 ease-in fixed z-[1] left-0 top-0 w-full h-full overflow-auto bg-[rgb(0,0,0)] bg-[rgba(0,0,0,0.4)]`}
       >
-        <div className="w-1/4">
+        <div className={props.secondDiv}>
           {props.showCloseBtn && (
             <span
               onClick={() => closeModal()}

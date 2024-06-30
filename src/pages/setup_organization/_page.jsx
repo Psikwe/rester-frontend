@@ -92,8 +92,12 @@ function SetupOrganization() {
               ctx.closePath();
             }}
           />
-          <Modal open={openDurationModal} close={closeDurationModal}>
-            <div className="m-auto bg-white p-14">
+          <Modal
+            secondDiv="w-1/4"
+            open={openDurationModal}
+            close={closeDurationModal}
+          >
+            <div className="m-auto bg-white border-t-4 border-[#33b655] p-14">
               <h3 className="text-xl">Welcome On Board! 🎉 </h3>
               <div className="text-gray-400">
                 <p>
@@ -105,7 +109,7 @@ function SetupOrganization() {
                 </p>
                 <br /> Please{" "}
                 <span
-                  className="text-black underline cursor-pointer"
+                  className="font-bold text-black underline cursor-pointer"
                   onClick={gotoLogin}
                 >
                   login

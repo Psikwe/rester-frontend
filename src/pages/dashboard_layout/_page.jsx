@@ -2,10 +2,13 @@ import React from "react";
 import { adminDashboardMenus } from "../../core/data";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { IoMdSettings } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import { Dropdown, Ripple, initTWE } from "tw-elements";
 import { CiLogout } from "react-icons/ci";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { MdCurrencyExchange } from "react-icons/md";
+import { MdOutlineLanguage } from "react-icons/md";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
 import { BsExclamationCircle } from "react-icons/bs";
@@ -186,19 +189,73 @@ const DashboardLayout = () => {
         </div>
 
         <div className="w-full bg-[#f5f9fe] overflow-auto h-screen">
-          <div className="flex justify-between px-40 bg-[#1A55E3] laptop-lg:px-20">
+          <div className="flex h-12 justify-between px-40 bg-[#1A55E3] laptop-lg:px-20">
             <div className="flex items-center justify-between ">
-              <MdAdminPanelSettings className="text-slate-200" size={30} />
-
+              <MdAdminPanelSettings className="text-slate-200" size={20} />
               <div className="flex items-center justify-between">
                 <small className="ml-1 text-slate-200">{entityName}</small>
               </div>
             </div>
-            <div className="m-auto text-slate-200">{showDate}</div>
+            <div className="m-auto text-sm text-slate-200">{showDate}</div>
             <div className="flex items-center cursor-pointer">
+              <button
+                className="flex items-center rounded pb-2 pt-2.5 text-xs font-medium text-white "
+                type="button"
+                id="settingsMenu"
+                data-twe-dropdown-toggle-ref
+                aria-expanded="false"
+                data-twe-ripple-init
+                data-twe-ripple-color="light"
+              >
+                <IoMdSettings className="text-white" size={20} />
+
+                <span className="ms-2 w-2 [&>svg]:h-5 [&>svg]:w-5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+              </button>
+              <ul
+                className="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
+                aria-labelledby="settingsMenu"
+                data-twe-dropdown-menu-ref
+              >
+                <li>
+                  <span
+                    className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
+                    data-twe-dropdown-item-ref
+                    // onClick={openModal}
+                  >
+                    <span className="mr-1">
+                      <MdCurrencyExchange color="#687864" size={20} />
+                    </span>
+                    Change Currency
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
+                    data-twe-dropdown-item-ref
+                    // onClick={openModal}
+                  >
+                    <span className="mr-1">
+                      <MdOutlineLanguage color="#687864" size={20} />
+                    </span>
+                    Change Language
+                  </span>
+                </li>
+              </ul>
               <div className="relative" data-twe-dropdown-ref>
                 <button
-                  className="flex items-center rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out motion-reduce:transition-none"
+                  className="flex items-center rounded px-6 pb-2 pt-2.5 text-xs font-medium text-white "
                   type="button"
                   id="dropdownMenuButton1"
                   data-twe-dropdown-toggle-ref
@@ -206,7 +263,8 @@ const DashboardLayout = () => {
                   data-twe-ripple-init
                   data-twe-ripple-color="light"
                 >
-                  <RxAvatar className="text-white" size={30} />
+                  <RxAvatar className="text-white" size={20} />
+
                   <span className="ms-2 w-2 [&>svg]:h-5 [&>svg]:w-5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

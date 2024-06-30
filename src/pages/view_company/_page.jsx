@@ -13,7 +13,7 @@ import {
   CreateEntityForm,
   GetAllEntities,
 } from "../../core/services/entity.service";
-import { noOfEmployees } from "../../core/data";
+import { industries, noOfEmployees, regions } from "../../core/data";
 import logo from "../../assets/rester.png";
 import Loader from "../../components/loader/_component";
 import { showToast } from "../../core/hooks/alert";
@@ -22,6 +22,8 @@ function ViewCompany() {
   const [isSkeletonLoading, setSkeletonLoading] = React.useState(true);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
   const [createEntityModal, setCreateEntityModal] = React.useState(false);
+  const [selectedRegion, setSelectedRegion] = React.useState(null);
+  const [selectedIndustry, setSelectedIndustry] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
 
@@ -97,6 +99,15 @@ function ViewCompany() {
         showToast(error.response.data.error, false);
       });
   };
+
+  const handleIndustryChange = (selectedRangeOption) => {
+    setSelectedIndustry(selectedRangeOption);
+  };
+
+  const handleRegionsChange = (selectedRangeOption) => {
+    setSelectedRegion(selectedRangeOption);
+  };
+
   return (
     <>
       <Modal open={isLogoutModalOpen} close={closeLogoutModal}>
@@ -133,9 +144,11 @@ function ViewCompany() {
             className="w-full"
             onSubmit={handleCompanySubmit}
           >
-            <div className="grid-cols-2 gap-3">
-              <div className="field w-96">
-                <label className="text-sm label bold">Enter Entity Name</label>
+            <div className="flex items-center w-full">
+              <div className="mr-2 field">
+                <label className="text-sm label">
+                  Enter Entity Name <span className="text-red-600">*</span>
+                </label>
                 <div className="control">
                   <input
                     required
@@ -143,6 +156,34 @@ function ViewCompany() {
                     type="text"
                     placeholder="Company Name"
                     name="name"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
+              </div>
+              <div className="field">
+                <label className="text-sm label bold">Enter Email</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
+              </div>
+            </div>
+            <div className="flex">
+              <div className="my-6 mr-2 field">
+                <label className="text-sm label bold">Enter Location</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Location"
+                    name="location"
                   />
                 </div>
                 {/* <p className="help">This is a help text</p> */}
@@ -161,38 +202,55 @@ function ViewCompany() {
                 </div>
                 {/* <p className="help">This is a help text</p> */}
               </div>
-              <label className="text-sm label bold">
-                Select number of employees
-              </label>
+            </div>
+            <div>
+              <div className="">
+                <label className="text-sm label bold">
+                  Select State/Province
+                </label>
+                <div className="flex w-full row mobile:w-full">
+                  <Select
+                    className="w-full"
+                    value={selectedRegion}
+                    onChange={handleRegionsChange}
+                    options={regions}
+                    placeholder="Region"
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className="text-sm label bold">
+                  Select number of employees
+                </label>
+                <div className="flex w-full row mobile:w-full">
+                  <Select
+                    className="w-full"
+                    value={selectedRangeOption}
+                    onChange={handleChange}
+                    options={noOfEmployees}
+                    placeholder="Number of employees"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="mt-3 ">
+              <label className="text-sm label bold">Select Industry</label>
               <div className="flex w-full row mobile:w-full">
                 <Select
                   className="w-full"
                   value={selectedRangeOption}
-                  onChange={handleChange}
-                  options={noOfEmployees}
-                  placeholder="Number of employees"
+                  onChange={handleIndustryChange}
+                  options={industries}
+                  placeholder="Industry"
                 />
-              </div>
-              <div className="mt-6 field">
-                <label className="text-sm label bold">Enter Email</label>
-                <div className="control">
-                  <input
-                    required
-                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                  />
-                </div>
-                {/* <p className="help">This is a help text</p> */}
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full  py-3 mt-8 text-white bg-[#0DCAF0] mobile:w-full"
+              className="w-1/2 py-3 mt-8 text-white rounded-full primary mobile:w-full"
             >
-              {isLoading ? <Loader /> : " Add Company"}
+              {isLoading ? <Loader /> : "Create Company"}
             </button>
           </form>
         </div>
@@ -240,9 +298,10 @@ function ViewCompany() {
           )}
           <div
             onClick={() => setCreateEntityModal(true)}
-            className="flex items-center cursor-pointer"
+            className="flex items-center text-sm underline cursor-pointer"
           >
-            <IoMdAdd size={30} />
+            <IoMdAdd size={25} />
+            Create Company
           </div>
         </div>
       </div>
