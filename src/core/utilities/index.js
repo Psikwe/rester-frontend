@@ -11,11 +11,11 @@ export const cacheUserRole = (role) => {
 };
 
 export const clearUserSession = () => {
-  localStorage.removeItem("u_token");
-  localStorage.removeItem("u_role");
-  localStorage.removeItem("entity_id");
-  localStorage.removeItem("entity_name");
-  localStorage.removeItem("u_token_expiry");
+  // localStorage.removeItem("u_token");
+  // localStorage.removeItem("u_role");
+  // localStorage.removeItem("entity_id");
+  // localStorage.removeItem("entity_name");
+  // localStorage.removeItem("u_token_expiry");
   localStorage.clear();
   window.location.reload();
 };
@@ -30,7 +30,7 @@ export const getUserSession = () => {
       localStorage.clear();
       return undefined;
     }
-    if (expiry < formattedCurrentDate) {
+    if (expiry > formattedCurrentDate) {
       clearUserSession();
     }
     return token;
@@ -49,7 +49,7 @@ export const getAxios = (URL) => {
   if (token != null && token !== "") {
     instance.defaults.headers.common["Authorization"] = "Bearer " + token;
   }
-  if (expiry < formattedCurrentDate) {
+  if (expiry > formattedCurrentDate) {
     clearUserSession();
   }
   instance.interceptors.response.use(
