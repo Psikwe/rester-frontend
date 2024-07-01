@@ -3,7 +3,7 @@ import moment from "moment";
 
 export const cacheUserSession = (token, expiry) => {
   localStorage.setItem("u_token", token);
-  localStorage.setItem("u_token_expiry", expiry);
+  localStorage.setItem("u_token_expiry", expiry.toString());
 };
 
 export const cacheUserRole = (role) => {
@@ -32,16 +32,18 @@ export const getUserSession = () => {
   try {
     var token = localStorage.getItem("u_token");
     let currentDate = new Date();
-    let formattedCurrentDate = moment(currentDate).format("lll");
+    let currentTimestamp = moment(currentDate).valueOf();
 
     let expiry = localStorage.getItem("u_token_expiry");
     if (expiry) {
-      console.log(expiry, formattedCurrentDate);
-      if (expiry === formattedCurrentDate) console.log("equals");
-      if (expiry > formattedCurrentDate) console.log("greater");
-      if (expiry < formattedCurrentDate) console.log("lesser");
+      let expiryTimestamp = parseInt(expiry, 10); // Convert the stored string to a number
 
-      if (expiry < formattedCurrentDate) clearUserSession();
+      console.log(expiryTimestamp, currentTimestamp);
+      if (expiryTimestamp === currentTimestamp) console.log("equals");
+      if (expiryTimestamp > currentTimestamp) console.log("greater");
+      if (expiryTimestamp < currentTimestamp) console.log("lesser");
+
+      if (expiryTimestamp < currentTimestamp) clearUserSession();
     }
 
     if (token === "" || token === null) {
