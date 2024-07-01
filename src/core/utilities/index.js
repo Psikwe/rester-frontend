@@ -61,13 +61,13 @@ export const getAxios = (URL) => {
   const instance = axios.create({ URL });
   let token = localStorage.getItem("u_token");
   let currentDate = new Date();
-  let formattedCurrentDate = moment(currentDate).format("lll");
+  let currentTimestamp = moment(currentDate).valueOf();
   let expiry = localStorage.getItem("u_token_expiry");
-
+  let expiryTimestamp = parseInt(expiry, 10);
   if (token != null && token !== "") {
     instance.defaults.headers.common["Authorization"] = "Bearer " + token;
   }
-  if (expiry < formattedCurrentDate) {
+  if (expiryTimestamp < currentTimestamp) {
     clearUserSession();
   }
   instance.interceptors.response.use(
