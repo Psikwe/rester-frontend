@@ -90,7 +90,7 @@ function Login() {
         cacheUserSession(res?.data.access_token, expiryDate);
         cacheUserRole(res?.data.roles);
         dispatch(setUser({ roles: [], username: res?.data.email }));
-        if (res?.data.roles.length > 1) {
+        if (res?.data.roles.length > 0) {
           setConfirmRole(true);
           return;
         } else {

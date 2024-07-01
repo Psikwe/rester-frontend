@@ -20,19 +20,35 @@ export const clearUserSession = () => {
   window.location.reload();
 };
 
+const removeStoredItems = () => {
+  localStorage.removeItem("u_token");
+  localStorage.removeItem("u_role");
+  localStorage.removeItem("entity_id");
+  localStorage.removeItem("entity_name");
+  localStorage.removeItem("u_token_expiry");
+};
+
 export const getUserSession = () => {
   try {
     var token = localStorage.getItem("u_token");
     let currentDate = new Date();
     let formattedCurrentDate = moment(currentDate).format("lll");
+
     let expiry = localStorage.getItem("u_token_expiry");
+    if (expiry) {
+      console.log(expiry, formattedCurrentDate);
+      if (expiry === formattedCurrentDate) console.log("equals");
+      if (expiry > formattedCurrentDate) console.log("greater");
+      if (expiry < formattedCurrentDate) console.log("lesser");
+
+      if (expiry < formattedCurrentDate) clearUserSession();
+    }
+
     if (token === "" || token === null) {
-      localStorage.clear();
+      removeStoredItems();
       return undefined;
     }
-    if (expiry > formattedCurrentDate) {
-      clearUserSession();
-    }
+
     return token;
   } catch (error) {
     console.error(error);
@@ -49,7 +65,7 @@ export const getAxios = (URL) => {
   if (token != null && token !== "") {
     instance.defaults.headers.common["Authorization"] = "Bearer " + token;
   }
-  if (expiry > formattedCurrentDate) {
+  if (expiry < formattedCurrentDate) {
     clearUserSession();
   }
   instance.interceptors.response.use(
