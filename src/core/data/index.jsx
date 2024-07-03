@@ -230,8 +230,13 @@ export const employeeDashboardMenus = [
     icon: <GrUserWorker color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "Update Employee",
+        menu: "Update Details",
         url: "/employee/update-employee",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
+        menu: "Payslip",
+        url: "#",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],
@@ -268,7 +273,46 @@ export const companies = [
 
 export const columnLabels = ["Flavour", "Food"];
 export const rowLabels = ["Item 1", "Item 2"];
+
 export const data = [
   [{ value: "Vanilla" }, { value: "Chocolate" }],
   [{ value: "Strawberry" }, { value: "Cookies" }],
+];
+
+export const pricingPackages = [
+  {
+    title: "Basic",
+    price: "GH₵ 199",
+    description: "Basic Package includes access to basic features.",
+    features: ["Feature 1", "Feature 2", "Feature 3"],
+    href: "/signup",
+    bgColor: "bg-gray-200",
+    btnName: "Get started for free",
+  },
+  {
+    title: "Premium",
+    price: "GH₵ 399",
+    description: "Premium Package includes access to premium features.",
+    features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4", "Feature 5"],
+    href: "/signup",
+    bgColor: "bg-gray-200",
+    btnName: "Book a demo",
+  },
+  {
+    title: "Enterprise",
+    price: "GH₵ 999",
+    description:
+      "Enterprise Package includes access to premium features and additional features.",
+    btnName: "Book a call",
+    bgColor: "bg-gradient-to-r from-green-100 to-green-300",
+    features: [
+      "Feature 1",
+      "Feature 2",
+      "Feature 3",
+      "Feature 4",
+      "Feature 5",
+      "Feature 6",
+      "Feature 7",
+    ],
+  },
 ];

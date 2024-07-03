@@ -34,6 +34,7 @@ import SavedReports from "./saved_reports/_page";
 import TaxReportDetails from "./tax_report_details/_page";
 import UpdateAdminEmployee from "./update_admin_employee/_page";
 import SetUpOrganizatoin from "./setup_organization/_page";
+import Pricing from "./pricing/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -47,6 +48,8 @@ export default function AppRoutes() {
             <Route index element={<Home />} />
             <Route path="*" element={<Login />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="pricing" element={<Pricing />} />
+
             <Route path="setup-organization" element={<SetUpOrganizatoin />} />
           </Route>
         ) : (

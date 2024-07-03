@@ -28,7 +28,7 @@ export default function Navbar() {
     },
     {
       name: "Pricing",
-      href: "#",
+      href: "/pricing",
       logo: <MdOutlinePriceChange className="icon-color" />,
     },
 
@@ -95,7 +95,7 @@ export default function Navbar() {
               ""
             ) : (
               <>
-                <div className="inline-block -mt-12 h-[100px] w-0.5 bg-[#33b655]"></div>
+                <div className="inline-block -mt-12 h-[100px] w-0.5 bg-[#03A9FA]"></div>
                 <NavLink className="duration-700 hover:text-white" to="/login">
                   {" "}
                   <div className="rounded-full py-[8px] px-[25px] duration-700 cursor-pointer border-2 border-[#03A9FA] text-[#1d3145]">

@@ -1,10 +1,9 @@
 import { NavLink } from "react-router-dom";
-import banner from "../assets/login.webp";
+import TnCsFile from "../assets/pdfs/TnCs.pdf";
+import PP from "../assets/pdfs/PP.pdf";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
 import React from "react";
-import Select from "react-select";
-import { noOfEmployees, yearOptions } from "../core/data";
 import axios, { formToJSON } from "axios";
 import { showToast } from "../core/hooks/alert";
 import Loader from "../components/loader/_component";
@@ -226,13 +225,13 @@ function Signup() {
               >
                 I agree to the{" "}
                 <span className="underline">
-                  <a href="#" target="_blank">
+                  <a href={TnCsFile} target="_blank">
                     Terms of Service
                   </a>
                 </span>{" "}
                 and{" "}
                 <span className="underline">
-                  <a href="#" target="_blank">
+                  <a href={PP} target="_blank">
                     Privacy Policy
                   </a>{" "}
                 </span>

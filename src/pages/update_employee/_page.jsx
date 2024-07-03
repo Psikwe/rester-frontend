@@ -57,7 +57,7 @@ function UpdateEmployee() {
     <>
       <form id="employee-form" onSubmit={handleUpdateEmployee}>
         <h3 className="mb-3 text-sm">Basic Informations</h3>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-3 mobile:grid-cols-1">
           <div className="field">
             <label className="text-sm label bold">Enter First Name</label>
             <div className="control">
