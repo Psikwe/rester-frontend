@@ -116,7 +116,7 @@ export default function Navbar() {
 
       {/* ************** Mobile Nav ***************/}
       <div className="from-nav-laptop-to-laptop-xl:hidden">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between h-16">
           <a
             className="me-1.5 inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white  transition duration-150 ease-in-out  focus:outline-none focus:ring-0 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
             data-twe-offcanvas-toggle
@@ -128,7 +128,7 @@ export default function Navbar() {
           >
             <IoMenu color="black" size={30} />
           </a>
-          <div className={styles.start}>
+          <div>
             <NavLink to="/" style={{ color: "#000" }}>
               <img className="w-32" src={logo} />
             </NavLink>
