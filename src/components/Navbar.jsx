@@ -130,7 +130,7 @@ export default function Navbar() {
           </a>
           <div className={styles.start}>
             <NavLink to="/" style={{ color: "#000" }}>
-              <b>R</b>ester
+              <img className="w-32" src={logo} />
             </NavLink>
           </div>
         </div>
