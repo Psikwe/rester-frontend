@@ -115,6 +115,21 @@ export const currencies = [
   { value: "EGP", label: "Egyptian Pound" },
 ];
 
+export const payslipDates = [
+  { value: "July 2024", label: "July 2024" },
+  { value: "June 2024", label: "June 2024" },
+  { value: "May 2024", label: "May 2024" },
+  { value: "April 2024", label: "April 2024" },
+  { value: "March 2024", label: "March 2024" },
+  { value: "February 2024", label: "February 2024" },
+  { value: "January 2024", label: "January 2024" },
+  { value: "December 2023", label: "December 2023" },
+  { value: "November 2023", label: "November 2023" },
+  { value: "October 2023", label: "October 2023" },
+  { value: "September 2023", label: "September 2023" },
+  { value: "August 2023", label: "August 2023" },
+];
+
 export const adminDashboardMenus = [
   {
     title: "Overview",
@@ -236,7 +251,7 @@ export const employeeDashboardMenus = [
       },
       {
         menu: "Payslip",
-        url: "#",
+        url: "/employee/employee-payslip",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],

@@ -1,11 +1,9 @@
 import React from "react";
-import { Spreadsheet } from "react-spreadsheet";
 import {
   DownloadTaxReport,
   GenerateTaxReport,
   SaveTaxReport,
 } from "../../core/services/report.service";
-import Flatpickr from "react-flatpickr";
 import moment from "moment";
 import Modal from "../../components/modal/_component";
 import { showToast } from "../../core/hooks/alert";
@@ -13,12 +11,7 @@ import DataGrid from "react-data-grid";
 import { SiCashapp } from "react-icons/si";
 import Loader from "../../components/loader/_component";
 import Select from "react-select";
-import {
-  categories,
-  categoriesNumber,
-  industries,
-  payrollDuration,
-} from "../../core/data";
+import { categories, categoriesNumber } from "../../core/data";
 
 const MySpreadsheet = () => {
   const entity_id = localStorage.getItem("entity_id");

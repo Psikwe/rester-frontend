@@ -92,7 +92,7 @@ function Login() {
         dispatch(setUser({ roles: [], username: res?.data.email }));
         if (!res?.data.is_verified) {
           showToast("Please verify account", false);
-          return;
+          // return;
         }
         if (res?.data.roles.length > 0) {
           setConfirmRole(true);

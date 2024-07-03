@@ -67,7 +67,7 @@ const EmployeeDashboardLayout = () => {
     },
     {
       name: "Payslip",
-      href: "#",
+      href: "/employee/employee-payslip",
       logo: <IoCalculator className="icon-color" />,
     },
   ];
