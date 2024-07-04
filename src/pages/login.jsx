@@ -115,7 +115,6 @@ function Login() {
         loginForm?.reset();
       })
       .catch((error) => {
-        alert("wrong");
         setIsLoading(false);
         showToast(error.response.data.error, false);
       });
