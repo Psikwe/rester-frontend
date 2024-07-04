@@ -85,15 +85,16 @@ function Login() {
     UserLogin(loginData)
       .then((res) => {
         setIsLoading(false);
-        let expiryTimestamp = moment.unix(res?.data.expiry).valueOf();
-        console.log("too: ", res);
-        cacheUserSession(res?.data.access_token, expiryTimestamp);
-        cacheUserRole(res?.data.roles);
-        dispatch(setUser({ roles: [], username: res?.data.email }));
         if (!res?.data.is_verified) {
           showToast("Please verify account", false);
           // return;
         }
+        let expiryTimestamp = moment.unix(res?.data.expiry).valueOf();
+        alert("right");
+        cacheUserSession(res?.data.access_token, expiryTimestamp);
+        cacheUserRole(res?.data.roles);
+        dispatch(setUser({ roles: [], username: res?.data.email }));
+
         if (res?.data.roles.length > 0) {
           setConfirmRole(true);
           return;
@@ -114,6 +115,7 @@ function Login() {
         loginForm?.reset();
       })
       .catch((error) => {
+        alert("wrong");
         setIsLoading(false);
         showToast(error.response.data.error, false);
       });
