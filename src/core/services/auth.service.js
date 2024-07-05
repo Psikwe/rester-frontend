@@ -15,6 +15,13 @@ export const UserLogin = async (data) => {
   );
 };
 
+export const UserIncomeCalculator = async (data) => {
+  return await axios.post(
+    "https://rester-82c60dc37022.herokuapp.com/calculate/income_tax",
+    data
+  );
+};
+
 export const UserForgotPassword = async (payload) => {
   return await axios.post(
     "https://rester-82c60dc37022.herokuapp.com/forgot_password",

@@ -1,5 +1,7 @@
 import { FaCediSign } from "react-icons/fa6";
 import { useState } from "react";
+import { formToJSON } from "axios";
+import { UserIncomeCalculator } from "../core/services/auth.service";
 
 export default function IncomeTaxCalculator() {
   const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -15,43 +17,64 @@ export default function IncomeTaxCalculator() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const formData = new FormData(event.target);
-    const basic_salary = formData.get("basic_salary");
-    const cash_allowances = formData.get("cash_allowances");
-    const bonus = formData.get("bonus");
-    const overtime = formData.get("overtime");
-    const tier_1 = formData.get("tier_1");
-    const tier_2 = formData.get("tier_2");
-    const tier_3 = formData.get("tier_3");
+    const incomeTaxForm = document.getElementById("income-tax-calculator");
+    const payload = {
+      ...formToJSON(incomeTaxForm),
+    };
 
-    const res = await fetch(`${SERVER_URL}/calculate/income_tax`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        basic_salary,
-        cash_allowances,
-        bonus,
-        overtime,
-        tier_1,
-        tier_2,
-        tier_3,
-      }),
-    });
+    UserIncomeCalculator(payload)
+      .then((response) => {
+        setTimeout(setLoading, 2000, false);
+        setResult(response.data);
+      })
+      .catch((error) => {
+        console.error("Error calculating income tax", error);
+        setLoading(false);
+      });
+    // const formData = new FormData(event.target);
+    // const basic_salary = formData.get("basic_salary");
+    // const cash_allowances = formData.get("cash_allowances");
+    // const bonus = formData.get("bonus");
+    // const overtime = formData.get("overtime");
+    // const tier_1 = formData.get("tier_1");
+    // const tier_2 = formData.get("tier_2");
+    // const tier_3 = formData.get("tier_3");
 
-    const data = await res.json();
+    // const res = await fetch(
+    //   "https://rester-82c60dc37022.herokuapp.com/calculate/income_tax",
+    //   {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({
+    //       basic_salary,
+    //       cash_allowances,
+    //       bonus,
+    //       overtime,
+    //       tier_1,
+    //       tier_2,
+    //       tier_3,
+    //     }),
+    //   }
+    // );
 
-    if (res.ok) {
-      console.log("Income tax calculated successfully");
-      setTimeout(setLoading, 2000, false);
+    // const data = await res.json();
 
-      setResult(data);
-    } else {
-      console.error("Error calculating income tax", data);
-    }
+    // if (res.ok) {
+    //   console.log("Income tax calculated successfully");
+    //   setTimeout(setLoading, 2000, false);
+
+    //   setResult(data);
+    // } else {
+    //   console.error("Error calculating income tax", data);
+    // }
   };
   return (
     <>
-      <form className="flex calculator column" onSubmit={handleSubmit}>
+      <form
+        id="income-tax-calculator"
+        className="flex calculator column"
+        onSubmit={handleSubmit}
+      >
         <div className="mt-12 mobile:mt-14 smallTitle center mobile:text-xl  text-[#25476A]">
           Income Tax Calculator
         </div>
@@ -175,7 +198,10 @@ export default function IncomeTaxCalculator() {
         {/*   <button className="outline">%</button> */}
         {/* </div> */}
         <div className="flex p-3 from-laptop-to-laptop-xl:w-1/2 column">
-          <button className="w-full py-3 text-white rounded-full primary">
+          <button
+            disabled={loading}
+            className="w-full py-3 text-white rounded-full primary"
+          >
             Calculate Income Tax
           </button>
         </div>
@@ -189,7 +215,7 @@ export default function IncomeTaxCalculator() {
 
       {!loading && result && (
         <div className="results">
-          <div className="smallTitle center">Results</div>
+          <div className="mt-10 smallTitle center">Results</div>
           <div className="result">
             <p>Basic Salary</p>
             {result.basic_salary}
