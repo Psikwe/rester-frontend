@@ -8,6 +8,7 @@ export default function GrossIncomeCalculator() {
   const handleChange = (selectedOption) => {
     setSelectedAuthorValue(selectedOption);
   };
+
   return (
     <div className="flex calculator column">
       <div className="mt-12 mobile:text-[26px] smallTitle center text-[#31708E]">
