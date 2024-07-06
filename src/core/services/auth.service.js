@@ -24,7 +24,7 @@ export const UserIncomeCalculator = async (data) => {
 
 export const UserGrossIncomeCalculator = async (data) => {
   return await axios.post(
-    "https://rester-82c60dc37022.herokuapp.com/calculate/income_tax",
+    "https://rester-82c60dc37022.herokuapp.com/calculate/gross_income",
     data
   );
 };

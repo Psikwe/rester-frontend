@@ -4,7 +4,6 @@ import { formToJSON } from "axios";
 import { UserIncomeCalculator } from "../core/services/auth.service";
 
 export default function IncomeTaxCalculator() {
-  const SERVER_URL = import.meta.env.VITE_SERVER_URL;
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [basicSalary, setBasicSalary] = useState("");
@@ -31,42 +30,6 @@ export default function IncomeTaxCalculator() {
         console.error("Error calculating income tax", error);
         setLoading(false);
       });
-    // const formData = new FormData(event.target);
-    // const basic_salary = formData.get("basic_salary");
-    // const cash_allowances = formData.get("cash_allowances");
-    // const bonus = formData.get("bonus");
-    // const overtime = formData.get("overtime");
-    // const tier_1 = formData.get("tier_1");
-    // const tier_2 = formData.get("tier_2");
-    // const tier_3 = formData.get("tier_3");
-
-    // const res = await fetch(
-    //   "https://rester-82c60dc37022.herokuapp.com/calculate/income_tax",
-    //   {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       basic_salary,
-    //       cash_allowances,
-    //       bonus,
-    //       overtime,
-    //       tier_1,
-    //       tier_2,
-    //       tier_3,
-    //     }),
-    //   }
-    // );
-
-    // const data = await res.json();
-
-    // if (res.ok) {
-    //   console.log("Income tax calculated successfully");
-    //   setTimeout(setLoading, 2000, false);
-
-    //   setResult(data);
-    // } else {
-    //   console.error("Error calculating income tax", data);
-    // }
   };
   return (
     <>

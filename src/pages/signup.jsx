@@ -4,7 +4,7 @@ import PP from "../assets/pdfs/PP.pdf";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
 import React from "react";
-import axios, { formToJSON } from "axios";
+import { formToJSON } from "axios";
 import { showToast } from "../core/hooks/alert";
 import Loader from "../components/loader/_component";
 import { UserSignUp } from "../core/services/auth.service";

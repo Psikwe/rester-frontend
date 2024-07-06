@@ -16,8 +16,13 @@ export const options = [
 ];
 
 export const yearOptions = [
-  { value: "chocolate", label: "2024/2025" },
-  { value: "strawberry", label: "2025/2026" },
+  { value: "2024/2025", label: "2024/2025" },
+  { value: "2025/2026", label: "2025/2026" },
+];
+
+export const ageOptions = [
+  { value: "true", label: "Yes" },
+  { value: "false", label: "No" },
 ];
 
 export const noOfEmployees = [
