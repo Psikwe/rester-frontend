@@ -2,6 +2,7 @@ import { FaCediSign } from "react-icons/fa6";
 import Select from "react-select";
 import { ageOptions, options, yearOptions } from "../core/data";
 import { useState } from "react";
+import { showToast } from "../core/hooks/alert";
 import { UserGrossIncomeCalculator } from "../core/services/auth.service";
 import { formToJSON } from "axios";
 
@@ -22,10 +23,23 @@ export default function GrossIncomeCalculator() {
     setSelectedAgeRangeChange(selectedOption);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    if (selectedOption === null) {
+      showToast("please select duration", false);
+      return;
+    }
+    if (selectedYearChange === null) {
+      showToast("please select year", false);
+      return;
+    }
+    if (selectedAgeRangeChange === null) {
+      showToast("please select if under 65 years", false);
+      return;
+    }
     setLoading(true);
     const grossIncomeTaxForm = document.getElementById("gross-income-tax");
+
     const payload = {
       ...formToJSON(grossIncomeTaxForm),
       duration: selectedOption.value,
@@ -60,9 +74,10 @@ export default function GrossIncomeCalculator() {
               <FaCediSign />
             </div>
             <input
+              required
               className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
               name="net_income"
-              type="text"
+              type="number"
               placeholder="Net income"
             />
           </div>
@@ -109,9 +124,10 @@ export default function GrossIncomeCalculator() {
           </div>
           <div className="w-1/2 mt-3 inputContainer mobile:w-full">
             <input
+              required
               className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 mobile:p-2 "
               name="pension_contribution"
-              type="text"
+              type="number"
               placeholder="Pension contribution"
             />
 
