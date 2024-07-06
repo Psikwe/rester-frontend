@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import banner from "../assets/login.webp";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
 import React from "react";
@@ -85,12 +84,8 @@ function Login() {
     UserLogin(loginData)
       .then((res) => {
         setIsLoading(false);
-        if (!res?.data.is_verified) {
-          showToast("Please verify account", false);
-          // return;
-        }
+
         let expiryTimestamp = moment.unix(res?.data.expiry).valueOf();
-        alert("right");
         cacheUserSession(res?.data.access_token, expiryTimestamp);
         cacheUserRole(res?.data.roles);
         dispatch(setUser({ roles: [], username: res?.data.email }));

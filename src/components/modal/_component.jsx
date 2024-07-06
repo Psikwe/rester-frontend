@@ -9,7 +9,7 @@ function Modal(props) {
       <div
         className={`${
           props.open ? "block" : "hidden"
-        } grid place-items-center duration-500 ease-in fixed z-[1] left-0 top-0 w-full h-full overflow-auto bg-[rgb(0,0,0)] bg-[rgba(0,0,0,0.4)]`}
+        } grid place-items-center duration-500 ease-in fixed z-50 overflow-y-scroll left-0 top-0 w-full h-full overflow-auto bg-[rgb(0,0,0)] bg-[rgba(0,0,0,0.4)]`}
       >
         <div className={props.secondDiv}>
           {props.showCloseBtn && (

@@ -1,6 +1,13 @@
 import React from "react";
 import Select from "react-select";
-import { industries, noOfEmployees, regions } from "../../core/data";
+import {
+  countries,
+  currencies,
+  industries,
+  languages,
+  noOfEmployees,
+  regions,
+} from "../../core/data";
 import { PiBuildingOfficeDuotone } from "react-icons/pi";
 import { formToJSON } from "axios";
 import { showToast } from "../../core/hooks/alert";
@@ -9,6 +16,8 @@ import { CreateEntityForm } from "../../core/services/entity.service";
 function CreateEntity() {
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
   const [selectedIndustry, setSelectedIndustry] = React.useState(null);
+  const [selectedCurrency, setSelectedCurrency] = React.useState(null);
+  const [selectedLanguage, setSelectedLanguage] = React.useState(null);
   const [selectedRegion, setSelectedRegion] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -18,6 +27,13 @@ function CreateEntity() {
 
   const handleIndustryChange = (selectedRangeOption) => {
     setSelectedIndustry(selectedRangeOption);
+  };
+
+  const handleLanguageChange = (selectedRangeOption) => {
+    setSelectedLanguage(selectedRangeOption);
+  };
+  const handleCurrencyChange = (selectedRangeOption) => {
+    setSelectedCurrency(selectedRangeOption);
   };
 
   const handleRegionsChange = (selectedRangeOption) => {
@@ -70,89 +86,131 @@ function CreateEntity() {
               {/* <p className="help">This is a help text</p> */}
             </div>
             <div className="mt-3 ">
-              <label className="text-sm label bold">Select Industry</label>
+              <label className="text-sm label">Select Industry</label>
               <div className="flex w-full row mobile:w-full">
                 <Select
                   className="w-full"
-                  value={selectedRangeOption}
+                  value={selectedIndustry}
                   onChange={handleIndustryChange}
                   options={industries}
                   placeholder="Industry"
                 />
               </div>
             </div>
-
-            <div className="my-6 field">
-              <label className="text-sm label bold">Enter Location</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="text"
-                  placeholder="Location"
-                  name="location"
-                />
+            <div className="flex items-center w-full mt-3">
+              <div className="w-full mr-2">
+                <label className="text-sm label">Select Country</label>
+                <div className="flex w-full row mobile:w-full">
+                  <Select
+                    className="w-full"
+                    value={selectedRegion}
+                    onChange={handleRegionsChange}
+                    options={countries}
+                    placeholder="Ghana"
+                  />
+                </div>
               </div>
-              {/* <p className="help">This is a help text</p> */}
-            </div>
 
-            <div className="mt-3 ">
-              <label className="text-sm label bold">
-                Select State/Province
+              <div className="w-full">
+                <label className="text-sm label">Select State/Province</label>
+                <div className="flex w-full row mobile:w-full">
+                  <Select
+                    className="w-full"
+                    value={selectedRegion}
+                    onChange={handleRegionsChange}
+                    options={regions}
+                    placeholder="Greater Accra"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center mt-3">
+              <div className="w-full mr-2 field">
+                <label className="text-sm label">Enter Email</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
+              </div>
+              <div className="w-full field">
+                <label className="text-sm label">Enter Address(GPS)</label>
+                <div className="control">
+                  <input
+                    required
+                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                    type="text"
+                    placeholder="Address"
+                    name="address"
+                  />
+                </div>
+                {/* <p className="help">This is a help text</p> */}
+              </div>
+            </div>
+            <div className="mt-3">
+              <label className="text-sm label">
+                Select number of employees
               </label>
               <div className="flex w-full row mobile:w-full">
                 <Select
                   className="w-full"
-                  value={selectedRegion}
-                  onChange={handleRegionsChange}
-                  options={regions}
-                  placeholder="Region"
+                  value={selectedRangeOption}
+                  onChange={handleChange}
+                  options={noOfEmployees}
+                  placeholder="Number of employees"
                 />
               </div>
             </div>
-            <div className="my-6 field">
-              <label className="text-sm label bold">Enter Address(GPS)</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="text"
-                  placeholder="Address"
-                  name="address"
-                />
+
+            <div className="mt-16 ">
+              <h3 className="text-gray-300">Regional Settings</h3>
+              <div className="flex ">
+                <div className="w-full mt-3 mr-2">
+                  <label className="text-sm label">Select Currency</label>
+                  <div className="flex w-full row mobile:w-full">
+                    <Select
+                      className="w-full"
+                      value={selectedCurrency}
+                      onChange={handleCurrencyChange}
+                      options={currencies}
+                      placeholder="Ghanaian Cedi"
+                    />
+                  </div>
+                </div>
+                <div className="w-full mt-3">
+                  <label className="text-sm label">Select Language</label>
+                  <div className="flex w-full row mobile:w-full">
+                    <Select
+                      className="w-full"
+                      isDisabled={true}
+                      value={selectedLanguage}
+                      onChange={handleLanguageChange}
+                      options={languages}
+                      placeholder="English"
+                    />
+                  </div>
+                </div>
               </div>
-              {/* <p className="help">This is a help text</p> */}
-            </div>
-            <label className="text-sm label bold">
-              Select number of employees
-            </label>
-            <div className="flex w-full row mobile:w-full">
-              <Select
-                className="w-full"
-                value={selectedRangeOption}
-                onChange={handleChange}
-                options={noOfEmployees}
-                placeholder="Number of employees"
-              />
-            </div>
-            <div className="mt-6 field">
-              <label className="text-sm label bold">Enter Email</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                />
-              </div>
-              {/* <p className="help">This is a help text</p> */}
             </div>
           </div>
-
+          <hr className="my-8 border-gray-300 border-1" />
+          <span className="text-sm">Note: </span>
+          <ul className="ml-8 text-xs text-gray-400 list-disc">
+            <li>You can update some of these settings from Settings anytime</li>
+            <li>
+              The language you select will be the default language, you can
+              change anytime.
+            </li>
+          </ul>
+          <hr className="my-8 border-gray-300 border-1" />
           <button
             type="submit"
-            className="w-1/2 py-3 mt-8 text-white rounded-full primary mobile:w-full"
+            className="w-1/3 py-3 my-8 text-white rounded-full primary mobile:w-full"
           >
             {isLoading ? <Loader /> : "Create Company"}
           </button>

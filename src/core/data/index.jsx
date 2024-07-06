@@ -208,6 +208,11 @@ export const adminDashboardMenus = [
         url: "/dashboard/saved-reports",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
+      {
+        menu: "Tax Rate",
+        url: "/dashboard/tax-rate",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
       // {
       //   menu: "Manage Entity",
       //   url: "/view-entity",

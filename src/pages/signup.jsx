@@ -8,13 +8,15 @@ import { formToJSON } from "axios";
 import { showToast } from "../core/hooks/alert";
 import Loader from "../components/loader/_component";
 import { UserSignUp } from "../core/services/auth.service";
+import Select from "react-select";
+import { industries } from "../core/data";
 
 function Signup() {
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
-  const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
+  const [selectedIndustry, setSelectedIndustry] = React.useState(null);
   const oldPasswordToggle = () => {
     setShowOldPasswordType(!showOldPasswordType);
   };
@@ -23,17 +25,21 @@ function Signup() {
     setShowNewPasswordType(!showNewPasswordType);
   };
 
-  const handleChange = (selectedRangeOption) => {
-    setSelectedRangeOption(selectedRangeOption);
+  const handleIndustryChange = (selectedIndustryValue) => {
+    setSelectedIndustry(selectedIndustryValue);
   };
 
   const handleSignup = (event) => {
-    setIsLoading(true);
     event.preventDefault();
+    if (selectedIndustry === null) {
+      showToast("please select industry", false);
+      return;
+    }
+    setIsLoading(true);
     const signupForm = document.getElementById("signup-form");
     const signupData = {
       ...formToJSON(signupForm),
-      company_size: selectedRangeOption.value,
+      company_industry: selectedIndustry.value,
     };
     UserSignUp(signupData)
       .then((res) => {
@@ -160,13 +166,39 @@ function Signup() {
             <div className="flex w-full row mobile:w-full">
               <Select
                 className="w-full"
-                value={selectedRangeOption}
+                value={selectedIndustryValue}
                 onChange={handleChange}
                 options={noOfEmployees}
                 placeholder="Number of employees"
               />
             </div> */}
-
+            <div className="mr-3 field">
+              <label className="text-sm label bold">
+                Enter Company Location
+              </label>
+              <div className="control">
+                <input
+                  required
+                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                  type="text"
+                  placeholder="location"
+                  name="company_location"
+                />
+              </div>
+              {/* <p className="help">This is a help text</p> */}
+            </div>
+            <div className="mt-3 ">
+              <label className="text-sm label">Select Industry</label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={selectedIndustry}
+                  onChange={handleIndustryChange}
+                  options={industries}
+                  placeholder="Industry"
+                />
+              </div>
+            </div>
             <div className="relative field">
               <label className="text-sm label bold">Enter Password</label>
               <div className="control">

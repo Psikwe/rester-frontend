@@ -36,7 +36,7 @@ export const getUserSession = () => {
 
     let expiry = localStorage.getItem("u_token_expiry");
     if (expiry) {
-      let expiryTimestamp = parseInt(expiry, 10); // Convert the stored string to a number
+      let expiryTimestamp = parseInt(expiry, 10);
 
       console.log(expiryTimestamp, currentTimestamp);
       if (expiryTimestamp === currentTimestamp) console.log("equals");

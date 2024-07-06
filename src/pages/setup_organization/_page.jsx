@@ -281,7 +281,7 @@ function SetupOrganization() {
             {isLoading ? <Loader /> : "Create Company"}
           </button>
         </form>
-      </div>{" "}
+      </div>
     </>
   );
 }
