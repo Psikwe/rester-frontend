@@ -1,22 +1,19 @@
 import React from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { UserVerification } from "../../core/services/auth.service";
-import Modal from "../../components/modal/_component";
-import Loader from "../../components/loader/_component";
 
 function VerifyUser() {
-  //   const location = useLocation();
-  //   const { vk } = useParams();
+  const { vk } = useParams();
 
-  //   React.useEffect(() => {
-  //     UserVerification(vk)
-  //       .then((response) => {
-  //         console.log(response);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }, [location]);
+  React.useEffect(() => {
+    UserVerification(vk)
+      .then((response) => {
+        console.log("veri: ", response);
+      })
+      .catch((error) => {
+        console.log("veriErr: ", error);
+      });
+  }, []);
   return (
     <>
       <div
