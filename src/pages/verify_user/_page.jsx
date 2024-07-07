@@ -4,7 +4,7 @@ import { UserVerification } from "../../core/services/auth.service";
 
 function VerifyUser() {
   const { vk } = useParams();
-
+  console.log("vk: " + vk);
   React.useEffect(() => {
     UserVerification(vk)
       .then((response) => {
