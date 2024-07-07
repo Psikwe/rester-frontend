@@ -31,15 +31,11 @@ function Signup() {
 
   const handleSignup = (event) => {
     event.preventDefault();
-    if (selectedIndustry === null) {
-      showToast("please select industry", false);
-      return;
-    }
+
     setIsLoading(true);
     const signupForm = document.getElementById("signup-form");
     const signupData = {
       ...formToJSON(signupForm),
-      company_industry: selectedIndustry.value,
     };
     UserSignUp(signupData)
       .then((res) => {
@@ -113,7 +109,7 @@ function Signup() {
                     className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                     type="email"
                     placeholder="Email"
-                    name="company_email"
+                    name="email"
                   />
                 </div>
                 {/* <p className="help">This is a help text</p> */}
