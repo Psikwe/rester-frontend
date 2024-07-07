@@ -36,6 +36,9 @@ import UpdateAdminEmployee from "./update_admin_employee/_page";
 import SetUpOrganizatoin from "./setup_organization/_page";
 import Pricing from "./pricing/_page";
 import Payslip from "./payslip/_page";
+import SuperAdminDashboardLayout from "./super_admin_dashboard_layout/_page";
+import SuperAdminDashboard from "./super_admin_dashboard/_page";
+import VerifyUser from "./verify_user/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -47,6 +50,7 @@ export default function AppRoutes() {
         {!userSession ? (
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="verify_user" element={<VerifyUser />} />
             <Route path="*" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="pricing" element={<Pricing />} />
@@ -128,6 +132,12 @@ export default function AppRoutes() {
               <Route path="/employee" element={<EmployeeDashboardLayout />}>
                 <Route path="update-employee" element={<UpdateEmployee />} />
                 <Route path="employee-payslip" element={<Payslip />} />
+              </Route>
+              <Route path="/super" element={<SuperAdminDashboardLayout />}>
+                <Route
+                  path="update-employee"
+                  element={<SuperAdminDashboard />}
+                />
               </Route>
             </>
           </>

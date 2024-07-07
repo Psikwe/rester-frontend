@@ -42,3 +42,9 @@ export const UserResetPassword = async (payload) => {
     payload
   );
 };
+export const UserVerification = async (payload) => {
+  return await axios.post(
+    "https://rester-82c60dc37022.herokuapp.com/verify_user",
+    payload
+  );
+};
