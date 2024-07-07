@@ -1,4 +1,5 @@
 import { getAxios } from "../utilities";
+import axios from "axios";
 
 export const GetAllEntities = async () => {
   return await getAxios().get(
@@ -9,6 +10,13 @@ export const GetAllEntities = async () => {
 export const CreateEntityForm = async (payload) => {
   return await getAxios().post(
     `https://rester-82c60dc37022.herokuapp.com/create_entity`,
+    payload
+  );
+};
+
+export const SetupOrganizationForm = async (payload) => {
+  return await axios.post(
+    `https://rester-82c60dc37022.herokuapp.com/setup_organization`,
     payload
   );
 };

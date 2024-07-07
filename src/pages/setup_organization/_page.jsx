@@ -10,52 +10,103 @@ import {
 } from "../../core/data";
 import { formToJSON } from "axios";
 import { showToast } from "../../core/hooks/alert";
-import { CreateEntityForm } from "../../core/services/entity.service";
+import {
+  CreateEntityForm,
+  SetupOrganizationForm,
+} from "../../core/services/entity.service";
 import Confetti from "react-confetti";
 import Modal from "../../components/modal/_component";
+import Loader from "../../components/loader/_component";
 
 function SetupOrganization() {
-  const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
+  const [selectedCountryOption, setSelectedCountryOption] =
+    React.useState(null);
+  const [selectedNoOfEmployees, setSelectedNoOfEmployees] =
+    React.useState(null);
   const [selectedCurrency, setSelectedCurrency] = React.useState(null);
+  const [disableStateField, setDisableStateField] = React.useState(false);
   const [selectedLanguage, setSelectedLanguage] = React.useState(null);
   const [selectedIndustry, setSelectedIndustry] = React.useState(null);
   const [selectedRegion, setSelectedRegion] = React.useState(null);
   const [openDurationModal, setOpenDurationModal] = React.useState(false);
+  const [showConfetti, setShowConfetti] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleChange = (selectedRangeOption) => {
-    setSelectedRangeOption(selectedRangeOption);
+  const handleIndustryChange = (selectedOption) => {
+    setSelectedIndustry(selectedOption);
   };
-
-  const handleIndustryChange = (selectedRangeOption) => {
-    setSelectedIndustry(selectedRangeOption);
+  const handleLanguageChange = (selectedOption) => {
+    setSelectedLanguage(selectedOption);
   };
-  const handleLanguageChange = (selectedRangeOption) => {
-    setSelectedLanguage(selectedRangeOption);
+  const handleCurrencyChange = (selectedOption) => {
+    setSelectedCurrency(selectedOption);
   };
-  const handleCurrencyChange = (selectedRangeOption) => {
-    setSelectedCurrency(selectedRangeOption);
+  const handleRegionsChange = (selectedOption) => {
+    setSelectedRegion(selectedOption);
   };
-
-  const handleRegionsChange = (selectedRangeOption) => {
-    setSelectedRegion(selectedRangeOption);
+  const handleCountryChange = (selectedOption) => {
+    setSelectedCountryOption(selectedOption);
+    if (selectedOption.value !== "Ghana") {
+      setDisableStateField(true);
+    } else {
+      setDisableStateField(false);
+    }
+  };
+  const handleNoOfEmployeesChange = (selectedOption) => {
+    setSelectedNoOfEmployees(selectedOption);
   };
 
   const handleCompanySubmit = (e) => {
     e.preventDefault();
+    const admin_email = localStorage.getItem("admin_email");
+    if (selectedIndustry === null) {
+      showToast("please select industry", false);
+      return;
+    }
+    if (selectedCountryOption === null) {
+      showToast("please select country", false);
+      return;
+    }
+    if (selectedCountryOption.value === "Ghana") {
+      if (selectedRegion === null) {
+        showToast("please select region", false);
+        return;
+      }
+    }
+
+    if (selectedNoOfEmployees === null) {
+      showToast("please select number of employees", false);
+      return;
+    }
+    if (selectedLanguage === null) {
+      showToast("please select number of employees", false);
+      return;
+    }
     setIsLoading(true);
     const companyForm = document.getElementById("company-form");
     const payload = {
       ...formToJSON(companyForm),
-      size: selectedRangeOption.value,
+      industry: selectedIndustry.value,
+      country: selectedCountryOption.value,
+      state:
+        selectedCountryOption.value === "Ghana" ? selectedRegion.value : "",
+      number_of_employees: selectedNoOfEmployees.value,
+      currency: selectedCurrency.value,
+      language: selectedLanguage.value,
+      admin_email: admin_email,
     };
-    console.log(payload);
-    CreateEntityForm(payload)
+
+    SetupOrganizationForm(payload)
       .then((res) => {
-        console.log(res);
         setIsLoading(false);
+        setOpenDurationModal(true);
+        setShowConfetti(true);
+        localStorage.removeItem("admin_email");
         showToast(res?.data.message, true);
-        companyForm?.reset();
+        // companyForm?.reset();
+        setTimeout(() => {
+          setShowConfetti(false);
+        }, 10000);
       })
       .catch((error) => {
         setIsLoading(false);
@@ -77,21 +128,23 @@ function SetupOrganization() {
 
   return (
     <>
+      {showConfetti && (
+        <Confetti
+          drawShape={(ctx) => {
+            ctx.beginPath();
+            for (let i = 0; i < 22; i++) {
+              const angle = 0.35 * i;
+              const x = (0.2 + 1.5 * angle) * Math.cos(angle);
+              const y = (0.2 + 1.5 * angle) * Math.sin(angle);
+              ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            ctx.closePath();
+          }}
+        />
+      )}
       {openDurationModal && (
         <>
-          <Confetti
-            drawShape={(ctx) => {
-              ctx.beginPath();
-              for (let i = 0; i < 22; i++) {
-                const angle = 0.35 * i;
-                const x = (0.2 + 1.5 * angle) * Math.cos(angle);
-                const y = (0.2 + 1.5 * angle) * Math.sin(angle);
-                ctx.lineTo(x, y);
-              }
-              ctx.stroke();
-              ctx.closePath();
-            }}
-          />
           <Modal
             secondDiv="w-1/4"
             open={openDurationModal}
@@ -123,12 +176,7 @@ function SetupOrganization() {
       <h3 className="mb-5 text-2xl text-center text-gray-500">
         Set up your organization profile
       </h3>
-      <div
-        className="flex justify-center w-24 m-auto bg-red-400 "
-        onClick={show}
-      >
-        showme
-      </div>
+
       <div className="flex w-1/2 p-10 m-auto my-16 bg-slate-100">
         <form
           id="company-form"
@@ -138,7 +186,8 @@ function SetupOrganization() {
           <div className="grid-cols-2 gap-3">
             <div className="field">
               <label className="text-sm label">
-                Enter Entity Name <span className="text-red-600">*</span>
+                Enter Entity Name
+                {/* <span className="text-red-600">*</span> */}
               </label>
               <div className="control">
                 <input
@@ -169,10 +218,10 @@ function SetupOrganization() {
                 <div className="flex w-full row mobile:w-full">
                   <Select
                     className="w-full"
-                    value={selectedRegion}
-                    onChange={handleRegionsChange}
+                    value={selectedCountryOption}
+                    onChange={handleCountryChange}
                     options={countries}
-                    placeholder="Ghana"
+                    placeholder="Country"
                   />
                 </div>
               </div>
@@ -185,7 +234,8 @@ function SetupOrganization() {
                     value={selectedRegion}
                     onChange={handleRegionsChange}
                     options={regions}
-                    placeholder="Greater Accra"
+                    placeholder="State/Province"
+                    isDisabled={disableStateField}
                   />
                 </div>
               </div>
@@ -225,8 +275,8 @@ function SetupOrganization() {
               <div className="flex w-full row mobile:w-full">
                 <Select
                   className="w-full"
-                  value={selectedRangeOption}
-                  onChange={handleChange}
+                  value={selectedNoOfEmployees}
+                  onChange={handleNoOfEmployeesChange}
                   options={noOfEmployees}
                   placeholder="Number of employees"
                 />
@@ -244,7 +294,7 @@ function SetupOrganization() {
                       value={selectedCurrency}
                       onChange={handleCurrencyChange}
                       options={currencies}
-                      placeholder="Ghanaian Cedi"
+                      placeholder="Currency"
                     />
                   </div>
                 </div>
@@ -253,11 +303,10 @@ function SetupOrganization() {
                   <div className="flex w-full row mobile:w-full">
                     <Select
                       className="w-full"
-                      isDisabled={true}
                       value={selectedLanguage}
                       onChange={handleLanguageChange}
                       options={languages}
-                      placeholder="English"
+                      placeholder="Language"
                     />
                   </div>
                 </div>

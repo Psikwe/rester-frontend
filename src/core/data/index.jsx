@@ -33,6 +33,8 @@ export const noOfEmployees = [
 
 export const industries = [
   { value: "Health", label: "Health" },
+  { value: "IT and Software", label: "IT and Software" },
+  { value: "Health", label: "Health" },
   { value: "Agency or Sales House", label: "Agency or Sales House" },
   { value: "Food Services", label: "Food Services" },
   { value: "Construction", label: "Construction" },
@@ -40,6 +42,7 @@ export const industries = [
   { value: "Financial", label: "Financial" },
   { value: "Manufactoring", label: "Manufactoring" },
   { value: "Real Estate", label: "Real Estate" },
+  { value: "Others", label: "Others" },
 ];
 
 export const categories = [
@@ -100,6 +103,10 @@ export const countries = [
   { value: "Sweden", label: "Sweden" },
   { value: "Portugal", label: "Portugal" },
   { value: "Switzerland", label: "Switzerland" },
+];
+export const taxType = [
+  { value: "Ghana", label: "Type 1" },
+  { value: "South Africa", label: "Type 2" },
 ];
 
 export const currencies = [
@@ -208,11 +215,11 @@ export const adminDashboardMenus = [
         url: "/dashboard/saved-reports",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
-      {
-        menu: "Tax Rate",
-        url: "/dashboard/tax-rate",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
-      },
+      // {
+      //   menu: "Tax Rate",
+      //   url: "/dashboard/tax-rate",
+      //   icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      // },
       // {
       //   menu: "Manage Entity",
       //   url: "/view-entity",
@@ -220,6 +227,41 @@ export const adminDashboardMenus = [
       // },
     ],
   },
+];
+
+export const superDashboardMenus = [
+  {
+    title: "Tax Rate",
+    icon: <RxDashboard color="#0DCAF0" size={16} />,
+    subMenu: [
+      {
+        menu: "Setup Tax Rate",
+        url: "/super/home",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
+        menu: "View Tax Rate",
+        url: "/super/view-tax-rate",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+    ],
+  },
+  // {
+  //   title: "Entity",
+  //   icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
+  //   subMenu: [
+  //     {
+  //       menu: "Setup a new Entity",
+  //       url: "/dashboard/create-entity",
+  //       icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+  //     },
+  //     // {
+  //     //   menu: "Manage Entity",
+  //     //   url: "/view-entity",
+  //     //   icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+  //     // },
+  //   ],
+  // },
 ];
 
 export const employeeDashboardMenus = [

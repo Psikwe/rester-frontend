@@ -1,5 +1,5 @@
 import React from "react";
-import { adminDashboardMenus } from "../../core/data";
+import { adminDashboardMenus, superDashboardMenus } from "../../core/data";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
@@ -149,7 +149,7 @@ const SuperAdminDashboardLayout = () => {
         <div className="px-3 pt-3 m-8 text-sm w-72">
           <img className="w-24 -mt-16 -ml-16" src={logo} />
           <ul className="mt-12 text-slate-600">
-            {adminDashboardMenus.map((ad, i) => (
+            {superDashboardMenus.map((ad, i) => (
               <React.Fragment key={i}>
                 <div className="flex items-center mt-9">
                   <span className="mr-1">{ad.icon}</span>
@@ -193,7 +193,7 @@ const SuperAdminDashboardLayout = () => {
             <div className="flex items-center justify-between ">
               <MdAdminPanelSettings className="text-slate-200" size={20} />
               <div className="flex items-center justify-between">
-                <small className="ml-1 text-slate-200">{entityName}</small>
+                <small className="ml-1 text-slate-200">Super Admin</small>
               </div>
             </div>
             <div className="m-auto text-sm text-slate-200">{showDate}</div>

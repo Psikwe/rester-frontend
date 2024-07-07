@@ -39,6 +39,7 @@ import Payslip from "./payslip/_page";
 import SuperAdminDashboardLayout from "./super_admin_dashboard_layout/_page";
 import SuperAdminDashboard from "./super_admin_dashboard/_page";
 import VerifyUser from "./verify_user/_page";
+import ViewTaxRate from "./view_tax_rate/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -134,10 +135,8 @@ export default function AppRoutes() {
                 <Route path="employee-payslip" element={<Payslip />} />
               </Route>
               <Route path="/super" element={<SuperAdminDashboardLayout />}>
-                <Route
-                  path="update-employee"
-                  element={<SuperAdminDashboard />}
-                />
+                <Route path="home" element={<SuperAdminDashboard />} />
+                <Route path="view-tax-rate" element={<ViewTaxRate />} />
               </Route>
             </>
           </>

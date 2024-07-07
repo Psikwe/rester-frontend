@@ -37,6 +37,7 @@ function Signup() {
     const signupData = {
       ...formToJSON(signupForm),
     };
+    localStorage.setItem("admin_email", signupData.email);
     UserSignUp(signupData)
       .then((res) => {
         setIsLoading(false);
@@ -53,7 +54,6 @@ function Signup() {
   };
 
   const handleCheck = (e) => {
-    console.log(e.target.checked);
     setIsChecked(e.target.checked);
   };
 
