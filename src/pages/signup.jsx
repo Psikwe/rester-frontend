@@ -103,37 +103,9 @@ function Signup() {
                 {/* <p className="help">This is a help text</p> */}
               </div>
             </div>
-            <div className="flex">
-              <div className="mr-3 field">
-                <label className="text-sm label bold">Enter Company Name</label>
-                <div className="control">
-                  <input
-                    required
-                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                    type="text"
-                    placeholder="Company Name"
-                    name="company_name"
-                  />
-                </div>
-                {/* <p className="help">This is a help text</p> */}
-              </div>
 
-              <div className="field">
-                <label className="text-sm label bold">Enter Address(GPS)</label>
-                <div className="control">
-                  <input
-                    required
-                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                    type="text"
-                    placeholder="Last name"
-                    name="company_address"
-                  />
-                </div>
-                {/* <p className="help">This is a help text</p> */}
-              </div>
-            </div>
             <div className="flex">
-              <div className="mr-3 field">
+              <div className="w-full mr-3 field">
                 <label className="text-sm label bold">Enter Email</label>
                 <div className="control">
                   <input
@@ -142,19 +114,6 @@ function Signup() {
                     type="email"
                     placeholder="Email"
                     name="company_email"
-                  />
-                </div>
-                {/* <p className="help">This is a help text</p> */}
-              </div>
-              <div className="field">
-                <label className="text-sm label bold">Enter Admin Email</label>
-                <div className="control">
-                  <input
-                    required
-                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                    type="email"
-                    placeholder="Email"
-                    name="email"
                   />
                 </div>
                 {/* <p className="help">This is a help text</p> */}
@@ -172,33 +131,7 @@ function Signup() {
                 placeholder="Number of employees"
               />
             </div> */}
-            <div className="mr-3 field">
-              <label className="text-sm label bold">
-                Enter Company Location
-              </label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="text"
-                  placeholder="location"
-                  name="company_location"
-                />
-              </div>
-              {/* <p className="help">This is a help text</p> */}
-            </div>
-            <div className="mt-3 ">
-              <label className="text-sm label">Select Industry</label>
-              <div className="flex w-full row mobile:w-full">
-                <Select
-                  className="w-full"
-                  value={selectedIndustry}
-                  onChange={handleIndustryChange}
-                  options={industries}
-                  placeholder="Industry"
-                />
-              </div>
-            </div>
+
             <div className="relative field">
               <label className="text-sm label bold">Enter Password</label>
               <div className="control">
