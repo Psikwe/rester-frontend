@@ -3,10 +3,11 @@ import { useLocation, useParams } from "react-router-dom";
 import { UserVerification } from "../../core/services/auth.service";
 
 function VerifyUser() {
-  const { vk } = useParams();
-  console.log("vk: " + vk);
+  const queryParams = new URLSearchParams(location.search);
+  const verificationKey = queryParams.get("vk");
+  console.log("vk: " + verificationKey);
   React.useEffect(() => {
-    UserVerification(vk)
+    UserVerification(verificationKey)
       .then((response) => {
         console.log("veri: ", response);
       })
