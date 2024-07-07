@@ -8,22 +8,26 @@ export default function Layout() {
   return (
     <>
       <Navbar />
-      <section className="main">
-        <div className="fixed z-50 right-8 bottom-8">
-          <a
-            target="_blank"
-            href="https://api.whatsapp.com/send?phone=447436942211"
-          >
-            <img src={whatsapp} className="w-8" />
-          </a>
-          <a target="_blank" href="mailto:clint.danso@gmail.com">
-            <img src={gmail} className="w-8 mt-5" />
-          </a>
-        </div>
+      <div className="">
+        <section className="main">
+          <div className="fixed z-50 right-8 bottom-8">
+            <a
+              target="_blank"
+              href="https://api.whatsapp.com/send?phone=447436942211"
+            >
+              <img src={whatsapp} className="w-8" />
+            </a>
+            <a target="_blank" href="mailto:clint.danso@gmail.com">
+              <img src={gmail} className="w-8 mt-5" />
+            </a>
+          </div>
 
-        <Outlet />
-      </section>
-      <Footer />
+          <Outlet />
+        </section>
+        <div className="bottom-0 w-full ">
+          <Footer />
+        </div>
+      </div>
     </>
   );
 }
