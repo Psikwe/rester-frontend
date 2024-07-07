@@ -6,8 +6,11 @@ function VerifyUser() {
   const queryParams = new URLSearchParams(location.search);
   const verificationKey = queryParams.get("vk");
   console.log("vk: " + verificationKey);
+  const payload = {
+    verification_key: verificationKey,
+  };
   React.useEffect(() => {
-    UserVerification(verificationKey)
+    UserVerification(payload)
       .then((response) => {
         console.log("veri: ", response);
       })

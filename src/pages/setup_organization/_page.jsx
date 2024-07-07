@@ -192,12 +192,12 @@ function SetupOrganization() {
             </div>
             <div className="flex items-center mt-3">
               <div className="w-full mr-2 field">
-                <label className="text-sm label">Enter Email</label>
+                <label className="text-sm label">Enter Company Email</label>
                 <div className="control">
                   <input
                     required
                     className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                    type="email"
+                    type="company_email"
                     placeholder="Email"
                     name="email"
                   />
