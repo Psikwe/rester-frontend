@@ -40,6 +40,8 @@ import SuperAdminDashboardLayout from "./super_admin_dashboard_layout/_page";
 import SuperAdminDashboard from "./super_admin_dashboard/_page";
 import VerifyUser from "./verify_user/_page";
 import ViewTaxRate from "./view_tax_rate/_page";
+import UpdateTaxRate from "./update_tax_rate/_page";
+import CreatePrice from "./create_price/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -137,6 +139,8 @@ export default function AppRoutes() {
               <Route path="/super" element={<SuperAdminDashboardLayout />}>
                 <Route path="home" element={<SuperAdminDashboard />} />
                 <Route path="view-tax-rate" element={<ViewTaxRate />} />
+                <Route path="update-tax-rate" element={<UpdateTaxRate />} />
+                <Route path="create-price" element={<CreatePrice />} />
               </Route>
             </>
           </>

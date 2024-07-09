@@ -244,24 +244,29 @@ export const superDashboardMenus = [
         url: "/super/view-tax-rate",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
+      {
+        menu: "Update Tax Rate",
+        url: "/super/update-tax-rate",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
     ],
   },
-  // {
-  //   title: "Entity",
-  //   icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
-  //   subMenu: [
-  //     {
-  //       menu: "Setup a new Entity",
-  //       url: "/dashboard/create-entity",
-  //       icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
-  //     },
-  //     // {
-  //     //   menu: "Manage Entity",
-  //     //   url: "/view-entity",
-  //     //   icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
-  //     // },
-  //   ],
-  // },
+  {
+    title: "Prices",
+    icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
+    subMenu: [
+      {
+        menu: "Create Price",
+        url: "/super/create-price",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      // {
+      //   menu: "Manage Entity",
+      //   url: "/view-entity",
+      //   icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      // },
+    ],
+  },
 ];
 
 export const employeeDashboardMenus = [

@@ -1,11 +1,7 @@
 import React from "react";
 import "react-data-grid/lib/styles.css";
 import { formToJSON } from "axios";
-import { BsExclamationCircleFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
-import Modal from "../../components/modal/_component";
-import TableLoader from "../../components/table_loader/_component";
-import Loader from "../../components/loader/_component";
 import { MdDelete } from "react-icons/md";
 import {
   DeleteEmployeeLoan,
@@ -81,7 +77,7 @@ function ViewTaxRate() {
       renderCell: renderActionsRow,
       width: "100px",
     },
-    { key: "annual_interest_rate", name: "UUID" },
+    { key: "annual_interest_rate", name: "UID" },
     { key: "loan_amount", name: "Type" },
     { key: "loan_provider", name: "Effective From" },
     { key: "loan_term", name: "Effective To" },
