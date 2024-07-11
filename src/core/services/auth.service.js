@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getAxios } from "../utilities";
 
 export const UserSignUp = async (data) => {
   return await axios.post(

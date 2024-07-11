@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/home";
 import Signup from "./signup";
 import Login from "./login";
@@ -42,10 +42,12 @@ import VerifyUser from "./verify_user/_page";
 import ViewTaxRate from "./view_tax_rate/_page";
 import UpdateTaxRate from "./update_tax_rate/_page";
 import CreatePrice from "./create_price/_page";
+import AccessDenied from "./access_denied/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
-
+  const role = localStorage.getItem("u_role");
+  console.log("Role: " + role);
   return (
     <BrowserRouter>
       <ToastContainer progressClassName="toast-progress" />
@@ -136,15 +138,25 @@ export default function AppRoutes() {
                 <Route path="update-employee" element={<UpdateEmployee />} />
                 <Route path="employee-payslip" element={<Payslip />} />
               </Route>
-              <Route path="/super" element={<SuperAdminDashboardLayout />}>
-                <Route path="home" element={<SuperAdminDashboard />} />
-                <Route path="view-tax-rate" element={<ViewTaxRate />} />
-                <Route path="update-tax-rate" element={<UpdateTaxRate />} />
-                <Route path="create-price" element={<CreatePrice />} />
-              </Route>
+              <>
+                {role === "" ? (
+                  <Route path="/super" element={<SuperAdminDashboardLayout />}>
+                    <Route path="home" element={<SuperAdminDashboard />} />
+                    <Route path="view-tax-rate" element={<ViewTaxRate />} />
+                    <Route path="update-tax-rate" element={<UpdateTaxRate />} />
+                    <Route path="create-price" element={<CreatePrice />} />
+                    <Route path="verify_user" element={<VerifyUser />} />
+                  </Route>
+                ) : (
+                  <Route path="access-denied" element={<AccessDenied />} />
+                )}
+              </>
             </>
           </>
         )}
+        {/* Redirect to AccessDenied for unmatched routes */}
+        <Route path="access-denied" element={<AccessDenied />} />
+        <Route path="*" element={<Navigate to="access-denied" />} />
       </Routes>
     </BrowserRouter>
   );

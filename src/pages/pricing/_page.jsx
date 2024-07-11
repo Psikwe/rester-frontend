@@ -1,8 +1,21 @@
 import React from "react";
 import { pricingPackages } from "../../core/data";
 import PricingCard from "../../components/pricing_card/_component";
+import { GetPricing } from "../../core/services/pricing.service";
 
 function Pricing() {
+  const [prices, setPrices] = React.useState([]);
+
+  React.useEffect(() => {
+    GetPricing()
+      .then((response) => {
+        console.log("pri: ", response?.data.prices);
+        setPrices(response?.data.prices);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <>
       <div className="laptop-lg:px-32 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16">

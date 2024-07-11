@@ -87,9 +87,15 @@ function Login() {
 
         let expiryTimestamp = moment.unix(res?.data.expiry).valueOf();
         cacheUserSession(res?.data.access_token, expiryTimestamp);
-        cacheUserRole(res?.data.roles);
+        cacheUserRole(res?.data.roles[0]);
+        console.log("role: ", res?.data.roles.length);
         dispatch(setUser({ roles: [], username: res?.data.email }));
-        if (res?.data.roles.length > 0) {
+        if (res?.data.roles[0] === "") {
+          showToast("Login Successful", true);
+          setTimeout(() => {
+            window.location.href = "/super/home";
+          }, 2000);
+        } else if (res?.data.roles.length > 1) {
           setConfirmRole(true);
           return;
         } else {
