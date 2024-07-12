@@ -281,8 +281,13 @@ export const taxOperatorMenus = [
     icon: <RxDashboard color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "Setup Tax Rate",
-        url: "/super/home",
+        menu: "Create Tax Rate",
+        url: "/tax-operator/create-tax-rate",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
+        menu: "Manage Tax Rate",
+        url: "/tax-operator/manage-tax-rate",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],

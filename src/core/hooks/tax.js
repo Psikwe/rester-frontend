@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { GetTaxTypes } from "../services/tax.service";
+import { GetIncomeTaxRates, GetTaxTypes } from "../services/tax.service";
 
 export const useTaxType = () => {
   const taxTypeQuery = useQuery({
@@ -12,5 +12,19 @@ export const useTaxType = () => {
   });
   return {
     taxTypeQuery,
+  };
+};
+
+export const useIncomeTaxRate = () => {
+  const incomeTaxRatesQuery = useQuery({
+    queryKey: ["incomeTaxRatesQuery"],
+    queryFn: () => GetIncomeTaxRates(),
+    onError: (error) => {
+      console.log("error: ", error);
+    },
+    // staleTime: Infinity,
+  });
+  return {
+    incomeTaxRatesQuery,
   };
 };

@@ -45,6 +45,8 @@ import CreatePrice from "./create_price/_page";
 import AccessDenied from "./access_denied/_page";
 import CreateTaxType from "./create_tax_type/_page";
 import TaxOperatorLayout from "./tax_operator_layout/_page";
+import ManageTaxRate from "./manage_tax_rate/_page";
+import UpdateTaxOperatorRate from "./update_tax_operator_rate/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -140,7 +142,6 @@ export default function AppRoutes() {
                 <Route path="update-employee" element={<UpdateEmployee />} />
                 <Route path="employee-payslip" element={<Payslip />} />
               </Route>
-
               <Route path="/super" element={<SuperAdminDashboardLayout />}>
                 <Route path="view-tax-rate" element={<ViewTaxRate />} />
                 <Route path="update-tax-rate" element={<UpdateTaxRate />} />
@@ -149,7 +150,15 @@ export default function AppRoutes() {
                 <Route path="verify_user" element={<VerifyUser />} />
               </Route>
               <Route path="/tax-operator" element={<TaxOperatorLayout />}>
-                <Route path="home" element={<SuperAdminDashboard />} />
+                <Route
+                  path="create-tax-rate"
+                  element={<SuperAdminDashboard />}
+                />
+                <Route path="manage-tax-rate" element={<ManageTaxRate />} />
+                <Route
+                  path="update-tax-rate/:id"
+                  element={<UpdateTaxOperatorRate />}
+                />
               </Route>
             </>
           </>

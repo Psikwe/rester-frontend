@@ -7,6 +7,7 @@ import { taxType } from "../../core/data";
 import { CreateIncomeTaxRate } from "../../core/services/tax.service";
 import { formToJSON } from "axios";
 import { useTaxType } from "../../core/hooks/tax";
+import { showToast } from "../../core/hooks/alert";
 
 function SuperAdminDashboard() {
   const fp = React.useRef(null);
@@ -17,21 +18,30 @@ function SuperAdminDashboard() {
     {
       uid: null,
       tax_type: null,
-      chargeable_income_min: null,
+      chargeable_income_min: 0,
       chargeable_income_max: null,
       range_rate: null,
-      order_no: null,
+      order_no: 1,
     },
   ]);
   const [selectedDistributed, setSelectedDistributed] = React.useState(null);
   const [isChecked, setIsChecked] = React.useState(false);
   const [isDistributedChecked, setIsDistributedChecked] = React.useState(false);
 
+  // const handleTaxTypeChange = (index, selectedOption) => {
+  //   const updatedSectionOne = [...sectionOne];
+  //   updatedSectionOne[index].tax_type = selectedOption;
+  //   setSectionOne(updatedSectionOne);
+  // };
+
   const handleTaxTypeChange = (index, selectedOption) => {
-    const updatedSectionOne = [...sectionOne];
-    updatedSectionOne[index].tax_type = selectedOption;
+    const updatedSectionOne = sectionOne.map((item) => ({
+      ...item,
+      tax_type: selectedOption,
+    }));
     setSectionOne(updatedSectionOne);
   };
+
   const handleDistributedChange = (selectedOption) => {
     setSelectedDistributed(selectedOption);
   };
@@ -61,6 +71,14 @@ function SuperAdminDashboard() {
   const handleTaxSubmit = (e) => {
     e.preventDefault();
     const taxForm = document.getElementById("tax-form");
+    // if (isChecked) {
+    //   let statusMessageField = document.getElementById("status-message").value;
+
+    //   if (statusMessageField === "") {
+    //     showToast("Status message field is required", false);
+    //     return;
+    //   }
+    // }
     setIsLoading(true);
     const firstSection = sectionOne.map((section) => ({
       uid: section.uid,
@@ -85,14 +103,21 @@ function SuperAdminDashboard() {
         console.log(error);
         setIsLoading(false);
         console.log(error);
-        showToast(error.response.data.message, false);
+        showToast(error.response.data.error, false);
       });
   };
 
   const handleAddSectionOneFields = () => {
-    setSectionOne([
-      ...sectionOne,
-      { uid: null, type: "", chargeableIncome: null, taxRate: "" },
+    setSectionOne((prevSectionOne) => [
+      ...prevSectionOne,
+      {
+        uid: null,
+        tax_type: prevSectionOne[0]?.tax_type || null,
+        chargeable_income_min: null,
+        chargeable_income_max: null,
+        range_rate: null,
+        order_no: prevSectionOne.length + 1,
+      },
     ]);
   };
 
@@ -130,6 +155,7 @@ function SuperAdminDashboard() {
                     <Select
                       className="w-full"
                       value={sec.tax_type}
+                      isDisabled={index !== 0}
                       onChange={(selectedOption) =>
                         handleTaxTypeChange(index, selectedOption)
                       }
@@ -146,6 +172,8 @@ function SuperAdminDashboard() {
                       className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                       type="text"
                       placeholder="Minimum"
+                      defaultValue={sec.chargeable_income_min}
+                      disabled={index === 0}
                       onChange={(e) => {
                         const updatedSectionOne = [...sectionOne];
                         updatedSectionOne[index].chargeable_income_min =
@@ -198,12 +226,15 @@ function SuperAdminDashboard() {
                       required
                       className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                       type="text"
+                      id="order-no"
                       placeholder="Order No."
-                      onChange={(e) => {
-                        const updatedSectionOne = [...sectionOne];
-                        updatedSectionOne[index].order_no = e.target.value;
-                        setSectionOne(updatedSectionOne);
-                      }}
+                      value={sec.order_no}
+                      disabled
+                      // onChange={(e) => {
+                      //   const updatedSectionOne = [...sectionOne];
+                      //   updatedSectionOne[index].order_no = e.target.value;
+                      //   setSectionOne(updatedSectionOne);
+                      // }}
                     />
                   </div>
                   {/* <p className="help">This is a help text</p> */}
@@ -211,7 +242,7 @@ function SuperAdminDashboard() {
                 <div
                   title="Remove"
                   className="flex items-center w-8 h-8 px-3 py-1 mt-3 ml-3 text-white bg-black cursor-pointer"
-                  onClick={() => handleRemoveSectionOneField(i)}
+                  onClick={() => handleRemoveSectionOneField(index)}
                 >
                   -
                 </div>
@@ -312,6 +343,7 @@ function SuperAdminDashboard() {
                         className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                         type="text"
                         placeholder="Message"
+                        id="status-message"
                         name="super_status_notes"
                       />
                     </div>
