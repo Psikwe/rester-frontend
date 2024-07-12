@@ -13,6 +13,7 @@ function SuperAdminDashboard() {
   const fp = React.useRef(null);
   const { taxTypeQuery } = useTaxType();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [formIndex, setFormIndex] = React.useState(0);
   const [typesOptions, setTyepesOptions] = React.useState([]);
   const [sectionOne, setSectionOne] = React.useState([
     {
@@ -45,12 +46,14 @@ function SuperAdminDashboard() {
   const handleDistributedChange = (selectedOption) => {
     setSelectedDistributed(selectedOption);
   };
+
   const handleCheck = (e) => {
     setIsChecked(e.target.checked);
   };
   const handleDistributedCheck = (e) => {
     setIsDistributedChecked(e.target.checked);
   };
+
   React.useEffect(() => {
     if (taxTypeQuery && taxTypeQuery.data && taxTypeQuery.data.data) {
       const options = taxTypeQuery.data.data.tax_types?.map((iT) => ({
@@ -70,6 +73,17 @@ function SuperAdminDashboard() {
 
   const handleTaxSubmit = (e) => {
     e.preventDefault();
+    if (formIndex !== 0) {
+      if (sectionOne[formIndex].chargeable_income_min < 1) {
+        showToast("Chargeable income min field can't be zero", false);
+        return;
+      }
+      if (sectionOne[formIndex].chargeable_income_max < 1) {
+        showToast("Chargeable income max field can't be zero", false);
+        return;
+      }
+    }
+
     const taxForm = document.getElementById("tax-form");
     // if (isChecked) {
     //   let statusMessageField = document.getElementById("status-message").value;
@@ -88,6 +102,7 @@ function SuperAdminDashboard() {
       range_rate: section.range_rate,
       order_no: section.order_no,
     }));
+
     const payload = {
       first_section: firstSection,
       ...formToJSON(taxForm),
@@ -179,11 +194,12 @@ function SuperAdminDashboard() {
                         updatedSectionOne[index].chargeable_income_min =
                           e.target.value;
                         setSectionOne(updatedSectionOne);
+                        setFormIndex(index);
                       }}
                     />
                   </div>
-                  {/* <p className="help">This is a help text</p> */}
                 </div>
+                {/* <p className="help">This is a help text</p> */}
                 <div className="w-full mr-3 field">
                   <label className="text-sm label">Max Chargeable Income</label>
                   <div className="control">
