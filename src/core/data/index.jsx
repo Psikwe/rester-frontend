@@ -105,8 +105,8 @@ export const countries = [
   { value: "Switzerland", label: "Switzerland" },
 ];
 export const taxType = [
-  { value: "Ghana", label: "Type 1" },
-  { value: "South Africa", label: "Type 2" },
+  { value: "type1", label: "Type 1" },
+  { value: "type2", label: "Type 2" },
 ];
 
 export const currencies = [
@@ -235,11 +235,6 @@ export const superDashboardMenus = [
     icon: <RxDashboard color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "Setup Tax Rate",
-        url: "/super/home",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
-      },
-      {
         menu: "View Tax Rate",
         url: "/super/view-tax-rate",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
@@ -247,6 +242,17 @@ export const superDashboardMenus = [
       {
         menu: "Update Tax Rate",
         url: "/super/update-tax-rate",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+    ],
+  },
+  {
+    title: "Tax Type",
+    icon: <RxDashboard color="#0DCAF0" size={16} />,
+    subMenu: [
+      {
+        menu: "Create Tax Type",
+        url: "/super/create-tax-type",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],
@@ -265,6 +271,20 @@ export const superDashboardMenus = [
       //   url: "/view-entity",
       //   icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       // },
+    ],
+  },
+];
+
+export const taxOperatorMenus = [
+  {
+    title: "Tax Rate",
+    icon: <RxDashboard color="#0DCAF0" size={16} />,
+    subMenu: [
+      {
+        menu: "Setup Tax Rate",
+        url: "/super/home",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
     ],
   },
 ];

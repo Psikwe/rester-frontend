@@ -6,12 +6,22 @@ import Select from "react-select";
 import { taxType } from "../../core/data";
 import { CreateIncomeTaxRate } from "../../core/services/tax.service";
 import { formToJSON } from "axios";
+import { useTaxType } from "../../core/hooks/tax";
 
 function SuperAdminDashboard() {
   const fp = React.useRef(null);
+  const { taxTypeQuery } = useTaxType();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [typesOptions, setTyepesOptions] = React.useState([]);
   const [sectionOne, setSectionOne] = React.useState([
-    { uid: null, type: "", chargeableIncome: null, taxRate: "" },
+    {
+      uid: null,
+      tax_type: null,
+      chargeable_income_min: null,
+      chargeable_income_max: null,
+      range_rate: null,
+      order_no: null,
+    },
   ]);
   const [selectedDistributed, setSelectedDistributed] = React.useState(null);
   const [isChecked, setIsChecked] = React.useState(false);
@@ -19,7 +29,7 @@ function SuperAdminDashboard() {
 
   const handleTaxTypeChange = (index, selectedOption) => {
     const updatedSectionOne = [...sectionOne];
-    updatedSectionOne[index].type = selectedOption;
+    updatedSectionOne[index].tax_type = selectedOption;
     setSectionOne(updatedSectionOne);
   };
   const handleDistributedChange = (selectedOption) => {
@@ -31,18 +41,51 @@ function SuperAdminDashboard() {
   const handleDistributedCheck = (e) => {
     setIsDistributedChecked(e.target.checked);
   };
+  React.useEffect(() => {
+    if (taxTypeQuery && taxTypeQuery.data && taxTypeQuery.data.data) {
+      const options = taxTypeQuery.data.data.tax_types?.map((iT) => ({
+        value: iT.id,
+        label: iT.name,
+      }));
+      setTyepesOptions(options);
+    }
+  }, [taxTypeQuery]);
 
-  const handleTaxSubmit = () => {
+  // const taxTypeDropdown = taxTypeQuery.data.data.tax_types;
+
+  // const taxOptions = taxTypeDropdown?.map((tt) => ({
+  //   value: tt.id,
+  //   label: tt.name,
+  // }));
+
+  const handleTaxSubmit = (e) => {
+    e.preventDefault();
     const taxForm = document.getElementById("tax-form");
+    setIsLoading(true);
+    const firstSection = sectionOne.map((section) => ({
+      uid: section.uid,
+      tax_type: section.tax_type.value,
+      chargeable_income_min: section.chargeable_income_min,
+      chargeable_income_max: section.chargeable_income_max,
+      range_rate: section.range_rate,
+      order_no: section.order_no,
+    }));
     const payload = {
+      first_section: firstSection,
       ...formToJSON(taxForm),
+      distributed: isDistributedChecked,
     };
     CreateIncomeTaxRate(payload)
       .then((response) => {
         console.log(response);
+        setIsLoading(false);
+        showToast(response.data.message, true);
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false);
+        console.log(error);
+        showToast(error.response.data.message, false);
       });
   };
 
@@ -62,8 +105,8 @@ function SuperAdminDashboard() {
       <div className="flex">
         <form id="tax-form" className="w-full" onSubmit={handleTaxSubmit}>
           <div className="p-2 border-2 border-blue-400 border-dashed">
-            {sectionOne.map((sec, i) => (
-              <div key={i} className="flex items-center mt-8">
+            {sectionOne.map((sec, index) => (
+              <div key={index} className="flex items-center mt-8">
                 <div className="w-full mr-3 field">
                   <label className="text-sm label">Enter UID</label>
                   <div className="control">
@@ -72,7 +115,11 @@ function SuperAdminDashboard() {
                       className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                       type="text"
                       placeholder="UID"
-                      name="uid"
+                      onChange={(e) => {
+                        const updatedSectionOne = [...sectionOne];
+                        updatedSectionOne[index].uid = e.target.value;
+                        setSectionOne(updatedSectionOne);
+                      }}
                     />
                   </div>
                   {/* <p className="help">This is a help text</p> */}
@@ -82,11 +129,11 @@ function SuperAdminDashboard() {
                   <div className="flex w-full row mobile:w-full">
                     <Select
                       className="w-full"
-                      value={sec.type}
+                      value={sec.tax_type}
                       onChange={(selectedOption) =>
-                        handleTaxTypeChange(i, selectedOption)
+                        handleTaxTypeChange(index, selectedOption)
                       }
-                      options={taxType}
+                      options={typesOptions}
                       placeholder="Type"
                     />
                   </div>
@@ -99,7 +146,12 @@ function SuperAdminDashboard() {
                       className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                       type="text"
                       placeholder="Minimum"
-                      name="chargeable_income_min"
+                      onChange={(e) => {
+                        const updatedSectionOne = [...sectionOne];
+                        updatedSectionOne[index].chargeable_income_min =
+                          e.target.value;
+                        setSectionOne(updatedSectionOne);
+                      }}
                     />
                   </div>
                   {/* <p className="help">This is a help text</p> */}
@@ -112,7 +164,12 @@ function SuperAdminDashboard() {
                       className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                       type="text"
                       placeholder="Maximum"
-                      name="chargeable_income_max"
+                      onChange={(e) => {
+                        const updatedSectionOne = [...sectionOne];
+                        updatedSectionOne[index].chargeable_income_max =
+                          e.target.value;
+                        setSectionOne(updatedSectionOne);
+                      }}
                     />
                   </div>
                   {/* <p className="help">This is a help text</p> */}
@@ -125,7 +182,11 @@ function SuperAdminDashboard() {
                       className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                       type="text"
                       placeholder="Rate"
-                      name="name"
+                      onChange={(e) => {
+                        const updatedSectionOne = [...sectionOne];
+                        updatedSectionOne[index].range_rate = e.target.value;
+                        setSectionOne(updatedSectionOne);
+                      }}
                     />
                   </div>
                   {/* <p className="help">This is a help text</p> */}
@@ -138,7 +199,11 @@ function SuperAdminDashboard() {
                       className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                       type="text"
                       placeholder="Order No."
-                      name="order_number"
+                      onChange={(e) => {
+                        const updatedSectionOne = [...sectionOne];
+                        updatedSectionOne[index].order_no = e.target.value;
+                        setSectionOne(updatedSectionOne);
+                      }}
                     />
                   </div>
                   {/* <p className="help">This is a help text</p> */}
@@ -209,7 +274,7 @@ function SuperAdminDashboard() {
                     required
                     className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                     type="text"
-                    placeholder="Rate"
+                    placeholder="Naration"
                     name="narration"
                   />
                 </div>
@@ -247,7 +312,7 @@ function SuperAdminDashboard() {
                         className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                         type="text"
                         placeholder="Message"
-                        name="name"
+                        name="super_status_notes"
                       />
                     </div>
                     {/* <p className="help">This is a help text</p> */}

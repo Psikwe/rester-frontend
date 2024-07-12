@@ -93,7 +93,7 @@ function Login() {
         if (res?.data.roles[0] === "") {
           showToast("Login Successful", true);
           setTimeout(() => {
-            window.location.href = "/super/home";
+            window.location.href = "/tax-operator/home";
           }, 2000);
         } else if (res?.data.roles.length > 1) {
           setConfirmRole(true);

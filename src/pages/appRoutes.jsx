@@ -43,6 +43,8 @@ import ViewTaxRate from "./view_tax_rate/_page";
 import UpdateTaxRate from "./update_tax_rate/_page";
 import CreatePrice from "./create_price/_page";
 import AccessDenied from "./access_denied/_page";
+import CreateTaxType from "./create_tax_type/_page";
+import TaxOperatorLayout from "./tax_operator_layout/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -138,25 +140,23 @@ export default function AppRoutes() {
                 <Route path="update-employee" element={<UpdateEmployee />} />
                 <Route path="employee-payslip" element={<Payslip />} />
               </Route>
-              <>
-                {role === "" ? (
-                  <Route path="/super" element={<SuperAdminDashboardLayout />}>
-                    <Route path="home" element={<SuperAdminDashboard />} />
-                    <Route path="view-tax-rate" element={<ViewTaxRate />} />
-                    <Route path="update-tax-rate" element={<UpdateTaxRate />} />
-                    <Route path="create-price" element={<CreatePrice />} />
-                    <Route path="verify_user" element={<VerifyUser />} />
-                  </Route>
-                ) : (
-                  <Route path="access-denied" element={<AccessDenied />} />
-                )}
-              </>
+
+              <Route path="/super" element={<SuperAdminDashboardLayout />}>
+                <Route path="view-tax-rate" element={<ViewTaxRate />} />
+                <Route path="update-tax-rate" element={<UpdateTaxRate />} />
+                <Route path="create-price" element={<CreatePrice />} />
+                <Route path="create-tax-type" element={<CreateTaxType />} />
+                <Route path="verify_user" element={<VerifyUser />} />
+              </Route>
+              <Route path="/tax-operator" element={<TaxOperatorLayout />}>
+                <Route path="home" element={<SuperAdminDashboard />} />
+              </Route>
             </>
           </>
         )}
         {/* Redirect to AccessDenied for unmatched routes */}
-        <Route path="access-denied" element={<AccessDenied />} />
-        <Route path="*" element={<Navigate to="access-denied" />} />
+        {/* <Route path="access-denied" element={<AccessDenied />} /> */}
+        <Route path="*" element={<AccessDenied />} />
       </Routes>
     </BrowserRouter>
   );
