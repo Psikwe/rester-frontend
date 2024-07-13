@@ -229,6 +229,20 @@ export const adminDashboardMenus = [
   },
 ];
 
+export const taxSettingsDashboardMenus = [
+  {
+    title: "Tax Settings",
+    icon: <RxDashboard color="#0DCAF0" size={16} />,
+    subMenu: [
+      {
+        menu: "Create Tax Rate Election",
+        url: "/dashboard/tax-settings",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+    ],
+  },
+];
+
 export const superDashboardMenus = [
   {
     title: "Tax Rate",
@@ -266,11 +280,17 @@ export const superDashboardMenus = [
         url: "/super/create-price",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
-      // {
-      //   menu: "Manage Entity",
-      //   url: "/view-entity",
-      //   icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
-      // },
+    ],
+  },
+  {
+    title: "Terms and Conditions",
+    icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
+    subMenu: [
+      {
+        menu: "Create Terms and Conditions",
+        url: "/super/create-terms-and-conditions",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
     ],
   },
 ];

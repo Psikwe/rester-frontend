@@ -3,7 +3,6 @@ import Loader from "../../components/loader/_component";
 import "flatpickr/dist/flatpickr.css";
 import Flatpickr from "react-flatpickr";
 import Select from "react-select";
-import { taxType } from "../../core/data";
 import { CreateIncomeTaxRate } from "../../core/services/tax.service";
 import { formToJSON } from "axios";
 import { useTaxType } from "../../core/hooks/tax";
@@ -39,6 +38,14 @@ function SuperAdminDashboard() {
     const updatedSectionOne = sectionOne.map((item) => ({
       ...item,
       tax_type: selectedOption,
+    }));
+    setSectionOne(updatedSectionOne);
+  };
+  const handleUidChange = (index, value) => {
+    console.log("value: " + value);
+    const updatedSectionOne = sectionOne.map((item) => ({
+      ...item,
+      uid: value,
     }));
     setSectionOne(updatedSectionOne);
   };
@@ -107,12 +114,14 @@ function SuperAdminDashboard() {
       first_section: firstSection,
       ...formToJSON(taxForm),
       distributed: isDistributedChecked,
+      activate: isChecked,
     };
     CreateIncomeTaxRate(payload)
       .then((response) => {
         console.log(response);
         setIsLoading(false);
         showToast(response.data.message, true);
+        taxForm?.reset();
       })
       .catch((error) => {
         console.log(error);
@@ -126,7 +135,7 @@ function SuperAdminDashboard() {
     setSectionOne((prevSectionOne) => [
       ...prevSectionOne,
       {
-        uid: null,
+        uid: prevSectionOne[0]?.uid || null,
         tax_type: prevSectionOne[0]?.tax_type || null,
         chargeable_income_min: null,
         chargeable_income_max: null,
@@ -155,11 +164,9 @@ function SuperAdminDashboard() {
                       className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                       type="text"
                       placeholder="UID"
-                      onChange={(e) => {
-                        const updatedSectionOne = [...sectionOne];
-                        updatedSectionOne[index].uid = e.target.value;
-                        setSectionOne(updatedSectionOne);
-                      }}
+                      value={sec.uid}
+                      disabled={index !== 0}
+                      onChange={(e) => handleUidChange(index, e.target.value)}
                     />
                   </div>
                   {/* <p className="help">This is a help text</p> */}
@@ -169,6 +176,7 @@ function SuperAdminDashboard() {
                   <div className="flex w-full row mobile:w-full">
                     <Select
                       className="w-full"
+                      required
                       value={sec.tax_type}
                       isDisabled={index !== 0}
                       onChange={(selectedOption) =>

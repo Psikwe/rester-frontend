@@ -47,6 +47,9 @@ import CreateTaxType from "./create_tax_type/_page";
 import TaxOperatorLayout from "./tax_operator_layout/_page";
 import ManageTaxRate from "./manage_tax_rate/_page";
 import UpdateTaxOperatorRate from "./update_tax_operator_rate/_page";
+import TermsAndConditions from "./terms_and_conditions/_page";
+import TaxSettings from "./tax_settings/_page";
+import TaxSettingsDashboardLayout from "./tax_settings_dashboard_layout/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -63,7 +66,6 @@ export default function AppRoutes() {
             <Route path="*" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="pricing" element={<Pricing />} />
-
             <Route path="setup-organization" element={<SetUpOrganizatoin />} />
           </Route>
         ) : (
@@ -85,6 +87,7 @@ export default function AppRoutes() {
                       path="update-employee/:id"
                       element={<UpdateAdminEmployee />}
                     />
+
                     <Route
                       path="create-employee"
                       element={<CreateEmployee />}
@@ -138,6 +141,9 @@ export default function AppRoutes() {
                   </Route>
                 </>
               )}
+              <Route path="dashboard/" element={<TaxSettingsDashboardLayout />}>
+                <Route path="tax-settings" element={<TaxSettings />} />
+              </Route>
               <Route path="/employee" element={<EmployeeDashboardLayout />}>
                 <Route path="update-employee" element={<UpdateEmployee />} />
                 <Route path="employee-payslip" element={<Payslip />} />
@@ -147,7 +153,10 @@ export default function AppRoutes() {
                 <Route path="update-tax-rate" element={<UpdateTaxRate />} />
                 <Route path="create-price" element={<CreatePrice />} />
                 <Route path="create-tax-type" element={<CreateTaxType />} />
-                <Route path="verify_user" element={<VerifyUser />} />
+                <Route
+                  path="terms-and-conditions"
+                  element={<TermsAndConditions />}
+                />
               </Route>
               <Route path="/tax-operator" element={<TaxOperatorLayout />}>
                 <Route
@@ -165,7 +174,7 @@ export default function AppRoutes() {
         )}
         {/* Redirect to AccessDenied for unmatched routes */}
         {/* <Route path="access-denied" element={<AccessDenied />} /> */}
-        <Route path="*" element={<AccessDenied />} />
+        {/* <Route path="*" element={<AccessDenied />} /> */}
       </Routes>
     </BrowserRouter>
   );

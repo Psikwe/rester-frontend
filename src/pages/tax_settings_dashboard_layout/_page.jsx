@@ -1,5 +1,8 @@
 import React from "react";
-import { adminDashboardMenus, superDashboardMenus } from "../../core/data";
+import {
+  adminDashboardMenus,
+  taxSettingsDashboardMenus,
+} from "../../core/data";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
@@ -18,7 +21,7 @@ import { IoArrowBackCircle } from "react-icons/io5";
 import moment from "moment";
 import { clearUserSession } from "../../core/utilities";
 
-const SuperAdminDashboardLayout = () => {
+const TaxSettingsDashboardLayout = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
   const [selectedMenu, setSelectedMenu] = React.useState(0);
@@ -149,7 +152,7 @@ const SuperAdminDashboardLayout = () => {
         <div className="px-3 pt-3 m-8 text-sm w-72">
           <img className="w-24 -mt-16 -ml-16" src={logo} />
           <ul className="mt-12 text-slate-600">
-            {superDashboardMenus.map((ad, i) => (
+            {taxSettingsDashboardMenus.map((ad, i) => (
               <React.Fragment key={i}>
                 <div className="flex items-center mt-9">
                   <span className="mr-1">{ad.icon}</span>
@@ -193,7 +196,7 @@ const SuperAdminDashboardLayout = () => {
             <div className="flex items-center justify-between ">
               <MdAdminPanelSettings className="text-slate-200" size={20} />
               <div className="flex items-center justify-between">
-                <small className="ml-1 text-slate-200">Super Admin</small>
+                <small className="ml-1 text-slate-200">{entityName}</small>
               </div>
             </div>
             <div className="m-auto text-sm text-slate-200">{showDate}</div>
@@ -234,9 +237,6 @@ const SuperAdminDashboardLayout = () => {
                     data-twe-dropdown-item-ref
                     // onClick={openModal}
                   >
-                    <span className="mr-1">
-                      <MdCurrencyExchange color="#687864" size={20} />
-                    </span>
                     Change Currency
                   </span>
                 </li>
@@ -246,10 +246,18 @@ const SuperAdminDashboardLayout = () => {
                     data-twe-dropdown-item-ref
                     // onClick={openModal}
                   >
-                    <span className="mr-1">
-                      <MdOutlineLanguage color="#687864" size={20} />
-                    </span>
                     Change Language
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
+                    data-twe-dropdown-item-ref
+                    onClick={() =>
+                      (window.location.href = "/dashboard/tax-settings")
+                    }
+                  >
+                    Tax
                   </span>
                 </li>
               </ul>
@@ -340,4 +348,4 @@ const SuperAdminDashboardLayout = () => {
   );
 };
 
-export default SuperAdminDashboardLayout;
+export default TaxSettingsDashboardLayout;

@@ -6,24 +6,25 @@ import "react-data-grid/lib/styles.css";
 import DataGrid from "react-data-grid";
 import Modal from "../../components/modal/_component";
 import TableLoader from "../../components/table_loader/_component";
-import { FiEdit } from "react-icons/fi";
-import { MdDelete } from "react-icons/md";
+import "flatpickr/dist/flatpickr.css";
+import Flatpickr from "react-flatpickr";
 import { BsExclamationCircleFill } from "react-icons/bs";
 import {
   AddTaxType,
+  CreateTaxRateElection,
   DeleteIncomeTaxRate,
-  DeleteTaxType,
-  GetTaxTypes,
 } from "../../core/services/tax.service";
 import { useIncomeTaxRate } from "../../core/hooks/tax";
 
-function ManageTaxRate() {
+function TaxSettings() {
+  const fp = React.useRef(null);
   const { incomeTaxRatesQuery } = useIncomeTaxRate();
   const [isLoading, setIsLoading] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [isPricingModalModalOpen, setPricingModalOpen] = React.useState(false);
   const [taxTypes, setTaxTypes] = React.useState([]);
   const [deleteId, setDeleteId] = React.useState("");
+  const [selectedRowId, setSelectedRowId] = React.useState(null);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
@@ -64,27 +65,62 @@ function ManageTaxRate() {
     setItemToDelete(name);
   };
 
+  const handleCheck = (id, uid) => {
+    let electionDate = document.getElementById("election_date").value;
+    if (electionDate === null || electionDate === "") {
+      showToast("Please select election date", false);
+      return;
+    }
+    setSelectedRowId(id);
+    const payload = {
+      election_date: electionDate,
+      tax_rate_uid: uid,
+    };
+    CreateTaxRateElection(payload)
+      .then((response) => {
+        console.log(response);
+        showToast(response?.data.message, true);
+      })
+      .catch((error) => {
+        showToast(error.response.data.error, false);
+      });
+  };
+
   const renderActionsRow = (data) => {
-    const { uid, name } = data.row;
+    const { id, uid, name } = data.row;
+    console.log(uid);
     return (
-      <div className="flex items-center mt-4">
-        <button
-          className="mb-2 ml-3"
-          title="Update"
-          onClick={() => handleUpdateClick(uid)}
-        >
-          <FiEdit color="green" size={18} />
-        </button>
-        <button
-          className="mb-2 ml-3"
-          title="Delete"
-          onClick={() => handleDelete(uid, name)}
-        >
-          <MdDelete color="red" size={18} />
-        </button>{" "}
+      <div>
+        <input
+          type="checkbox"
+          checked={selectedRowId === id}
+          onChange={() => handleCheck(id, uid)}
+        />
       </div>
     );
   };
+
+  //   const renderActionsRow = (data) => {
+  //     const { id, name } = data.row;
+  //     return (
+  //       <div className="flex items-center mt-4">
+  //         <button
+  //           className="mb-2 ml-3"
+  //           title="Update"
+  //           onClick={() => handleUpdateClick(id)}
+  //         >
+  //           <FiEdit color="green" size={18} />
+  //         </button>
+  //         <button
+  //           className="mb-2 ml-3"
+  //           title="Delete"
+  //           onClick={() => handleDelete(id, name)}
+  //         >
+  //           <MdDelete color="red" size={18} />
+  //         </button>{" "}
+  //       </div>
+  //     );
+  //   };
 
   const columns = [
     {
@@ -251,7 +287,26 @@ function ManageTaxRate() {
           </button>
         </form>
       </Modal>
-
+      <div className="mt-3 mb-12 field">
+        <label className="text-sm label bold">Select Election Date</label>
+        <Flatpickr
+          className="bg-gray-50 mr-2 w-1/4 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block pl-10 p-2.5 "
+          placeholder="Election Date"
+          ref={fp}
+          name="election_date"
+          id="election_date"
+        />
+        <button
+          type="button"
+          className="text-xs"
+          onClick={() => {
+            if (!fp?.current?.flatpickr) return;
+            fp.current.flatpickr.clear();
+          }}
+        >
+          Clear
+        </button>
+      </div>
       <>
         {isOperationLoading ? (
           <>
@@ -276,4 +331,4 @@ function ManageTaxRate() {
   );
 }
 
-export default ManageTaxRate;
+export default TaxSettings;

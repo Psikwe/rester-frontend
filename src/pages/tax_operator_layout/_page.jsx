@@ -295,7 +295,7 @@ const TaxOperatorLayout = () => {
             <div
               onClick={goback}
               title="Go back"
-              className="flex items-center mb-6 cursor-pointer"
+              className="flex items-center w-10 mb-6 cursor-pointer"
             >
               <IoArrowBackCircle size={40} />
             </div>

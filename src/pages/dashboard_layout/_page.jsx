@@ -234,9 +234,6 @@ const DashboardLayout = () => {
                     data-twe-dropdown-item-ref
                     // onClick={openModal}
                   >
-                    <span className="mr-1">
-                      <MdCurrencyExchange color="#687864" size={20} />
-                    </span>
                     Change Currency
                   </span>
                 </li>
@@ -246,10 +243,18 @@ const DashboardLayout = () => {
                     data-twe-dropdown-item-ref
                     // onClick={openModal}
                   >
-                    <span className="mr-1">
-                      <MdOutlineLanguage color="#687864" size={20} />
-                    </span>
                     Change Language
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
+                    data-twe-dropdown-item-ref
+                    onClick={() =>
+                      (window.location.href = "/dashboard/tax-settings")
+                    }
+                  >
+                    Tax
                   </span>
                 </li>
               </ul>
@@ -328,7 +333,7 @@ const DashboardLayout = () => {
             <div
               onClick={goback}
               title="Go back"
-              className="flex items-center mb-6 cursor-pointer"
+              className="flex items-center w-10 mb-6 cursor-pointer"
             >
               <IoArrowBackCircle size={40} />
             </div>
