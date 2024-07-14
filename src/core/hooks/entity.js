@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { GetAllEntities } from "../services/entity.service";
+import { GetAllEntities, GetOneEntity } from "../services/entity.service";
 
 export const useEntity = () => {
   const entityQuery = useQuery({
@@ -12,5 +12,19 @@ export const useEntity = () => {
   });
   return {
     entityQuery,
+  };
+};
+
+export const useOneEntity = (id) => {
+  const oneEntityQuery = useQuery({
+    queryKey: ["oneEntityQuery"],
+    queryFn: () => GetOneEntity(id),
+    onError: (error) => {
+      console.log("error: ", error);
+    },
+    // staleTime: Infinity,
+  });
+  return {
+    oneEntityQuery,
   };
 };

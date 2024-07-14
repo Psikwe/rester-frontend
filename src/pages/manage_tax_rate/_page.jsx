@@ -110,6 +110,7 @@ function ManageTaxRate() {
       incomeTaxRatesQuery.data &&
       incomeTaxRatesQuery.data.data
     ) {
+      console.log(incomeTaxRatesQuery.data.data.income_tax_rates);
       setTaxTypes(incomeTaxRatesQuery.data.data.income_tax_rates);
     }
     // GetTaxTypes()
@@ -120,7 +121,7 @@ function ManageTaxRate() {
     //   .catch((error) => {
     //     console.log(error);
     //   });
-  }, [incomeTaxRatesQuery]);
+  }, [incomeTaxRatesQuery.data]);
 
   const filteredData = taxTypes?.filter((e) => {
     if (query === "") return e.income_name;
@@ -168,7 +169,11 @@ function ManageTaxRate() {
           </div>
           <div>
             <h3 className="mt-3 text-black">
-              Are you sure you want to delete this Tax Rate
+              <span className="-mt-6 font-bold text-red-500">
+                Once you {itemToDelete} there is no going back! <br /> Please be
+                certain.
+              </span>
+              <br /> Are you sure you want to delete this Tax Rate
               <b className="font-bold">{itemToDelete}</b>?
             </h3>
             <div className="flex mx-2 mt-6">
@@ -259,16 +264,22 @@ function ManageTaxRate() {
           </>
         ) : (
           <>
-            <DataGrid
-              className="text-sm rdg-light grid-container"
-              columns={columns}
-              rows={taxTypes || []}
-              bottomSummaryRows={summaryRows}
-              rowHeight={50}
-            />
-            <strong className="text-sm">
-              {/* Totals: {filteredData?.length} records */}
-            </strong>
+            {taxTypes.length < 1 ? (
+              <h3>No Data</h3>
+            ) : (
+              <>
+                <DataGrid
+                  className="text-sm rdg-light grid-container"
+                  columns={columns}
+                  rows={taxTypes || []}
+                  bottomSummaryRows={summaryRows}
+                  rowHeight={50}
+                />
+                <strong className="text-sm">
+                  {/* Totals: {filteredData?.length} records */}
+                </strong>
+              </>
+            )}
           </>
         )}
       </>

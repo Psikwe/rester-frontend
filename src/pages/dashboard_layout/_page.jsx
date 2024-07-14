@@ -21,6 +21,7 @@ import { clearUserSession } from "../../core/utilities";
 const DashboardLayout = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
+  const [entityName, setEntityName] = React.useState("");
   const [selectedMenu, setSelectedMenu] = React.useState(0);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
@@ -60,8 +61,10 @@ const DashboardLayout = () => {
     setIsLogoutModalOpen(true);
   };
   const { pathname } = useLocation();
-  console.log(pathname);
-  const entityName = localStorage.getItem("entity_name");
+  React.useEffect(() => {
+    const eName = localStorage.getItem("entity_name");
+    setEntityName(eName);
+  }, []);
 
   const goback = () => {
     window.history.back();

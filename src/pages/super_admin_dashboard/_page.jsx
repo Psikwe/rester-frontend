@@ -7,11 +7,14 @@ import { CreateIncomeTaxRate } from "../../core/services/tax.service";
 import { formToJSON } from "axios";
 import { useTaxType } from "../../core/hooks/tax";
 import { showToast } from "../../core/hooks/alert";
+import correct from "../../assets/correct.svg";
+import Modal from "../../components/modal/_component";
 
 function SuperAdminDashboard() {
   const fp = React.useRef(null);
   const { taxTypeQuery } = useTaxType();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [successModal, setSuccessModal] = React.useState(false);
   const [formIndex, setFormIndex] = React.useState(0);
   const [typesOptions, setTyepesOptions] = React.useState([]);
   const [sectionOne, setSectionOne] = React.useState([
@@ -69,14 +72,7 @@ function SuperAdminDashboard() {
       }));
       setTyepesOptions(options);
     }
-  }, [taxTypeQuery]);
-
-  // const taxTypeDropdown = taxTypeQuery.data.data.tax_types;
-
-  // const taxOptions = taxTypeDropdown?.map((tt) => ({
-  //   value: tt.id,
-  //   label: tt.name,
-  // }));
+  }, [taxTypeQuery.data]);
 
   const handleTaxSubmit = (e) => {
     e.preventDefault();
@@ -120,6 +116,7 @@ function SuperAdminDashboard() {
       .then((response) => {
         console.log(response);
         setIsLoading(false);
+        setSuccessModal(true);
         showToast(response.data.message, true);
         taxForm?.reset();
       })
@@ -149,8 +146,29 @@ function SuperAdminDashboard() {
     const updatedSectionOne = sectionOne.filter((_, i) => i !== index);
     setSectionOne(updatedSectionOne);
   };
+
+  const closeSuccessModal = () => {
+    setSuccessModal(false);
+  };
   return (
     <>
+      <Modal
+        showCloseBtn={true}
+        open={successModal}
+        close={closeSuccessModal}
+        closeOnOverlay
+      >
+        <div className="p-10 bg-white">
+          <div className="w-16 m-auto">
+            <img src={correct} />
+          </div>
+          <div>
+            <h3 className="mt-3 text-black">
+              All admins have been informed of this new tax rate
+            </h3>
+          </div>
+        </div>
+      </Modal>
       <div className="flex">
         <form id="tax-form" className="w-full" onSubmit={handleTaxSubmit}>
           <div className="p-2 border-2 border-blue-400 border-dashed">

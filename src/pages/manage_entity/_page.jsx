@@ -170,41 +170,6 @@ function ManageEntity() {
         </div>
       </Modal>
 
-      {/* <div className="flex flex-wrap w-full gap-3 px-4 py-3 mb-6 bg-slate-200">
-        <div className="relative w-full mb-2">
-          <div className="absolute left-0 flex items-center pl-3 pointer-events-none top-5">
-            <FcSearch />
-          </div>
-          <input
-            type="text"
-            className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-            placeholder="Search by Entity Name..."
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </div>
-      </div> */}
-      {/* {isLoading ? (
-        <>
-          <TableLoader />
-        </>
-      ) : (
-        <>
-          {isOperationLoading ? (
-            <>
-              <TableLoader />
-            </>
-          ) : (
-            <>
-              <DataGrid
-                className="text-sm rdg-light grid-container"
-                columns={columns}
-                rows={filteredData || []}
-                bottomSummaryRows={summaryRows}
-              />  
-            </>
-          )}
-        </>
-      )} */}
       {populateEntity.name == "" ? (
         <h3 className="text-gray-300">Entity Deleted</h3>
       ) : (

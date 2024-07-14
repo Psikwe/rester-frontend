@@ -314,16 +314,22 @@ function TaxSettings() {
           </>
         ) : (
           <>
-            <DataGrid
-              className="text-sm rdg-light grid-container"
-              columns={columns}
-              rows={taxTypes || []}
-              bottomSummaryRows={summaryRows}
-              rowHeight={50}
-            />
-            <strong className="text-sm">
-              {/* Totals: {filteredData?.length} records */}
-            </strong>
+            {taxTypes.length < 1 ? (
+              <h3>No Data</h3>
+            ) : (
+              <>
+                <DataGrid
+                  className="text-sm rdg-light grid-container"
+                  columns={columns}
+                  rows={taxTypes || []}
+                  bottomSummaryRows={summaryRows}
+                  rowHeight={50}
+                />
+                <strong className="text-sm">
+                  {/* Totals: {filteredData?.length} records */}
+                </strong>
+              </>
+            )}
           </>
         )}
       </>
