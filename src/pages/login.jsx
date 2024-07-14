@@ -88,7 +88,7 @@ function Login() {
         let expiryTimestamp = moment.unix(res?.data.expiry).valueOf();
         cacheUserSession(res?.data.access_token, expiryTimestamp);
         cacheUserRole(res?.data.roles[0]);
-        console.log("role: ", res?.data.roles.length);
+        console.log("role: ", res?.data.roles);
         dispatch(setUser({ roles: [], username: res?.data.email }));
         if (res?.data.roles[0] === "") {
           showToast("Login Successful", true);
@@ -102,12 +102,17 @@ function Login() {
           if (res?.data.roles[0] === "admin") {
             showToast("Login Successful", true);
             setTimeout(() => {
-              window.location.href = "/employee/update-employee";
+              window.location.href = "/view-entity";
             }, 2000);
           } else if (res?.data.roles[0] === "employee") {
             showToast("Login Successful", true);
             setTimeout(() => {
-              window.location.href = "/view-entity";
+              window.location.href = "employee/update-employee";
+            }, 2000);
+          } else if (res?.data.roles[0] === "super admin") {
+            showToast("Login Successful", true);
+            setTimeout(() => {
+              window.location.href = "/super/view-tax-rate";
             }, 2000);
           }
         }
