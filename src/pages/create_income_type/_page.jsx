@@ -91,11 +91,13 @@ function CreateIncomeType() {
     { key: "income_description", name: "Income Description" },
     { key: "tax_class1", name: "Cat 1" },
     { key: "tax_class2", name: "Cat 2" },
+    { key: "tax_component", name: "Tax Component" },
   ];
 
   React.useEffect(() => {
     GetIncomeTypes(entity_id)
       .then((response) => {
+        console.log("try: ", response?.data.income_types);
         setIncomeTypes(response?.data.income_types);
       })
       .catch((error) => {
