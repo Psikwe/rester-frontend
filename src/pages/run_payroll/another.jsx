@@ -11,6 +11,7 @@ import DataGrid from "react-data-grid";
 import { SiCashapp } from "react-icons/si";
 import Loader from "../../components/loader/_component";
 import Select from "react-select";
+import Flatpickr from "react-flatpickr";
 import { categories, categoriesNumber } from "../../core/data";
 
 const MySpreadsheet = () => {
@@ -331,12 +332,12 @@ const MySpreadsheet = () => {
         close={closeDurationModal}
       >
         <div className="w-full bg-white p-14">
-          <div className="flex">
-            {/* <div className="mt-3 mr-5 field">
+          <div className="flex flex-col">
+            <div className="w-[20rem] mt-3 mr-5 field">
               <label className="text-sm label bold">Select Start Date</label>
               <Flatpickr
                 className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                placeholder="Date of Birth"
+                placeholder="Start Date"
                 ref={fp}
                 name="start_date"
                 onChange={handleStartDateChange}
@@ -353,11 +354,11 @@ const MySpreadsheet = () => {
               </button>
             </div>
 
-            <div className="mt-3 field">
+            <div className="mt-3 w-[20rem] field">
               <label className="text-sm label bold">Select End Date</label>
               <Flatpickr
                 className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                placeholder="Date of Birth"
+                placeholder="End Date"
                 ref={fp}
                 name="end_date"
                 onChange={handleEndDateChange}
@@ -372,9 +373,9 @@ const MySpreadsheet = () => {
               >
                 Clear
               </button>
-            </div> */}
+            </div>
           </div>
-          <div className="flex">
+          {/* <div className="flex">
             <div className="mt-3 w-96">
               <label className="text-sm label">Select Category</label>
               <div className="flex w-full row mobile:w-full">
@@ -401,7 +402,7 @@ const MySpreadsheet = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="flex">
             <button

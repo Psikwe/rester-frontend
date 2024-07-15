@@ -9,6 +9,7 @@ import { useTaxType } from "../../core/hooks/tax";
 import { showToast } from "../../core/hooks/alert";
 import correct from "../../assets/correct.svg";
 import Modal from "../../components/modal/_component";
+import moment from "moment";
 
 function SuperAdminDashboard() {
   const fp = React.useRef(null);
@@ -16,6 +17,7 @@ function SuperAdminDashboard() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [successModal, setSuccessModal] = React.useState(false);
   const [formIndex, setFormIndex] = React.useState(0);
+  const [uidField, setUidField] = React.useState(0);
   const [typesOptions, setTyepesOptions] = React.useState([]);
   const [sectionOne, setSectionOne] = React.useState([
     {
@@ -73,7 +75,29 @@ function SuperAdminDashboard() {
       setTyepesOptions(options);
     }
   }, [taxTypeQuery.data]);
+  React.useEffect(() => {
+    const uidGenerator = () => {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const currentDay = new Date().getDate();
+      const month = new Date().getMonth() + 1;
+      const year = new Date().getFullYear();
+      const currentTime = new Date().getTime();
 
+      let randomStr = "";
+      for (let i = 0; i < 6; i++) {
+        randomStr += letters[Math.floor(Math.random() * letters.length)];
+      }
+
+      let uidNumber = `U-${currentDay}${month}${year}-${currentTime}-${randomStr}`;
+
+      return uidNumber;
+    };
+    setUidField(uidGenerator);
+  }, []);
+
+  const showw = () => {
+    document.getElementById("ress").innerHTML = uidGenerator();
+  };
   const handleTaxSubmit = (e) => {
     e.preventDefault();
     if (formIndex !== 0) {
@@ -96,9 +120,10 @@ function SuperAdminDashboard() {
     //     return;
     //   }
     // }
+
     setIsLoading(true);
     const firstSection = sectionOne.map((section) => ({
-      uid: section.uid,
+      uid: uidField,
       tax_type: section.tax_type.value,
       chargeable_income_min: section.chargeable_income_min,
       chargeable_income_max: section.chargeable_income_max,
@@ -112,6 +137,8 @@ function SuperAdminDashboard() {
       distributed: isDistributedChecked,
       activate: isChecked,
     };
+
+    console.log("pay", payload);
     CreateIncomeTaxRate(payload)
       .then((response) => {
         console.log(response);
@@ -149,6 +176,7 @@ function SuperAdminDashboard() {
 
   const closeSuccessModal = () => {
     setSuccessModal(false);
+    window.location.reload();
   };
   return (
     <>
@@ -171,10 +199,11 @@ function SuperAdminDashboard() {
       </Modal>
       <div className="flex">
         <form id="tax-form" className="w-full" onSubmit={handleTaxSubmit}>
+          <p id="ress"> </p>
           <div className="p-2 border-2 border-blue-400 border-dashed">
             {sectionOne.map((sec, index) => (
               <div key={index} className="flex items-center mt-8">
-                <div className="w-full mr-3 field">
+                <div className="w-full mr-3 field" hidden>
                   <label className="text-sm label">Enter UID</label>
                   <div className="control">
                     <input
@@ -182,8 +211,8 @@ function SuperAdminDashboard() {
                       className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                       type="text"
                       placeholder="UID"
-                      value={sec.uid}
-                      disabled={index !== 0}
+                      disabled={true}
+                      value={uidField}
                       onChange={(e) => handleUidChange(index, e.target.value)}
                     />
                   </div>

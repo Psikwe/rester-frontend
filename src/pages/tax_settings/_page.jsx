@@ -20,11 +20,17 @@ function TaxSettings() {
   const fp = React.useRef(null);
   const { incomeTaxRatesQuery } = useIncomeTaxRate();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [saveLoading, isSaveLoading] = React.useState(false);
+  const [showSaveBtn, setShowSaveBtn] = React.useState(false);
+  const [readyToSubmit, setReadyToSubmit] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [isPricingModalModalOpen, setPricingModalOpen] = React.useState(false);
   const [taxTypes, setTaxTypes] = React.useState([]);
   const [deleteId, setDeleteId] = React.useState("");
+  const [electionDate, setElectionDate] = React.useState("");
   const [selectedRowId, setSelectedRowId] = React.useState(null);
+  const [uidLists, setUidLists] = React.useState([]);
+  const [updatedUidLists, setUpdatedUidLists] = React.useState();
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
@@ -65,36 +71,66 @@ function TaxSettings() {
     setItemToDelete(name);
   };
 
-  const handleCheck = (id, uid) => {
+  const handleCheck = (id, uid, checked) => {
+    setSelectedRowId(uid);
+    if (uid === selectedRowId) {
+      showToast("You can only elect one type of tax at a time", false);
+      return;
+    }
+
+    if (checked) {
+      setShowSaveBtn(true);
+    } else setShowSaveBtn(false);
+    setUidLists((prevUidLists) => {
+      if (checked) {
+        return [...prevUidLists, uid];
+      } else {
+        return prevUidLists.filter((existingUid) => existingUid !== uid);
+      }
+    });
+  };
+
+  const handleSubmitElection = () => {
     let electionDate = document.getElementById("election_date").value;
     if (electionDate === null || electionDate === "") {
       showToast("Please select election date", false);
       return;
     }
-    setSelectedRowId(id);
+    setElectionDate(electionDate);
+    setReadyToSubmit(true);
+  };
+
+  React.useEffect(() => {
+    setUpdatedUidLists(uidLists);
+
     const payload = {
       election_date: electionDate,
-      tax_rate_uid: uid,
+      tax_rate_uids: uidLists,
     };
-    CreateTaxRateElection(payload)
-      .then((response) => {
-        console.log(response);
-        showToast(response?.data.message, true);
-      })
-      .catch((error) => {
-        showToast(error.response.data.error, false);
-      });
-  };
+    console.log("adsf: ", payload);
+    if (readyToSubmit) {
+      CreateTaxRateElection(payload)
+        .then((response) => {
+          console.log(response);
+          showToast(response?.data.message, true);
+        })
+        .catch((error) => {
+          showToast(error.response.data.error, false);
+        });
+    }
+
+    console.log("payloadss: ", uidLists);
+  }, [readyToSubmit]);
 
   const renderActionsRow = (data) => {
     const { id, uid, name } = data.row;
-    console.log(uid);
+
     return (
       <div>
         <input
           type="checkbox"
-          checked={selectedRowId === id}
-          onChange={() => handleCheck(id, uid)}
+          // checked={selectedRowId !== uid}
+          onChange={(e) => handleCheck(id, uid, e.target.checked)}
         />
       </div>
     );
@@ -131,7 +167,6 @@ function TaxSettings() {
     },
     { key: "uid", name: "UID" },
     { key: "chargeable_income_min", name: "Chargeable Income Min" },
-    { key: "chargeable_income_max", name: "Chargeable Income Max" },
     { key: "chargeable_income_max", name: "Chargeable Income Max" },
     { key: "range_rate", name: "Range Rate" },
     { key: "effective_from", name: "Effective From" },
@@ -287,26 +322,47 @@ function TaxSettings() {
           </button>
         </form>
       </Modal>
-      <div className="mt-3 mb-12 field">
-        <label className="text-sm label bold">Select Election Date</label>
-        <Flatpickr
-          className="bg-gray-50 mr-2 w-1/4 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block pl-10 p-2.5 "
-          placeholder="Election Date"
-          ref={fp}
-          name="election_date"
-          id="election_date"
-        />
-        <button
-          type="button"
-          className="text-xs"
-          onClick={() => {
-            if (!fp?.current?.flatpickr) return;
-            fp.current.flatpickr.clear();
-          }}
-        >
-          Clear
-        </button>
+      <div className="flex">
+        <div className="w-full mt-3 mb-12 field">
+          <label className="text-sm label bold">Select Election Date</label>
+          <Flatpickr
+            className="bg-gray-50 mr-2 w-1/4 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block pl-10 p-2.5 "
+            placeholder="Election Date"
+            ref={fp}
+            name="election_date"
+            id="election_date"
+          />
+          <button
+            type="button"
+            className="text-xs"
+            onClick={() => {
+              if (!fp?.current?.flatpickr) return;
+              fp.current.flatpickr.clear();
+            }}
+          >
+            Clear
+          </button>
+        </div>
+        {showSaveBtn ? (
+          <div className="w-1/4">
+            <button
+              onClick={handleSubmitElection}
+              disabled={saveLoading}
+              type="submit"
+              className={
+                saveLoading
+                  ? `animate-pulse rounded-full w-full py-3 text-white mt-9 primary mobile:w-full`
+                  : `w-full py-3 rounded-full text-white mt-9 primary mobile:w-full`
+              }
+            >
+              {saveLoading ? <Loader /> : "Save Election"}
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
+
       <>
         {isOperationLoading ? (
           <>
