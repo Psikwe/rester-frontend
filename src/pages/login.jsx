@@ -28,6 +28,7 @@ function Login() {
   const [isResetPassowrdModalOpen, setIsResetPassowrdModalOpen] =
     React.useState(false);
   const [confirmRole, setConfirmRole] = React.useState(false);
+  const [adminSuperRole, setAdminSuperRole] = React.useState(false);
   const newPasswordToggle = () => {
     setShowNewPasswordType(!showNewPasswordType);
   };
@@ -95,21 +96,33 @@ function Login() {
           setTimeout(() => {
             window.location.href = "/tax-operator/create-tax-rate";
           }, 2000);
-        } else if (res?.data.roles.length > 1) {
+        } else if (
+          res?.data.roles.includes("admin") &&
+          res?.data.roles.includes("employee")
+        ) {
           setConfirmRole(true);
           return;
+        } else if (
+          res?.data.roles.includes("admin") &&
+          res?.data.roles.includes("superadmin")
+        ) {
+          setAdminSuperRole(true);
+          return;
         } else {
-          if (res?.data.roles[0] === "admin") {
+          if (res?.data.roles[0] === "admin" && !res?.data.roles[1]) {
             showToast("Login Successful", true);
             setTimeout(() => {
               window.location.href = "/view-entity";
             }, 2000);
-          } else if (res?.data.roles[0] === "employee") {
+          } else if (res?.data.roles[0] === "employee" && !res?.data.roles[1]) {
             showToast("Login Successful", true);
             setTimeout(() => {
               window.location.href = "employee/update-employee";
             }, 2000);
-          } else if (res?.data.roles[0] === "super admin") {
+          } else if (
+            res?.data.roles[0] === "superadmin" &&
+            !res?.data.roles[1]
+          ) {
             showToast("Login Successful", true);
             setTimeout(() => {
               window.location.href = "/super/view-tax-rate";
@@ -149,6 +162,13 @@ function Login() {
     showToast("Login Successful", true);
     setTimeout(() => {
       window.location.href = "/employee/update-employee";
+    }, 2000);
+  };
+
+  const handleSuperAdmin = () => {
+    showToast("Login Successful", true);
+    setTimeout(() => {
+      window.location.href = "/super/view-tax-rate";
     }, 2000);
   };
 
@@ -257,6 +277,31 @@ function Login() {
             {isResetLoading ? <Loader /> : "Submit"}
           </button>
         </form>
+      </Modal>
+      <Modal showCloseBtn={false} open={adminSuperRole}>
+        <div className="w-full bg-white p-14">
+          <div className="flex justify-center mb-2">
+            <FaCircleInfo color="gray" size={70} className="mr-2" />
+          </div>
+          <p className="text-gray-500">
+            Multiple roles are detected for this user. <br /> Do you want to
+            login as super admin or admin?
+          </p>
+          <div className="flex">
+            <button
+              onClick={handleSuperAdmin}
+              className="w-full mr-2 rounded-full text-white mt-9 bg-[#2062fe] mobile:w-full"
+            >
+              As Super Admin
+            </button>
+            <button
+              onClick={handleAdminNavigation}
+              className="w-full py-2 text-white bg-[#33b655] rounded-full mt-9 mobile:w-full"
+            >
+              As Admin
+            </button>
+          </div>
+        </div>
       </Modal>
       <Modal
         showCloseBtn={false}
