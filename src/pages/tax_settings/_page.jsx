@@ -182,6 +182,7 @@ function TaxSettings() {
       incomeTaxRatesQuery.data &&
       incomeTaxRatesQuery.data.data
     ) {
+      console.log("try: ", incomeTaxRatesQuery.data.data.income_tax_rates);
       setTaxTypes(incomeTaxRatesQuery.data.data.income_tax_rates);
     }
     // GetTaxTypes()
