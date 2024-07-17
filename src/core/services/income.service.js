@@ -18,3 +18,10 @@ export const DeleteIncomeType = async (income_type_id, entity_id) => {
     `https://rester-82c60dc37022.herokuapp.com/delete_income_type/${income_type_id}?entity_id=${entity_id}`
   );
 };
+
+export const UpdateIncomeType = async (payload) => {
+  return await getAxios().patch(
+    "https://rester-82c60dc37022.herokuapp.com/update_income_type",
+    payload
+  );
+};

@@ -50,6 +50,7 @@ import UpdateTaxOperatorRate from "./update_tax_operator_rate/_page";
 import TermsAndConditions from "./terms_and_conditions/_page";
 import TaxSettings from "./tax_settings/_page";
 import TaxSettingsDashboardLayout from "./tax_settings_dashboard_layout/_page";
+import UpdateIncomeType from "./update_income_type/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -111,6 +112,10 @@ export default function AppRoutes() {
                     <Route
                       path="update-employee-loan/:id"
                       element={<UpdateEmployeeLoan />}
+                    />
+                    <Route
+                      path="update-income-type/:id"
+                      element={<UpdateIncomeType />}
                     />
                     <Route
                       path="create-allowable-deductions"

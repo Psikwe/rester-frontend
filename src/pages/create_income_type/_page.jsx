@@ -59,6 +59,10 @@ function CreateIncomeType() {
     setItemToDelete(income_name);
   };
 
+  const handleUpdateClick = (id) => {
+    window.location.href = "update-income-type/" + id;
+  };
+
   const renderActionsRow = (data) => {
     const { id, income_name } = data.row;
     return (

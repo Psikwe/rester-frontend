@@ -165,6 +165,7 @@ function TaxSettings() {
       renderCell: renderActionsRow,
       width: "100px",
     },
+    { key: "tax_type", name: "Tax Type" },
     { key: "uid", name: "UID" },
     { key: "chargeable_income_min", name: "Chargeable Income Min" },
     { key: "chargeable_income_max", name: "Chargeable Income Max" },
