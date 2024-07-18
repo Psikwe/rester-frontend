@@ -136,6 +136,11 @@ function TaxSettings() {
     );
   };
 
+  const renderTaxTypeRow = (data) => {
+    const { tax_type } = data.row;
+    return <>{tax_type.name}</>;
+  };
+
   //   const renderActionsRow = (data) => {
   //     const { id, name } = data.row;
   //     return (
@@ -165,7 +170,7 @@ function TaxSettings() {
       renderCell: renderActionsRow,
       width: "100px",
     },
-    { key: "tax_type", name: "Tax Type" },
+    { key: "tax_type", name: "Tax Type", renderCell: renderTaxTypeRow },
     { key: "uid", name: "UID" },
     { key: "chargeable_income_min", name: "Chargeable Income Min" },
     { key: "chargeable_income_max", name: "Chargeable Income Max" },
