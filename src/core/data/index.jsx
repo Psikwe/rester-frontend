@@ -249,13 +249,13 @@ export const superDashboardMenus = [
     icon: <RxDashboard color="#0DCAF0" size={16} />,
     subMenu: [
       {
-        menu: "View Tax Rate",
-        url: "/super/view-tax-rate",
+        menu: "Create Tax Rate",
+        url: "/super/create-tax-rate",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
-        menu: "Update Tax Rate",
-        url: "/super/update-tax-rate",
+        menu: "Manage Tax Rate",
+        url: "/super/manage-tax-rate",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],
@@ -264,6 +264,11 @@ export const superDashboardMenus = [
     title: "Tax Type",
     icon: <RxDashboard color="#0DCAF0" size={16} />,
     subMenu: [
+      {
+        menu: "Create Tax Component",
+        url: "/super/create-tax-component",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
       {
         menu: "Create Tax Type",
         url: "/super/create-tax-type",
@@ -282,17 +287,17 @@ export const superDashboardMenus = [
       },
     ],
   },
-  {
-    title: "Terms and Conditions",
-    icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
-    subMenu: [
-      {
-        menu: "Create Terms and Conditions",
-        url: "/super/create-terms-and-conditions",
-        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
-      },
-    ],
-  },
+  // {
+  //   title: "Terms and Conditions",
+  //   icon: <PiBuildingOfficeLight color="#0DCAF0" size={16} />,
+  //   subMenu: [
+  //     {
+  //       menu: "Create Terms and Conditions",
+  //       url: "/super/create-terms-and-conditions",
+  //       icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+  //     },
+  //   ],
+  // },
 ];
 
 export const taxOperatorMenus = [

@@ -51,6 +51,10 @@ import TermsAndConditions from "./terms_and_conditions/_page";
 import TaxSettings from "./tax_settings/_page";
 import TaxSettingsDashboardLayout from "./tax_settings_dashboard_layout/_page";
 import UpdateIncomeType from "./update_income_type/_page";
+import SuperCreateTaxRate from "./view_tax_rate/_page";
+import SuperManageTaxRate from "./update_tax_rate/_page";
+import CreateTaxComponent from "./create_tax_component/_page";
+import SuperUpdateTaxRate from "./super_update_tax_rate/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -154,9 +158,24 @@ export default function AppRoutes() {
                 <Route path="employee-payslip" element={<Payslip />} />
               </Route>
               <Route path="/super" element={<SuperAdminDashboardLayout />}>
-                <Route path="view-tax-rate" element={<ViewTaxRate />} />
-                <Route path="update-tax-rate" element={<UpdateTaxRate />} />
+                <Route
+                  path="create-tax-rate"
+                  element={<SuperCreateTaxRate />}
+                />
+                <Route
+                  path="manage-tax-rate"
+                  element={<SuperManageTaxRate />}
+                />
+                <Route
+                  path="update-tax-rate/:id"
+                  element={<SuperUpdateTaxRate />}
+                />
                 <Route path="create-price" element={<CreatePrice />} />
+
+                <Route
+                  path="create-tax-component"
+                  element={<CreateTaxComponent />}
+                />
                 <Route path="create-tax-type" element={<CreateTaxType />} />
                 <Route
                   path="terms-and-conditions"

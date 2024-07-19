@@ -168,7 +168,7 @@ function Login() {
   const handleSuperAdmin = () => {
     showToast("Login Successful", true);
     setTimeout(() => {
-      window.location.href = "/super/view-tax-rate";
+      window.location.href = "/super/create-tax-rate";
     }, 2000);
   };
 
