@@ -136,7 +136,7 @@ export default function Navbar() {
         </div>
 
         <div
-          className="invisible fixed bottom-0 left-0 top-0 z-[1045] flex w-96 max-w-full -translate-x-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out data-[twe-offcanvas-show]:transform-none dark:bg-body-dark dark:text-white"
+          className="invisible w-80 fixed bottom-0 left-0 top-0 z-[1045] flex max-w-full -translate-x-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out data-[twe-offcanvas-show]:transform-none dark:bg-body-dark dark:text-white"
           tabIndex="-1"
           id="offcanvasExample"
           aria-labelledby="offcanvasExampleLabel"

@@ -2,14 +2,17 @@ import React from "react";
 import { pricingPackages } from "../../core/data";
 import PricingCard from "../../components/pricing_card/_component";
 import { GetPricing } from "../../core/services/pricing.service";
+import SkeletonLoader from "../../components/skeleton_loading/_component";
 
 function Pricing() {
   const [prices, setPrices] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
+    setIsLoading(true);
     GetPricing()
       .then((response) => {
-        console.log("pri: ", response?.data.prices);
+        setIsLoading(false);
         setPrices(response?.data.prices);
       })
       .catch((error) => {
@@ -32,9 +35,33 @@ function Pricing() {
             Today.
           </p>
         </div>
-        <div className="flex mt-32">
-          {pricingPackages.map((pp, i) => (
+        <div className="flex items-center justify-center m-auto mt-32 mb-12 mobile:gap-7 mobile:flex-col">
+          {isLoading ? (
+            <>
+              <SkeletonLoader />
+              <SkeletonLoader />
+              <SkeletonLoader />
+            </>
+          ) : (
+            <>
+              {prices &&
+                prices.map((price, i) => (
+                  <PricingCard
+                    key={i}
+                    // bgColor={price.bgColor}
+                    header={price.name}
+                    price={price.amount}
+                    btnName="Pay"
+                    // description={price.description}
+                    // features={price.features}
+                  />
+                ))}
+            </>
+          )}
+
+          {/* {pricingPackages.map((pp, i) => (
             <PricingCard
+              key={i}
               bgColor={pp.bgColor}
               header={pp.title}
               price={pp.price}
@@ -42,7 +69,7 @@ function Pricing() {
               features={pp.features}
               btnName={pp.btnName}
             />
-          ))}
+          ))} */}
         </div>
       </div>
     </>

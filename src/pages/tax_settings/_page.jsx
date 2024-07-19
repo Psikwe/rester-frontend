@@ -171,7 +171,7 @@ function TaxSettings() {
       width: "100px",
     },
     { key: "tax_type", name: "Tax Type", renderCell: renderTaxTypeRow },
-    { key: "uid", name: "UID" },
+    // { key: "uid", name: "UID" },
     { key: "chargeable_income_min", name: "Chargeable Income Min" },
     { key: "chargeable_income_max", name: "Chargeable Income Max" },
     { key: "range_rate", name: "Range Rate" },
