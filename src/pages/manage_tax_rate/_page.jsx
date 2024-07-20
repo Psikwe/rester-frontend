@@ -93,7 +93,7 @@ function ManageTaxRate() {
       renderCell: renderActionsRow,
       width: "100px",
     },
-    { key: "uid", name: "UID" },
+    // { key: "uid", name: "UID" },
     { key: "chargeable_income_min", name: "Chargeable Income Min" },
     { key: "chargeable_income_max", name: "Chargeable Income Max" },
     { key: "chargeable_income_max", name: "Chargeable Income Max" },
