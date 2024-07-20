@@ -28,70 +28,73 @@ function TaxSettings() {
   const [taxTypes, setTaxTypes] = React.useState([]);
   const [deleteId, setDeleteId] = React.useState("");
   const [electionDate, setElectionDate] = React.useState("");
-  const [selectedRowId, setSelectedRowId] = React.useState(null);
+  const [selectedRowId, setSelectedRowId] = React.useState([]);
   const [uidLists, setUidLists] = React.useState([]);
   const [updatedUidLists, setUpdatedUidLists] = React.useState();
   const [isOperationLoading, setOperationLoading] = React.useState(false);
+  const [sameUidSelected, setSameUidSelected] = React.useState(false);
+  const [checkedId, setCheckedId] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
-
-  const handleCreateTaxType = (e) => {
-    setIsLoading(true);
-    e.preventDefault();
-    const taxTypeForm = document.getElementById("tax-type-form");
-    let appliedOnComponent = document.getElementById(
-      "applied_on_component"
-    ).value;
-    const payload = {
-      ...formToJSON(taxTypeForm),
-      applied_on_component: appliedOnComponent,
-    };
-
-    AddTaxType(payload)
-      .then((res) => {
-        setIsLoading(false);
-        showToast(res?.data.message, true);
-        taxTypeForm?.reset();
-        setPricingModalOpen(false);
-        incomeTaxRatesQuery.refetch();
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        showToast(error.response.data.error, false);
-      });
-  };
-
-  const handleUpdateClick = (id) => {
-    window.location.href = "update-tax-rate/" + id;
-  };
-
-  const handleDelete = (id, name) => {
-    setDeleteId(id);
-    setDeleteModalOpen(true);
-    setItemToDelete(name);
-  };
+  const [checkedUids, setCheckedUids] = React.useState({});
 
   const handleCheck = (id, uid, checked) => {
     setSelectedRowId(uid);
-    if (uid === selectedRowId) {
-      showToast("You can only elect one type of tax at a time", false);
-      return;
-    }
 
-    if (checked) {
-      setShowSaveBtn(true);
-    } else setShowSaveBtn(false);
-    setUidLists((prevUidLists) => {
+    setCheckedUids((prevCheckedUids) => {
+      const newCheckedUids = { ...prevCheckedUids };
       if (checked) {
-        return [...prevUidLists, uid];
+        setUidLists(newCheckedUids);
+        newCheckedUids[uid] = id;
       } else {
-        return prevUidLists.filter((existingUid) => existingUid !== uid);
+        delete newCheckedUids[uid];
       }
+
+      return newCheckedUids;
     });
+
+    // Update showSaveBtn based on whether any uid is checked
+    setShowSaveBtn(Object.keys(checkedUids).length >= 0);
   };
+
+  // const handleCreateTaxType = (e) => {
+  //   setIsLoading(true);
+  //   e.preventDefault();
+
+  //   const taxTypeForm = document.getElementById("tax-type-form");
+
+  //   let appliedOnComponent = document.getElementById(
+  //     "applied_on_component"
+  //   ).value;
+  //   const payload = {
+  //     ...formToJSON(taxTypeForm),
+  //     applied_on_component: appliedOnComponent,
+  //   };
+
+  //   console.log("pay: ", payload);
+
+  //   // AddTaxType(payload)
+  //   //   .then((res) => {
+  //   //     setIsLoading(false);
+  //   //     showToast(res?.data.message, true);
+  //   //     taxTypeForm?.reset();
+  //   //     setPricingModalOpen(false);
+  //   //     incomeTaxRatesQuery.refetch();
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     setIsLoading(false);
+  //   //     showToast(error.response.data.error, false);
+  //   //   });
+  // };
 
   const handleSubmitElection = () => {
     let electionDate = document.getElementById("election_date").value;
+
+    // if (sameUidSelected) {
+    //   console.log("ww: ", sameUidSelected);
+    //   showToast("Cannot select the same Uid for multiple tax types.", false);
+    //   return;
+    // }
     if (electionDate === null || electionDate === "") {
       showToast("Please select election date", false);
       return;
@@ -107,29 +110,31 @@ function TaxSettings() {
       election_date: electionDate,
       tax_rate_uids: uidLists,
     };
-    console.log("adsf: ", payload);
+
+    console.log("payload: ", payload);
     if (readyToSubmit) {
       CreateTaxRateElection(payload)
         .then((response) => {
           console.log(response);
           showToast(response?.data.message, true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         })
         .catch((error) => {
           showToast(error.response.data.error, false);
         });
     }
-
-    console.log("payloadss: ", uidLists);
   }, [readyToSubmit]);
 
   const renderActionsRow = (data) => {
     const { id, uid, name } = data.row;
-
     return (
       <div>
         <input
           type="checkbox"
-          // checked={selectedRowId !== uid}
+          checked={checkedUids[uid] === id}
+          disabled={checkedUids[uid] && checkedUids[uid] !== id}
           onChange={(e) => handleCheck(id, uid, e.target.checked)}
         />
       </div>
@@ -138,7 +143,8 @@ function TaxSettings() {
 
   const renderTaxTypeRow = (data) => {
     const { tax_type } = data.row;
-    return <>{tax_type.name}</>;
+
+    return <>{tax_type && tax_type?.name}</>;
   };
 
   //   const renderActionsRow = (data) => {
@@ -187,7 +193,6 @@ function TaxSettings() {
       incomeTaxRatesQuery.data &&
       incomeTaxRatesQuery.data.data
     ) {
-      console.log("try: ", incomeTaxRatesQuery.data.data.income_tax_rates);
       setTaxTypes(incomeTaxRatesQuery.data.data.income_tax_rates);
     }
     // GetTaxTypes()
@@ -266,7 +271,7 @@ function TaxSettings() {
           </div>
         </div>
       </Modal>
-      <Modal
+      {/* <Modal
         showCloseBtn={true}
         open={isPricingModalModalOpen}
         close={closeModal}
@@ -328,7 +333,7 @@ function TaxSettings() {
             {isLoading ? <Loader /> : " Add Tax Type"}
           </button>
         </form>
-      </Modal>
+      </Modal> */}
       <div className="flex">
         <div className="w-full mt-3 mb-12 field">
           <label className="text-sm label bold">Select Election Date</label>

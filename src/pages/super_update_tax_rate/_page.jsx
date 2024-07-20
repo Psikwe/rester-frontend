@@ -20,7 +20,6 @@ function SuperUpdateTaxRate() {
   const [incomeTaxRate, setIncomeTaxRate] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isDistributedChecked, setIsDistributedChecked] = React.useState(false);
-
   const [typesOptions, setTyepesOptions] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
   const [sectionOne, setSectionOne] = React.useState([

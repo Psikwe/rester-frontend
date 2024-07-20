@@ -25,6 +25,7 @@ function SuperManageTaxRate() {
   const [taxTypes, setTaxTypes] = React.useState([]);
   const [deleteId, setDeleteId] = React.useState("");
   const [isOperationLoading, setOperationLoading] = React.useState(false);
+  const [isTableLoading, setIsTableLoading] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
 
@@ -105,6 +106,7 @@ function SuperManageTaxRate() {
   ];
 
   React.useEffect(() => {
+    setIsTableLoading(true);
     if (
       incomeTaxRatesQuery &&
       incomeTaxRatesQuery.data &&
@@ -112,6 +114,7 @@ function SuperManageTaxRate() {
     ) {
       console.log(incomeTaxRatesQuery.data.data.income_tax_rates);
       setTaxTypes(incomeTaxRatesQuery.data.data.income_tax_rates);
+      setIsTableLoading(false);
     }
     // GetTaxTypes()
     //   .then((response) => {
