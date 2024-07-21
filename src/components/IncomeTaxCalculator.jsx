@@ -101,7 +101,7 @@ export default function IncomeTaxCalculator() {
             type="number"
             min="0"
             placeholder="Tier 1"
-            value={(parseFloat(basicSalary) * 0.05).toFixed(2)}
+            value={(parseFloat(basicSalary) * 0.055).toFixed(2)}
             className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
           />
