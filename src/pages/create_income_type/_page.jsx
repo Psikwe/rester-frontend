@@ -6,6 +6,7 @@ import {
   DeleteIncomeType,
   GetIncomeTypes,
 } from "../../core/services/income.service";
+import Select from "react-select";
 import Loader from "../../components/loader/_component";
 import "react-data-grid/lib/styles.css";
 import DataGrid from "react-data-grid";
@@ -15,28 +16,40 @@ import { FcSearch } from "react-icons/fc";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { BsExclamationCircleFill } from "react-icons/bs";
+import { useTaxComponent } from "../../core/hooks/tax";
 
 function CreateIncomeType() {
   const [isLoading, setIsLoading] = React.useState(false);
+  const { taxComponentQuery } = useTaxComponent();
   const [query, setQuery] = React.useState("");
   const [isCreateIncomeTypeModalOpen, setIsCreateIncomeTypeModalOpen] =
     React.useState(false);
   const [incomeTypes, setIncomeTypes] = React.useState([]);
   const [deleteId, setDeleteId] = React.useState("");
+  const [selectedComponent, setSelectedComponent] = React.useState();
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
 
   const entity_id = localStorage.getItem("entity_id");
-  const handleCreateEmployeeSubmit = (e) => {
-    setIsLoading(true);
-    const entity_id = localStorage.getItem("entity_id");
+
+  const handleEmployeeIncomeType = (e) => {
     e.preventDefault();
+    console.log(selectedComponent);
+    if (selectedComponent === null || selectedComponent === undefined) {
+      showToast("Please select a tax component", false);
+      return;
+    }
+    // setIsLoading(true);
+    const entity_id = localStorage.getItem("entity_id");
+
     const incomeForm = document.getElementById("income-type-form");
     const payload = {
       ...formToJSON(incomeForm),
       entity_id: entity_id,
+      tax_component: selectedComponent.value,
     };
+
     CreateIncomeTypeForm(payload)
       .then((res) => {
         setIsLoading(false);
@@ -52,6 +65,16 @@ function CreateIncomeType() {
         showToast(error.response.data.error, false);
       });
   };
+  taxComponentQuery && taxComponentQuery?.data?.data?.tax_components;
+  const componentOptionDropdown =
+    taxComponentQuery && taxComponentQuery?.data?.data?.tax_components;
+
+  const componentOptions =
+    componentOptionDropdown &&
+    componentOptionDropdown.map((co, _) => ({
+      value: co.id,
+      label: co.name,
+    }));
 
   const handleDelete = (id, income_name) => {
     setDeleteId(id);
@@ -133,6 +156,10 @@ function CreateIncomeType() {
     setDeleteModalOpen(false);
   };
 
+  const handleComponentChange = (selectedOptions) => {
+    setSelectedComponent(selectedOptions);
+  };
+
   const confirmDeactivate = () => {
     setOperationLoading(true);
     setDeleteModalOpen(false);
@@ -189,7 +216,7 @@ function CreateIncomeType() {
         <form
           id="income-type-form"
           className="p-8 bg-white"
-          onSubmit={handleCreateEmployeeSubmit}
+          onSubmit={handleEmployeeIncomeType}
         >
           <h3 className="text-sm mt-9">Income Type</h3>
           <div className="grid grid-cols-3 gap-3">
@@ -244,17 +271,16 @@ function CreateIncomeType() {
                 />
               </div>
             </div>
-            <div className="mt-3 field">
+
+            <div className="mt-4 field">
               <label className="text-sm label bold">Enter Tax Component</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                  type="number"
-                  placeholder="Tax component"
-                  name="tax_component"
-                />
-              </div>
+              <Select
+                className="w-full"
+                value={selectedComponent}
+                onChange={handleComponentChange}
+                options={componentOptions}
+                placeholder="Select Component"
+              />
             </div>
           </div>
 
