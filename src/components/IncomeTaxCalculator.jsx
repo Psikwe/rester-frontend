@@ -1,4 +1,3 @@
-import { FaCediSign } from "react-icons/fa6";
 import { useState } from "react";
 import { formToJSON } from "axios";
 import { UserIncomeCalculator } from "../core/services/auth.service";
@@ -12,6 +11,8 @@ export default function IncomeTaxCalculator() {
     const { value } = e.target;
     setBasicSalary(value);
   };
+
+  const formatter = new Intl.NumberFormat("en-US");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,15 +39,15 @@ export default function IncomeTaxCalculator() {
         className="flex calculator column"
         onSubmit={handleSubmit}
       >
-        <div className="mt-12 mobile:mt-14 smallTitle center mobile:text-xl  text-[#25476A]">
-          Income Tax Calculator
+        <div className="mobile:mt-14 mt-12 smallTitle center mobile:text-xl  text-[#25476A]">
+          Monthly income tax calculator
         </div>
 
         <div className="flex w-1/2 mobile:w-full column">
           {/* <button className="outline "> */}
           {/*   <FaCediSign /> */}
           {/* </button> */}
-          <b>Basic Salary</b>
+          <b>Basic Salary (GHS)</b>
           <input
             name="basic_salary"
             type="number"
@@ -60,7 +61,7 @@ export default function IncomeTaxCalculator() {
           />
         </div>
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Cash Allowances</b>
+          <b>Cash Allowances (GHS)</b>
           <input
             name="cash_allowances"
             type="number"
@@ -71,7 +72,7 @@ export default function IncomeTaxCalculator() {
           />
         </div>
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Bonus</b>
+          <b>Bonus (GHS)</b>
           <input
             name="bonus"
             type="number"
@@ -83,7 +84,7 @@ export default function IncomeTaxCalculator() {
         </div>
 
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Overtime</b>
+          <b>Overtime (GHS)</b>
           <input
             name="overtime"
             type="number"
@@ -95,19 +96,19 @@ export default function IncomeTaxCalculator() {
         </div>
 
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Tier 1</b>
+          <b>Social Security (SSNIT Tier 1)</b>
           <input
             name="tier_1"
             type="number"
             min="0"
-            placeholder="Tier 1"
+            placeholder="SSNIT Tier 1"
             value={(parseFloat(basicSalary) * 0.055).toFixed(2)}
             className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
           />
         </div>
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Tier 2</b>
+          <b>Private Pension (Tier 2)</b>
           <input
             name="tier_2"
             type="number"
@@ -118,12 +119,12 @@ export default function IncomeTaxCalculator() {
           />
         </div>
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Tier 3</b>
+          <b>Voluntary Provident Fund (SNNIT Tier 3)</b>
           <input
             name="tier_3"
             type="number"
             min="0"
-            placeholder="Tier 3"
+            placeholder="SNNIT Tier 3"
             className="bg-gray-50 border outline-0 mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
             step="0.01"
           />
@@ -180,17 +181,17 @@ export default function IncomeTaxCalculator() {
         <div className="results">
           <div className="mt-10 smallTitle center">Results</div>
           <div className="result">
-            <p>Basic Salary</p>
-            {result.basic_salary}
+            <p>Monthly basic Salary</p>
+            GHS {formatter.format(result.basic_salary)}
           </div>
 
           <div className="result">
-            <p>Overtime Minimum Tax</p>
-            {result.overtime_minimum_tax}
+            <p>Monthly overtime tax</p>
+            GHS {formatter.format(result.overtime_minimum_tax)}
           </div>
           <div className="result">
-            <p>Bonus Minimum Tax</p>
-            {result.bonus_minimum_tax}
+            <p>Monthly bonus tax</p>
+            GHS {formatter.format(result.bonus_minimum_tax)}
           </div>
           {/* <div className="result"> */}
           {/*   {" "} */}
@@ -198,8 +199,8 @@ export default function IncomeTaxCalculator() {
           {/*   {result.tax_graduated_rates} */}
           {/* </div> */}
           <div className="result bold">
-            <p> Cumulative Tax</p>
-            {result.cumulative_tax}
+            <p>Monthly PAYE tax</p>
+            GHS {formatter.format(result.cumulative_tax)}
           </div>
         </div>
       )}

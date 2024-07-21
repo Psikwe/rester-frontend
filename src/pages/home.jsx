@@ -203,7 +203,7 @@ function Home() {
             }
             onClick={() => setCalculator("incomeTax")}
           >
-            Income Tax Calculator
+            PAYE Tax Calculator
           </button>
           <button
             className={
