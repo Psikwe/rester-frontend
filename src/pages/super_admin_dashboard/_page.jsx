@@ -234,7 +234,7 @@ function SuperAdminDashboard() {
                     />
                   </div>
                 </div>
-                <div className="w-full mr-3 field">
+                {/* <div className="w-full mr-3 field">
                   <label className="text-sm label">Min Chargeable Income</label>
                   <div className="control">
                     <input
@@ -253,10 +253,9 @@ function SuperAdminDashboard() {
                       }}
                     />
                   </div>
-                </div>
-                {/* <p className="help">This is a help text</p> */}
+                </div> */}
                 <div className="w-full mr-3 field">
-                  <label className="text-sm label">Max Chargeable Income</label>
+                  <label className="text-sm label">Chargeable Income</label>
                   <div className="control">
                     <input
                       required

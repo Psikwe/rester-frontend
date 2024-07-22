@@ -1,5 +1,4 @@
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
 import { UserVerification } from "../../core/services/auth.service";
 import Modal from "../../components/modal/_component";
 import verify from "../../assets/verify.svg";
@@ -8,7 +7,7 @@ function VerifyUser() {
   const queryParams = new URLSearchParams(location.search);
   const [verifyDone, setVerifyDone] = React.useState(false);
   const verificationKey = queryParams.get("vk");
-  console.log("vk: " + verificationKey);
+  console.log("vk: ", verificationKey);
   const payload = {
     verification_key: verificationKey,
   };

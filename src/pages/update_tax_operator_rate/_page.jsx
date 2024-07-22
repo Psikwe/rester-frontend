@@ -197,7 +197,7 @@ function UpdateTaxOperatorRate() {
             </div> */}
             {/* <p className="help">This is a help text</p> */}
             <div className="w-full mr-3 field">
-              <label className="text-sm label">Max Chargeable Income</label>
+              <label className="text-sm label">Chargeable Income</label>
               <div className="control">
                 <input
                   required

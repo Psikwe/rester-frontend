@@ -55,11 +55,11 @@ import SuperCreateTaxRate from "./view_tax_rate/_page";
 import SuperManageTaxRate from "./update_tax_rate/_page";
 import CreateTaxComponent from "./create_tax_component/_page";
 import SuperUpdateTaxRate from "./super_update_tax_rate/_page";
+import ResetPassword from "./reset_password/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
-  const role = localStorage.getItem("u_role");
-  console.log("Role: " + role);
+
   return (
     <BrowserRouter>
       <ToastContainer progressClassName="toast-progress" />
@@ -68,6 +68,7 @@ export default function AppRoutes() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="verify_user" element={<VerifyUser />} />
+            <Route path="reset_password" element={<ResetPassword />} />
             <Route path="*" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="pricing" element={<Pricing />} />
