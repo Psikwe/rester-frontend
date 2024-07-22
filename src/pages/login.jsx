@@ -203,8 +203,8 @@ function Login() {
             type="submit"
             className={
               isForgotLoading
-                ? `animate-pulse rounded-full w-full py-3 text-white mt-9 primary mobile:w-full`
-                : `w-full rounded-full py-3 text-white mt-9 primary mobile:w-full`
+                ? `animate-pulse rounded-full w-1/3 py-2 text-white mt-9 primary mobile:w-full`
+                : `w-1/3 rounded-full py-2 flex justify-center m-auto text-white mt-9 primary mobile:w-full`
             }
           >
             {isForgotLoading ? <Loader /> : "Submit"}

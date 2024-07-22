@@ -155,7 +155,7 @@ function SuperUpdateTaxRate() {
       >
         <div className="p-2 border-2 border-blue-400 border-dashed">
           <div className="flex items-center mt-8">
-            <div className="w-full mr-3 field">
+            {/* <div className="w-full mr-3 field">
               <label className="text-sm label">Enter UID</label>
               <div className="control">
                 <input
@@ -167,8 +167,7 @@ function SuperUpdateTaxRate() {
                   placeholder="UID"
                 />
               </div>
-              {/* <p className="help">This is a help text</p> */}
-            </div>
+            </div> */}
             <div className="w-full mr-3">
               <label className="text-sm label">Select Type</label>
               <div className="flex w-full row mobile:w-full">
@@ -180,7 +179,7 @@ function SuperUpdateTaxRate() {
                 />
               </div>
             </div>
-            <div className="w-full mr-3 field">
+            {/* <div className="w-full mr-3 field">
               <label className="text-sm label">Min Chargeable Income</label>
               <div className="control">
                 <input
@@ -194,7 +193,7 @@ function SuperUpdateTaxRate() {
                   placeholder="Minimum"
                 />
               </div>
-            </div>
+            </div> */}
             {/* <p className="help">This is a help text</p> */}
             <div className="w-full mr-3 field">
               <label className="text-sm label">Max Chargeable Income</label>

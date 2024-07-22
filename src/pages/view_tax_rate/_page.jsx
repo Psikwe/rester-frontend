@@ -9,7 +9,6 @@ import { useTaxType } from "../../core/hooks/tax";
 import { showToast } from "../../core/hooks/alert";
 import correct from "../../assets/correct.svg";
 import Modal from "../../components/modal/_component";
-import moment from "moment";
 
 function SuperCreateTaxRate() {
   const fp = React.useRef(null);
@@ -75,6 +74,7 @@ function SuperCreateTaxRate() {
       setTyepesOptions(options);
     }
   }, [taxTypeQuery.data]);
+
   React.useEffect(() => {
     const uidGenerator = () => {
       const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -95,9 +95,6 @@ function SuperCreateTaxRate() {
     setUidField(uidGenerator);
   }, []);
 
-  const showw = () => {
-    document.getElementById("ress").innerHTML = uidGenerator();
-  };
   const handleTaxSubmit = (e) => {
     e.preventDefault();
     if (formIndex !== 0) {
@@ -125,7 +122,7 @@ function SuperCreateTaxRate() {
     const firstSection = sectionOne.map((section) => ({
       uid: uidField,
       tax_type: section.tax_type.value,
-      chargeable_income_min: section.chargeable_income_min,
+      // chargeable_income_min: section.chargeable_income_min,
       chargeable_income_max: section.chargeable_income_max,
       range_rate: section.range_rate,
       order_no: section.order_no,
@@ -138,7 +135,6 @@ function SuperCreateTaxRate() {
       activate: isChecked,
     };
 
-    console.log("pay", payload);
     CreateIncomeTaxRate(payload)
       .then((response) => {
         console.log(response);
@@ -234,7 +230,7 @@ function SuperCreateTaxRate() {
                     />
                   </div>
                 </div>
-                <div className="w-full mr-3 field">
+                {/* <div className="w-full mr-3 field">
                   <label className="text-sm label">Min Chargeable Income</label>
                   <div className="control">
                     <input
@@ -253,7 +249,7 @@ function SuperCreateTaxRate() {
                       }}
                     />
                   </div>
-                </div>
+                </div> */}
                 {/* <p className="help">This is a help text</p> */}
                 <div className="w-full mr-3 field">
                   <label className="text-sm label">Max Chargeable Income</label>
