@@ -335,7 +335,8 @@ function UpdateTaxElection() {
             {isLoading ? <Loader /> : " Add Tax Type"}
           </button>
         </form>
-      </Modal> */}
+      </Modal> */}{" "}
+      <h3 className="text-2xl">Update Tax Election</h3>
       <div className="flex">
         <div className="w-full mt-3 mb-12 field">
           <label className="text-sm label bold">Select Election Date</label>
@@ -376,7 +377,6 @@ function UpdateTaxElection() {
           ""
         )}
       </div>
-
       <>
         {isOperationLoading ? (
           <>
