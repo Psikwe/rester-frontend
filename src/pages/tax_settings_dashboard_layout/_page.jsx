@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  adminDashboardMenus,
-  taxSettingsDashboardMenus,
-} from "../../core/data";
+import { taxSettingsDashboardMenus } from "../../core/data";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
@@ -10,8 +7,6 @@ import { RxAvatar } from "react-icons/rx";
 import { Dropdown, Ripple, initTWE } from "tw-elements";
 import { CiLogout } from "react-icons/ci";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { MdCurrencyExchange } from "react-icons/md";
-import { MdOutlineLanguage } from "react-icons/md";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
 import { BsExclamationCircle } from "react-icons/bs";
@@ -24,7 +19,6 @@ import { clearUserSession } from "../../core/utilities";
 const TaxSettingsDashboardLayout = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
-  const [selectedMenu, setSelectedMenu] = React.useState(0);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
 

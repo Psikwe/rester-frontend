@@ -8,8 +8,6 @@ import { formToJSON } from "axios";
 import { showToast } from "../core/hooks/alert";
 import Loader from "../components/loader/_component";
 import { UserSignUp } from "../core/services/auth.service";
-import Select from "react-select";
-import { industries } from "../core/data";
 
 function Signup() {
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);

@@ -239,6 +239,11 @@ export const taxSettingsDashboardMenus = [
         url: "/dashboard/tax-settings",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
+      {
+        menu: "Manage Tax Rate Election",
+        url: "/dashboard/manage-tax-election",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
     ],
   },
 ];

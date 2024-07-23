@@ -14,6 +14,18 @@ export const CreateTaxRateElection = async (payload) => {
   );
 };
 
+export const GetTaxRateElections = async () => {
+  return await getAxios().get(
+    "https://rester-82c60dc37022.herokuapp.com/get_tax_rate_elections"
+  );
+};
+
+export const DeleteTaxRateElection = async (tax_election_id) => {
+  return await getAxios().delete(
+    `https://rester-82c60dc37022.herokuapp.com/delete_tax_rate_election/${tax_election_id}`
+  );
+};
+
 export const AddTaxType = async (payload) => {
   return await getAxios().post(
     "https://rester-82c60dc37022.herokuapp.com/create_tax_type",

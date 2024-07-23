@@ -56,6 +56,8 @@ import SuperManageTaxRate from "./update_tax_rate/_page";
 import CreateTaxComponent from "./create_tax_component/_page";
 import SuperUpdateTaxRate from "./super_update_tax_rate/_page";
 import ResetPassword from "./reset_password/_page";
+import ManageTaxSettings from "./manage_tax_settings/_page";
+import ManageTaxElection from "./manage_tax_settings/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -153,6 +155,10 @@ export default function AppRoutes() {
               )}
               <Route path="dashboard/" element={<TaxSettingsDashboardLayout />}>
                 <Route path="tax-settings" element={<TaxSettings />} />
+                <Route
+                  path="manage-tax-election"
+                  element={<ManageTaxElection />}
+                />
               </Route>
               <Route path="/employee" element={<EmployeeDashboardLayout />}>
                 <Route path="update-employee" element={<UpdateEmployee />} />
