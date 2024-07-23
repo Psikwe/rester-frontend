@@ -14,6 +14,13 @@ export const CreateTaxRateElection = async (payload) => {
   );
 };
 
+export const UpdateTaxRateElection = async (payload) => {
+  return await getAxios().patch(
+    "https://rester-82c60dc37022.herokuapp.com/update_tax_rate_election",
+    payload
+  );
+};
+
 export const GetTaxRateElections = async () => {
   return await getAxios().get(
     "https://rester-82c60dc37022.herokuapp.com/get_tax_rate_elections"

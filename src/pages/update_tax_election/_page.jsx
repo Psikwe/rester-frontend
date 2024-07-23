@@ -10,13 +10,14 @@ import "flatpickr/dist/flatpickr.css";
 import Flatpickr from "react-flatpickr";
 import { BsExclamationCircleFill } from "react-icons/bs";
 import {
-  AddTaxType,
-  CreateTaxRateElection,
   DeleteIncomeTaxRate,
+  UpdateTaxRateElection,
 } from "../../core/services/tax.service";
 import { useIncomeTaxRate } from "../../core/hooks/tax";
+import { useParams } from "react-router-dom";
 
-function TaxSettings() {
+function UpdateTaxElection() {
+  const { id, tax_rate_uid } = useParams();
   const fp = React.useRef(null);
   const { incomeTaxRatesQuery } = useIncomeTaxRate();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -28,18 +29,20 @@ function TaxSettings() {
   const [taxTypes, setTaxTypes] = React.useState([]);
   const [deleteId, setDeleteId] = React.useState("");
   const [electionDate, setElectionDate] = React.useState("");
-  const [selectedRowId, setSelectedRowId] = React.useState([]);
+  const [selectedRowUid, setSelectedRowUid] = React.useState([]);
   const [uidLists, setUidLists] = React.useState([]);
   const [updatedUidLists, setUpdatedUidLists] = React.useState();
   const [isOperationLoading, setOperationLoading] = React.useState(false);
-  const [sameUidSelected, setSameUidSelected] = React.useState(false);
+  const [selectedUid, setSelectedUid] = React.useState("");
   const [checkedId, setCheckedId] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
   const [checkedUids, setCheckedUids] = React.useState({});
 
   const handleCheck = (id, uid, checked) => {
-    setSelectedRowId(uid);
+    setSelectedUid(uid);
+
+    setSelectedRowUid(uid);
 
     setCheckedUids((prevCheckedUids) => {
       const newCheckedUids = { ...prevCheckedUids };
@@ -88,15 +91,14 @@ function TaxSettings() {
   // };
 
   const handleSubmitElection = () => {
+    console.log("uidqq: ", selectedUid);
     let electionDate = document.getElementById("election_date").value;
-
-    // if (sameUidSelected) {
-    //   console.log("ww: ", sameUidSelected);
-    //   showToast("Cannot select the same Uid for multiple tax types.", false);
-    //   return;
-    // }
     if (electionDate === null || electionDate === "") {
       showToast("Please select election date", false);
+      return;
+    }
+    if (selectedUid === tax_rate_uid) {
+      showToast("Cannot update with already elected tax type.", false);
       return;
     }
     setElectionDate(electionDate);
@@ -105,20 +107,19 @@ function TaxSettings() {
 
   React.useEffect(() => {
     setUpdatedUidLists(uidLists);
-
     const payload = {
       election_date: electionDate,
       tax_rate_uids: uidLists,
+      tax_rate_election_id: id,
     };
 
-    console.log("payload: ", payload);
     if (readyToSubmit) {
-      CreateTaxRateElection(payload)
+      UpdateTaxRateElection(payload)
         .then((response) => {
           console.log(response);
           showToast(response?.data.message, true);
           setTimeout(() => {
-            window.location.reload();
+            window.location.href = "/dashboard/manage-tax-election";
           }, 2000);
         })
         .catch((error) => {
@@ -128,7 +129,7 @@ function TaxSettings() {
   }, [readyToSubmit]);
 
   const renderActionsRow = (data) => {
-    const { id, uid, name } = data.row;
+    const { id, uid } = data.row;
     return (
       <div className="flex items-center justify-center">
         <label className="-mr-6">Elect</label>
@@ -368,7 +369,7 @@ function TaxSettings() {
                   : `w-full py-3 rounded-full text-white mt-9 primary mobile:w-full`
               }
             >
-              {saveLoading ? <Loader /> : "Save Election"}
+              {saveLoading ? <Loader /> : "Update Election"}
             </button>
           </div>
         ) : (
@@ -406,4 +407,4 @@ function TaxSettings() {
   );
 }
 
-export default TaxSettings;
+export default UpdateTaxElection;

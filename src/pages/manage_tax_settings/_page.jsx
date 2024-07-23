@@ -54,8 +54,8 @@ function ManageTaxElection() {
       });
   };
 
-  const handleUpdateClick = (id) => {
-    window.location.href = "update-tax-rate/" + id;
+  const handleUpdateClick = (id, tax_rate_uid) => {
+    window.location.href = "update-tax-election/" + id + "/" + tax_rate_uid;
   };
 
   const handleDelete = (id, name) => {
@@ -65,14 +65,14 @@ function ManageTaxElection() {
   };
 
   const renderActionsRow = (data) => {
-    const { id, name } = data.row;
+    const { tax_rate_uid, id, name } = data.row;
     console.log(data.row);
     return (
       <div className="flex items-center mt-4">
         <button
           className="mb-2 ml-3"
           title="Update"
-          onClick={() => handleUpdateClick(uid)}
+          onClick={() => handleUpdateClick(id, tax_rate_uid)}
         >
           <FiEdit color="green" size={18} />
         </button>
@@ -97,6 +97,7 @@ function ManageTaxElection() {
       renderCell: renderActionsRow,
       width: "100px",
     },
+    { key: "tax_rate_uid", name: "UID" },
     {
       key: "elections",
       name: "Election Date",

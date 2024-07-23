@@ -21,7 +21,6 @@ import "@/styles/globals.css";
 import "tw-elements";
 import "react-toastify/dist/ReactToastify.css";
 import MobileScreen from "./mobile_screen/_page";
-import RunPayroll from "./run_payroll/_page";
 import CreateIncomeType from "./create_income_type/_page";
 import CreateAllowableDeductions from "./create_allowable_deductions/_page";
 import CreateEmployeeLoan from "./create_employee_loan/_page";
@@ -39,10 +38,7 @@ import Payslip from "./payslip/_page";
 import SuperAdminDashboardLayout from "./super_admin_dashboard_layout/_page";
 import SuperAdminDashboard from "./super_admin_dashboard/_page";
 import VerifyUser from "./verify_user/_page";
-import ViewTaxRate from "./view_tax_rate/_page";
-import UpdateTaxRate from "./update_tax_rate/_page";
 import CreatePrice from "./create_price/_page";
-import AccessDenied from "./access_denied/_page";
 import CreateTaxType from "./create_tax_type/_page";
 import TaxOperatorLayout from "./tax_operator_layout/_page";
 import ManageTaxRate from "./manage_tax_rate/_page";
@@ -56,8 +52,8 @@ import SuperManageTaxRate from "./update_tax_rate/_page";
 import CreateTaxComponent from "./create_tax_component/_page";
 import SuperUpdateTaxRate from "./super_update_tax_rate/_page";
 import ResetPassword from "./reset_password/_page";
-import ManageTaxSettings from "./manage_tax_settings/_page";
 import ManageTaxElection from "./manage_tax_settings/_page";
+import UpdateTaxElection from "./update_tax_election/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -158,6 +154,10 @@ export default function AppRoutes() {
                 <Route
                   path="manage-tax-election"
                   element={<ManageTaxElection />}
+                />
+                <Route
+                  path="update-tax-election/:id/:tax_rate_uid"
+                  element={<UpdateTaxElection />}
                 />
               </Route>
               <Route path="/employee" element={<EmployeeDashboardLayout />}>
