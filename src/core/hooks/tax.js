@@ -48,10 +48,10 @@ export const useTaxComponent = () => {
   };
 };
 
-export const useTaxRateElections = () => {
+export const useTaxRateElections = (entity_id) => {
   const taxRateElectionsQuery = useQuery({
     queryKey: ["taxRateElectionsQuery"],
-    queryFn: () => GetTaxRateElections(),
+    queryFn: () => GetTaxRateElections(entity_id),
     onError: (error) => {
       console.log("error: ", error);
     },

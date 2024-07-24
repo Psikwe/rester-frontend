@@ -19,9 +19,11 @@ import { useParams } from "react-router-dom";
 function UpdateTaxElection() {
   const { id, tax_rate_uid } = useParams();
   const fp = React.useRef(null);
+  const entity_id = localStorage.getItem("entity_id");
   const { incomeTaxRatesQuery } = useIncomeTaxRate();
   const [isLoading, setIsLoading] = React.useState(false);
   const [saveLoading, isSaveLoading] = React.useState(false);
+  const [updateDone, setUpdateDone] = React.useState(false);
   const [showSaveBtn, setShowSaveBtn] = React.useState(false);
   const [readyToSubmit, setReadyToSubmit] = React.useState(false);
   const [query, setQuery] = React.useState("");
@@ -40,7 +42,7 @@ function UpdateTaxElection() {
   const [checkedUids, setCheckedUids] = React.useState({});
 
   const handleCheck = (id, uid, checked) => {
-    setSelectedUid(uid);
+    if (checked) setSelectedUid(uid);
 
     setSelectedRowUid(uid);
 
@@ -52,7 +54,6 @@ function UpdateTaxElection() {
       } else {
         delete newCheckedUids[uid];
       }
-
       return newCheckedUids;
     });
 
@@ -91,7 +92,7 @@ function UpdateTaxElection() {
   // };
 
   const handleSubmitElection = () => {
-    console.log("uidqq: ", selectedUid);
+    // isSaveLoading(true);
     let electionDate = document.getElementById("election_date").value;
     if (electionDate === null || electionDate === "") {
       showToast("Please select election date", false);
@@ -109,20 +110,26 @@ function UpdateTaxElection() {
     setUpdatedUidLists(uidLists);
     const payload = {
       election_date: electionDate,
+      entity_id,
       tax_rate_uids: uidLists,
-      tax_rate_election_id: id,
+      uid_to_update: tax_rate_uid,
     };
 
     if (readyToSubmit) {
       UpdateTaxRateElection(payload)
         .then((response) => {
+          setUpdateDone(true);
+          isSaveLoading(false);
           console.log(response);
           showToast(response?.data.message, true);
+
           setTimeout(() => {
             window.location.href = "/dashboard/manage-tax-election";
           }, 2000);
         })
         .catch((error) => {
+          setUpdateDone(true);
+          isSaveLoading(false);
           showToast(error.response.data.error, false);
         });
     }
@@ -179,8 +186,8 @@ function UpdateTaxElection() {
       width: "100px",
     },
     { key: "tax_type", name: "Tax Type", renderCell: renderTaxTypeRow },
-    { key: "uid", name: "UID" },
-    { key: "chargeable_income_min", name: "Chargeable Income Min" },
+    // { key: "uid", name: "UID" },
+    // { key: "chargeable_income_min", name: "Chargeable Income Min" },
     { key: "chargeable_income_max", name: "Chargeable Income Max" },
     { key: "range_rate", name: "Range Rate" },
     { key: "effective_from", name: "Effective From" },

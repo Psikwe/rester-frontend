@@ -18,7 +18,8 @@ import { useIncomeTaxRate, useTaxRateElections } from "../../core/hooks/tax";
 import moment from "moment";
 
 function ManageTaxElection() {
-  const { taxRateElectionsQuery } = useTaxRateElections();
+  const entity_id = localStorage.getItem("entity_id");
+  const { taxRateElectionsQuery } = useTaxRateElections(entity_id);
   const [isLoading, setIsLoading] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [isPricingModalModalOpen, setPricingModalOpen] = React.useState(false);
@@ -97,7 +98,7 @@ function ManageTaxElection() {
       renderCell: renderActionsRow,
       width: "100px",
     },
-    { key: "tax_rate_uid", name: "UID" },
+    // { key: "tax_rate_uid", name: "UID" },
     {
       key: "elections",
       name: "Election Date",

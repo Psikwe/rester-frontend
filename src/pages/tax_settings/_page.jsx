@@ -18,6 +18,7 @@ import { useIncomeTaxRate } from "../../core/hooks/tax";
 
 function TaxSettings() {
   const fp = React.useRef(null);
+  const entity_id = localStorage.getItem("entity_id");
   const { incomeTaxRatesQuery } = useIncomeTaxRate();
   const [isLoading, setIsLoading] = React.useState(false);
   const [saveLoading, isSaveLoading] = React.useState(false);
@@ -49,7 +50,6 @@ function TaxSettings() {
       } else {
         delete newCheckedUids[uid];
       }
-
       return newCheckedUids;
     });
 
@@ -95,6 +95,10 @@ function TaxSettings() {
     //   showToast("Cannot select the same Uid for multiple tax types.", false);
     //   return;
     // }
+    if (Object.keys(checkedUids).length === 0) {
+      showToast("Please elect at least one tax type.", false);
+      return;
+    }
     if (electionDate === null || electionDate === "") {
       showToast("Please select election date", false);
       return;
@@ -109,6 +113,7 @@ function TaxSettings() {
     const payload = {
       election_date: electionDate,
       tax_rate_uids: uidLists,
+      entity_id,
     };
 
     console.log("payload: ", payload);
@@ -178,8 +183,7 @@ function TaxSettings() {
       width: "100px",
     },
     { key: "tax_type", name: "Tax Type", renderCell: renderTaxTypeRow },
-    { key: "uid", name: "UID" },
-    { key: "chargeable_income_min", name: "Chargeable Income Min" },
+    // { key: "uid", name: "UID" },
     { key: "chargeable_income_max", name: "Chargeable Income Max" },
     { key: "range_rate", name: "Range Rate" },
     { key: "effective_from", name: "Effective From" },

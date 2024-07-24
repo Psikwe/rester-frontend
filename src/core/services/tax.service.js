@@ -21,9 +21,9 @@ export const UpdateTaxRateElection = async (payload) => {
   );
 };
 
-export const GetTaxRateElections = async () => {
+export const GetTaxRateElections = async (entity_id) => {
   return await getAxios().get(
-    "https://rester-82c60dc37022.herokuapp.com/get_tax_rate_elections"
+    `https://rester-82c60dc37022.herokuapp.com/get_tax_rate_elections/${entity_id}`
   );
 };
 
