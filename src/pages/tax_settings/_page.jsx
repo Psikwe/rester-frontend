@@ -21,7 +21,7 @@ function TaxSettings() {
   const entity_id = localStorage.getItem("entity_id");
   const { incomeTaxRatesQuery } = useIncomeTaxRate();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [saveLoading, isSaveLoading] = React.useState(false);
+  const [saveLoading, setSaveLoading] = React.useState(false);
   const [showSaveBtn, setShowSaveBtn] = React.useState(false);
   const [readyToSubmit, setReadyToSubmit] = React.useState(false);
   const [query, setQuery] = React.useState("");
@@ -105,6 +105,7 @@ function TaxSettings() {
     }
     setElectionDate(electionDate);
     setReadyToSubmit(true);
+    setSaveLoading(true);
   };
 
   React.useEffect(() => {
@@ -116,10 +117,10 @@ function TaxSettings() {
       entity_id,
     };
 
-    console.log("payload: ", payload);
     if (readyToSubmit) {
       CreateTaxRateElection(payload)
         .then((response) => {
+          setSaveLoading(false);
           console.log(response);
           showToast(response?.data.message, true);
           setTimeout(() => {
@@ -127,7 +128,11 @@ function TaxSettings() {
           }, 2000);
         })
         .catch((error) => {
+          setSaveLoading(false);
           showToast(error.response.data.error, false);
+          setTimeout(() => {
+            window.location.reload();
+          }, 4000);
         });
     }
   }, [readyToSubmit]);

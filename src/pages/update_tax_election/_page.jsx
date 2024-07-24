@@ -22,7 +22,7 @@ function UpdateTaxElection() {
   const entity_id = localStorage.getItem("entity_id");
   const { incomeTaxRatesQuery } = useIncomeTaxRate();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [saveLoading, isSaveLoading] = React.useState(false);
+  const [saveLoading, setSaveLoading] = React.useState(false);
   const [updateDone, setUpdateDone] = React.useState(false);
   const [showSaveBtn, setShowSaveBtn] = React.useState(false);
   const [readyToSubmit, setReadyToSubmit] = React.useState(false);
@@ -92,7 +92,6 @@ function UpdateTaxElection() {
   // };
 
   const handleSubmitElection = () => {
-    // isSaveLoading(true);
     let electionDate = document.getElementById("election_date").value;
     if (electionDate === null || electionDate === "") {
       showToast("Please select election date", false);
@@ -104,6 +103,7 @@ function UpdateTaxElection() {
     }
     setElectionDate(electionDate);
     setReadyToSubmit(true);
+    setSaveLoading(true);
   };
 
   React.useEffect(() => {
@@ -119,7 +119,7 @@ function UpdateTaxElection() {
       UpdateTaxRateElection(payload)
         .then((response) => {
           setUpdateDone(true);
-          isSaveLoading(false);
+          setSaveLoading(false);
           console.log(response);
           showToast(response?.data.message, true);
 
@@ -129,7 +129,7 @@ function UpdateTaxElection() {
         })
         .catch((error) => {
           setUpdateDone(true);
-          isSaveLoading(false);
+          setSaveLoading(false);
           showToast(error.response.data.error, false);
         });
     }

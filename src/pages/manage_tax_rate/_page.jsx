@@ -93,13 +93,11 @@ function ManageTaxRate() {
       renderCell: renderActionsRow,
       width: "100px",
     },
-    // { key: "uid", name: "UID" },
-    // { key: "chargeable_income_min", name: "Chargeable Income Min" },
     { key: "chargeable_income_max", name: "Income Max" },
     { key: "range_rate", name: "Range Rate" },
     { key: "effective_from", name: "Effective From" },
     { key: "effective_to", name: "Effective To" },
-    { key: "distributed", name: "Distributed" },
+    // { key: "distributed", name: "Distributed" },
     { key: "order_no", name: "Order Number" },
   ];
 
