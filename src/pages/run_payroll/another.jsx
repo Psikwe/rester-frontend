@@ -18,6 +18,7 @@ const MySpreadsheet = () => {
   const entity_id = localStorage.getItem("entity_id");
   const fp = React.useRef(null);
   const [report, setReport] = React.useState([]);
+  const [reportResponse, setReportResponse] = React.useState("");
   const [selectedStartDate, setSelectedStartDate] = React.useState(null);
   const [grandReport, setGrandReport] = React.useState();
   const [selectedIndustry, setSelectedIndustry] = React.useState(null);
@@ -30,98 +31,6 @@ const MySpreadsheet = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [durationIsConfirmed, setDurationIsConfirmed] = React.useState(false);
   const [openDurationModal, setOpenDurationModal] = React.useState(true);
-
-  const anothers = [
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "asd Kwesi asd" }, { value: "0.00" }],
-    [{ value: false }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "Cleaner" }],
-    [{ value: "sadfas" }, { value: false }],
-    [{ value: 44 }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "asd23" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "me asd me" }, { value: "0.00" }],
-    [{ value: false }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "Cleaner" }],
-    [{ value: "asdas" }, { value: false }],
-    [{ value: 43 }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "asdf223" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }, { value: "0.00" }],
-    [{ value: "0.00" }],
-  ];
-
-  const me = [
-    {
-      accomodation_element: "0.00",
-      basic_salary: "0.00",
-      bonus_income: "0.00",
-      cash_allowances: "0.00",
-      chargeable_income: "0.00",
-      deductible_reliefs: "0.00",
-      excess_bonus: "0.00",
-      final_tax_on_bonus: "0.00",
-      name_of_employee: "asd Kwesi asd",
-      non_cash_benefit: "0.00",
-      non_resident: false,
-      overtime_income: "0.00",
-      overtime_tax: "0.00",
-      position: "Cleaner",
-      remarks: "sadfas",
-      secondary_employment: false,
-      serial_no: 44,
-      severance_pay_paid: "0.00",
-      social_security_fund: "0.00",
-      tax_deductible: "0.00",
-      third_tier: "0.00",
-      tin: "asd23",
-      total_assessable_income: "0.00",
-      total_cash_emolument: "0.00",
-      total_reliefs: "0.00",
-      total_tax_payable_to_gra: "0.00",
-      vehicle_element: "0.00",
-    },
-    {
-      accomodation_element: "0.00",
-      basic_salary: "0.00",
-      bonus_income: "0.00",
-      cash_allowances: "0.00",
-      chargeable_income: "0.00",
-      deductible_reliefs: "0.00",
-      excess_bonus: "0.00",
-      final_tax_on_bonus: "0.00",
-      name_of_employee: "me asd me",
-      non_cash_benefit: "0.00",
-      non_resident: false,
-      overtime_income: "0.00",
-      overtime_tax: "0.00",
-      position: "Cleaner",
-      remarks: "asdas",
-      secondary_employment: false,
-      serial_no: 43,
-      severance_pay_paid: "0.00",
-      social_security_fund: "0.00",
-      tax_deductible: "0.00",
-      third_tier: "0.00",
-      tin: "asdf223",
-      total_assessable_income: "0.00",
-      total_cash_emolument: "0.00",
-      total_reliefs: "0.00",
-      total_tax_payable_to_gra: "0.00",
-      vehicle_element: "0.00",
-    },
-  ];
 
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date[0]);
@@ -275,22 +184,22 @@ const MySpreadsheet = () => {
           setReport(result);
         })
         .catch((error) => {
-          console.log(error);
+          console.log("eee: ", error);
+          setReportResponse(error.response.data.error);
         });
     }
   }, [durationIsConfirmed]);
 
-  React.useEffect(() => {
-    DownloadTaxReport(entity_id, formattedStartDate, formattedEndDate)
-      .then((response) => {
-        console.log("ffoh: ", response?.data.entries);
-        let result = response.data.entries;
-        setReport(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   DownloadTaxReport(entity_id, formattedStartDate, formattedEndDate)
+  //     .then((response) => {
+  //       let result = response.data.entries;
+  //       setReport(result);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   const saveReport = () => {
     setIsLoading(true);
@@ -414,23 +323,28 @@ const MySpreadsheet = () => {
           </div>
         </div>
       </Modal>
+      {durationIsConfirmed && report.length === 0 ? (
+        <h3 className="text-red-500">{reportResponse}</h3>
+      ) : (
+        <>
+          {durationIsConfirmed && (
+            <div className="overflow-y-hidden">
+              <button
+                onClick={saveReport}
+                className="w-1/6 h-10 py-3 mb-3 mr-4 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
+              >
+                {isLoading ? <Loader /> : "Save Payroll"}
+              </button>
 
-      {durationIsConfirmed && (
-        <div className="overflow-y-hidden">
-          <button
-            onClick={saveReport}
-            className="w-1/6 h-10 py-3 mb-3 mr-4 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
-          >
-            {isLoading ? <Loader /> : "Save Payroll"}
-          </button>
-
-          <DataGrid
-            className="text-sm rdg-light grid-container"
-            columns={columns}
-            rows={report || []}
-            rowHeight={50}
-          />
-        </div>
+              <DataGrid
+                className="text-sm rdg-light grid-container"
+                columns={columns}
+                rows={report || []}
+                rowHeight={50}
+              />
+            </div>
+          )}
+        </>
       )}
     </>
   );

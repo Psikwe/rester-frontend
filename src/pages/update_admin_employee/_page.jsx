@@ -24,6 +24,7 @@ function UpdateAdminEmployee() {
   const { incomeTypeQuery } = useIncomeType(entity_id);
   const [isLoading, setIsLoading] = React.useState(false);
   const [employeeDetails, setEmployeeDetails] = React.useState({});
+  const [noIncomeMessage, setNoIncomeMessage] = React.useState("");
   const [incomeSection, setIncomeSection] = React.useState([
     { incomeType: null, amount: "", incomeFrequency: null },
   ]);
@@ -56,6 +57,7 @@ function UpdateAdminEmployee() {
     GetOneEmployee(id)
       .then((response) => {
         setEmployeeDetails(response.data.employee);
+        setNoIncomeMessage(response.data.message);
         console.log("ee: ", response);
       })
       .catch((err) => {
@@ -309,75 +311,82 @@ function UpdateAdminEmployee() {
             </div>
           </div>
         </div>
-        {incomeSection.map((to, index) => (
-          <div key={index} className="flex items-center mt-8">
-            <div className="w-full mr-3">
-              <label className="text-sm label bold">
-                Select type of income
-              </label>
-              <div className="flex w-full row mobile:w-full">
-                <Select
-                  className="w-full"
-                  value={to.incomeType}
-                  onChange={(selectedOption) =>
-                    handleChange(index, selectedOption)
-                  }
-                  options={incomeTypeOptions}
-                  placeholder={employeeDetails.income_type}
-                />
+        {noIncomeMessage !== "" ? (
+          <h3 className="mt-8 text-red-500">{noIncomeMessage}</h3>
+        ) : (
+          <>
+            {incomeSection.map((to, index) => (
+              <div key={index} className="flex items-center mt-8">
+                <div className="w-full mr-3">
+                  <label className="text-sm label bold">
+                    Select type of income
+                  </label>
+                  <div className="flex w-full row mobile:w-full">
+                    <Select
+                      className="w-full"
+                      value={to.incomeType}
+                      onChange={(selectedOption) =>
+                        handleChange(index, selectedOption)
+                      }
+                      options={incomeTypeOptions}
+                      placeholder={employeeDetails.income_type}
+                    />
+                  </div>
+                </div>
+                <div className="w-full mr-3">
+                  <label className="text-sm label bold">Enter Amount</label>
+                  <div className="control">
+                    <input
+                      required
+                      className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
+                      type="number"
+                      placeholder="Amount"
+                      name="income_amount"
+                      defaultValue={employeeDetails.income_amount}
+                      onChange={(e) => {
+                        const updatedIncomeSection = [...incomeSection];
+                        updatedIncomeSection[index].amount = e.target.value;
+                        setIncomeSection(updatedIncomeSection);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="w-full">
+                  <label className="text-sm label bold">
+                    Select frequency of income
+                  </label>
+                  <div className="flex w-full row mobile:w-full">
+                    <Select
+                      className="w-full"
+                      value={to.incomeFrequency}
+                      onChange={(selectedOption) =>
+                        handleFrequencyChange(index, selectedOption)
+                      }
+                      options={options}
+                      id="income-frequency"
+                      placeholder={employeeDetails.income_frequency}
+                    />
+                  </div>
+                </div>
+                <div
+                  title="Remove fields"
+                  className="w-12 px-3 py-1 mt-3 ml-3 text-white bg-black cursor-pointer"
+                  onClick={() => handleRemoveOptionsField(index)}
+                >
+                  <GrFormSubtract />
+                </div>
               </div>
-            </div>
-            <div className="w-full mr-3">
-              <label className="text-sm label bold">Enter Amount</label>
-              <div className="control">
-                <input
-                  required
-                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
-                  type="number"
-                  placeholder="Amount"
-                  name="income_amount"
-                  defaultValue={employeeDetails.income_amount}
-                  onChange={(e) => {
-                    const updatedIncomeSection = [...incomeSection];
-                    updatedIncomeSection[index].amount = e.target.value;
-                    setIncomeSection(updatedIncomeSection);
-                  }}
-                />
-              </div>
-            </div>
-            <div className="w-full">
-              <label className="text-sm label bold">
-                Select frequency of income
-              </label>
-              <div className="flex w-full row mobile:w-full">
-                <Select
-                  className="w-full"
-                  value={to.incomeFrequency}
-                  onChange={(selectedOption) =>
-                    handleFrequencyChange(index, selectedOption)
-                  }
-                  options={options}
-                  id="income-frequency"
-                  placeholder={employeeDetails.income_frequency}
-                />
-              </div>
-            </div>
+            ))}
             <div
-              title="Remove fields"
-              className="w-12 px-3 py-1 mt-3 ml-3 text-white bg-black cursor-pointer"
-              onClick={() => handleRemoveOptionsField(index)}
+              title="Add fields"
+              className="flex items-center w-10 px-3 py-1 mt-3 text-white bg-black cursor-pointer"
+              onClick={handleAddOptionsField}
             >
-              <GrFormSubtract />
+              <IoAddOutline />
             </div>
-          </div>
-        ))}
-        <div
-          title="Add fields"
-          className="flex items-center w-10 px-3 py-1 mt-3 text-white bg-black cursor-pointer"
-          onClick={handleAddOptionsField}
-        >
-          <IoAddOutline />
-        </div>
+          </>
+        )}
+
         <button
           disabled={isLoading}
           type="submit"
