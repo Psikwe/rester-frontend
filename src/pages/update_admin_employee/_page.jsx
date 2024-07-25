@@ -5,6 +5,7 @@ import { showToast } from "../../core/hooks/alert";
 import Loader from "../../components/loader/_component";
 import {
   GetOneEmployee,
+  SubmitUpdateEmployee,
   UpdateEmployeeProfile,
 } from "../../core/services/employee.service";
 import Select from "react-select";
@@ -80,11 +81,14 @@ function UpdateAdminEmployee() {
       income_type_id: incomeTypeOptions.value,
     };
 
-    UpdateEmployeeProfile(payload)
+    SubmitUpdateEmployee(payload)
       .then((res) => {
         console.log(res);
         setIsLoading(false);
         showToast(res?.data.message, true);
+        setTimeout(() => {
+          window.location.href = "/dashboard/manage-employees";
+        }, 2000);
         // companyForm?.reset();
       })
       .catch((error) => {
