@@ -35,7 +35,6 @@ function CreateEmployee() {
   const handleFrequencyChange = (index, selectedOption) => {
     const updatedIncomeSection = [...incomeSection];
     updatedIncomeSection[index].incomeFrequency = selectedOption;
-    console.log("uppfff: ", updatedIncomeSection);
     setIncomeSection(updatedIncomeSection);
   };
 
@@ -67,23 +66,25 @@ function CreateEmployee() {
       entity_id: entity_id,
       incomeSection: transformedData,
     };
-    CreateEmployeeForm(payload)
-      .then((res) => {
-        setIsLoading(false);
-        console.log("reees: ", res);
-        showToast(res?.data.message, true);
-        employeeForm?.reset();
-        setIncomeSection([
-          { incomeType: null, amount: "", incomeFrequency: null },
-        ]);
-        setTimeout(() => {
-          window.location.href = "/dashboard/manage-employees";
-        }, 2000);
-      })
-      .catch((error) => {
-        showToast(error.response.data.error, false);
-        setIsLoading(false);
-      });
+
+    console.log("payload: ", payload);
+    // CreateEmployeeForm(payload)
+    //   .then((res) => {
+    //     setIsLoading(false);
+    //     console.log("reees: ", res);
+    //     showToast(res?.data.message, true);
+    //     employeeForm?.reset();
+    //     setIncomeSection([
+    //       { incomeType: null, amount: "", incomeFrequency: null },
+    //     ]);
+    //     setTimeout(() => {
+    //       window.location.href = "/dashboard/manage-employees";
+    //     }, 2000);
+    //   })
+    //   .catch((error) => {
+    //     showToast(error.response.data.error, false);
+    //     setIsLoading(false);
+    //   });
   };
   const incomeTypeDropdown = incomeTypeQuery.data?.data.income_types;
 

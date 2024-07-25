@@ -89,7 +89,8 @@ function UpdateAdminEmployee() {
       })
       .catch((error) => {
         setIsLoading(false);
-        showToast(error.response.data.error, false);
+        console.log("err: ", error.response.data.message);
+        showToast(error.response.data.message, false);
       });
   };
   const incomeTypeDropdown = incomeTypeQuery.data?.data.income_types;
