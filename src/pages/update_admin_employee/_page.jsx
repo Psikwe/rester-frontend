@@ -28,7 +28,21 @@ function UpdateAdminEmployee() {
   const [frequencySelected, setIsFrequencySelected] = React.useState(false);
   const [amountChanged, setAmountChanged] = React.useState(false);
   const [employeeDetails, setEmployeeDetails] = React.useState({});
+  const [isDependent, setIsDependent] = React.useState(false);
+  const [isDependentChanged, setIsDependentChanged] = React.useState(false);
+  const [isCertified, setIsCertified] = React.useState(false);
+  const [isCertifiedChanged, setIsCertifiedChanged] = React.useState(false);
+  const [isDisabled, setIsDisabled] = React.useState(false);
+  const [isDisabledChanged, setIsDisabledChanged] = React.useState(false);
+  const [isSponsor, setIsSponsorChild] = React.useState(false);
+  const [isSponsorChanged, setIsSponsorChildChanged] = React.useState(false);
+  const [isProvidesNecessities, setIsProvidesNecessities] =
+    React.useState(false);
+  const [isProvidesNecessitiesChanged, setIsProvidesNecessitiesChanged] =
+    React.useState(false);
   const [noIncomeMessage, setNoIncomeMessage] = React.useState("");
+  const [noIncomeMessageChanged, setNoIncomeMessageChanged] =
+    React.useState("");
   const [incomeSection, setIncomeSection] = React.useState([
     { incomeType: null, amount: "", incomeFrequency: null },
   ]);
@@ -60,13 +74,29 @@ function UpdateAdminEmployee() {
     ]);
   };
 
+  const handleDependentCheck = (e) => {
+    setIsDependent(e.target.checked);
+  };
+  const handleDisabledCheck = (e) => {
+    setIsDisabled(e.target.checked);
+  };
+  const handleSponsorChildCheck = (e) => {
+    setIsSponsorChild(e.target.checked);
+  };
+  const handleCertifiedCheck = (e) => {
+    setIsCertified(e.target.checked);
+  };
+  const handleProvidesCheck = (e) => {
+    setIsProvidesNecessities(e.target.checked);
+  };
+
   React.useEffect(() => {
     GetOneEmployee(id)
       .then((response) => {
         setEmployeeDetails(response.data.employee);
         setUpdateIncomeTypeSection(response.data.employee.incomeSection);
         setNoIncomeMessage(response.data.message);
-        console.log("ee: ", response);
+        console.log("ee: ", response.data.employee);
       })
       .catch((err) => {
         console.error(err);
@@ -75,7 +105,6 @@ function UpdateAdminEmployee() {
 
   let dateOfBirth = moment(employeeDetails.data_of_birth).format("YYYY-MM-DD");
   let startDate = moment(employeeDetails.start_date).format("YYYY-MM-DD");
-
   const handleUpdateEmployee = (e) => {
     let dobValue = document.getElementById("date-of-birth");
     let startDateValue = document.getElementById("start-date");
@@ -109,6 +138,19 @@ function UpdateAdminEmployee() {
       start_date:
         startDateValue.value.length === 0 ? startDate : startDateValue.value,
       incomeSection: transformedData,
+      has_dependant_spouse: isDependentChanged
+        ? isDependent
+        : employeeDetails.has_dependant_spouse,
+      is_certified_disabled: isCertifiedChanged
+        ? isCertified
+        : employeeDetails.is_certified_disabled,
+      is_disabled: isDisabledChanged ? isDisabled : employeeDetails.is_disabled,
+      sponsors_child_education: isSponsorChanged
+        ? isSponsor
+        : employeeDetails.sponsors_child_education,
+      provides_necessities_for_children: isProvidesNecessitiesChanged
+        ? isProvidesNecessities
+        : employeeDetails.provides_necessities_for_children,
     };
     // console.log("pay: ", payload);
     SubmitUpdateEmployee(payload)
@@ -116,15 +158,15 @@ function UpdateAdminEmployee() {
         console.log(res);
         setIsLoading(false);
         showToast(res?.data.message, true);
-        setTimeout(() => {
-          window.location.href = "/dashboard/manage-employees";
-        }, 2000);
+        // setTimeout(() => {
+        //   window.location.href = "/dashboard/manage-employees";
+        // }, 2000);
         companyForm?.reset();
       })
       .catch((error) => {
         setIsLoading(false);
         console.log("err: ", error.response.data.message);
-        showToast(error.response.data.message, false);
+        showToast(error.response.data.error, false);
       });
   };
   const incomeTypeDropdown = incomeTypeQuery.data?.data.income_types;
@@ -340,9 +382,72 @@ function UpdateAdminEmployee() {
           </div>
         </div>
 
+        <div className="grid grid-cols-3">
+          <div className="mt-8 ml-6 field ">
+            <label className="text-sm label">
+              Check if employee has dependent spouse
+            </label>
+            <input
+              className="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary"
+              type="checkbox"
+              defaultChecked={employeeDetails.has_dependant_spouse}
+              onChange={handleDependentCheck}
+              onClick={() => setIsDependentChanged(true)}
+            />
+          </div>
+          <div className="mt-8 ml-6 field">
+            <label className="text-sm label">
+              Check if employee is disabled
+            </label>
+            <input
+              className="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary"
+              type="checkbox"
+              defaultChecked={employeeDetails.is_disabled}
+              onChange={handleDisabledCheck}
+              onClick={() => setIsDisabledChanged(true)}
+            />
+          </div>
+          <div className="mt-8 ml-6 field">
+            <label className="text-sm label">
+              Check if employee sponsors child education
+            </label>
+            <input
+              className="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary"
+              type="checkbox"
+              defaultChecked={employeeDetails.sponsors_child_education}
+              onChange={handleSponsorChildCheck}
+              onClick={() => setIsSponsorChildChanged(true)}
+            />
+          </div>
+          <div className="mt-8 ml-6 field">
+            <label className="text-sm label">
+              Check if employee is certified disabled
+            </label>
+            <input
+              className="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary"
+              type="checkbox"
+              defaultChecked={employeeDetails.is_certified_disabled}
+              onChange={handleCertifiedCheck}
+              onClick={() => setIsCertifiedChanged(true)}
+            />
+          </div>
+          <div className="mt-8 ml-6 field">
+            <label className="text-sm label">
+              Check if employee provides necessities for children
+            </label>
+            <input
+              className="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary"
+              type="checkbox"
+              defaultChecked={employeeDetails.provides_necessities_for_children}
+              onChange={handleProvidesCheck}
+              onClick={() => setIsProvidesNecessitiesChanged(true)}
+            />
+          </div>
+        </div>
+
         {noIncomeMessage === "" || !noIncomeMessage ? (
           <>
-            <div className="border-gray-500 border-2 p-2 mt-3 border-dotted">
+            <div className="border-gray-500 border-2 p-2 mt-8 border-dotted">
               <h3 className=" mt-8">Existing Incomes</h3>
               <div className="text-gray-400 flex justify-between">
                 {["Income Type", "Amount", "Frequency of Income"].map(

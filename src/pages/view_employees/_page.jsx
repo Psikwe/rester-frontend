@@ -91,25 +91,31 @@ function ViewEmployees() {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-6 mt-10 slide-in-right">
-          {isSkeletonLoading ? (
-            [1, 2, 3].map((e, i) => <SkeletonLoader key={i} />)
-          ) : (
-            <>
-              {filteredData.map((e, i) => (
-                <a href={`/dashboard/manage-employee-loans/` + e.id}>
-                  <div className="slide-in-right" key={i}>
-                    <EmployeeCard
-                      fullName={e.first_name + " " + e.last_name}
-                      email={e.email}
-                      ghanaCardNo={e.ghana_card_id}
-                    />
-                  </div>{" "}
-                </a>
-              ))}
-            </>
-          )}
-        </div>
+        {employees.length < 1 ? (
+          <h3>No Data</h3>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 gap-6 mt-10 slide-in-right">
+              {isSkeletonLoading ? (
+                [1, 2, 3].map((e, i) => <SkeletonLoader key={i} />)
+              ) : (
+                <>
+                  {filteredData.map((e, i) => (
+                    <a href={`/dashboard/manage-employee-loans/` + e.id}>
+                      <div className="slide-in-right" key={i}>
+                        <EmployeeCard
+                          fullName={e.first_name + " " + e.last_name}
+                          email={e.email}
+                          ghanaCardNo={e.ghana_card_id}
+                        />
+                      </div>{" "}
+                    </a>
+                  ))}
+                </>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

@@ -129,8 +129,8 @@ function ManageEmployees() {
   React.useEffect(() => {
     GetAllEmployees(entity_id)
       .then((response) => {
-        console.log("res: ", response);
         setEmployees(response?.data.employees);
+        console.log("res: ", employees);
       })
       .catch((error) => {
         console.log(error);
@@ -138,7 +138,7 @@ function ManageEmployees() {
   }, []);
 
   const filteredData = employees?.filter((e) => {
-    if (query === "" && e.is_disabled == false) return e;
+    if (query === "") return e;
     else if (
       e?.first_name?.toLowerCase().includes(query.toLocaleLowerCase()) &&
       e.is_disabled == false
