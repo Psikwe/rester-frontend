@@ -38,10 +38,10 @@ export const getUserSession = () => {
     if (expiry) {
       let expiryTimestamp = parseInt(expiry, 10);
 
-      console.log(expiryTimestamp, currentTimestamp);
-      if (expiryTimestamp === currentTimestamp) console.log("equals");
-      if (expiryTimestamp > currentTimestamp) console.log("greater");
-      if (expiryTimestamp < currentTimestamp) console.log("lesser");
+      // console.log(expiryTimestamp, currentTimestamp);
+      // if (expiryTimestamp === currentTimestamp) console.log("equals");
+      // if (expiryTimestamp > currentTimestamp) console.log("greater");
+      // if (expiryTimestamp < currentTimestamp) console.log("lesser");
 
       if (expiryTimestamp < currentTimestamp) clearUserSession();
     }

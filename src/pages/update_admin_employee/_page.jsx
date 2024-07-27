@@ -6,7 +6,6 @@ import Loader from "../../components/loader/_component";
 import {
   GetOneEmployee,
   SubmitUpdateEmployee,
-  UpdateEmployeeProfile,
 } from "../../core/services/employee.service";
 import Select from "react-select";
 import { formToJSON } from "axios";
@@ -24,9 +23,15 @@ function UpdateAdminEmployee() {
   const { id } = useParams();
   const { incomeTypeQuery } = useIncomeType(entity_id);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [incomeSelected, setIsIncomeSelected] = React.useState(false);
-  const [frequencySelected, setIsFrequencySelected] = React.useState(false);
-  const [amountChanged, setAmountChanged] = React.useState(false);
+  const [existingIncomeSelected, setIsExistingIncomeSelected] =
+    React.useState(false);
+  const [existingFrequencySelected, setIsExistingFrequencySelected] =
+    React.useState(false);
+
+  const [isIncomeTypeUpdated, setIsIncomeTypeUpdated] = React.useState(false);
+  const [isAmountUpdated, setIsAmountUpdated] = React.useState(false);
+  const [isFrequencyUpdated, setIsFrequencyUpdated] = React.useState(false);
+
   const [employeeDetails, setEmployeeDetails] = React.useState({});
   const [isDependent, setIsDependent] = React.useState(false);
   const [isDependentChanged, setIsDependentChanged] = React.useState(false);
@@ -46,20 +51,65 @@ function UpdateAdminEmployee() {
   const [incomeSection, setIncomeSection] = React.useState([
     { incomeType: null, amount: "", incomeFrequency: null },
   ]);
+  const [existingIncomeSection, setExistingIncomeSection] = React.useState([
+    { income_type_id: null, amount: "", frequency: null },
+  ]);
   const [updateIncometypeSection, setUpdateIncomeTypeSection] =
     React.useState();
+
   const handleChange = (index, selectedOption) => {
     const updatedIncomeSection = [...incomeSection];
     updatedIncomeSection[index].incomeType = selectedOption;
     setIncomeSection(updatedIncomeSection);
-    setIsIncomeSelected(true);
+    setIsIncomeTypeUpdated(true);
+  };
+
+  React.useEffect(() => {
+    if (updateIncometypeSection) {
+      setExistingIncomeSection(
+        updateIncometypeSection.map((ui) => ({
+          income_type_id: ui.income_type_id,
+          amount: ui.amount,
+          frequency: ui.frequency,
+        }))
+      );
+    }
+  }, [updateIncometypeSection]);
+
+  const handleExistingIncomeChange = (idx, selectedOption) => {
+    const updatedIncomeSection = [...existingIncomeSection];
+    updatedIncomeSection[idx] = {
+      ...updatedIncomeSection[idx],
+      income_type_id: selectedOption.value,
+    };
+    setExistingIncomeSection(updatedIncomeSection);
+    setIsExistingIncomeSelected(true);
+  };
+
+  const handleExistingAmountChange = (idx, amount) => {
+    const updatedIncomeSection = [...existingIncomeSection];
+    updatedIncomeSection[idx] = {
+      ...updatedIncomeSection[idx],
+      amount: amount,
+    };
+    setExistingIncomeSection(updatedIncomeSection);
   };
 
   const handleFrequencyChange = (index, selectedOption) => {
     const updatedIncomeSection = [...incomeSection];
     updatedIncomeSection[index].incomeFrequency = selectedOption;
     setIncomeSection(updatedIncomeSection);
-    setIsFrequencySelected(true);
+    setIsFrequencyUpdated(true);
+  };
+
+  const handleExistingFrequencyChange = (idx, selectedOption) => {
+    const updatedIncomeSection = [...existingIncomeSection];
+    updatedIncomeSection[idx] = {
+      ...updatedIncomeSection[idx],
+      frequency: selectedOption.value,
+    };
+    setExistingIncomeSection(updatedIncomeSection);
+    setIsExistingFrequencySelected(true);
   };
 
   const handleRemoveOptionsField = (index) => {
@@ -96,7 +146,7 @@ function UpdateAdminEmployee() {
         setEmployeeDetails(response.data.employee);
         setUpdateIncomeTypeSection(response.data.employee.incomeSection);
         setNoIncomeMessage(response.data.message);
-        console.log("ee: ", response.data.employee);
+        console.log("ee: ", response.data.employee.incomeSection);
       })
       .catch((err) => {
         console.error(err);
@@ -108,7 +158,7 @@ function UpdateAdminEmployee() {
   const handleUpdateEmployee = (e) => {
     let dobValue = document.getElementById("date-of-birth");
     let startDateValue = document.getElementById("start-date");
-    setIsLoading(true);
+    // setIsLoading(true);
     e.preventDefault();
     const employeeForm = document.getElementById("employee-form");
     const amount = document.getElementById("amount");
@@ -121,15 +171,25 @@ function UpdateAdminEmployee() {
     const preFrequencyTypes = updateIncometypeSection.map((ui, _) => {
       return ui.frequency;
     });
+
+    const existingIncomes = updateIncometypeSection.map((ui, idx) => {
+      const updatedIncome = existingIncomeSection[idx];
+      return {
+        incomeType: updatedIncome?.income_type_id ?? ui.income_type_id,
+        amount: updatedIncome?.amount ?? ui.amount,
+        incomeFrequency: updatedIncome?.frequency ?? ui.frequency,
+      };
+    });
+
+    console.log("pre", existingIncomes);
+
     const transformedData = incomeSection.map((entry) => ({
-      incomeType: incomeSelected
-        ? entry.incomeType.value
-        : preIncomeTypes.join(","),
-      amount: entry.amount,
-      incomeFrequency: frequencySelected
-        ? entry.incomeFrequency.value
-        : preFrequencyTypes.join(","),
+      incomeType: isIncomeTypeUpdated ? entry.incomeType.value : "",
+      amount: isAmountUpdated ? entry.amount : "",
+      incomeFrequency: isFrequencyUpdated ? entry.incomeFrequency.value : "",
     }));
+
+    const grandTotalIncomes = existingIncomes.concat(transformedData);
 
     const payload = {
       ...formToJSON(employeeForm),
@@ -137,7 +197,7 @@ function UpdateAdminEmployee() {
       date_of_birth: dobValue.value.length === 0 ? dateOfBirth : dobValue.value,
       start_date:
         startDateValue.value.length === 0 ? startDate : startDateValue.value,
-      incomeSection: transformedData,
+      incomeSection: grandTotalIncomes,
       has_dependant_spouse: isDependentChanged
         ? isDependent
         : employeeDetails.has_dependant_spouse,
@@ -152,15 +212,15 @@ function UpdateAdminEmployee() {
         ? isProvidesNecessities
         : employeeDetails.provides_necessities_for_children,
     };
-    // console.log("pay: ", payload);
+    console.log("pay: ", payload);
     SubmitUpdateEmployee(payload)
       .then((res) => {
         console.log(res);
         setIsLoading(false);
         showToast(res?.data.message, true);
-        // setTimeout(() => {
-        //   window.location.href = "/dashboard/manage-employees";
-        // }, 2000);
+        setTimeout(() => {
+          window.location.href = "/dashboard/manage-employees";
+        }, 2000);
         companyForm?.reset();
       })
       .catch((error) => {
@@ -444,10 +504,67 @@ function UpdateAdminEmployee() {
             />
           </div>
         </div>
-
+        <div className="border-gray-500 border-2 p-2 mt-8 border-dotted">
+          <h3 className="my-8">Existing Incomes</h3>
+          <div className="text-gray-400 flex justify-between">
+            {["Income Type", "Amount", "Frequency of Income"].map(
+              (lists, idx) => (
+                <div key={idx}>{lists}</div>
+              )
+            )}
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            {updateIncometypeSection &&
+              updateIncometypeSection.map((inc, idx) => (
+                <React.Fragment key={idx}>
+                  <div className="mt-6 w-full mobile:w-full">
+                    <Select
+                      className="w-full"
+                      onChange={(selectedOption) =>
+                        handleExistingIncomeChange(idx, selectedOption)
+                      }
+                      options={incomeTypeOptions}
+                      placeholder={inc.income_type_name}
+                    />
+                  </div>
+                  <div className="w-full mr-3">
+                    <label className="text-sm label bold">Enter Amount</label>
+                    <div className="control">
+                      <input
+                        className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
+                        type="number"
+                        required
+                        placeholder="Amount"
+                        defaultValue={inc.amount}
+                        onChange={(e) =>
+                          handleExistingAmountChange(idx, e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full">
+                    <label className="text-sm label bold">
+                      Select frequency of income
+                    </label>
+                    <div className="flex w-full row mobile:w-full">
+                      <Select
+                        className="w-full"
+                        onChange={(selectedOption) =>
+                          handleExistingFrequencyChange(idx, selectedOption)
+                        }
+                        options={options}
+                        id="income-frequency"
+                        placeholder={inc.frequency}
+                      />
+                    </div>
+                  </div>
+                </React.Fragment>
+              ))}
+          </div>
+        </div>
         {noIncomeMessage === "" || !noIncomeMessage ? (
           <>
-            <div className="border-gray-500 border-2 p-2 mt-8 border-dotted">
+            {/* <div className="border-gray-500 border-2 p-2 mt-8 border-dotted">
               <h3 className=" mt-8">Existing Incomes</h3>
               <div className="text-gray-400 flex justify-between">
                 {["Income Type", "Amount", "Frequency of Income"].map(
@@ -468,7 +585,7 @@ function UpdateAdminEmployee() {
                     </React.Fragment>
                   ))}
               </div>
-            </div>
+            </div> */}
           </>
         ) : (
           <h3 className="mt-8 text-red-500">{noIncomeMessage}</h3>
@@ -498,14 +615,13 @@ function UpdateAdminEmployee() {
                 <input
                   className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
                   type="number"
-                  required
                   placeholder="Amount"
                   value={to.amount}
                   onChange={(e) => {
                     const updatedIncomeSection = [...incomeSection];
                     updatedIncomeSection[index].amount = e.target.value;
                     setIncomeSection(updatedIncomeSection);
-                    setAmountChanged(true);
+                    setIsAmountUpdated(true);
                   }}
                 />
               </div>
