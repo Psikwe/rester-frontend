@@ -80,6 +80,7 @@ function CreateTaxComponent() {
 
   const handleTaxComponent = (e) => {
     setIsLoading(true);
+    setOperationLoading(true);
     e.preventDefault();
     const componentForm = document.getElementById("tax-component-form");
     const payload = {
@@ -88,12 +89,17 @@ function CreateTaxComponent() {
 
     AddTaxComponent(payload)
       .then((res) => {
+        setTaxTypeModal(false);
         setIsLoading(false);
+        setOperationLoading(false);
         showToast(res?.data.message, true);
         componentForm?.reset();
+
+        taxComponentQuery.refetch();
       })
       .catch((error) => {
         setIsLoading(false);
+        setOperationLoading(false);
         showToast(error.response.data.error, false);
       });
   };
