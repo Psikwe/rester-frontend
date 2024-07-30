@@ -22,6 +22,7 @@ function ManageEmployeeLoans() {
   const { id } = useParams();
   localStorage.setItem("employee_id", id);
   const [query, setQuery] = React.useState("");
+  const [isContentLoading, setContentLoading] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [deleteId, setDeleteId] = React.useState("");
   const [employeeLoan, setEmployeeLoan] = React.useState([]);
@@ -113,12 +114,14 @@ function ManageEmployeeLoans() {
   };
 
   React.useEffect(() => {
+    setContentLoading(true);
     GetAllEmployeeLoans(id, entity_id)
       .then((response) => {
-        console.log("sss: ", response);
+        setContentLoading(false);
         setEmployeeLoan(response?.data.employee_loans);
       })
       .catch((error) => {
+        setContentLoading(false);
         console.log(error);
       });
   }, []);
@@ -324,33 +327,41 @@ function ManageEmployeeLoans() {
       >
         Create Loan
       </button>
-      {employeeLoan.length === 0 ? (
-        <div className="flex flex-col items-center justify-center">
-          {/* <VscSearchStop
+      {isContentLoading ? (
+        <>
+          <TableLoader />
+        </>
+      ) : (
+        <>
+          {!isContentLoading && employeeLoan.length === 0 ? (
+            <div className="flex flex-col items-center justify-center">
+              {/* <VscSearchStop
                 color="#687864"
                 size={40}
                 className="animate-bounce"
               /> */}
-          <h3 className="text-slate-400">No match</h3>
-        </div>
-      ) : (
-        <>
-          {isOperationLoading ? (
-            <>
-              <TableLoader />
-            </>
+              <h3 className="text-slate-400">No match</h3>
+            </div>
           ) : (
             <>
-              <DataGrid
-                className="text-sm rdg-light grid-container"
-                columns={columns}
-                rows={employeeLoan || []}
-                bottomSummaryRows={summaryRows}
-                rowHeight={50}
-              />
-              <strong className="text-sm">
-                Totals: {employeeLoan?.length} records
-              </strong>
+              {isOperationLoading ? (
+                <>
+                  <TableLoader />
+                </>
+              ) : (
+                <>
+                  <DataGrid
+                    className="text-sm rdg-light grid-container"
+                    columns={columns}
+                    rows={employeeLoan || []}
+                    bottomSummaryRows={summaryRows}
+                    rowHeight={50}
+                  />
+                  <strong className="text-sm">
+                    Totals: {employeeLoan?.length} records
+                  </strong>
+                </>
+              )}
             </>
           )}
         </>

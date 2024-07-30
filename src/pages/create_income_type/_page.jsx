@@ -20,6 +20,7 @@ import { useTaxComponent } from "../../core/hooks/tax";
 
 function CreateIncomeType() {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isContentLoading, setContentLoading] = React.useState(false);
   const { taxComponentQuery } = useTaxComponent();
   const [query, setQuery] = React.useState("");
   const [isCreateIncomeTypeModalOpen, setIsCreateIncomeTypeModalOpen] =
@@ -123,12 +124,15 @@ function CreateIncomeType() {
   ];
 
   React.useEffect(() => {
+    setContentLoading(true);
     GetIncomeTypes(entity_id)
       .then((response) => {
+        setContentLoading(false);
         console.log("try: ", response?.data.income_types);
         setIncomeTypes(response?.data.income_types);
       })
       .catch((error) => {
+        setContentLoading(false);
         console.log(error);
       });
   }, []);
@@ -316,33 +320,41 @@ function CreateIncomeType() {
           />
         </div>
       </div>
-      {filteredData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center">
-          {/* <VscSearchStop
+      {isContentLoading ? (
+        <>
+          <TableLoader />
+        </>
+      ) : (
+        <>
+          {!isContentLoading && filteredData.length === 0 ? (
+            <div className="flex flex-col items-center justify-center">
+              {/* <VscSearchStop
                 color="#687864"
                 size={40}
                 className="animate-bounce"
               /> */}
-          <h3 className="text-slate-400">No match</h3>
-        </div>
-      ) : (
-        <>
-          {isOperationLoading ? (
-            <>
-              <TableLoader />
-            </>
+              <h3 className="text-slate-400">No match</h3>
+            </div>
           ) : (
             <>
-              <DataGrid
-                className="text-sm rdg-light grid-container"
-                columns={columns}
-                rows={filteredData || []}
-                bottomSummaryRows={summaryRows}
-                rowHeight={50}
-              />
-              <strong className="text-sm">
-                Totals: {filteredData?.length} records
-              </strong>
+              {isOperationLoading ? (
+                <>
+                  <TableLoader />
+                </>
+              ) : (
+                <>
+                  <DataGrid
+                    className="text-sm rdg-light grid-container"
+                    columns={columns}
+                    rows={filteredData || []}
+                    bottomSummaryRows={summaryRows}
+                    rowHeight={50}
+                  />
+                  <strong className="text-sm">
+                    Totals: {filteredData?.length} records
+                  </strong>
+                </>
+              )}
             </>
           )}
         </>

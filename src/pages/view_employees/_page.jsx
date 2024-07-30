@@ -11,18 +11,22 @@ import { NavLink } from "react-router-dom";
 
 function ViewEmployees() {
   const entity_id = localStorage.getItem("entity_id");
+  const [isLoading, setIsLoading] = React.useState(true);
   const [isSkeletonLoading, setSkeletonLoading] = React.useState(true);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [employees, setEmployees] = React.useState([]);
   React.useEffect(() => {
+    setIsLoading(true);
     GetAllEmployees(entity_id)
       .then((response) => {
         console.log("ent: ", response);
+        setIsLoading(false);
         setSkeletonLoading(false);
         setEmployees(response?.data.employees);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log("comp: ", error);
       });
   }, []);
@@ -91,29 +95,41 @@ function ViewEmployees() {
             />
           </div>
         </div>
-        {employees.length < 1 ? (
-          <h3>No Data</h3>
+        {isLoading ? (
+          <>
+            <div className="grid grid-cols-2">
+              <SkeletonLoader />
+              <SkeletonLoader />
+              <SkeletonLoader />
+            </div>
+          </>
         ) : (
           <>
-            <div className="grid grid-cols-2 gap-6 mt-10 slide-in-right">
-              {isSkeletonLoading ? (
-                [1, 2, 3].map((e, i) => <SkeletonLoader key={i} />)
-              ) : (
-                <>
-                  {filteredData.map((e, i) => (
-                    <a href={`/dashboard/manage-employee-loans/` + e.id}>
-                      <div className="slide-in-right" key={i}>
-                        <EmployeeCard
-                          fullName={e.first_name + " " + e.last_name}
-                          email={e.email}
-                          ghanaCardNo={e.ghana_card_id}
-                        />
-                      </div>{" "}
-                    </a>
-                  ))}
-                </>
-              )}
-            </div>
+            {!isLoading && employees.length < 1 ? (
+              <h3>No Data</h3>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 gap-6 mt-10 slide-in-right">
+                  {isSkeletonLoading ? (
+                    [1, 2, 3].map((e, i) => <SkeletonLoader key={i} />)
+                  ) : (
+                    <>
+                      {filteredData.map((e, i) => (
+                        <a href={`/dashboard/manage-employee-loans/` + e.id}>
+                          <div className="slide-in-right" key={i}>
+                            <EmployeeCard
+                              fullName={e.first_name + " " + e.last_name}
+                              email={e.email}
+                              ghanaCardNo={e.ghana_card_id}
+                            />
+                          </div>{" "}
+                        </a>
+                      ))}
+                    </>
+                  )}
+                </div>
+              </>
+            )}
           </>
         )}
       </div>

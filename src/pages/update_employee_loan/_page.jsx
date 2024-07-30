@@ -147,7 +147,7 @@ function UpdateEmployeeLoan() {
             <label className="relative inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
-                checked={employeeLoan.is_compounded_interest}
+                defaultChecked={employeeLoan.is_compounded_interest}
                 onChange={handleCheckboxChange}
                 className="sr-only peer"
               />
