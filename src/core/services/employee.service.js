@@ -106,3 +106,9 @@ export const UpdateEmployeeProfile = async (payload) => {
     payload
   );
 };
+
+export const DeleteIncome = async (income_id, entity_id, employee_id) => {
+  return await getAxios().delete(
+    `https://rester-82c60dc37022.herokuapp.com/delete_income/${income_id}?entity_id=${entity_id}&employee_id=${employee_id}`
+  );
+};

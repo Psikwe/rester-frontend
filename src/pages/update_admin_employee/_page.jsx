@@ -4,18 +4,19 @@ import Flatpickr from "react-flatpickr";
 import { showToast } from "../../core/hooks/alert";
 import Loader from "../../components/loader/_component";
 import {
+  DeleteIncome,
   GetOneEmployee,
   SubmitUpdateEmployee,
 } from "../../core/services/employee.service";
 import Select from "react-select";
 import { formToJSON } from "axios";
-import { IoAddOutline } from "react-icons/io5";
-import { GrFormSubtract } from "react-icons/gr";
 import { useParams } from "react-router-dom";
 import { useIncomeType } from "../../core/hooks/income";
 import moment from "moment";
 import { options } from "../../core/data";
-import EmployeeIncomeSectionUpdate from "../../components/employee_income/_component";
+import { MdDelete } from "react-icons/md";
+import Modal from "../../components/modal/_component";
+import { BsExclamationCircleFill } from "react-icons/bs";
 
 function UpdateAdminEmployee() {
   const fp = React.useRef(null);
@@ -27,13 +28,16 @@ function UpdateAdminEmployee() {
     React.useState(false);
   const [existingFrequencySelected, setIsExistingFrequencySelected] =
     React.useState(false);
-
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
+  const [incomeId, setIncomeId] = React.useState();
+  const [employeeId, setEmployeeId] = React.useState();
   const [isIncomeTypeUpdated, setIsIncomeTypeUpdated] = React.useState(false);
   const [isAmountUpdated, setIsAmountUpdated] = React.useState(false);
   const [isFrequencyUpdated, setIsFrequencyUpdated] = React.useState(false);
 
   const [employeeDetails, setEmployeeDetails] = React.useState({});
   const [isDependent, setIsDependent] = React.useState(false);
+  const [deleteIsDone, setDeleteIsDone] = React.useState(false);
   const [isDependentChanged, setIsDependentChanged] = React.useState(false);
   const [isCertified, setIsCertified] = React.useState(false);
   const [isCertifiedChanged, setIsCertifiedChanged] = React.useState(false);
@@ -151,14 +155,14 @@ function UpdateAdminEmployee() {
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [deleteIsDone]);
 
   let dateOfBirth = moment(employeeDetails.data_of_birth).format("YYYY-MM-DD");
   let startDate = moment(employeeDetails.start_date).format("YYYY-MM-DD");
   const handleUpdateEmployee = (e) => {
     let dobValue = document.getElementById("date-of-birth");
     let startDateValue = document.getElementById("start-date");
-    // setIsLoading(true);
+    setIsLoading(true);
     e.preventDefault();
     const employeeForm = document.getElementById("employee-form");
     const amount = document.getElementById("amount");
@@ -212,7 +216,7 @@ function UpdateAdminEmployee() {
         ? isProvidesNecessities
         : employeeDetails.provides_necessities_for_children,
     };
-    console.log("pay: ", payload);
+
     SubmitUpdateEmployee(payload)
       .then((res) => {
         console.log(res);
@@ -235,8 +239,58 @@ function UpdateAdminEmployee() {
     label: iT.income_name,
   }));
 
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
+  };
+
+  const handleDeleteIncome = (incomeId, employeeId) => {
+    setDeleteModalOpen(true);
+    setEmployeeId(employeeId);
+    setIncomeId(incomeId);
+  };
+
+  const confirmDelete = () => {
+    DeleteIncome(incomeId, entity_id, employeeId)
+      .then((response) => {
+        setDeleteModalOpen(false);
+        showToast(response.data.message, true);
+        setDeleteIsDone(true);
+      })
+      .catch((error) => {
+        setDeleteModalOpen(false);
+        showToast(error.response.data.error, false);
+      });
+  };
+
   return (
     <>
+      <Modal open={deleteModalOpen} close={closeDeleteModal} closeOnOverlay>
+        <div className="p-10 bg-white">
+          <div className="w-16 m-auto">
+            <BsExclamationCircleFill size={70} color="red" />
+          </div>
+          <div>
+            <h3 className="mt-3 text-black">
+              Are you sure you want to delete this income?
+            </h3>
+            <div className="flex mx-2 mt-6">
+              <button
+                onClick={closeDeleteModal}
+                className="w-full py-2 rounded-full mr-2 text-white mt-9 primary mobile:w-full"
+              >
+                No
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="w-full py-2 text-white bg-red-500 mt-9 rounded-full mobile:w-full"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
       <form id="employee-form" onSubmit={handleUpdateEmployee}>
         <h3 className="mb-3 text-sm">Basic Informations</h3>
         <div className="grid grid-cols-3 gap-3">
@@ -513,6 +567,7 @@ function UpdateAdminEmployee() {
               )
             )}
           </div>
+
           <div className="grid grid-cols-3 gap-3">
             {updateIncometypeSection &&
               updateIncometypeSection.map((inc, idx) => (
@@ -557,6 +612,13 @@ function UpdateAdminEmployee() {
                         placeholder={inc.frequency}
                       />
                     </div>
+                  </div>
+                  <div
+                    title="Delete"
+                    onClick={() => handleDeleteIncome(inc.id, inc.employee_id)}
+                    className="cursor-pointer col-span-4 w-6"
+                  >
+                    <MdDelete color="red" size={18} />
                   </div>
                 </React.Fragment>
               ))}
@@ -648,7 +710,7 @@ function UpdateAdminEmployee() {
               className="w-12 px-3 py-1 mt-3 ml-3 text-white bg-black cursor-pointer"
               onClick={() => handleRemoveOptionsField(index)}
             >
-              <GrFormSubtract />
+              -
             </div>
           </div>
         ))}
@@ -657,7 +719,7 @@ function UpdateAdminEmployee() {
           className="flex items-center w-10 px-3 py-1 mt-3 text-white bg-black cursor-pointer"
           onClick={handleAddOptionsField}
         >
-          <IoAddOutline />
+          +
         </div>
 
         <button

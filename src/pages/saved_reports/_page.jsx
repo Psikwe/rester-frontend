@@ -146,6 +146,9 @@ const SavedReports = () => {
             created_at: report.created_at,
           }));
         });
+        transformedData.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
         console.log("oh: ", response.data.tax_reports);
         setReport(transformedData);
       })
