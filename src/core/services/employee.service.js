@@ -112,3 +112,35 @@ export const DeleteIncome = async (income_id, entity_id, employee_id) => {
     `https://rester-82c60dc37022.herokuapp.com/delete_income/${income_id}?entity_id=${entity_id}&employee_id=${employee_id}`
   );
 };
+
+export const CreateEmployeePension = async (payload) => {
+  return await getAxios().post(
+    `https://rester-82c60dc37022.herokuapp.com/create_pension`,
+    payload
+  );
+};
+
+export const UpdateEmployeePensionForm = async (payload) => {
+  return await getAxios().patch(
+    `https://rester-82c60dc37022.herokuapp.com/update_pension`,
+    payload
+  );
+};
+
+export const GetEmployeePensions = async (entity_id) => {
+  return await getAxios().get(
+    `https://rester-82c60dc37022.herokuapp.com/get_pensions/${entity_id}`
+  );
+};
+
+export const GetEmployeePension = async (pension_id) => {
+  return await getAxios().get(
+    `https://rester-82c60dc37022.herokuapp.com/get_pension/${pension_id}`
+  );
+};
+
+export const DeleteEmployeePension = async (pension_id) => {
+  return await getAxios().delete(
+    `https://rester-82c60dc37022.herokuapp.com/delete_pension/${pension_id}`
+  );
+};

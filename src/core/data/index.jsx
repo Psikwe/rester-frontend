@@ -104,6 +104,25 @@ export const countries = [
   { value: "Portugal", label: "Portugal" },
   { value: "Switzerland", label: "Switzerland" },
 ];
+
+export const contributors = [
+  { value: "Employer", label: "Employer" },
+  { value: "Employee", label: "Employee" },
+];
+
+export const pensionTypes = [
+  { value: "Tier 1", label: "Tier 1" },
+  { value: "Tier 2", label: "Tier 2" },
+  { value: "Tier 3", label: "Tier 3" },
+  { value: "Tier 4", label: "Tier 4" },
+  { value: "Tier 5", label: "Tier 5" },
+];
+
+export const calculation = [
+  { value: "Flat Amount", label: "Flat Amount" },
+  { value: "Rate Based", label: "Rate Based" },
+];
+
 export const taxType = [
   { value: "type1", label: "Type 1" },
   { value: "type2", label: "Type 2" },
@@ -190,6 +209,11 @@ export const adminDashboardMenus = [
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
+        menu: "Manage Pensions",
+        url: "/dashboard/view-employees-pensions",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
         menu: "Create Income Type",
         url: "/dashboard/create-income-type",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
@@ -197,6 +221,16 @@ export const adminDashboardMenus = [
       {
         menu: "Create Allowable Deductions",
         url: "/dashboard/create-allowable-deductions",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
+        menu: "Reliefs Management",
+        url: "#",
+        icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
+      },
+      {
+        menu: "Worthwhile contributions",
+        url: "#",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
     ],

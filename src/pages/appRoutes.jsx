@@ -54,6 +54,9 @@ import SuperUpdateTaxRate from "./super_update_tax_rate/_page";
 import ResetPassword from "./reset_password/_page";
 import ManageTaxElection from "./manage_tax_settings/_page";
 import UpdateTaxElection from "./update_tax_election/_page";
+import ViewEmployeesPensions from "./view_employees_pensions/_page";
+import ManageEmployeePensions from "./manage_employee_pensions/_page";
+import UpdateEmployeePension from "./update_employee_pension/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -82,6 +85,10 @@ export default function AppRoutes() {
                   <Route path="view-entity" element={<ViewCompany />} />
                   <Route path="dashboard/" element={<DashboardLayout />}>
                     <Route path="view-employees" element={<ViewEmployees />} />
+                    <Route
+                      path="view-employees-pensions"
+                      element={<ViewEmployeesPensions />}
+                    />
                     <Route path="create-entity" element={<CreateEntity />} />
                     <Route
                       path="update-entity/:id"
@@ -111,6 +118,14 @@ export default function AppRoutes() {
                     <Route
                       path="manage-employee-loans/:id"
                       element={<ManageEmployeeLoans />}
+                    />
+                    <Route
+                      path="manage-employee-pensions/:id"
+                      element={<ManageEmployeePensions />}
+                    />
+                    <Route
+                      path="update-employee-pension/:id"
+                      element={<UpdateEmployeePension />}
                     />
                     <Route
                       path="update-employee-loan/:id"

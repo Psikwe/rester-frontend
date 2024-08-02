@@ -6,12 +6,11 @@ import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "../../components/modal/_component";
 import { clearUserSession } from "../../core/utilities";
 import { GetAllEmployees } from "../../core/services/employee.service";
-import EmployeeCard from "../../components/employee_card/_component";
 import DataGrid from "react-data-grid";
 import { Link } from "react-router-dom";
 import TableLoader from "../../components/table_loader/_component";
 
-function ViewEmployees() {
+function ViewEmployeesPensions() {
   const entity_id = localStorage.getItem("entity_id");
   const [isLoading, setIsLoading] = React.useState(true);
   const [isSkeletonLoading, setSkeletonLoading] = React.useState(true);
@@ -57,7 +56,7 @@ function ViewEmployees() {
     const id = row.id; // Adjust this according to your actual row structure
 
     return (
-      <Link to={`/dashboard/manage-employee-loans/${id}`}>
+      <Link to={`/dashboard/manage-employee-pensions/${id}`}>
         {props.column.name === "First Name"
           ? row.first_name
           : props.column.name === "Last Name"
@@ -114,7 +113,7 @@ function ViewEmployees() {
           <div className="inline-block  h-24 w-1 bg-[#6ccef5]"></div>
           <h3 className="flex items-center ml-3 text-gray-500">
             <FaCircleInfo size={25} className="mr-2" />
-            Please click on employee you want to manage loan.
+            Please click on employee you want to manage pension.
           </h3>
         </div>
         <div className="flex flex-wrap w-full gap-3 px-4 py-3 my-6 bg-slate-200">
@@ -132,7 +131,7 @@ function ViewEmployees() {
         </div>
         {isLoading ? (
           <>
-            <div className="">
+            <div>
               <TableLoader />
             </div>
           </>
@@ -155,7 +154,7 @@ function ViewEmployees() {
                         rowHeight={50}
                       />
                       {/* {filteredData.map((e, i) => (
-                        <a href={`/dashboard/manage-employee-loans/` + e.id}>
+                        <a href={`/dashboard/manage-employee-pensions/` + e.id}>
                           <div className="slide-in-right" key={i}>
                             <EmployeeCard
                               fullName={e.first_name + " " + e.last_name}
@@ -177,4 +176,4 @@ function ViewEmployees() {
   );
 }
 
-export default ViewEmployees;
+export default ViewEmployeesPensions;

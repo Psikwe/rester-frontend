@@ -277,7 +277,7 @@ function CreateIncomeType() {
             </div>
 
             <div className="mt-4 field">
-              <label className="text-sm label bold">Enter Tax Component</label>
+              <label className="text-sm label bold">Select Tax Component</label>
               <Select
                 className="w-full"
                 value={selectedComponent}

@@ -151,7 +151,7 @@ const DashboardLayout = () => {
       <div className="flex w-full h-screen mb-8 overflow-x-hidden">
         <div className="px-3 pt-3 m-8 text-sm w-72">
           <img className="w-24 -mt-16 -ml-16" src={logo} />
-          <ul className="mt-12 text-slate-600">
+          <ul className="text-slate-600">
             {adminDashboardMenus.map((ad, i) => (
               <React.Fragment key={i}>
                 <div className="flex items-center mt-9">

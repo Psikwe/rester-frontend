@@ -17,7 +17,6 @@ import { FiEdit } from "react-icons/fi";
 import { BsExclamationCircleFill } from "react-icons/bs";
 
 function CreateTaxComponent() {
-  const { taxTypeQuery } = useTaxType();
   const { taxComponentQuery } = useTaxComponent();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
@@ -27,7 +26,6 @@ function CreateTaxComponent() {
   const [updateModal, setUpdateModal] = React.useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
-  const [taxTypes, setTaxTypes] = React.useState([]);
   const [selectedComponent, setSelectedComponent] = React.useState();
   const [itemToDelete, setItemToDelete] = React.useState("");
 
