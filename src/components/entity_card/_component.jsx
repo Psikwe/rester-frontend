@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 
 function EntityCard(props) {
   return (
-    <div className="block p-6 bg-white rounded-lg drop-shadow-2xl text-slate-400 ">
+    <div className="block w-1/2 p-6 bg-white rounded-lg drop-shadow-2xl text-slate-400 ">
       <div className="flex items-center justify-between">
         <div>
           <p className="mb-4 text-sm">

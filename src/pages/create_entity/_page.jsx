@@ -71,9 +71,7 @@ function CreateEntity() {
         >
           <div className="grid-cols-2 gap-3">
             <div className="field">
-              <label className="text-sm label">
-                Enter Entity Name <span className="text-red-600">*</span>
-              </label>
+              <label className="text-sm label">Enter Entity Name</label>
               <div className="control">
                 <input
                   required

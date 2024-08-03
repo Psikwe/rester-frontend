@@ -11,18 +11,17 @@ import { DeleteEntity, GetOneEntity } from "../../core/services/entity.service";
 import { showToast } from "../../core/hooks/alert";
 import { useParams } from "react-router-dom";
 import { useEmployees } from "../../core/hooks/employees";
+import SkeletonLoader from "../../components/skeleton_loading/_component";
 
 function ManageEntity() {
   const entity_id = localStorage.getItem("entity_id");
   const { id } = useParams();
-
   localStorage.setItem("entity_id", id);
-
   const { employeesQuery } = useEmployees(entity_id);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
+  const [contentLoading, setContentLoading] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const [noOfEmployees, setNoOfEmployees] = React.useState(0);
-
   const [populateEntity, setPopulateEntity] = React.useState({
     name: "",
     address: "",
@@ -31,13 +30,16 @@ function ManageEntity() {
   });
 
   React.useEffect(() => {
+    setContentLoading(true);
     GetOneEntity(id)
       .then((response) => {
         setPopulateEntity(response.data.entity);
+        setContentLoading(false);
         localStorage.setItem("entity_name", response.data.entity.name);
       })
       .catch((error) => {
         console.log(error);
+        setContentLoading(false);
       });
   }, []);
 
@@ -124,7 +126,6 @@ function ManageEntity() {
       .then((res) => {
         console.log(res);
         showToast(res?.data.message, true);
-
         setTimeout(() => {
           window.location.reload();
         }, 2000);
@@ -169,19 +170,26 @@ function ManageEntity() {
           </div>
         </div>
       </Modal>
-
-      {populateEntity.name == "" ? (
-        <h3 className="text-gray-300">Entity Deleted</h3>
+      {contentLoading ? (
+        <>
+          <SkeletonLoader />
+        </>
       ) : (
-        <EntityCard
-          companyName={populateEntity.name}
-          noOfEmployees={noOfEmployees}
-          email={populateEntity.email}
-          address={populateEntity.address}
-          handleDelete={handleDelete}
-          handleUpdate={handleUpdate}
-          handleViewTerminatedEmployees={handleViewTerminatedEmployees}
-        />
+        <>
+          {populateEntity.name == "" ? (
+            <h3 className="text-gray-300">Entity Deleted</h3>
+          ) : (
+            <EntityCard
+              companyName={populateEntity.name}
+              noOfEmployees={noOfEmployees}
+              email={populateEntity.email}
+              address={populateEntity.address}
+              handleDelete={handleDelete}
+              handleUpdate={handleUpdate}
+              handleViewTerminatedEmployees={handleViewTerminatedEmployees}
+            />
+          )}
+        </>
       )}
     </>
   );
