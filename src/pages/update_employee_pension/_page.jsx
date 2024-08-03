@@ -75,7 +75,6 @@ function UpdateEmployeePension() {
 
   const handleEmployeePension = (e) => {
     e.preventDefault();
-
     setIsLoading(true);
 
     const pensionForm = document.getElementById("update-employee-pension-form");
@@ -100,7 +99,7 @@ function UpdateEmployeePension() {
         showToast(res?.data.message, true);
         pensionForm?.reset();
         setTimeout(() => {
-          window.history.back();
+          window.location.href = "/dashboard/manage-employees-pensions";
         }, 2000);
       })
       .catch((error) => {
@@ -167,7 +166,7 @@ function UpdateEmployeePension() {
                 value={selectedContributor}
                 onChange={handleContributorChange}
                 options={contributors}
-                placeholder="Contributor"
+                placeholder={employeePension.contributor}
               />
             </div>
           </div>

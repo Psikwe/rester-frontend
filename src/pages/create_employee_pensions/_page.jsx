@@ -28,11 +28,10 @@ import {
   pensionTypes,
 } from "../../core/data";
 
-function ManageEmployeePensions() {
+function CreateEmployeePensionPage() {
   const entity_id = localStorage.getItem("entity_id");
   const { id } = useParams();
   const { taxComponentQuery } = useTaxComponent();
-  localStorage.setItem("employee_id", id);
   const [query, setQuery] = React.useState("");
   const [selectedContributor, setSelectedContributor] = React.useState(null);
   const [selectedType, setSelectedType] = React.useState(null);
@@ -105,7 +104,7 @@ function ManageEmployeePensions() {
       renderCell: renderActionsRow,
       width: "100px",
     },
-    { key: "employee_name", name: "Amount" },
+    { key: "employee_name", name: "Employee Name" },
     { key: "amount", name: "Amount" },
     { key: "base", name: "Base" },
     { key: "calculation", name: "Calculation" },
@@ -180,6 +179,9 @@ function ManageEmployeePensions() {
         pensionForm?.reset();
         setCreateLoan(false);
         setIsDoneAdding(true);
+        setTimeout(() => {
+          window.location.href = "/dashboard/manage-employees-pensions";
+        }, 2000);
       })
       .catch((error) => {
         setIsLoading(false);
@@ -279,175 +281,123 @@ function ManageEmployeePensions() {
           </div>
         </div>
       </Modal>
-      <Modal
-        showCloseBtn={true}
-        open={createLoan}
-        close={closeLoanModal}
-        closeOnOverlay
-      >
-        <div className="p-10 bg-white">
-          <form id="employee-pension-form" onSubmit={handleEmployeePension}>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="field">
-                <label className="text-sm label bold">Enter Amount</label>
-                <div className="control">
-                  <input
-                    required
-                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                    type="number"
-                    placeholder="Amount"
-                    name="amount"
-                  />
-                </div>
-              </div>
-              <div className="field">
-                <label className="text-sm label bold">Select Base</label>
-                <Select
-                  className="w-full"
-                  value={selectedComponent}
-                  onChange={handleComponentChange}
-                  options={componentOptions}
-                  placeholder="Base"
+
+      <div className="p-10 bg-white">
+        <form id="employee-pension-form" onSubmit={handleEmployeePension}>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="field">
+              <label className="text-sm label bold">Enter Amount</label>
+              <div className="control">
+                <input
+                  required
+                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                  type="number"
+                  placeholder="Amount"
+                  name="amount"
                 />
               </div>
-
-              <div className="w-full mr-2">
-                <label className="text-sm label">Select Calculation</label>
-                <div className="flex w-full row mobile:w-full">
-                  <Select
-                    className="w-full"
-                    value={selectedCalculation}
-                    onChange={handleCalculationChnage}
-                    options={calculation}
-                    placeholder="Calculation"
-                  />
-                </div>
-              </div>
-              <div className="mt-4 w-full mr-2">
-                <label className="text-sm label">Select Contributor</label>
-                <div className="flex w-full row mobile:w-full">
-                  <Select
-                    className="w-full"
-                    value={selectedContributor}
-                    onChange={handleContributorChange}
-                    options={contributors}
-                    placeholder="Contributor"
-                  />
-                </div>
-              </div>
-              <div className="mt-4 field">
-                <label className="text-sm label bold">Enter Name</label>
-                <div className="control">
-                  <input
-                    required
-                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                  />
-                </div>
-              </div>
-              <div className="mt-4 field">
-                <label className="text-sm label bold">Enter Rate</label>
-                <div className="control">
-                  <input
-                    required
-                    className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                    type="number"
-                    placeholder="Rate"
-                    name="rate"
-                  />
-                </div>
-              </div>
-              <div className="mt-7 flex flex-col field">
-                <label className="mb-1 text-sm label bold">
-                  Toggle Statutory Or Not
-                </label>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    onChange={handleCheckboxChange}
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-gray-200 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#00eeff]"></div>
-                </label>
-              </div>
-              <div className="mt-4 w-full mr-2">
-                <label className="text-sm label">Select Type</label>
-                <div className="flex w-full row mobile:w-full">
-                  <Select
-                    className="w-full"
-                    value={selectedType}
-                    onChange={handleTypeChange}
-                    options={pensionTypes}
-                    placeholder="Contributor"
-                  />
-                </div>
-              </div>
+            </div>
+            <div className="field">
+              <label className="text-sm label bold">Select Base</label>
+              <Select
+                className="w-full"
+                value={selectedComponent}
+                onChange={handleComponentChange}
+                options={componentOptions}
+                placeholder="Base"
+              />
             </div>
 
-            <button
-              disabled={isLoading}
-              type="submit"
-              className={
-                isLoading
-                  ? `animate-pulse w-1/3 py-2 mb-3 rounded-full text-white primary mt-9 mobile:w-full`
-                  : `w-1/3 py-2 mb-3 rounded-full text-white primary mt-9 mobile:w-full`
-              }
-            >
-              {isLoading ? <Loader /> : " Add Employee Pension"}
-            </button>
-          </form>
-        </div>
-      </Modal>
-
-      <button
-        onClick={() => setCreateLoan(true)}
-        className="w-1/6 py-3 mb-3 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
-      >
-        Create Pension
-      </button>
-      {isContentLoading ? (
-        <>
-          <TableLoader />
-        </>
-      ) : (
-        <>
-          {!isContentLoading && employeePensions.length === 0 ? (
-            <div className="flex flex-col items-center justify-center">
-              {/* <VscSearchStop
-                color="#687864"
-                size={40}
-                className="animate-bounce"
-              /> */}
-              <h3 className="text-slate-400">No match</h3>
+            <div className="w-full mr-2">
+              <label className="text-sm label">Select Calculation</label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={selectedCalculation}
+                  onChange={handleCalculationChnage}
+                  options={calculation}
+                  placeholder="Calculation"
+                />
+              </div>
             </div>
-          ) : (
-            <>
-              {isOperationLoading ? (
-                <>
-                  <TableLoader />
-                </>
-              ) : (
-                <>
-                  <DataGrid
-                    className="text-sm rdg-light grid-container"
-                    columns={columns}
-                    rows={employeePensions || []}
-                    bottomSummaryRows={summaryRows}
-                    rowHeight={50}
-                  />
-                  <strong className="text-sm">
-                    Totals: {employeePensions?.length} records
-                  </strong>
-                </>
-              )}
-            </>
-          )}
-        </>
-      )}
+            <div className="mt-4 w-full mr-2">
+              <label className="text-sm label">Select Contributor</label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={selectedContributor}
+                  onChange={handleContributorChange}
+                  options={contributors}
+                  placeholder="Contributor"
+                />
+              </div>
+            </div>
+            <div className="mt-4 field">
+              <label className="text-sm label bold">Enter Name</label>
+              <div className="control">
+                <input
+                  required
+                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                />
+              </div>
+            </div>
+            <div className="mt-4 field">
+              <label className="text-sm label bold">Enter Rate</label>
+              <div className="control">
+                <input
+                  required
+                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                  type="number"
+                  placeholder="Rate"
+                  name="rate"
+                />
+              </div>
+            </div>
+            <div className="mt-7 flex flex-col field">
+              <label className="mb-1 text-sm label bold">
+                Toggle Statutory Or Not
+              </label>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  onChange={handleCheckboxChange}
+                  className="sr-only peer"
+                />
+                <div className="w-11 h-6 bg-gray-200 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#00eeff]"></div>
+              </label>
+            </div>
+            <div className="mt-4 w-full mr-2">
+              <label className="text-sm label">Select Type</label>
+              <div className="flex w-full row mobile:w-full">
+                <Select
+                  className="w-full"
+                  value={selectedType}
+                  onChange={handleTypeChange}
+                  options={pensionTypes}
+                  placeholder="Contributor"
+                />
+              </div>
+            </div>
+          </div>
+
+          <button
+            disabled={isLoading}
+            type="submit"
+            className={
+              isLoading
+                ? `animate-pulse w-1/3 py-2 mb-3 rounded-full text-white primary mt-9 mobile:w-full`
+                : `w-1/3 py-2 mb-3 rounded-full text-white primary mt-9 mobile:w-full`
+            }
+          >
+            {isLoading ? <Loader /> : " Add Employee Pension"}
+          </button>
+        </form>
+      </div>
     </>
   );
 }
 
-export default ManageEmployeePensions;
+export default CreateEmployeePensionPage;

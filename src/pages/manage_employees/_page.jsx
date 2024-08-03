@@ -15,6 +15,7 @@ import {
 } from "../../core/services/employee.service";
 import { FcSearch } from "react-icons/fc";
 import "react-data-grid/lib/styles.css";
+import pension from "../../assets/icons/pension.png";
 import DataGrid from "react-data-grid";
 import DeactivatedEmployees from "../deactivated_employees/_page";
 import { showToast } from "../../core/hooks/alert";
@@ -37,6 +38,9 @@ function ManageEmployees() {
   const handleNavigateToEmployeeLoan = (id) => {
     window.location.href = "/dashboard/create-employee-loan/" + id;
   };
+  const handleNavigateToEmployeePension = (id) => {
+    window.location.href = "/dashboard/create-employee-pensions/" + id;
+  };
 
   const handleNavigateToTerminateEmployee = (id) => {
     window.location.href = "/dashboard/terminate-employee/" + id;
@@ -52,10 +56,7 @@ function ManageEmployees() {
     const { id, first_name } = data.row;
     setEmployeeId(id);
     return (
-      <div className="grid grid-cols-2 mt-1">
-        {/* <button title="Delete" onClick={() => handleDeleteClick(id, name)}>
-          <MdDelete color="red" size={18} />
-        </button> */}
+      <div className="grid grid-cols-3 mt-1">
         <button
           className="mb-2 ml-3"
           title="Update"
@@ -83,6 +84,13 @@ function ManageEmployees() {
           onClick={() => handleNavigateToEmployeeLoan(id, first_name)}
         >
           <SiCashapp color="blue" size={18} />
+        </button>
+        <button
+          className="-mt-3 ml-3"
+          title="Create Employee Pension"
+          onClick={() => handleNavigateToEmployeePension(id)}
+        >
+          <img src={pension} className="w-18" />
         </button>
       </div>
     );
@@ -200,7 +208,7 @@ function ManageEmployees() {
                         columns={columns}
                         rows={filteredData || []}
                         bottomSummaryRows={summaryRows}
-                        rowHeight={50}
+                        rowHeight={60}
                       />
                       <strong className="text-sm">
                         Totals: {filteredData?.length} records

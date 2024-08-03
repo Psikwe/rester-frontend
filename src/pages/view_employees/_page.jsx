@@ -114,7 +114,7 @@ function ViewEmployees() {
           <div className="inline-block  h-24 w-1 bg-[#6ccef5]"></div>
           <h3 className="flex items-center ml-3 text-gray-500">
             <FaCircleInfo size={25} className="mr-2" />
-            Please click on employee you want to manage loan.
+            Please select employee you want to manage loan.
           </h3>
         </div>
         <div className="flex flex-wrap w-full gap-3 px-4 py-3 my-6 bg-slate-200">

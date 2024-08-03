@@ -210,7 +210,7 @@ export const adminDashboardMenus = [
       },
       {
         menu: "Manage Pensions",
-        url: "/dashboard/view-employees-pensions",
+        url: "/dashboard/manage-employees-pensions",
         icon: <MdOutlineKeyboardDoubleArrowRight color="#00D284" />,
       },
       {
