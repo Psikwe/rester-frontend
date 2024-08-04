@@ -8,6 +8,7 @@ import moment from "moment";
 import { showToast } from "../../core/hooks/alert";
 import DataGrid from "react-data-grid";
 import { IoEyeOutline } from "react-icons/io5";
+import TableLoader from "../../components/table_loader/_component";
 
 const SavedReports = () => {
   const entity_id = localStorage.getItem("entity_id");
@@ -16,6 +17,7 @@ const SavedReports = () => {
   const [selectedStartDate, setSelectedStartDate] = React.useState(null);
   const [selectedEndDate, setSelectedEndDate] = React.useState(null);
   const [durationIsConfirmed, setDurationIsConfirmed] = React.useState(false);
+  const [contentLoaded, setContentLoaded] = React.useState(false);
   const [openDurationModal, setOpenDurationModal] = React.useState(true);
 
   const handleStartDateChange = (date) => {
@@ -106,67 +108,88 @@ const SavedReports = () => {
       renderCell: renderActionsRow,
       width: "100px",
     },
-    { key: "created_ats", name: "Report Id" },
-    { key: "serial_nos", name: "Report Name" },
-    { key: "created_at", name: "Date Created" },
-    { key: "name_of_employees", name: "Description" },
-    { key: "positions", name: "Period" },
-    // { key: "basic_salary", name: "Basic Salary" },
-    // { key: "secondary_employment", name: "Secondary Employment" },
-    // { key: "social_security_fund", name: "Social Security Fund" },
-    // { key: "third_tier", name: "Third Tier" },
-    // { key: "cash_allowances", name: "Cash Allowances" },
-    // { key: "bonus_income", name: "Bonus Income" },
-    // { key: "final_tax_on_bonus", name: "Final Tax On Bonus" },
-    // { key: "excess_bonus", name: "Excess Bonus" },
-    // { key: "total_cash_emolument", name: "Total Cash Employment" },
-    // { key: "accomodation_element", name: "Accomodation Element" },
-    // { key: "vehicle_element", name: "Vehicle Element" },
-    // { key: "non_cash_benefit", name: "Non Cash Benefit" },
-    // { key: "total_assessable_income", name: "Total Assemble Income" },
-    // { key: "tax_deductible", name: "Tax Deductible" },
-    // { key: "total_reliefs", name: "Total Reliefs" },
-    // { key: "chargeable_income", name: "Chargeable Income" },
-    // { key: "deductible_reliefs", name: "Deductible Reliefs" },
-    // { key: "overtime_income", name: "Overtime Income" },
-    // { key: "overtime_tax", name: "Overtime Tax" },
-    // { key: "total_tax_payable_to_gra", name: "Total Tax Payable To GRA" },
-    // { key: "severance_pay_paid", name: "Serverance Pay Paid" },
-    // { key: "remarks", name: "Remarks" },
+    { key: "serial_no", name: "Ser. No" },
+    { key: "tin", name: "Tin(11 Characters)" },
+    { key: "name_of_employee", name: "Name of Employee" },
+    { key: "position", name: "Position" },
+    { key: "basic_salary", name: "Basic Salary" },
+    { key: "secondary_employment", name: "Secondary Employment" },
+    { key: "social_security_fund", name: "Social Security Fund" },
+    { key: "third_tier", name: "Third Tier" },
+    { key: "cash_allowances", name: "Cash Allowances" },
+    { key: "bonus_income", name: "Bonus Income(up to 15% of Basic Salary)" },
+    { key: "final_tax_on_bonus", name: "Final Tax On Bonus" },
+    { key: "excess_bonus", name: "Excess Bonus" },
+    { key: "total_cash_emolument", name: "Total Cash Employment" },
+    { key: "accomodation_element", name: "Accomodation Element" },
+    { key: "vehicle_element", name: "Vehicle Element" },
+    { key: "non_cash_benefit", name: "Non Cash Benefit" },
+    {
+      key: "total_assessable_income",
+      name: "Total Assemble Income(14+15+16+17)",
+    },
+    { key: "deductible_reliefs", name: "Deductible Reliefs" },
+    { key: "total_reliefs", name: "Total Reliefs" },
+    { key: "chargeable_income", name: "Chargeable Income" },
+    { key: "deductible_reliefs", name: "Tax Deductible" },
+    { key: "overtime_income", name: "Overtime Income" },
+    { key: "overtime_tax", name: "Overtime Tax" },
+    {
+      key: "total_tax_payable_to_gra",
+      name: "Total Tax Payable To GRA(12+22+24)",
+    },
+    { key: "severance_pay_paid", name: "Serverance Pay Paid" },
+    { key: "remarks", name: "Remarks" },
+
+    // { key: "created_ats", name: "Report Id" },
+    // { key: "serial_nos", name: "Report Name" },
+    // { key: "start_date", name: "Start Date" },
+    // { key: "created_at", name: "Date Created" },
   ];
 
   React.useEffect(() => {
+    setContentLoaded(true);
     GetTaxReports(entity_id)
       .then((response) => {
+        setContentLoaded(false);
         let result = response.data.tax_reports;
+        console.log("aa: ", response.data.tax_reports);
+        let entries = response.data.tax_reports
+          .map((rep) => rep.entries)
+          .flat()
+          .flat();
+        console.log("aas: ", entries);
+        setReport(entries);
+        // const totalEntries = response.data.tax_reports.entries.concat(
+        //   response.data.tax_reports.totals
+        // );
         const transformedData = result.flatMap((report) => {
           return report.entries.map((entry) => ({
             ...entry,
             id: report.id,
-            created_at: report.created_at,
+            created_at: moment(report.created_at).format("lll"),
           }));
         });
         transformedData.sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
-        console.log("oh: ", response.data.tax_reports);
-        setReport(transformedData);
       })
       .catch((error) => {
+        setContentLoaded(false);
         console.log(error);
       });
   }, []);
 
-  React.useEffect(() => {
-    DownloadTaxReport(entity_id, formattedStartDate, formattedEndDate)
-      .then((response) => {
-        console.log("ffoh: ", response?.data.entries);
-        let result = response.data.entries;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   DownloadTaxReport(entity_id, formattedStartDate, formattedEndDate)
+  //     .then((response) => {
+  //       console.log("ffoh: ", response?.data.entries);
+  //       let result = response.data.entries;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   return (
     <>
@@ -178,13 +201,20 @@ const SavedReports = () => {
           Download Payroll
         </button> */}
         {/* <Spreadsheet data={extendedData} /> */}
-
-        <DataGrid
-          className="text-sm rdg-light grid-container"
-          columns={columns}
-          rows={report || []}
-          rowHeight={50}
-        />
+        {contentLoaded ? (
+          <>
+            <TableLoader />
+          </>
+        ) : (
+          <>
+            <DataGrid
+              className="text-sm rdg-light grid-container"
+              columns={columns}
+              rows={report || []}
+              rowHeight={50}
+            />
+          </>
+        )}
       </div>
     </>
   );

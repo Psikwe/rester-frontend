@@ -28,6 +28,10 @@ const MySpreadsheet = () => {
   const [selectedPayrollDuration, setSelectedPayrollDuration] =
     React.useState(null);
   const [selectedEndDate, setSelectedEndDate] = React.useState(null);
+  const [selectedEffectiveFromDate, setSelectedFromEffectiveDate] =
+    React.useState(null);
+  const [selectedEffectiveToDate, setSelectedToEffectiveDate] =
+    React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [durationIsConfirmed, setDurationIsConfirmed] = React.useState(false);
   const [openDurationModal, setOpenDurationModal] = React.useState(true);
@@ -37,14 +41,20 @@ const MySpreadsheet = () => {
   };
   let formattedStartDate = moment(selectedStartDate).format("YYYY-MM-DD");
   let formattedEndDate = moment(selectedEndDate).format("YYYY-MM-DD");
+  let formattedEffectiveFromDate = moment(selectedEffectiveFromDate).format(
+    "YYYY-MM-DD"
+  );
+  let formattedEffectiveToDate = moment(selectedEffectiveToDate).format(
+    "YYYY-MM-DD"
+  );
 
   const closeDurationModal = () => {
     setOpenDurationModal(false);
   };
 
   const validate = () => {
-    if (!selectedStartDate || !selectedEndDate) {
-      showToast("Select a start date or end date", false);
+    if (!selectedStartDate || !selectedEndDate || !selectedEffectiveFromDate) {
+      showToast("All dates required, except Effective To", false);
       return;
     }
     setDurationIsConfirmed(true);
@@ -53,6 +63,12 @@ const MySpreadsheet = () => {
 
   const handleEndDateChange = (date) => {
     setSelectedEndDate(date[0]);
+  };
+  const handleEffectiveFromDateChange = (date) => {
+    setSelectedFromEffectiveDate(date[0]);
+  };
+  const handleEffectiveToDateChange = (date) => {
+    setSelectedToEffectiveDate(date[0]);
   };
 
   const transformArray = (arr) => {
@@ -176,7 +192,15 @@ const MySpreadsheet = () => {
 
   React.useEffect(() => {
     if (durationIsConfirmed) {
-      GenerateTaxReport(entity_id, formattedStartDate, formattedEndDate)
+      GenerateTaxReport(
+        entity_id,
+        formattedStartDate,
+        formattedEndDate,
+        formattedEffectiveFromDate,
+        formattedEffectiveToDate === null || formattedEffectiveToDate === ""
+          ? ""
+          : formattedEffectiveToDate
+      )
         .then((response) => {
           console.log("oh: ", response?.data);
           setGrandReport(response?.data);
@@ -241,7 +265,7 @@ const MySpreadsheet = () => {
         close={closeDurationModal}
       >
         <div className="w-full bg-white p-14">
-          <div className="flex flex-col">
+          <div className="grid grid-cols-2 gap-2">
             <div className="w-[20rem] mt-3 mr-5 field">
               <label className="text-sm label bold">Select Start Date</label>
               <Flatpickr
@@ -271,6 +295,47 @@ const MySpreadsheet = () => {
                 ref={fp}
                 name="end_date"
                 onChange={handleEndDateChange}
+              />
+              <button
+                type="button"
+                className="text-xs"
+                onClick={() => {
+                  if (!fp?.current?.flatpickr) return;
+                  fp.current.flatpickr.clear();
+                }}
+              >
+                Clear
+              </button>
+            </div>
+
+            <div className="mt-3 w-[20rem] field">
+              <label className="text-sm label bold">Effective From</label>
+              <Flatpickr
+                className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                placeholder="End Date"
+                ref={fp}
+                name="end_date"
+                onChange={handleEffectiveFromDateChange}
+              />
+              <button
+                type="button"
+                className="text-xs"
+                onClick={() => {
+                  if (!fp?.current?.flatpickr) return;
+                  fp.current.flatpickr.clear();
+                }}
+              >
+                Clear
+              </button>
+            </div>
+            <div className="mt-3 w-[20rem] field">
+              <label className="text-sm label bold">Effective To</label>
+              <Flatpickr
+                className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                placeholder="End Date"
+                ref={fp}
+                name="end_date"
+                onChange={handleEffectiveToDateChange}
               />
               <button
                 type="button"
