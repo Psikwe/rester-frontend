@@ -192,15 +192,7 @@ const MySpreadsheet = () => {
 
   React.useEffect(() => {
     if (durationIsConfirmed) {
-      GenerateTaxReport(
-        entity_id,
-        formattedStartDate,
-        formattedEndDate,
-        formattedEffectiveFromDate,
-        formattedEffectiveToDate === null || formattedEffectiveToDate === ""
-          ? ""
-          : formattedEffectiveToDate
-      )
+      GenerateTaxReport(entity_id, formattedStartDate, formattedEndDate)
         .then((response) => {
           console.log("oh: ", response?.data);
           setGrandReport(response?.data);
@@ -265,7 +257,7 @@ const MySpreadsheet = () => {
         close={closeDurationModal}
       >
         <div className="w-full bg-white p-14">
-          <div className="grid grid-cols-2 gap-2">
+          <div className="flex flex-col gap-2">
             <div className="w-[20rem] mt-3 mr-5 field">
               <label className="text-sm label bold">Select Start Date</label>
               <Flatpickr
@@ -295,47 +287,6 @@ const MySpreadsheet = () => {
                 ref={fp}
                 name="end_date"
                 onChange={handleEndDateChange}
-              />
-              <button
-                type="button"
-                className="text-xs"
-                onClick={() => {
-                  if (!fp?.current?.flatpickr) return;
-                  fp.current.flatpickr.clear();
-                }}
-              >
-                Clear
-              </button>
-            </div>
-
-            <div className="mt-3 w-[20rem] field">
-              <label className="text-sm label bold">Effective From</label>
-              <Flatpickr
-                className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                placeholder="End Date"
-                ref={fp}
-                name="end_date"
-                onChange={handleEffectiveFromDateChange}
-              />
-              <button
-                type="button"
-                className="text-xs"
-                onClick={() => {
-                  if (!fp?.current?.flatpickr) return;
-                  fp.current.flatpickr.clear();
-                }}
-              >
-                Clear
-              </button>
-            </div>
-            <div className="mt-3 w-[20rem] field">
-              <label className="text-sm label bold">Effective To</label>
-              <Flatpickr
-                className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                placeholder="End Date"
-                ref={fp}
-                name="end_date"
-                onChange={handleEffectiveToDateChange}
               />
               <button
                 type="button"

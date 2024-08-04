@@ -12,6 +12,7 @@ import { CreateEmployeeForm } from "../../core/services/employee.service";
 import { formToJSON } from "axios";
 import { useIncomeType } from "../../core/hooks/income";
 import Loader from "../../components/loader/_component";
+import moment from "moment";
 
 function CreateEmployee() {
   const fp = React.useRef(null);
@@ -29,18 +30,24 @@ function CreateEmployee() {
     setShowNewPasswordType(!showNewPasswordType);
   };
   const [incomeSection, setIncomeSection] = React.useState([
-    { incomeType: null, amount: "", incomeFrequency: null },
+    {
+      income_type: null,
+      amount: "",
+      effective_from: null,
+      effective_to: null,
+      income_frequency: null,
+    },
   ]);
 
   const handleChange = (index, selectedOption) => {
     const updatedIncomeSection = [...incomeSection];
-    updatedIncomeSection[index].incomeType = selectedOption;
+    updatedIncomeSection[index].income_type = selectedOption;
     setIncomeSection(updatedIncomeSection);
   };
 
   const handleFrequencyChange = (index, selectedOption) => {
     const updatedIncomeSection = [...incomeSection];
-    updatedIncomeSection[index].incomeFrequency = selectedOption;
+    updatedIncomeSection[index].income_frequency = selectedOption;
     setIncomeSection(updatedIncomeSection);
   };
 
@@ -72,7 +79,13 @@ function CreateEmployee() {
   const handleAddOptionsField = () => {
     setIncomeSection([
       ...incomeSection,
-      { incomeType: null, amount: "", incomeFrequency: null },
+      {
+        income_type: null,
+        amount: "",
+        effective_from: "",
+        effective_to: "",
+        income_frequency: null,
+      },
     ]);
   };
 
@@ -81,16 +94,18 @@ function CreateEmployee() {
     e.preventDefault();
 
     const transformedData = incomeSection.map((entry) => ({
-      incomeType: entry.incomeType.value,
+      income_type: entry.income_type.value,
+      effective_from: entry.effective_from,
+      effective_to: entry.effective_to,
       amount: entry.amount,
-      incomeFrequency: entry.incomeFrequency.value,
+      frequency: entry.income_frequency.value,
     }));
 
     const employeeForm = document.getElementById("employee-form");
     const payload = {
       ...formToJSON(employeeForm),
       entity_id: entity_id,
-      incomeSection: transformedData,
+      income_section: transformedData,
       has_dependant_spouse: isDependent,
       is_certified_disabled: isCertified,
       is_disabled: isDisabled,
@@ -407,12 +422,12 @@ function CreateEmployee() {
           <div key={index} className="flex items-center mt-8">
             <div className="w-full mr-3">
               <label className="text-sm label bold">
-                Select type of income
+                Select type of incomes
               </label>
               <div className="flex w-full row mobile:w-full">
                 <Select
                   className="w-full"
-                  value={to.incomeType}
+                  value={to.income_type}
                   onChange={(selectedOption) =>
                     handleChange(index, selectedOption)
                   }
@@ -438,6 +453,57 @@ function CreateEmployee() {
                 />
               </div>
             </div>
+
+            <div className="mt-5 w-full mr-3">
+              <label className="text-sm label bold">Effective From</label>
+              <Flatpickr
+                className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                placeholder="Effective From"
+                id="effective_from"
+                ref={fp}
+                onChange={(e) => {
+                  const updatedIncomeSection = [...incomeSection];
+                  updatedIncomeSection[index].effective_from = e[0];
+                  setIncomeSection(updatedIncomeSection);
+                }}
+              />
+              <button
+                type="button"
+                className="text-xs"
+                onClick={() => {
+                  if (!fp?.current?.flatpickr) return;
+                  fp.current.flatpickr.clear();
+                }}
+              >
+                Clear
+              </button>
+            </div>
+
+            <div className="w-full mt-5 mr-3">
+              <label className="text-sm label bold">Effective To</label>
+              <Flatpickr
+                className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                placeholder="Effective To"
+                id="effective_to"
+                ref={fp}
+                onChange={(e) => {
+                  const updatedIncomeSection = [...incomeSection];
+                  updatedIncomeSection[index].effective_to = e[0];
+                  setIncomeSection(updatedIncomeSection);
+                }}
+              />
+              <button
+                type="button"
+                className="text-xs"
+                onClick={() => {
+                  if (!fp?.current?.flatpickr) return;
+                  fp.current.flatpickr.clear();
+                }}
+              >
+                Clear
+              </button>
+            </div>
+
             <div className="w-full">
               <label className="text-sm label bold">
                 Select frequency of income
@@ -445,13 +511,13 @@ function CreateEmployee() {
               <div className="flex w-full row mobile:w-full">
                 <Select
                   className="w-full"
-                  value={to.incomeFrequency}
+                  value={to.income_frequency}
                   onChange={(selectedOption) =>
                     handleFrequencyChange(index, selectedOption)
                   }
                   options={options}
                   id="income-frequency"
-                  placeholder="Select Frequency of Income"
+                  placeholder="Select Frequency"
                 />
               </div>
             </div>

@@ -50,20 +50,36 @@ function UpdateAdminEmployee() {
   const [isProvidesNecessitiesChanged, setIsProvidesNecessitiesChanged] =
     React.useState(false);
   const [noIncomeMessage, setNoIncomeMessage] = React.useState("");
+  const [effectiveFrom, setEffectiveFrom] = React.useState("");
+  const [effectiveFromChanged, setEffectiveFromChanged] = React.useState(false);
+  const [effectiveTo, setEffectiveTo] = React.useState("");
+  const [effectiveToChanged, setEffectiveToChanged] = React.useState(false);
   const [noIncomeMessageChanged, setNoIncomeMessageChanged] =
     React.useState("");
   const [incomeSection, setIncomeSection] = React.useState([
-    { incomeType: null, amount: "", incomeFrequency: null },
+    {
+      income_type: null,
+      amount: "",
+      effective_from: null,
+      effective_to: null,
+      income_frequency: null,
+    },
   ]);
   const [existingIncomeSection, setExistingIncomeSection] = React.useState([
-    { income_type_id: null, amount: "", frequency: null },
+    {
+      income_type_id: null,
+      amount: "",
+      effective_from: null,
+      effective_to: null,
+      frequency: null,
+    },
   ]);
   const [updateIncometypeSection, setUpdateIncomeTypeSection] =
     React.useState();
 
   const handleChange = (index, selectedOption) => {
     const updatedIncomeSection = [...incomeSection];
-    updatedIncomeSection[index].incomeType = selectedOption;
+    updatedIncomeSection[index].income_type = selectedOption;
     setIncomeSection(updatedIncomeSection);
     setIsIncomeTypeUpdated(true);
   };
@@ -74,6 +90,8 @@ function UpdateAdminEmployee() {
         updateIncometypeSection.map((ui) => ({
           income_type_id: ui.income_type_id,
           amount: ui.amount,
+          effective_from: ui.effective_from,
+          effective_to: ui.effective_to,
           frequency: ui.frequency,
         }))
       );
@@ -101,7 +119,7 @@ function UpdateAdminEmployee() {
 
   const handleFrequencyChange = (index, selectedOption) => {
     const updatedIncomeSection = [...incomeSection];
-    updatedIncomeSection[index].incomeFrequency = selectedOption;
+    updatedIncomeSection[index].income_frequency = selectedOption;
     setIncomeSection(updatedIncomeSection);
     setIsFrequencyUpdated(true);
   };
@@ -124,7 +142,7 @@ function UpdateAdminEmployee() {
   const handleAddOptionsField = () => {
     setIncomeSection([
       ...incomeSection,
-      { incomeType: null, amount: "", incomeFrequency: null },
+      { income_type: null, amount: "", income_frequency: null },
     ]);
   };
 
@@ -148,9 +166,9 @@ function UpdateAdminEmployee() {
     GetOneEmployee(id)
       .then((response) => {
         setEmployeeDetails(response.data.employee);
-        setUpdateIncomeTypeSection(response.data.employee.incomeSection);
+        setUpdateIncomeTypeSection(response.data.employee.income_section);
+        console.log("test me: ", response.data.employee.income_section);
         setNoIncomeMessage(response.data.message);
-        console.log("ee: ", response.data.employee.incomeSection);
       })
       .catch((err) => {
         console.error(err);
@@ -159,6 +177,7 @@ function UpdateAdminEmployee() {
 
   let dateOfBirth = moment(employeeDetails.data_of_birth).format("YYYY-MM-DD");
   let startDate = moment(employeeDetails.start_date).format("YYYY-MM-DD");
+
   const handleUpdateEmployee = (e) => {
     let dobValue = document.getElementById("date-of-birth");
     let startDateValue = document.getElementById("start-date");
@@ -178,19 +197,24 @@ function UpdateAdminEmployee() {
 
     const existingIncomes = updateIncometypeSection.map((ui, idx) => {
       const updatedIncome = existingIncomeSection[idx];
+      console.log("updated", updatedIncome);
       return {
-        incomeType: updatedIncome?.income_type_id ?? ui.income_type_id,
+        income_type: updatedIncome?.income_type_id ?? ui.income_type_id,
         amount: updatedIncome?.amount ?? ui.amount,
-        incomeFrequency: updatedIncome?.frequency ?? ui.frequency,
+        effective_from: updatedIncome?.effective_from ?? effectiveFrom,
+        effective_to: updatedIncome?.effective_to ?? effectiveTo,
+        frequency: updatedIncome?.frequency ?? ui.frequency,
       };
     });
 
     console.log("pre", existingIncomes);
 
     const transformedData = incomeSection.map((entry) => ({
-      incomeType: isIncomeTypeUpdated ? entry.incomeType.value : "",
+      income_type: isIncomeTypeUpdated ? entry.income_type.value : "",
       amount: isAmountUpdated ? entry.amount : "",
-      incomeFrequency: isFrequencyUpdated ? entry.incomeFrequency.value : "",
+      effective_from: entry.effective_from,
+      effective_to: entry.effective_to,
+      frequency: isFrequencyUpdated ? entry.income_frequency.value : "",
     }));
 
     const grandTotalIncomes = existingIncomes.concat(transformedData);
@@ -276,13 +300,13 @@ function UpdateAdminEmployee() {
             <div className="flex mx-2 mt-6">
               <button
                 onClick={closeDeleteModal}
-                className="w-full py-2 rounded-full mr-2 text-white mt-9 primary mobile:w-full"
+                className="w-full py-2 mr-2 text-white rounded-full mt-9 primary mobile:w-full"
               >
                 No
               </button>
               <button
                 onClick={confirmDelete}
-                className="w-full py-2 text-white bg-red-500 mt-9 rounded-full mobile:w-full"
+                className="w-full py-2 text-white bg-red-500 rounded-full mt-9 mobile:w-full"
               >
                 Yes
               </button>
@@ -558,21 +582,27 @@ function UpdateAdminEmployee() {
             />
           </div>
         </div>
-        <div className="border-gray-500 border-2 p-2 mt-8 border-dotted">
+        <div className="p-2 mt-8 border-2 border-gray-500 border-dotted">
           <h3 className="my-8">Existing Incomes</h3>
-          <div className="text-gray-400 flex justify-between">
-            {["Income Type", "Amount", "Frequency of Income"].map(
-              (lists, idx) => (
-                <div key={idx}>{lists}</div>
-              )
-            )}
-          </div>
+          {/* <div className="flex justify-between text-gray-400">
+            {[
+              "Income Type",
+              "Amount",
+              "Effective From",
+              "Effective To",
+              "Frequency of Income",
+            ].map((lists, idx) => (
+              <div key={idx}>{lists}</div>
+            ))}
+          </div> */}
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-4 gap-5">
             {updateIncometypeSection &&
               updateIncometypeSection.map((inc, idx) => (
                 <React.Fragment key={idx}>
-                  <div className="mt-6 w-full mobile:w-full">
+                  <div className="w-full mobile:w-full">
+                    {" "}
+                    <label className="text-sm label bold">Type of Income</label>
                     <Select
                       className="w-full"
                       onChange={(selectedOption) =>
@@ -597,7 +627,66 @@ function UpdateAdminEmployee() {
                       />
                     </div>
                   </div>
-                  <div className="w-full">
+                  <div className="w-full mr-3">
+                    <label className="text-sm label bold">Effective From</label>
+                    <Flatpickr
+                      className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                      placeholder={moment(inc.effective_from).format(
+                        "YYYY-MM-DD"
+                      )}
+                      id="effective_from"
+                      ref={fp}
+                      onChange={(e) => {
+                        const updatedIncomeSection = [...existingIncomeSection];
+                        updatedIncomeSection[idx] = {
+                          ...updatedIncomeSection[idx],
+                          effective_from: e[0],
+                        };
+                        setExistingIncomeSection(updatedIncomeSection);
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="text-xs"
+                      onClick={() => {
+                        if (!fp?.current?.flatpickr) return;
+                        fp.current.flatpickr.clear();
+                      }}
+                    >
+                      Clear
+                    </button>
+                  </div>
+
+                  <div className="w-full mr-3">
+                    <label className="text-sm label bold">Effective To</label>
+                    <Flatpickr
+                      className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                      placeholder={moment(inc.effective_to).format(
+                        "YYYY-MM-DD"
+                      )}
+                      id="effective_to"
+                      ref={fp}
+                      onChange={(e) => {
+                        const updatedIncomeSection = [...existingIncomeSection];
+                        updatedIncomeSection[idx] = {
+                          ...updatedIncomeSection[idx],
+                          effective_to: e[0],
+                        };
+                        setExistingIncomeSection(updatedIncomeSection);
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="text-xs"
+                      onClick={() => {
+                        if (!fp?.current?.flatpickr) return;
+                        fp.current.flatpickr.clear();
+                      }}
+                    >
+                      Clear
+                    </button>
+                  </div>
+                  <div className="w-full ">
                     <label className="text-sm label bold">
                       Select frequency of income
                     </label>
@@ -616,7 +705,7 @@ function UpdateAdminEmployee() {
                   <div
                     title="Delete"
                     onClick={() => handleDeleteIncome(inc.id, inc.employee_id)}
-                    className="cursor-pointer col-span-4 w-6"
+                    className="w-6 col-span-4 cursor-pointer"
                   >
                     <MdDelete color="red" size={18} />
                   </div>
@@ -626,9 +715,9 @@ function UpdateAdminEmployee() {
         </div>
         {noIncomeMessage === "" || !noIncomeMessage ? (
           <>
-            {/* <div className="border-gray-500 border-2 p-2 mt-8 border-dotted">
-              <h3 className=" mt-8">Existing Incomes</h3>
-              <div className="text-gray-400 flex justify-between">
+            {/* <div className="p-2 mt-8 border-2 border-gray-500 border-dotted">
+              <h3 className="mt-8 ">Existing Incomes</h3>
+              <div className="flex justify-between text-gray-400">
                 {["Income Type", "Amount", "Frequency of Income"].map(
                   (lists, idx) => (
                     <div key={idx}>{lists}</div>
@@ -662,7 +751,7 @@ function UpdateAdminEmployee() {
               <div className="flex w-full row mobile:w-full">
                 <Select
                   className="w-full"
-                  value={to.incomeType}
+                  value={to.income_type}
                   onChange={(selectedOption) =>
                     handleChange(index, selectedOption)
                   }
@@ -688,6 +777,56 @@ function UpdateAdminEmployee() {
                 />
               </div>
             </div>
+
+            <div className="w-full mt-5 mr-3">
+              <label className="text-sm label bold">Effective From</label>
+              <Flatpickr
+                className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                placeholder="Effective From"
+                id="effective_from"
+                ref={fp}
+                onChange={(e) => {
+                  const updatedIncomeSection = [...incomeSection];
+                  updatedIncomeSection[index].effective_from = e[0];
+                  setIncomeSection(updatedIncomeSection);
+                }}
+              />
+              <button
+                type="button"
+                className="text-xs"
+                onClick={() => {
+                  if (!fp?.current?.flatpickr) return;
+                  fp.current.flatpickr.clear();
+                }}
+              >
+                Clear
+              </button>
+            </div>
+
+            <div className="w-full mt-5 mr-3">
+              <label className="text-sm label bold">Effective To</label>
+              <Flatpickr
+                className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                placeholder="Effective To"
+                id="effective_to"
+                ref={fp}
+                onChange={(e) => {
+                  const updatedIncomeSection = [...incomeSection];
+                  updatedIncomeSection[index].effective_to = e[0];
+                  setIncomeSection(updatedIncomeSection);
+                }}
+              />
+              <button
+                type="button"
+                className="text-xs"
+                onClick={() => {
+                  if (!fp?.current?.flatpickr) return;
+                  fp.current.flatpickr.clear();
+                }}
+              >
+                Clear
+              </button>
+            </div>
             <div className="w-full">
               <label className="text-sm label bold">
                 Select frequency of income
@@ -695,13 +834,13 @@ function UpdateAdminEmployee() {
               <div className="flex w-full row mobile:w-full">
                 <Select
                   className="w-full"
-                  value={to.incomeFrequency}
+                  value={to.income_frequency}
                   onChange={(selectedOption) =>
                     handleFrequencyChange(index, selectedOption)
                   }
                   options={options}
                   id="income-frequency"
-                  placeholder="Select Frequency of Income"
+                  placeholder="Select Frequency"
                 />
               </div>
             </div>
@@ -727,8 +866,8 @@ function UpdateAdminEmployee() {
           type="submit"
           className={
             isLoading
-              ? `animate-pulse w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
-              : `w-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
+              ? `animate-pulse rounded-full w-1/2 py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
+              : `w-1/2 rounded-full py-3 mb-3 text-white bg-[#0DCAF0] mt-9 mobile:w-full`
           }
         >
           {isLoading ? <Loader /> : "Update"}
