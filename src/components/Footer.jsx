@@ -25,19 +25,19 @@ export default function Footer() {
     { name: "Report an Issue", href: "#" },
   ];
   const contact = [
-    { name: "support@rester.com", href: "#" },
-    { name: "050 xxx xxxx", href: "#" },
+    { name: "support@rester.com", href: "mailto:Clinton.danso@service4gh.com" },
+    { name: "+44 7436942211", href: "#" },
   ];
 
   const footerSocials = [
     {
       icon: <FaSquareFacebook size={20} />,
-      link: "https://github.com/Psikwe?tab=repositories",
+      link: "#",
       key: "4",
     },
     {
       icon: <FaSquareXTwitter size={20} />,
-      link: "https://www.linkedin.com/in/dennis-boateng-7136411b0/",
+      link: "#",
       key: "2",
     },
     {

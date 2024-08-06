@@ -87,7 +87,6 @@ const SavedReports = () => {
   };
   const renderActionsRow = (data) => {
     const { id } = data.row;
-    console.log(id);
     return (
       <div className="grid grid-cols-2 mt-1">
         <button
@@ -128,7 +127,7 @@ const SavedReports = () => {
       key: "total_assessable_income",
       name: "Total Assemble Income(14+15+16+17)",
     },
-    { key: "deductible_reliefs", name: "Deductible Reliefs" },
+    // { key: "deductible_reliefs", name: "Deductible Reliefs" },
     { key: "total_reliefs", name: "Total Reliefs" },
     { key: "chargeable_income", name: "Chargeable Income" },
     { key: "deductible_reliefs", name: "Tax Deductible" },
@@ -153,11 +152,13 @@ const SavedReports = () => {
       .then((response) => {
         setContentLoaded(false);
         let result = response.data.tax_reports;
-        console.log("aa: ", response.data.tax_reports);
-        let entries = response.data.tax_reports
-          .map((rep) => rep.entries)
-          .flat()
-          .flat();
+        let entries = response.data.tax_reports.flatMap((report) =>
+          report.entries.map((entry) => ({
+            ...entry,
+            id: report.id,
+          }))
+        );
+        let wEnt = response.data.tax_reports;
         console.log("aas: ", entries);
         setReport(entries);
         // const totalEntries = response.data.tax_reports.entries.concat(
