@@ -17,14 +17,20 @@ import logo from "../../assets/rester.png";
 import { IoArrowBackCircle } from "react-icons/io5";
 import moment from "moment";
 import { clearUserSession } from "../../core/utilities";
+import { GetOneEntity } from "../../core/services/entity.service";
 
 const DashboardLayout = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
-  const [entityName, setEntityName] = React.useState("");
-  const [selectedMenu, setSelectedMenu] = React.useState(0);
+  const [entityName, setEntityName] = React.useState();
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
+  const [populateEntity, setPopulateEntity] = React.useState({
+    name: "",
+    address: "",
+    size: "",
+    email: "",
+  });
 
   React.useEffect(() => {
     initTWE({ Dropdown, Ripple });
@@ -61,6 +67,7 @@ const DashboardLayout = () => {
     setIsLogoutModalOpen(true);
   };
   const { pathname } = useLocation();
+
   React.useEffect(() => {
     const eName = localStorage.getItem("entity_name");
     setEntityName(eName);

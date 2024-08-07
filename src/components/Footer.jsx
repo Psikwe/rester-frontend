@@ -95,7 +95,7 @@ export default function Footer() {
             {footerSocials.map((f) => (
               <a key={f.key} target="_blank" href={f.link}>
                 <ul>
-                  <li className="mr-8 text-gray-500 duration-500 hover:text-[#f67153] hover:-translate-y-1">
+                  <li className="mr-8 text-gray-500 duration-500 hover:-translate-y-1">
                     {f.icon}
                   </li>
                 </ul>

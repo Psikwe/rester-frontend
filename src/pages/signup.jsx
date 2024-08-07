@@ -66,7 +66,7 @@ function Signup() {
           <form
             id="signup-form"
             onSubmit={handleSignup}
-            className="mobile:border-2 bg-white mobile:border-[#687864] mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-2 from-laptop-to-laptop-xl:w-[30vw] h-full"
+            className="mobile:border-2 bg-white mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-2 from-laptop-to-laptop-xl:w-[30rem] h-full"
           >
             <div className="flex w-full">
               <div className="w-full mr-3 field">
@@ -201,8 +201,8 @@ function Signup() {
               disabled={!isChecked}
               className={
                 isChecked
-                  ? "w-1/2 py-3 m-auto mt-8 text-white rounded-full primary mobile:w-full "
-                  : "w-1/2 py-3 m-auto mt-8 text-white rounded-full primary mobile:w-full bg-[#c9edff] cursor-not-allowed"
+                  ? "w-1/2 py-2 m-auto mt-8 text-white rounded-full primary mobile:w-full "
+                  : "w-1/2 py-2 m-auto mt-8 text-white rounded-full primary mobile:w-full bg-[#c9edff] cursor-not-allowed"
               }
             >
               {isLoading ? <Loader /> : "Signup"}

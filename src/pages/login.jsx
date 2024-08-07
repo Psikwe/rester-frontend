@@ -172,8 +172,6 @@ function Login() {
     }, 2000);
   };
 
-  //  email: testt@gmail.com
-  //  pass: KAKAY1212?!?@test
   return (
     <>
       <Modal
@@ -334,18 +332,11 @@ function Login() {
       </Modal>
       <section className="bg-slate-200">
         <div className="login-container">
-          {/* <p className="mt-16 text-3xl mb-9 from-laptop-to-laptop-xl:title">
-            Login
-          </p> */}
           <div className="flex mb-24">
-            {/* <img
-              className="h-[31rem]  brightness-75 mobile:hidden"
-              src={banner}
-            /> */}
             <form
               id="login-form"
               onSubmit={handleLogin}
-              className="mobile:border-2 bg-white mobile:border-[#687864] mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30vw] h-[31rem] mobile-h-full"
+              className="mobile:border-2 bg-white mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30rem] h-[31rem] mobile-h-full"
             >
               <div className="field">
                 <label className="text-sm label bold">Email</label>
@@ -386,8 +377,8 @@ function Login() {
                 type="submit"
                 className={
                   isLoading
-                    ? `animate-pulse w-1/2 rounded-full m-auto py-3 text-white mt-3 primary mobile:w-full`
-                    : `w-1/2 m-auto py-3 rounded-full text-white mt-3 primary mobile:w-full`
+                    ? `animate-pulse w-1/2 rounded-full m-auto py-2 text-white mt-3 primary mobile:w-full`
+                    : `w-1/2 m-auto py-2 rounded-full text-white mt-3 primary mobile:w-full`
                 }
               >
                 {isLoading ? <Loader /> : "Login"}

@@ -5,7 +5,7 @@ import { IoArrowBackCircle } from "react-icons/io5";
 
 function AccessDenied() {
   const goback = () => {
-    window.history.back();
+    clearUserSession();
   };
   return (
     <>
@@ -18,7 +18,7 @@ function AccessDenied() {
             className="flex items-center justify-center mb-6 cursor-pointer"
           >
             <IoArrowBackCircle size={40} />
-            Go back
+            Go back to login
           </div>
         </div>
       </div>

@@ -58,6 +58,7 @@ import ViewEmployeesPensions from "./manage_employees_pensions/_page";
 import UpdateEmployeePension from "./update_employee_pension/_page";
 import CreateEmployeePensionPage from "./create_employee_pensions/_page";
 import ManageEmployeesPensions from "./manage_employees_pensions/_page";
+import AccessDenied from "./access_denied/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -71,154 +72,134 @@ export default function AppRoutes() {
             <Route index element={<Home />} />
             <Route path="verify_user" element={<VerifyUser />} />
             <Route path="reset_password" element={<ResetPassword />} />
-            <Route path="*" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="setup-organization" element={<SetUpOrganizatoin />} />
+            <Route path="*" element={<Login />} />
           </Route>
         ) : (
           <>
-            <>
-              {isMobile ? (
-                <Route path="view-entity" element={<MobileScreen />} />
-              ) : (
-                <>
-                  <Route path="view-entity" element={<ViewCompany />} />
-                  <Route path="dashboard/" element={<DashboardLayout />}>
-                    <Route path="view-employees" element={<ViewEmployees />} />
-                    <Route
-                      path="manage-employees-pensions"
-                      element={<ManageEmployeesPensions />}
-                    />
-                    <Route path="create-entity" element={<CreateEntity />} />
-                    <Route
-                      path="update-entity/:id"
-                      element={<UpdateEntity />}
-                    />
-                    <Route
-                      path="update-employee/:id"
-                      element={<UpdateAdminEmployee />}
-                    />
+            {isMobile ? (
+              <Route path="view-entity" element={<MobileScreen />} />
+            ) : (
+              <>
+                <Route path="view-entity" element={<ViewCompany />} />
+                <Route path="dashboard/" element={<DashboardLayout />}>
+                  <Route path="view-employees" element={<ViewEmployees />} />
+                  <Route
+                    path="manage-employees-pensions"
+                    element={<ManageEmployeesPensions />}
+                  />
+                  <Route path="create-entity" element={<CreateEntity />} />
+                  <Route path="update-entity/:id" element={<UpdateEntity />} />
+                  <Route
+                    path="update-employee/:id"
+                    element={<UpdateAdminEmployee />}
+                  />
+                  <Route path="create-employee" element={<CreateEmployee />} />
+                  <Route
+                    path="create-employee-loan/:id"
+                    element={<CreateEmployeeLoan />}
+                  />
+                  <Route
+                    path="terminate-employee/:id"
+                    element={<TerminateEmployee />}
+                  />
+                  <Route
+                    path="terminated-employees/:id"
+                    element={<TerminatedEmployees />}
+                  />
+                  <Route
+                    path="manage-employee-loans/:id"
+                    element={<ManageEmployeeLoans />}
+                  />
+                  <Route
+                    path="create-employee-pensions/:id"
+                    element={<CreateEmployeePensionPage />}
+                  />
+                  <Route
+                    path="update-employee-pension/:id"
+                    element={<UpdateEmployeePension />}
+                  />
+                  <Route
+                    path="update-employee-loan/:id"
+                    element={<UpdateEmployeeLoan />}
+                  />
+                  <Route
+                    path="update-income-type/:id"
+                    element={<UpdateIncomeType />}
+                  />
+                  <Route
+                    path="create-allowable-deductions"
+                    element={<CreateAllowableDeductions />}
+                  />
+                  <Route
+                    path="create-income-type"
+                    element={<CreateIncomeType />}
+                  />
+                  <Route
+                    path="create-allowable-deductions"
+                    element={<CreateIncomeType />}
+                  />
+                  <Route path="run-payroll" element={<MySpreadsheet />} />
+                  <Route path="saved-reports" element={<SavedReports />} />
+                  <Route
+                    path="tax-report-details/:id"
+                    element={<TaxReportDetails />}
+                  />
+                  <Route path="manage-entity/:id" element={<ManageEntity />} />
+                  <Route
+                    path="manage-employees"
+                    element={<ManageEmployees />}
+                  />
+                </Route>
+              </>
+            )}
+            <Route path="dashboard/" element={<TaxSettingsDashboardLayout />}>
+              <Route path="tax-settings" element={<TaxSettings />} />
+              <Route
+                path="manage-tax-election"
+                element={<ManageTaxElection />}
+              />
+              <Route
+                path="update-tax-election/:id/:tax_rate_uid"
+                element={<UpdateTaxElection />}
+              />
+            </Route>
+            <Route path="/employee" element={<EmployeeDashboardLayout />}>
+              <Route path="update-employee" element={<UpdateEmployee />} />
+              <Route path="employee-payslip" element={<Payslip />} />
+            </Route>
+            <Route path="/super" element={<SuperAdminDashboardLayout />}>
+              <Route path="create-tax-rate" element={<SuperCreateTaxRate />} />
+              <Route path="manage-tax-rate" element={<SuperManageTaxRate />} />
+              <Route
+                path="update-tax-rate/:id"
+                element={<SuperUpdateTaxRate />}
+              />
+              <Route path="create-price" element={<CreatePrice />} />
 
-                    <Route
-                      path="create-employee"
-                      element={<CreateEmployee />}
-                    />
-                    <Route
-                      path="create-employee-loan/:id"
-                      element={<CreateEmployeeLoan />}
-                    />
-                    <Route
-                      path="terminate-employee/:id"
-                      element={<TerminateEmployee />}
-                    />
-                    <Route
-                      path="terminated-employees/:id"
-                      element={<TerminatedEmployees />}
-                    />
-                    <Route
-                      path="manage-employee-loans/:id"
-                      element={<ManageEmployeeLoans />}
-                    />
-                    <Route
-                      path="create-employee-pensions/:id"
-                      element={<CreateEmployeePensionPage />}
-                    />
-                    <Route
-                      path="update-employee-pension/:id"
-                      element={<UpdateEmployeePension />}
-                    />
-                    <Route
-                      path="update-employee-loan/:id"
-                      element={<UpdateEmployeeLoan />}
-                    />
-                    <Route
-                      path="update-income-type/:id"
-                      element={<UpdateIncomeType />}
-                    />
-                    <Route
-                      path="create-allowable-deductions"
-                      element={<CreateAllowableDeductions />}
-                    />
-                    <Route
-                      path="create-income-type"
-                      element={<CreateIncomeType />}
-                    />
-                    <Route
-                      path="create-allowable-deductions"
-                      element={<CreateIncomeType />}
-                    />
-                    <Route path="run-payroll" element={<MySpreadsheet />} />
-                    <Route path="saved-reports" element={<SavedReports />} />
-                    <Route
-                      path="tax-report-details/:id"
-                      element={<TaxReportDetails />}
-                    />
-                    <Route
-                      path="manage-entity/:id"
-                      element={<ManageEntity />}
-                    />
-                    <Route
-                      path="manage-employees"
-                      element={<ManageEmployees />}
-                    />
-                  </Route>
-                </>
-              )}
-              <Route path="dashboard/" element={<TaxSettingsDashboardLayout />}>
-                <Route path="tax-settings" element={<TaxSettings />} />
-                <Route
-                  path="manage-tax-election"
-                  element={<ManageTaxElection />}
-                />
-                <Route
-                  path="update-tax-election/:id/:tax_rate_uid"
-                  element={<UpdateTaxElection />}
-                />
-              </Route>
-              <Route path="/employee" element={<EmployeeDashboardLayout />}>
-                <Route path="update-employee" element={<UpdateEmployee />} />
-                <Route path="employee-payslip" element={<Payslip />} />
-              </Route>
-              <Route path="/super" element={<SuperAdminDashboardLayout />}>
-                <Route
-                  path="create-tax-rate"
-                  element={<SuperCreateTaxRate />}
-                />
-                <Route
-                  path="manage-tax-rate"
-                  element={<SuperManageTaxRate />}
-                />
-                <Route
-                  path="update-tax-rate/:id"
-                  element={<SuperUpdateTaxRate />}
-                />
-                <Route path="create-price" element={<CreatePrice />} />
-
-                <Route
-                  path="create-tax-component"
-                  element={<CreateTaxComponent />}
-                />
-                <Route path="create-tax-type" element={<CreateTaxType />} />
-                <Route
-                  path="terms-and-conditions"
-                  element={<TermsAndConditions />}
-                />
-              </Route>
-              <Route path="/tax-operator" element={<TaxOperatorLayout />}>
-                <Route
-                  path="create-tax-rate"
-                  element={<SuperAdminDashboard />}
-                />
-                <Route path="manage-tax-rate" element={<ManageTaxRate />} />
-                <Route
-                  path="update-tax-rate/:id"
-                  element={<UpdateTaxOperatorRate />}
-                />
-              </Route>
-            </>
+              <Route
+                path="create-tax-component"
+                element={<CreateTaxComponent />}
+              />
+              <Route path="create-tax-type" element={<CreateTaxType />} />
+              <Route
+                path="terms-and-conditions"
+                element={<TermsAndConditions />}
+              />
+            </Route>
+            <Route path="/tax-operator" element={<TaxOperatorLayout />}>
+              <Route path="create-tax-rate" element={<SuperAdminDashboard />} />
+              <Route path="manage-tax-rate" element={<ManageTaxRate />} />
+              <Route
+                path="update-tax-rate/:id"
+                element={<UpdateTaxOperatorRate />}
+              />
+            </Route>
           </>
-        )}
+        )}{" "}
+        <Route path="*" element={<AccessDenied />} />
         {/* Redirect to AccessDenied for unmatched routes */}
         {/* <Route path="access-denied" element={<AccessDenied />} /> */}
         {/* <Route path="*" element={<AccessDenied />} /> */}
