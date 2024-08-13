@@ -45,6 +45,7 @@ function ViewCompany() {
       address: "",
     },
   ]);
+
   React.useEffect(() => {
     GetAllEntities()
       .then((res) => {
@@ -122,6 +123,11 @@ function ViewCompany() {
 
   const handleRegionsChange = (selectedRangeOption) => {
     setSelectedRegion(selectedRangeOption);
+  };
+
+  const goToManageEntity = (id) => {
+    window.location.href = "/dashboard/manage-entity/" + id;
+    localStorage.setItem("entity_id", id);
   };
 
   return (
@@ -335,7 +341,7 @@ function ViewCompany() {
 
         <div className="grid grid-cols-3 gap-6 mt-10 slide-in-right">
           {isSkeletonLoading ? (
-            [1, 2, 3].map((e, i) => <SkeletonLoader key={i} />)
+            [1, 2, 3].map((_, i) => <SkeletonLoader key={i} />)
           ) : (
             <>
               {company.map((c, i) => (
@@ -344,7 +350,7 @@ function ViewCompany() {
                     // passage={c.passage}
                     noOfEmployees={c.size}
                     companyName={c.name}
-                    href={`/dashboard/manage-entity/${c.id}`}
+                    href={() => goToManageEntity(c.id)}
                   />
                 </div>
               ))}

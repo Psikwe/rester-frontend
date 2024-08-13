@@ -59,6 +59,7 @@ import UpdateEmployeePension from "./update_employee_pension/_page";
 import CreateEmployeePensionPage from "./create_employee_pensions/_page";
 import ManageEmployeesPensions from "./manage_employees_pensions/_page";
 import AccessDenied from "./access_denied/_page";
+import CreateSubscription from "./create_subscription/_page";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
@@ -84,6 +85,10 @@ export default function AppRoutes() {
             ) : (
               <>
                 <Route path="view-entity" element={<ViewCompany />} />
+                <Route
+                  path="select-subscription"
+                  element={<CreateSubscription />}
+                />
                 <Route path="dashboard/" element={<DashboardLayout />}>
                   <Route path="view-employees" element={<ViewEmployees />} />
                   <Route

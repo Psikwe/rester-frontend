@@ -17,9 +17,10 @@ function PricingCard(props) {
             </span>
           </span>
         </ul> */}
-        <button className="w-40 py-1 text-white bg-black rounded-full mt-9 mobile:w-full">
+        {/* <button className="w-40 py-1 text-white bg-black rounded-full mt-9 mobile:w-full">
           {props.btnName}
-        </button>
+        </button> */}
+        <div className="text-gray-300">{props.selected}</div>
       </div>
     </>
   );
