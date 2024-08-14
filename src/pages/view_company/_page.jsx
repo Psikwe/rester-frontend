@@ -24,6 +24,10 @@ import {
 import logo from "../../assets/rester.png";
 import Loader from "../../components/loader/_component";
 import { showToast } from "../../core/hooks/alert";
+import {
+  GetBillingHistory,
+  GetSubscriptions,
+} from "../../core/services/pricing.service";
 
 function ViewCompany() {
   const [isSkeletonLoading, setSkeletonLoading] = React.useState(true);
@@ -126,7 +130,16 @@ function ViewCompany() {
   };
 
   const goToManageEntity = (id) => {
-    window.location.href = "/dashboard/manage-entity/" + id;
+    GetSubscriptions(id)
+      .then((response) => {
+        console.log(response);
+        response.data.subscriptions.length === 0
+          ? (window.location.href = "/select-subscription")
+          : (window.location.href = "/dashboard/manage-entity/" + id);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     localStorage.setItem("entity_id", id);
   };
 

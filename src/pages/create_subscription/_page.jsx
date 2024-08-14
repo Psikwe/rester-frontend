@@ -84,8 +84,14 @@ function CreateSubscription() {
         setTransactionId(response?.data.transaction_id);
         showToast(response?.data.message, true);
         console.log("id: " + response?.data.transaction_id);
-        if (response?.data.transaction_id)
+
+        if (response?.data.transaction_id) {
+          sessionStorage.setItem(
+            "transaction_id",
+            response?.data.transaction_id
+          );
           checkPaymentStatus(response?.data.transaction_id);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -97,6 +103,7 @@ function CreateSubscription() {
     CheckPaymentStatus(transaction_id)
       .then((response) => {
         console.log(response);
+        window.location.href = "/dashboard/manage-entity/" + entity_id;
       })
       .then((response) => {
         console.log(response);

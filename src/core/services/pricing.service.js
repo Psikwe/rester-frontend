@@ -22,6 +22,12 @@ export const AddSubscription = async (data) => {
   );
 };
 
+export const GetSubscriptions = async (entity_id) => {
+  return await getAxios().get(
+    `https://rester-82c60dc37022.herokuapp.com/get_subscriptions/${entity_id}`
+  );
+};
+
 export const CheckPaymentStatus = async (transaction_id) => {
   return await getAxios().get(
     `https://rester-82c60dc37022.herokuapp.com/check_payment_status/` +
@@ -30,7 +36,7 @@ export const CheckPaymentStatus = async (transaction_id) => {
 };
 
 export const GetBillingHistory = async (entity_id) => {
-  return await getAxios().post(
+  return await getAxios().get(
     `https://rester-82c60dc37022.herokuapp.com/get_billing_history/` +
       entity_id,
     data

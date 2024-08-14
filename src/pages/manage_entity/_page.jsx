@@ -16,7 +16,7 @@ import SkeletonLoader from "../../components/skeleton_loading/_component";
 function ManageEntity() {
   const entity_id = localStorage.getItem("entity_id");
   const { id } = useParams();
-  localStorage.setItem("entity_id", id);
+
   const { employeesQuery } = useEmployees(entity_id);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [contentLoading, setContentLoading] = React.useState(false);
