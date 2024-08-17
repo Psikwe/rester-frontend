@@ -60,9 +60,25 @@ import CreateEmployeePensionPage from "./create_employee_pensions/_page";
 import ManageEmployeesPensions from "./manage_employees_pensions/_page";
 import AccessDenied from "./access_denied/_page";
 import CreateSubscription from "./create_subscription/_page";
+import { GetSubscriptions } from "../core/services/pricing.service";
 
 export default function AppRoutes() {
   const [userSession] = React.useState(getUserSession());
+  const entity_id = localStorage.getItem("entity_id");
+  const [checkForPayment, setCheckForPayment] = React.useState();
+
+  React.useEffect(() => {
+    if (entity_id !== "" || entity_id !== null) {
+      GetSubscriptions(entity_id)
+        .then((response) => {
+          console.log("ads: ", response.data.subscriptions);
+          setCheckForPayment(response.data.subscriptions);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, []);
 
   return (
     <BrowserRouter>
@@ -89,88 +105,126 @@ export default function AppRoutes() {
                   path="select-subscription"
                   element={<CreateSubscription />}
                 />
-                <Route path="dashboard/" element={<DashboardLayout />}>
-                  <Route path="view-employees" element={<ViewEmployees />} />
+                {checkForPayment && checkForPayment.length === 0 ? (
+                  <>
+                    <Route
+                      path="select-subscription"
+                      element={<CreateSubscription />}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Route path="dashboard/" element={<DashboardLayout />}>
+                      <Route
+                        path="view-employees"
+                        element={<ViewEmployees />}
+                      />
+                      <Route
+                        path="manage-employees-pensions"
+                        element={<ManageEmployeesPensions />}
+                      />
+                      <Route path="create-entity" element={<CreateEntity />} />
+                      <Route
+                        path="update-entity/:id"
+                        element={<UpdateEntity />}
+                      />
+                      <Route
+                        path="update-employee/:id"
+                        element={<UpdateAdminEmployee />}
+                      />
+                      <Route
+                        path="create-employee"
+                        element={<CreateEmployee />}
+                      />
+                      <Route
+                        path="create-employee-loan/:id"
+                        element={<CreateEmployeeLoan />}
+                      />
+                      <Route
+                        path="terminate-employee/:id"
+                        element={<TerminateEmployee />}
+                      />
+                      <Route
+                        path="terminated-employees/:id"
+                        element={<TerminatedEmployees />}
+                      />
+                      <Route
+                        path="manage-employee-loans/:id"
+                        element={<ManageEmployeeLoans />}
+                      />
+                      <Route
+                        path="create-employee-pensions/:id"
+                        element={<CreateEmployeePensionPage />}
+                      />
+                      <Route
+                        path="update-employee-pension/:id"
+                        element={<UpdateEmployeePension />}
+                      />
+                      <Route
+                        path="update-employee-loan/:id"
+                        element={<UpdateEmployeeLoan />}
+                      />
+                      <Route
+                        path="update-income-type/:id"
+                        element={<UpdateIncomeType />}
+                      />
+                      <Route
+                        path="create-allowable-deductions"
+                        element={<CreateAllowableDeductions />}
+                      />
+                      <Route
+                        path="create-income-type"
+                        element={<CreateIncomeType />}
+                      />
+                      <Route
+                        path="create-allowable-deductions"
+                        element={<CreateIncomeType />}
+                      />
+                      <Route path="run-payroll" element={<MySpreadsheet />} />
+                      <Route path="saved-reports" element={<SavedReports />} />
+                      <Route
+                        path="tax-report-details/:id"
+                        element={<TaxReportDetails />}
+                      />
+                      <Route
+                        path="manage-entity/:id"
+                        element={<ManageEntity />}
+                      />
+                      <Route
+                        path="manage-employees"
+                        element={<ManageEmployees />}
+                      />
+                    </Route>
+                  </>
+                )}
+              </>
+            )}
+            {checkForPayment && checkForPayment.length === 0 ? (
+              <>
+                <Route
+                  path="select-subscription"
+                  element={<CreateSubscription />}
+                />
+              </>
+            ) : (
+              <>
+                <Route
+                  path="dashboard/"
+                  element={<TaxSettingsDashboardLayout />}
+                >
+                  <Route path="tax-settings" element={<TaxSettings />} />
                   <Route
-                    path="manage-employees-pensions"
-                    element={<ManageEmployeesPensions />}
+                    path="manage-tax-election"
+                    element={<ManageTaxElection />}
                   />
-                  <Route path="create-entity" element={<CreateEntity />} />
-                  <Route path="update-entity/:id" element={<UpdateEntity />} />
                   <Route
-                    path="update-employee/:id"
-                    element={<UpdateAdminEmployee />}
-                  />
-                  <Route path="create-employee" element={<CreateEmployee />} />
-                  <Route
-                    path="create-employee-loan/:id"
-                    element={<CreateEmployeeLoan />}
-                  />
-                  <Route
-                    path="terminate-employee/:id"
-                    element={<TerminateEmployee />}
-                  />
-                  <Route
-                    path="terminated-employees/:id"
-                    element={<TerminatedEmployees />}
-                  />
-                  <Route
-                    path="manage-employee-loans/:id"
-                    element={<ManageEmployeeLoans />}
-                  />
-                  <Route
-                    path="create-employee-pensions/:id"
-                    element={<CreateEmployeePensionPage />}
-                  />
-                  <Route
-                    path="update-employee-pension/:id"
-                    element={<UpdateEmployeePension />}
-                  />
-                  <Route
-                    path="update-employee-loan/:id"
-                    element={<UpdateEmployeeLoan />}
-                  />
-                  <Route
-                    path="update-income-type/:id"
-                    element={<UpdateIncomeType />}
-                  />
-                  <Route
-                    path="create-allowable-deductions"
-                    element={<CreateAllowableDeductions />}
-                  />
-                  <Route
-                    path="create-income-type"
-                    element={<CreateIncomeType />}
-                  />
-                  <Route
-                    path="create-allowable-deductions"
-                    element={<CreateIncomeType />}
-                  />
-                  <Route path="run-payroll" element={<MySpreadsheet />} />
-                  <Route path="saved-reports" element={<SavedReports />} />
-                  <Route
-                    path="tax-report-details/:id"
-                    element={<TaxReportDetails />}
-                  />
-                  <Route path="manage-entity/:id" element={<ManageEntity />} />
-                  <Route
-                    path="manage-employees"
-                    element={<ManageEmployees />}
+                    path="update-tax-election/:id/:tax_rate_uid"
+                    element={<UpdateTaxElection />}
                   />
                 </Route>
               </>
             )}
-            <Route path="dashboard/" element={<TaxSettingsDashboardLayout />}>
-              <Route path="tax-settings" element={<TaxSettings />} />
-              <Route
-                path="manage-tax-election"
-                element={<ManageTaxElection />}
-              />
-              <Route
-                path="update-tax-election/:id/:tax_rate_uid"
-                element={<UpdateTaxElection />}
-              />
-            </Route>
+
             <Route path="/employee" element={<EmployeeDashboardLayout />}>
               <Route path="update-employee" element={<UpdateEmployee />} />
               <Route path="employee-payslip" element={<Payslip />} />

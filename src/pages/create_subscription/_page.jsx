@@ -13,6 +13,9 @@ import SkeletonLoader from "../../components/skeleton_loading/_component";
 import { CiLogout } from "react-icons/ci";
 import Loader from "../../components/loader/_component";
 import { showToast } from "../../core/hooks/alert";
+import Modal from "../../components/modal/_component";
+import { BsExclamationCircle } from "react-icons/bs";
+import { clearUserSession } from "../../core/utilities";
 
 function CreateSubscription() {
   const entity_id = localStorage.getItem("entity_id");
@@ -109,8 +112,38 @@ function CreateSubscription() {
         console.log(response);
       });
   };
+
+  const handleLogout = () => {
+    clearUserSession();
+  };
+
+  const closeLogoutModal = () => {
+    setIsLogoutModalOpen(false);
+  };
   return (
     <>
+      <Modal open={isLogoutModalOpen} close={closeLogoutModal}>
+        <div className="w-full bg-white p-14">
+          <div className="flex justify-center mb-2">
+            <BsExclamationCircle size={70} color="red" />
+          </div>
+          <p>Are you sure you want to logout?</p>
+          <div className="flex">
+            <button
+              onClick={closeLogoutModal}
+              className="w-full py-2 mr-2 text-white rounded-full mt-9 primary mobile:w-full"
+            >
+              No
+            </button>
+            <button
+              onClick={handleLogout}
+              className="w-full py-2 text-white bg-red-500 rounded-full mt-9 mobile:w-full"
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      </Modal>
       <nav className="sticky top-0 z-10 flex justify-between h-20 p-6 text-gray-500 bg-white shadow-2xl">
         <div className="flex items-center ml-4 text-left">
           <div className="w-full mr-4 text-2xl font-semibold text-black mobile:text-xs">

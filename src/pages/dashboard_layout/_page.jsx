@@ -234,11 +234,11 @@ const DashboardLayout = () => {
                 </span>
               </button>
               <ul
-                className="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
+                className="w-28 h-16 absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
                 aria-labelledby="settingsMenu"
                 data-twe-dropdown-menu-ref
               >
-                <li>
+                {/* <li>
                   <span
                     className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
                     data-twe-dropdown-item-ref
@@ -255,7 +255,7 @@ const DashboardLayout = () => {
                   >
                     Change Language
                   </span>
-                </li>
+                </li> */}
                 <li>
                   <span
                     className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"

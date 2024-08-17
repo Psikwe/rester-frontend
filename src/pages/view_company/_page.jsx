@@ -61,16 +61,6 @@ function ViewCompany() {
       });
   }, []);
 
-  const navLists = [
-    {
-      name: "Dashboard",
-      link: "/",
-    },
-    {
-      name: "Trips",
-      link: "/trips",
-    },
-  ];
   const handleLogout = () => {
     clearUserSession();
     // window.location.href = "/";
@@ -130,6 +120,7 @@ function ViewCompany() {
   };
 
   const goToManageEntity = (id) => {
+    localStorage.setItem("entity_id", id);
     GetSubscriptions(id)
       .then((response) => {
         console.log(response);
@@ -140,7 +131,6 @@ function ViewCompany() {
       .catch((error) => {
         console.error(error);
       });
-    localStorage.setItem("entity_id", id);
   };
 
   return (

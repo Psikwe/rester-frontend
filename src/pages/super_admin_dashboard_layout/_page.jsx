@@ -198,7 +198,7 @@ const SuperAdminDashboardLayout = () => {
             </div>
             <div className="m-auto text-sm text-slate-200">{showDate}</div>
             <div className="flex items-center cursor-pointer">
-              <button
+              {/* <button
                 className="flex items-center rounded pb-2 pt-2.5 text-xs font-medium text-white "
                 type="button"
                 id="settingsMenu"
@@ -222,7 +222,7 @@ const SuperAdminDashboardLayout = () => {
                     />
                   </svg>
                 </span>
-              </button>
+              </button> */}
               <ul
                 className="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
                 aria-labelledby="settingsMenu"

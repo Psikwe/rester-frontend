@@ -30,16 +30,16 @@ export default function Footer() {
   ];
 
   const footerSocials = [
-    {
-      icon: <FaSquareFacebook size={20} />,
-      link: "#",
-      key: "4",
-    },
-    {
-      icon: <FaSquareXTwitter size={20} />,
-      link: "#",
-      key: "2",
-    },
+    // {
+    //   icon: <FaSquareFacebook size={20} />,
+    //   link: "#",
+    //   key: "4",
+    // },
+    // {
+    //   icon: <FaSquareXTwitter size={20} />,
+    //   link: "#",
+    //   key: "2",
+    // },
     {
       icon: <AiOutlineMail size={20} />,
       link: "mailto:Clinton.danso@service4gh.com",
