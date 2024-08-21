@@ -33,6 +33,7 @@ function ManageEntity() {
     setContentLoading(true);
     GetOneEntity(id)
       .then((response) => {
+        console.log("rr: ", response.data.entity);
         setPopulateEntity(response.data.entity);
         setContentLoading(false);
         localStorage.setItem("entity_name", response.data.entity.name);

@@ -175,7 +175,7 @@ function Home() {
                   onClick={handleSignupNavigation}
                   className="text-sm duration-700 rounded-full mobile:w-1/2 button primary"
                 >
-                  Get Started &#8599;
+                  Get Starte &#8599;
                 </button>
               </div>
             </div>

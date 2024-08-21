@@ -1,37 +1,41 @@
 import React from "react";
-import { pricingPackages } from "../../core/data";
-import PricingCard from "../../components/pricing_card/_component";
+import secureImg from "../../assets/security.png";
+import momoImg from "../../assets/momo.png";
 import {
   AddSubscription,
   CheckPaymentStatus,
-  GetBillingHistory,
   GetPricing,
 } from "../../core/services/pricing.service";
 import logo from "../../assets/rester.png";
-
-import SkeletonLoader from "../../components/skeleton_loading/_component";
 import { CiLogout } from "react-icons/ci";
 import Loader from "../../components/loader/_component";
 import { showToast } from "../../core/hooks/alert";
 import Modal from "../../components/modal/_component";
 import { BsExclamationCircle } from "react-icons/bs";
 import { clearUserSession } from "../../core/utilities";
+import { FaCircleInfo } from "react-icons/fa6";
+import loading from "../../assets/gifs/loading.gif";
+import success from "../../assets/gifs/successs.gif";
 
 function CreateSubscription() {
   const entity_id = localStorage.getItem("entity_id");
-  const [prices, setPrices] = React.useState([]);
+  const [prices, setPrices] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isButtonLoading, setButtonIsLoading] = React.useState(false);
   const [transactionId, setTransactionId] = React.useState("");
   const [priceId, setPriceId] = React.useState(0);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
+  const [paymentConfirmationModal, setPaymentConfirmationModal] =
+    React.useState(false);
+  const [paymentFailedModal, setPaymentFailedModal] = React.useState(false);
+  const [paymentLoadingModal, setPaymentLoadingModal] = React.useState(false);
 
   React.useEffect(() => {
     setIsLoading(true);
     GetPricing()
       .then((response) => {
         setIsLoading(false);
-        console.log(response?.data.prices);
+        console.log(response);
         setPrices(response?.data.prices);
       })
       .catch((error) => {
@@ -43,19 +47,13 @@ function CreateSubscription() {
     setIsLogoutModalOpen(true);
   };
 
-  const selectSubscription = (id) => {
-    setPriceId(id);
-  };
-
-  React.useEffect(() => {
-    GetBillingHistory(entity_id)
-      .then((response) => {
-        console.log("re: ", response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   GetBillingHistory(entity_id)
+  //     .then((response) => {})
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   const handleSubscription = () => {
     console.log("p: ", priceId);
@@ -70,24 +68,22 @@ function CreateSubscription() {
       showToast("Number must be 10 digits", false);
       return;
     }
-    if (priceId == 0) {
-      showToast("Please select a plan", false);
-      return;
-    }
+    // if (priceId == 0) {
+    //   showToast("Please select a plan", false);
+    //   return;
+    // }
 
     const payload = {
       entity_id: entity_id,
       phone_number: phoneNumberField,
-      price_id: priceId,
+      price_id: prices[0].id,
     };
-
+    setPaymentLoadingModal(true);
     AddSubscription(payload)
       .then((response) => {
         console.log(response);
         setTransactionId(response?.data.transaction_id);
-        showToast(response?.data.message, true);
-        console.log("id: " + response?.data.transaction_id);
-
+        // showToast(response?.data.message, true);
         if (response?.data.transaction_id) {
           sessionStorage.setItem(
             "transaction_id",
@@ -105,11 +101,17 @@ function CreateSubscription() {
   const checkPaymentStatus = (transaction_id) => {
     CheckPaymentStatus(transaction_id)
       .then((response) => {
-        console.log(response);
-        window.location.href = "/dashboard/manage-entity/" + entity_id;
+        setPaymentLoadingModal(false);
+        setPaymentConfirmationModal(true);
+        setTimeout(() => {
+          setPaymentConfirmationModal(false);
+          window.location.href = "/dashboard/manage-entity/" + entity_id;
+        }, 3000);
+        // window.location.href = "/dashboard/manage-entity/" + entity_id;
       })
-      .then((response) => {
-        console.log(response);
+      .catch((error) => {
+        setPaymentFailedModal(true);
+        console.log(error);
       });
   };
 
@@ -120,6 +122,13 @@ function CreateSubscription() {
   const closeLogoutModal = () => {
     setIsLogoutModalOpen(false);
   };
+  const closePaymentConfirmationModal = () => {
+    setPaymentConfirmationModal(false);
+  };
+  const closePaymentFailedModal = () => {
+    setPaymentFailedModal(false);
+  };
+
   return (
     <>
       <Modal open={isLogoutModalOpen} close={closeLogoutModal}>
@@ -144,6 +153,46 @@ function CreateSubscription() {
           </div>
         </div>
       </Modal>
+      <Modal open={paymentLoadingModal}>
+        <div className="w-[30rem] bg-white p-14">
+          <div className="flex justify-center mb-2">
+            <img className="w-48 h-48" src={loading} />
+          </div>
+          <p className="flex justify-center">
+            Waiting for payment on your device
+          </p>
+        </div>
+      </Modal>
+      <Modal
+        open={paymentConfirmationModal}
+        close={closePaymentConfirmationModal}
+      >
+        <div className="w-full text-center bg-white p-14">
+          <p>Payment made successfully.</p>
+          <div className="flex justify-center mb-2">
+            <img src={success} />
+          </div>
+
+          <p className="text-lg text-green-400 animate-pulse">
+            Hang tight while we take you to the dashboard!
+          </p>
+        </div>
+      </Modal>
+      <Modal open={paymentFailedModal} close={closePaymentFailedModal}>
+        <div className="w-[30rem] text-center bg-white p-14">
+          <p className="text-2xl text-red-600">Payment failed</p>
+          <div className="flex justify-center mb-2">
+            <BsExclamationCircle size={120} color="red" />
+          </div>
+
+          <p
+            className="text-lg text-green-400 cursor-pointer animate-pulse"
+            onClick={closePaymentFailedModal}
+          >
+            Retry
+          </p>
+        </div>
+      </Modal>
       <nav className="sticky top-0 z-10 flex justify-between h-20 p-6 text-gray-500 bg-white shadow-2xl">
         <div className="flex items-center ml-4 text-left">
           <div className="w-full mr-4 text-2xl font-semibold text-black mobile:text-xs">
@@ -162,7 +211,7 @@ function CreateSubscription() {
       <div className="laptop-lg:px-32 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16">
         <div className="flex flex-col justify-center text-center">
           <h3 className="text-4xl font-medium tracking-widest">
-            Choose the plan that’s right for you
+            Make payment and get started!
           </h3>
           <p className="w-1/2 m-auto mt-4 text-lg font-thin">
             Start and Grow with
@@ -172,24 +221,89 @@ function CreateSubscription() {
             Today.
           </p>
         </div>
-        <div className="relative flex items-center justify-center m-auto mt-32 mb-8">
-          <div>
-            <label className="text-sm label bold">
-              Enter number for payment
-            </label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-[30rem] pl-10 p-2.5"
-                type="number"
-                id="phone-number"
-                placeholder="number"
-                name="phone_number"
-              />
+        <div className="flex items-center justify-between">
+          <div className="p-16 bg-slate-100 rounded-2xl">
+            <div className="flex justify-between">
+              <div>
+                <h3>
+                  <span className="text-2xl">R</span>ester
+                </h3>
+                <div className="flex items-center ">
+                  <div className="mr-1 text-3xl font-medium">
+                    GHS {prices && prices[0].amount}
+                  </div>
+                  <div className="text-xs text-green-500 underline uppercase">
+                    monthly
+                  </div>
+                </div>
+                <h3 className="mt-2 text-sm font-medium">Package Details</h3>
+                <div>
+                  <ul className="text-sm text-gray-400 list-disc">
+                    <li>Ability to download payroll</li>
+                    <li>Ability to download reports</li>
+                    <li>Ability to onboard unlimited employees</li>
+                    <li>Free Training</li>
+                  </ul>
+                </div>
+              </div>
+              <div></div>
+            </div>
+          </div>
+
+          <div className="m-auto mt-32 mb-8 ">
+            <div className="flex items-center p-1 border-2 rounded-lg border-slate-100">
+              <img className="w-10 mr-2" src={momoImg} />
+              <span className="text-sm text-slate-500">MTN MOMO PAYMENT</span>
+            </div>
+            <div className="flex my-4 items-center w-full bg-[#d4f2ff]">
+              <div className="inline-block  h-24 w-1 bg-[#6ccef5]"></div>
+              <h3 className="flex items-center ml-3 text-gray-500">
+                <FaCircleInfo size={25} className="mr-2" />
+                Please ensure that the number entered below <br /> is where
+                payment will be deducted
+              </h3>
+            </div>
+            <div className="mt-8">
+              <label className="text-sm label bold">
+                Enter number for payment
+              </label>
+              <div className="control">
+                <input
+                  required
+                  className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-[30rem] pl-10 p-2.5"
+                  type="number"
+                  id="phone-number"
+                  autoFocus={true}
+                  placeholder="number"
+                  name="phone_number"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center py-2 mt-3 rounded-full px-9 bg-slate-100">
+              <div className="flex items-center mt-3">
+                <img className="mr-1" src={secureImg} />
+                <h5 className="text-xs">
+                  Secure <br /> checkout
+                </h5>
+              </div>
+              <button
+                disabled={isLoading}
+                onClick={handleSubscription}
+                type="submit"
+                className={
+                  isLoading
+                    ? `cursor-pointer w-1/2 rounded-full m-auto py-2 text-white mt-3 primary mobile:w-full flex justify-center`
+                    : `w-1/2 m-auto cursor-pointer py-2 rounded-full text-white mt-3 primary mobile:w-full flex justify-center`
+                }
+              >
+                {isButtonLoading ? <Loader /> : "Complete Payment"}
+              </button>
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-center m-auto mb-12 mobile:gap-7 mobile:flex-col">
+
+        {/* <div className="flex items-center justify-center m-auto mb-12 mobile:gap-7 mobile:flex-col">
           {isLoading ? (
             <>
               <SkeletonLoader />
@@ -219,19 +333,7 @@ function CreateSubscription() {
                 ))}
             </>
           )}
-        </div>
-        <button
-          disabled={isLoading}
-          onClick={handleSubscription}
-          type="submit"
-          className={
-            isLoading
-              ? `animate-pulse w-1/5 rounded-full m-auto py-2 text-white mt-3 primary mobile:w-full flex justify-center`
-              : `w-1/5 m-auto py-2 rounded-full text-white mt-3 primary mobile:w-full flex justify-center`
-          }
-        >
-          {isButtonLoading ? <Loader /> : "Subscribe"}
-        </button>
+        </div> */}
       </div>
     </>
   );
