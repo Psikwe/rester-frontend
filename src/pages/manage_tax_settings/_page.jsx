@@ -16,8 +16,10 @@ import {
 } from "../../core/services/tax.service";
 import { useIncomeTaxRate, useTaxRateElections } from "../../core/hooks/tax";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 function ManageTaxElection() {
+  const navigate = useNavigate();
   const entity_id = localStorage.getItem("entity_id");
   const { taxRateElectionsQuery } = useTaxRateElections(entity_id);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -56,7 +58,7 @@ function ManageTaxElection() {
   };
 
   const handleUpdateClick = (id, tax_rate_uid) => {
-    window.location.href = "update-tax-election/" + id + "/" + tax_rate_uid;
+    navigate("update-tax-election/" + id + "/" + tax_rate_uid);
   };
 
   const handleDelete = (id, name) => {

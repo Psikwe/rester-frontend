@@ -16,8 +16,10 @@ import { clearUserSession } from "../../core/utilities";
 import { FaCircleInfo } from "react-icons/fa6";
 import loading from "../../assets/gifs/loading.gif";
 import success from "../../assets/gifs/successs.gif";
+import { useNavigate } from "react-router-dom";
 
 function CreateSubscription() {
+  const navigate = useNavigate();
   const entity_id = localStorage.getItem("entity_id");
   const [prices, setPrices] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -105,9 +107,8 @@ function CreateSubscription() {
         setPaymentConfirmationModal(true);
         setTimeout(() => {
           setPaymentConfirmationModal(false);
-          window.location.href = "/dashboard/manage-entity/" + entity_id;
+          navigate("/dashboard/manage-entity/" + entity_id);
         }, 3000);
-        // window.location.href = "/dashboard/manage-entity/" + entity_id;
       })
       .catch((error) => {
         setPaymentFailedModal(true);
@@ -193,6 +194,7 @@ function CreateSubscription() {
           </p>
         </div>
       </Modal>
+
       <nav className="sticky top-0 z-10 flex justify-between h-20 p-6 text-gray-500 bg-white shadow-2xl">
         <div className="flex items-center ml-4 text-left">
           <div className="w-full mr-4 text-2xl font-semibold text-black mobile:text-xs">
@@ -208,6 +210,9 @@ function CreateSubscription() {
           <CiLogout size={40} />
         </div>
       </nav>
+      <div className="flex justify-end mt-3 mr-10 text-green-900 cursor-pointer">
+        Go on free tier
+      </div>
       <div className="laptop-lg:px-32 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16">
         <div className="flex flex-col justify-center text-center">
           <h3 className="text-4xl font-medium tracking-widest">

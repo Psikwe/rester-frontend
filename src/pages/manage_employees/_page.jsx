@@ -19,31 +19,33 @@ import pension from "../../assets/icons/pension.png";
 import DataGrid from "react-data-grid";
 import DeactivatedEmployees from "../deactivated_employees/_page";
 import { showToast } from "../../core/hooks/alert";
+import { useNavigate } from "react-router-dom";
 
 function ManageEmployees() {
   const entity_id = localStorage.getItem("entity_id");
   const [query, setQuery] = React.useState("");
   const [deleteId, setDeleteId] = React.useState("");
   const [employeeId, setEmployeeId] = React.useState("");
-  const [employees, setEmployees] = React.useState([]);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
+  const [employees, setEmployees] = React.useState([]);
   const [isContentLoading, setContentLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
   const [itemToDelete, setItemToDelete] = React.useState("");
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
-
+  const navigate = useNavigate;
   const handleUpdateClick = (id) => {
-    window.location.href = "/dashboard/update-employee/" + id;
+    navigate("/dashboard/update-employee/" + id);
   };
 
   const handleNavigateToEmployeeLoan = (id) => {
-    window.location.href = "/dashboard/create-employee-loan/" + id;
+    navigate("/dashboard/create-employee-loan/" + id);
   };
   const handleNavigateToEmployeePension = (id) => {
-    window.location.href = "/dashboard/create-employee-pensions/" + id;
+    navigate("/dashboard/create-employee-pensions/" + id);
   };
 
   const handleNavigateToTerminateEmployee = (id) => {
-    window.location.href = "/dashboard/terminate-employee/" + id;
+    navigate("/dashboard/terminate-employee/" + id);
   };
 
   const handleDelete = (id, first_name) => {
@@ -86,7 +88,7 @@ function ManageEmployees() {
           <SiCashapp color="blue" size={18} />
         </button>
         <button
-          className="-mt-3 ml-3"
+          className="ml-3 -mt-3"
           title="Create Employee Pension"
           onClick={() => handleNavigateToEmployeePension(id)}
         >
@@ -141,10 +143,10 @@ function ManageEmployees() {
       .then((response) => {
         setContentLoading(false);
         setEmployees(response?.data.employees);
-        console.log("res: ", employees);
+        console.log("res: ", response?.data.error);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error.response?.data.error);
       });
   }, []);
 
@@ -188,11 +190,6 @@ function ManageEmployees() {
             <>
               {!isContentLoading && filteredData.length === 0 ? (
                 <div className="flex flex-col items-center justify-center">
-                  {/* <VscSearchStop
-                color="#687864"
-                size={40}
-                className="animate-bounce"
-              /> */}
                   <h3 className="text-slate-400">No match</h3>
                 </div>
               ) : (
@@ -219,9 +216,7 @@ function ManageEmployees() {
               )}
             </>
           ) : (
-            <>
-              <TableLoader />
-            </>
+            <>{error}</>
           )}
         </>
       ),
@@ -237,11 +232,11 @@ function ManageEmployees() {
   ];
 
   const handleNavigateToManageEmployeeLoans = () => {
-    window.location.href = "/dashboard/manage-employee-loans/" + employeeId;
+    navigate("/dashboard/manage-employee-loans/" + employeeId);
   };
 
   const createEmployee = () => {
-    window.location.href = "/dashboard/create-employee";
+    navigate("/dashboard/create-employee");
   };
   return (
     <>

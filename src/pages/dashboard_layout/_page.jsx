@@ -1,6 +1,6 @@
 import React from "react";
 import { adminDashboardMenus } from "../../core/data";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
@@ -17,20 +17,14 @@ import logo from "../../assets/rester.png";
 import { IoArrowBackCircle } from "react-icons/io5";
 import moment from "moment";
 import { clearUserSession } from "../../core/utilities";
-import { GetOneEntity } from "../../core/services/entity.service";
 
 const DashboardLayout = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
   const [entityName, setEntityName] = React.useState();
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
-  const [populateEntity, setPopulateEntity] = React.useState({
-    name: "",
-    address: "",
-    size: "",
-    email: "",
-  });
 
   React.useEffect(() => {
     initTWE({ Dropdown, Ripple });
@@ -48,7 +42,6 @@ const DashboardLayout = () => {
 
   const handleLogout = () => {
     clearUserSession();
-    // window.location.href = "/";
   };
 
   const closeModal = () => {
@@ -260,9 +253,7 @@ const DashboardLayout = () => {
                   <span
                     className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
                     data-twe-dropdown-item-ref
-                    onClick={() =>
-                      (window.location.href = "/dashboard/tax-settings")
-                    }
+                    onClick={() => navigate("/dashboard/tax-settings")}
                   >
                     Tax
                   </span>

@@ -17,8 +17,10 @@ import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { BsExclamationCircleFill } from "react-icons/bs";
 import { useTaxComponent } from "../../core/hooks/tax";
+import { useNavigate } from "react-router-dom";
 
 function CreateIncomeType() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isContentLoading, setContentLoading] = React.useState(false);
   const { taxComponentQuery } = useTaxComponent();
@@ -84,7 +86,7 @@ function CreateIncomeType() {
   };
 
   const handleUpdateClick = (id) => {
-    window.location.href = "update-income-type/" + id;
+    navigate("update-income-type/" + id);
   };
 
   const renderActionsRow = (data) => {

@@ -27,7 +27,7 @@ function Pricing() {
             Transparent Pricing to Empower Your Team and Operations
           </h3>
           <p className="w-1/2 m-auto mt-4 text-lg font-thin">
-            Choose the plan that best suits your needs and budget. Start and
+            Signup for a plan that best suits your needs and budget. Start and
             Grow with
             <span className="mx-1 animate-pulse font-medium text-[#22c55e]">
               Rester

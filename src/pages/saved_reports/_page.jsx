@@ -9,8 +9,10 @@ import { showToast } from "../../core/hooks/alert";
 import DataGrid from "react-data-grid";
 import { IoEyeOutline } from "react-icons/io5";
 import TableLoader from "../../components/table_loader/_component";
+import { useNavigate } from "react-router-dom";
 
 const SavedReports = () => {
+  const navigate = useNavigate();
   const entity_id = localStorage.getItem("entity_id");
   const fp = React.useRef(null);
   const [report, setReport] = React.useState([]);
@@ -83,7 +85,7 @@ const SavedReports = () => {
     return [...extendedData, ...additionalRows];
   }
   const handleNavigationToDetails = (id) => {
-    window.location.href = "/dashboard/tax-report-details/" + id;
+    navigate("/dashboard/tax-report-details/" + id);
   };
   const renderActionsRow = (data) => {
     const { id } = data.row;

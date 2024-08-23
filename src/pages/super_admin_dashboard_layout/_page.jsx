@@ -41,7 +41,6 @@ const SuperAdminDashboardLayout = () => {
 
   const handleLogout = () => {
     clearUserSession();
-    // window.location.href = "/";
   };
 
   const closeModal = () => {

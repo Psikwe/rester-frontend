@@ -12,13 +12,17 @@ import { PiBuildingOfficeDuotone } from "react-icons/pi";
 import { formToJSON } from "axios";
 import { showToast } from "../../core/hooks/alert";
 import { CreateEntityForm } from "../../core/services/entity.service";
+import Loader from "../../components/loader/_component";
+import { useNavigate } from "react-router-dom";
 
 function CreateEntity() {
+  const navigate = useNavigate();
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
   const [selectedIndustry, setSelectedIndustry] = React.useState(null);
   const [selectedCurrency, setSelectedCurrency] = React.useState(null);
   const [selectedLanguage, setSelectedLanguage] = React.useState(null);
   const [selectedRegion, setSelectedRegion] = React.useState(null);
+  const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleChange = (selectedRangeOption) => {
@@ -39,6 +43,9 @@ function CreateEntity() {
   const handleRegionsChange = (selectedRangeOption) => {
     setSelectedRegion(selectedRangeOption);
   };
+  const handleCountryChange = (selectedRangeOption) => {
+    setSelectedCountry(selectedRangeOption);
+  };
 
   const handleCompanySubmit = (e) => {
     e.preventDefault();
@@ -46,15 +53,20 @@ function CreateEntity() {
     const companyForm = document.getElementById("company-form");
     const payload = {
       ...formToJSON(companyForm),
-      size: selectedRangeOption.value,
+      number_of_employees: selectedRangeOption.value,
+      country: selectedCountry.value,
+      currency: selectedCurrency.value,
+      industry: selectedIndustry.value,
+      language: "en",
+      state: selectedRegion.value,
     };
-    console.log(payload);
+
     CreateEntityForm(payload)
       .then((res) => {
-        console.log(res);
         setIsLoading(false);
         showToast(res?.data.message, true);
         companyForm?.reset();
+        navigate("/view-entity");
       })
       .catch((error) => {
         setIsLoading(false);
@@ -101,8 +113,8 @@ function CreateEntity() {
                 <div className="flex w-full row mobile:w-full">
                   <Select
                     className="w-full"
-                    value={selectedRegion}
-                    onChange={handleRegionsChange}
+                    value={selectedCountry}
+                    onChange={handleCountryChange}
                     options={countries}
                     placeholder="Ghana"
                   />

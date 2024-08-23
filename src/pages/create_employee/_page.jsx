@@ -13,9 +13,11 @@ import { formToJSON } from "axios";
 import { useIncomeType } from "../../core/hooks/income";
 import Loader from "../../components/loader/_component";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 function CreateEmployee() {
   const fp = React.useRef(null);
+  const navigate = useNavigate();
   const entity_id = localStorage.getItem("entity_id");
   const { incomeTypeQuery } = useIncomeType(entity_id);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -113,7 +115,6 @@ function CreateEmployee() {
       provides_necessities_for_children: isProvidesNecessities,
     };
 
-    console.log("payload: ", payload);
     CreateEmployeeForm(payload)
       .then((res) => {
         setIsLoading(false);
@@ -124,7 +125,7 @@ function CreateEmployee() {
           { incomeType: null, amount: "", incomeFrequency: null },
         ]);
         setTimeout(() => {
-          window.location.href = "/dashboard/manage-employees";
+          navigate("/dashboard/manage-employees");
         }, 2000);
       })
       .catch((error) => {
@@ -454,7 +455,7 @@ function CreateEmployee() {
               </div>
             </div>
 
-            <div className="mt-5 w-full mr-3">
+            <div className="w-full mt-5 mr-3">
               <label className="text-sm label bold">Effective From</label>
               <Flatpickr
                 className="bg-gray-50 mr-2 cursor-pointer border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "

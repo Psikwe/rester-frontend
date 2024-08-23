@@ -14,13 +14,14 @@ import {
   GetEmployeePensions,
 } from "../../core/services/employee.service";
 import DataGrid from "react-data-grid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TableLoader from "../../components/table_loader/_component";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { showToast } from "../../core/hooks/alert";
 
 function ManageEmployeesPensions() {
+  const navigate = useNavigate();
   const entity_id = localStorage.getItem("entity_id");
   const [isLoading, setIsLoading] = React.useState(true);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
@@ -51,7 +52,6 @@ function ManageEmployeesPensions() {
 
   const handleLogout = () => {
     clearUserSession();
-    // window.location.href = "/";
   };
 
   const closeLogoutModal = () => {
@@ -85,7 +85,7 @@ function ManageEmployeesPensions() {
   };
 
   const handleUpdateClick = (id) => {
-    window.location.href = "/dashboard/update-employee-pension/" + id;
+    navigate("/dashboard/update-employee-pension/" + id);
   };
 
   const handleDelete = (id, name) => {
@@ -189,13 +189,13 @@ function ManageEmployeesPensions() {
             <div className="flex justify-center mx-2 mt-6">
               <button
                 onClick={closeDeleteModal}
-                className="w-1/3 rounded-full py-2 mr-2 text-white mt-9 primary mobile:w-full"
+                className="w-1/3 py-2 mr-2 text-white rounded-full mt-9 primary mobile:w-full"
               >
                 No
               </button>
               <button
                 onClick={confirmDelete}
-                className="w-1/3 rounded-full py-2 text-white bg-red-500 mt-9 mobile:w-full"
+                className="w-1/3 py-2 text-white bg-red-500 rounded-full mt-9 mobile:w-full"
               >
                 Yes
               </button>

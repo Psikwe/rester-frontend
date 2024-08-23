@@ -9,14 +9,14 @@ import { useEntity } from "../../core/hooks/entity";
 import Modal from "../../components/modal/_component";
 import { DeleteEntity, GetOneEntity } from "../../core/services/entity.service";
 import { showToast } from "../../core/hooks/alert";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEmployees } from "../../core/hooks/employees";
 import SkeletonLoader from "../../components/skeleton_loading/_component";
 
 function ManageEntity() {
   const entity_id = localStorage.getItem("entity_id");
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const { employeesQuery } = useEmployees(entity_id);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [contentLoading, setContentLoading] = React.useState(false);
@@ -33,7 +33,6 @@ function ManageEntity() {
     setContentLoading(true);
     GetOneEntity(id)
       .then((response) => {
-        console.log("rr: ", response.data.entity);
         setPopulateEntity(response.data.entity);
         setContentLoading(false);
         localStorage.setItem("entity_name", response.data.entity.name);
@@ -55,11 +54,11 @@ function ManageEntity() {
   };
 
   const handleUpdate = () => {
-    window.location.href = "/dashboard/update-entity/" + id;
+    navigate("/dashboard/update-entity/" + id);
   };
 
   const handleViewTerminatedEmployees = () => {
-    window.location.href = "/dashboard/terminated-employees/" + id;
+    navigate("/dashboard/terminated-employees/" + id);
   };
 
   const renderActionsRow = (data) => {

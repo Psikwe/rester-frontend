@@ -17,8 +17,10 @@ import {
 import Confetti from "react-confetti";
 import Modal from "../../components/modal/_component";
 import Loader from "../../components/loader/_component";
+import { useNavigate } from "react-router-dom";
 
 function SetupOrganization() {
+  const navigate = useNavigate();
   const [selectedCountryOption, setSelectedCountryOption] =
     React.useState(null);
   const [selectedNoOfEmployees, setSelectedNoOfEmployees] =
@@ -119,7 +121,7 @@ function SetupOrganization() {
   };
 
   const gotoLogin = () => {
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   const show = () => {

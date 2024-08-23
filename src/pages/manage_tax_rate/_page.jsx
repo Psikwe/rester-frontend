@@ -16,8 +16,10 @@ import {
   GetTaxTypes,
 } from "../../core/services/tax.service";
 import { useIncomeTaxRate } from "../../core/hooks/tax";
+import { useNavigate } from "react-router-dom";
 
 function ManageTaxRate() {
+  const navigate = useNavigate();
   const { incomeTaxRatesQuery } = useIncomeTaxRate();
   const [isLoading, setIsLoading] = React.useState(false);
   const [query, setQuery] = React.useState("");
@@ -55,7 +57,7 @@ function ManageTaxRate() {
   };
 
   const handleUpdateClick = (id) => {
-    window.location.href = "update-tax-rate/" + id;
+    navigate("update-tax-rate/" + id);
   };
 
   const handleDelete = (id, name) => {

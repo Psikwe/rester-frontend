@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import TnCsFile from "../assets/pdfs/TnCs.pdf";
 import PP from "../assets/pdfs/PP.pdf";
 import { HiMiniEyeSlash } from "react-icons/hi2";
@@ -10,6 +10,7 @@ import Loader from "../components/loader/_component";
 import { UserSignUp } from "../core/services/auth.service";
 
 function Signup() {
+  const navigate = useNavigate();
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -42,7 +43,7 @@ function Signup() {
         showToast(res.data.message, true);
         signupForm?.reset();
         setTimeout(() => {
-          window.location.href = "/setup-organization";
+          navigate("/setup-organization");
         }, 2000);
       })
       .catch((error) => {

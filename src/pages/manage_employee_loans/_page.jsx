@@ -15,9 +15,10 @@ import {
 import "react-data-grid/lib/styles.css";
 import DataGrid from "react-data-grid";
 import { showToast } from "../../core/hooks/alert";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function ManageEmployeeLoans() {
+  const navigate = useNavigate();
   const entity_id = localStorage.getItem("entity_id");
   const { id } = useParams();
   localStorage.setItem("employee_id", id);
@@ -33,15 +34,7 @@ function ManageEmployeeLoans() {
   const [createLoan, setCreateLoan] = React.useState(false);
 
   const handleUpdateClick = (id) => {
-    window.location.href = "/dashboard/update-employee-loan/" + id;
-  };
-
-  const handleNavigateToEmployeeLoan = (id) => {
-    window.location.href = "/dashboard/create-employee-loan/" + id;
-  };
-
-  const handleNavigateToTerminateEmployee = (id) => {
-    window.location.href = "/dashboard/terminate-employee/" + id;
+    navigate("/dashboard/update-employee-loan/" + id);
   };
 
   const handleDelete = (id, loan_provider) => {

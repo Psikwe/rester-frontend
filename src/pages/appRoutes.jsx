@@ -71,7 +71,6 @@ export default function AppRoutes() {
     if (entity_id !== "" || entity_id !== null) {
       GetSubscriptions(entity_id)
         .then((response) => {
-          console.log("ads: ", response.data.subscriptions);
           setCheckForPayment(response.data.subscriptions);
         })
         .catch((error) => {

@@ -35,7 +35,6 @@ function ViewEmployees() {
 
   const handleLogout = () => {
     clearUserSession();
-    // window.location.href = "/";
   };
 
   const closeLogoutModal = () => {

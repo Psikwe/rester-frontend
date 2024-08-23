@@ -37,8 +37,10 @@ function ViewCompany() {
   const [selectedLanguage, setSelectedLanguage] = React.useState(null);
   const [selectedCurrency, setSelectedCurrency] = React.useState(null);
   const [selectedIndustry, setSelectedIndustry] = React.useState(null);
+  const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedRangeOption, setSelectedRangeOption] = React.useState(null);
+  const [isCreateDone, setIsCreateDone] = React.useState(false);
 
   const [company, setCompany] = React.useState([
     {
@@ -59,11 +61,10 @@ function ViewCompany() {
       .catch((error) => {
         console.log("comp: ", error);
       });
-  }, []);
+  }, [isCreateDone]);
 
   const handleLogout = () => {
     clearUserSession();
-    // window.location.href = "/";
   };
   const openLogoutModal = () => {
     setIsLogoutModalOpen(true);
@@ -85,18 +86,22 @@ function ViewCompany() {
     const companyForm = document.getElementById("company-form");
     const payload = {
       ...formToJSON(companyForm),
-      size: selectedRangeOption.value,
+      number_of_employees: selectedRangeOption.value,
+      country: selectedCountry.value,
+      currency: selectedCurrency.value,
+      industry: selectedIndustry.value,
+      language: "en",
+      state: selectedRegion.value,
     };
-    console.log(payload);
+
     CreateEntityForm(payload)
       .then((res) => {
-        console.log(res);
         setIsLoading(false);
         showToast(res?.data.message, true);
         companyForm?.reset();
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        setCreateEntityModal(false);
+        setIsCreateDone(true);
+        navigate("/view-entity");
       })
       .catch((error) => {
         setIsLoading(false);
@@ -117,6 +122,9 @@ function ViewCompany() {
 
   const handleRegionsChange = (selectedRangeOption) => {
     setSelectedRegion(selectedRangeOption);
+  };
+  const handleCountryChange = (selectedRangeOption) => {
+    setSelectedCountry(selectedRangeOption);
   };
 
   const goToManageEntity = (id) => {
@@ -203,7 +211,7 @@ function ViewCompany() {
                     <Select
                       className="w-full"
                       value={selectedRegion}
-                      onChange={handleRegionsChange}
+                      onChange={handleCountryChange}
                       options={countries}
                       placeholder="Ghana"
                     />

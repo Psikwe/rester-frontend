@@ -5,30 +5,21 @@ import Select from "react-select";
 import { BsExclamationCircleFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import Modal from "../../components/modal/_component";
-import TableLoader from "../../components/table_loader/_component";
 import Loader from "../../components/loader/_component";
 import { MdDelete } from "react-icons/md";
 import {
   CreateEmployeePension,
-  DeleteEmployeeLoan,
   DeleteEmployeePension,
-  GetAllEmployeeLoans,
   GetEmployeePensions,
-  SubmitEmployeeLoan,
 } from "../../core/services/employee.service";
 import "react-data-grid/lib/styles.css";
-import DataGrid from "react-data-grid";
 import { showToast } from "../../core/hooks/alert";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTaxComponent } from "../../core/hooks/tax";
-import {
-  calculation,
-  contributors,
-  countries,
-  pensionTypes,
-} from "../../core/data";
+import { calculation, contributors, pensionTypes } from "../../core/data";
 
 function CreateEmployeePensionPage() {
+  const navigate = useNavigate();
   const entity_id = localStorage.getItem("entity_id");
   const { id } = useParams();
   const { taxComponentQuery } = useTaxComponent();
@@ -50,15 +41,7 @@ function CreateEmployeePensionPage() {
   const [isDoneAdding, setIsDoneAdding] = React.useState(false);
 
   const handleUpdateClick = (id) => {
-    window.location.href = "/dashboard/update-employee-pension/" + id;
-  };
-
-  const handleNavigateToEmployeeLoan = (id) => {
-    window.location.href = "/dashboard/create-employee-loan/" + id;
-  };
-
-  const handleNavigateToTerminateEmployee = (id) => {
-    window.location.href = "/dashboard/terminate-employee/" + id;
+    navigate("/dashboard/update-employee-pension/" + id);
   };
 
   const handleDelete = (id, name) => {
@@ -180,7 +163,7 @@ function CreateEmployeePensionPage() {
         setCreateLoan(false);
         setIsDoneAdding(true);
         setTimeout(() => {
-          window.location.href = "/dashboard/manage-employees-pensions";
+          navigate("/dashboard/manage-employees-pensions");
         }, 2000);
       })
       .catch((error) => {
@@ -320,7 +303,7 @@ function CreateEmployeePensionPage() {
                 />
               </div>
             </div>
-            <div className="mt-4 w-full mr-2">
+            <div className="w-full mt-4 mr-2">
               <label className="text-sm label">Select Contributor</label>
               <div className="flex w-full row mobile:w-full">
                 <Select
@@ -356,7 +339,7 @@ function CreateEmployeePensionPage() {
                 />
               </div>
             </div>
-            <div className="mt-7 flex flex-col field">
+            <div className="flex flex-col mt-7 field">
               <label className="mb-1 text-sm label bold">
                 Toggle Statutory Or Not
               </label>
@@ -369,7 +352,7 @@ function CreateEmployeePensionPage() {
                 <div className="w-11 h-6 bg-gray-200 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#00eeff]"></div>
               </label>
             </div>
-            <div className="mt-4 w-full mr-2">
+            <div className="w-full mt-4 mr-2">
               <label className="text-sm label">Select Type</label>
               <div className="flex w-full row mobile:w-full">
                 <Select
