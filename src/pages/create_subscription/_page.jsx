@@ -210,7 +210,10 @@ function CreateSubscription() {
           <CiLogout size={40} />
         </div>
       </nav>
-      <div className="flex justify-end mt-3 mr-10 text-green-900 cursor-pointer">
+      <div
+        onClick={() => navigate("/dashboard/manage-entity/" + entity_id)}
+        className="flex justify-end mt-3 mr-10 text-green-900 cursor-pointer"
+      >
         Go on free tier
       </div>
       <div className="laptop-lg:px-32 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16">
