@@ -8,6 +8,19 @@ export const AddPrice = async (data) => {
   );
 };
 
+export const DeletePrice = async (id) => {
+  return await getAxios().delete(
+    `https://rester-82c60dc37022.herokuapp.com/delete_price/` + id
+  );
+};
+
+export const UpdatePrice = async (data) => {
+  return await getAxios().put(
+    "https://rester-82c60dc37022.herokuapp.com/update_price",
+    data
+  );
+};
+
 export const GetPricing = async (data) => {
   return await axios.get(
     "https://rester-82c60dc37022.herokuapp.com/get_prices",

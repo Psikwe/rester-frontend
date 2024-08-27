@@ -17,6 +17,7 @@ import logo from "../../assets/rester.png";
 import { IoArrowBackCircle } from "react-icons/io5";
 import moment from "moment";
 import { clearUserSession } from "../../core/utilities";
+import { GetSubscriptions } from "../../core/services/pricing.service";
 
 const DashboardLayout = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const DashboardLayout = () => {
   const [entityName, setEntityName] = React.useState();
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
+  const [userSubscriptionStatus, setUserSubscriptionStatus] = React.useState();
 
   React.useEffect(() => {
     initTWE({ Dropdown, Ripple });
@@ -69,6 +71,22 @@ const DashboardLayout = () => {
   const goback = () => {
     window.history.back();
   };
+
+  React.useEffect(() => {
+    let entity_id = localStorage.getItem("entity_id");
+    GetSubscriptions(entity_id)
+      .then((response) => {
+        setUserSubscriptionStatus(
+          response &&
+            response.data &&
+            response.data.subscriptions &&
+            response.data.subscriptions.length
+        );
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   return (
     <>
       <Modal showCloseBtn={true} open={isModalOpen} close={closeModal}>
@@ -227,28 +245,10 @@ const DashboardLayout = () => {
                 </span>
               </button>
               <ul
-                className="w-28 h-16 absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
+                className="w-28 h-18 absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
                 aria-labelledby="settingsMenu"
                 data-twe-dropdown-menu-ref
               >
-                {/* <li>
-                  <span
-                    className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
-                    data-twe-dropdown-item-ref
-                    // onClick={openModal}
-                  >
-                    Change Currency
-                  </span>
-                </li>
-                <li>
-                  <span
-                    className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
-                    data-twe-dropdown-item-ref
-                    // onClick={openModal}
-                  >
-                    Change Language
-                  </span>
-                </li> */}
                 <li>
                   <span
                     className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
@@ -258,6 +258,42 @@ const DashboardLayout = () => {
                     Tax
                   </span>
                 </li>
+                {userSubscriptionStatus === 0 ? (
+                  <li>
+                    <span
+                      className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
+                      data-twe-dropdown-item-ref
+                      onClick={() => navigate("/select-subscription")}
+                    >
+                      Subscribe to a plan
+                    </span>
+                  </li>
+                ) : (
+                  ""
+                )}
+                {userSubscriptionStatus !== 0 ? (
+                  <li>
+                    <span
+                      className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
+                      data-twe-dropdown-item-ref
+                      onClick={() => navigate("/select-subscription")}
+                    >
+                      Change subscription plan
+                    </span>
+                  </li>
+                ) : (
+                  ""
+                )}
+
+                {/* <li>
+                  <span
+                    className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
+                    data-twe-dropdown-item-ref
+                    // onClick={openModal}
+                  >
+                    Change Language
+                  </span>
+                </li> */}
               </ul>
               <div className="relative" data-twe-dropdown-ref>
                 <button

@@ -123,6 +123,7 @@ function ViewCompany() {
   const handleRegionsChange = (selectedRangeOption) => {
     setSelectedRegion(selectedRangeOption);
   };
+
   const handleCountryChange = (selectedRangeOption) => {
     setSelectedCountry(selectedRangeOption);
   };

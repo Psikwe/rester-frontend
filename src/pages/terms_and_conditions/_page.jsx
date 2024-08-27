@@ -19,7 +19,6 @@ import {
   Undo,
 } from "ckeditor5";
 import "ckeditor5/ckeditor5.css";
-import Loader from "../../components/loader/_component";
 import "react-data-grid/lib/styles.css";
 import DataGrid from "react-data-grid";
 import Modal from "../../components/modal/_component";

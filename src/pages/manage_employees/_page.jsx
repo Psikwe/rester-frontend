@@ -32,7 +32,9 @@ function ManageEmployees() {
   const [error, setError] = React.useState("");
   const [itemToDelete, setItemToDelete] = React.useState("");
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
+
   const navigate = useNavigate();
+
   const handleUpdateClick = (id) => {
     navigate("/dashboard/update-employee/" + id);
   };

@@ -58,7 +58,7 @@ function ManageTaxElection() {
   };
 
   const handleUpdateClick = (id, tax_rate_uid) => {
-    navigate("update-tax-election/" + id + "/" + tax_rate_uid);
+    navigate("/dashboard/update-tax-election/" + id + "/" + tax_rate_uid);
   };
 
   const handleDelete = (id, name) => {

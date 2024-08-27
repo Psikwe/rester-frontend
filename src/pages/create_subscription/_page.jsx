@@ -17,6 +17,8 @@ import { FaCircleInfo } from "react-icons/fa6";
 import loading from "../../assets/gifs/loading.gif";
 import success from "../../assets/gifs/successs.gif";
 import { useNavigate } from "react-router-dom";
+import PricingCard from "../../components/pricing_card/_component";
+import SkeletonLoader from "../../components/skeleton_loading/_component";
 
 function CreateSubscription() {
   const navigate = useNavigate();
@@ -24,7 +26,6 @@ function CreateSubscription() {
   const [prices, setPrices] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isButtonLoading, setButtonIsLoading] = React.useState(false);
-  const [transactionId, setTransactionId] = React.useState("");
   const [priceId, setPriceId] = React.useState(0);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
   const [paymentConfirmationModal, setPaymentConfirmationModal] =
@@ -37,11 +38,12 @@ function CreateSubscription() {
     GetPricing()
       .then((response) => {
         setIsLoading(false);
-        console.log(response);
+        console.log("rr: ", response?.data.prices);
         setPrices(response?.data.prices);
       })
       .catch((error) => {
         console.log(error);
+        showToast(error.response.data.error, false);
       });
   }, []);
 
@@ -58,7 +60,6 @@ function CreateSubscription() {
   // }, []);
 
   const handleSubscription = () => {
-    console.log("p: ", priceId);
     let phoneNumberField = document.getElementById("phone-number").value;
     let numString = phoneNumberField.toString();
     console.log("p: ", phoneNumberField);
@@ -83,8 +84,6 @@ function CreateSubscription() {
     setPaymentLoadingModal(true);
     AddSubscription(payload)
       .then((response) => {
-        console.log(response);
-        setTransactionId(response?.data.transaction_id);
         // showToast(response?.data.message, true);
         if (response?.data.transaction_id) {
           sessionStorage.setItem(
@@ -212,9 +211,9 @@ function CreateSubscription() {
       </nav>
       <div
         onClick={() => navigate("/dashboard/manage-entity/" + entity_id)}
-        className="flex justify-end mt-3 mr-10 text-green-900 cursor-pointer"
+        className="flex justify-end mt-3 mr-10 font-semibold text-green-900 underline uppercase cursor-pointer"
       >
-        Go on free tier
+        Go on free plan
       </div>
       <div className="laptop-lg:px-32 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16">
         <div className="flex flex-col justify-center text-center">
@@ -238,7 +237,7 @@ function CreateSubscription() {
                 </h3>
                 <div className="flex items-center ">
                   <div className="mr-1 text-3xl font-medium">
-                    GHS {prices && prices[0].amount}
+                    GHS {prices && prices[3].amount}
                   </div>
                   <div className="text-xs text-green-500 underline uppercase">
                     monthly
@@ -311,7 +310,7 @@ function CreateSubscription() {
           </div>
         </div>
 
-        {/* <div className="flex items-center justify-center m-auto mb-12 mobile:gap-7 mobile:flex-col">
+        <div className="flex items-center justify-center m-auto mb-12 mobile:gap-7 mobile:flex-col">
           {isLoading ? (
             <>
               <SkeletonLoader />
@@ -334,14 +333,14 @@ function CreateSubscription() {
                       price={price.amount}
                       btnName="Pay"
                       selected={priceId === price.id ? "selected" : ""}
-                      // description={price.description}
+                      description={price.features}
                       // features={price.features}
                     />
                   </div>
                 ))}
             </>
           )}
-        </div> */}
+        </div>
       </div>
     </>
   );
