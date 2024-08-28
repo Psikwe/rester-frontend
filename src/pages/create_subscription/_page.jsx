@@ -26,6 +26,8 @@ function CreateSubscription() {
   const [prices, setPrices] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isButtonLoading, setButtonIsLoading] = React.useState(false);
+  const [selectedPrice, setSelectedPrice] = React.useState("");
+  const [selectedPriceId, setSelectedPriceId] = React.useState("");
   const [priceId, setPriceId] = React.useState(0);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
   const [paymentConfirmationModal, setPaymentConfirmationModal] =
@@ -67,6 +69,10 @@ function CreateSubscription() {
       showToast("Please enter a number", false);
       return;
     }
+    if (!selectedPriceId) {
+      showToast("Please select a plan", false);
+      return;
+    }
     if (phoneNumberField && phoneNumberField.length !== 10) {
       showToast("Number must be 10 digits", false);
       return;
@@ -79,7 +85,7 @@ function CreateSubscription() {
     const payload = {
       entity_id: entity_id,
       phone_number: phoneNumberField,
-      price_id: prices[0].id,
+      price_id: selectedPriceId,
     };
     setPaymentLoadingModal(true);
     AddSubscription(payload)
@@ -127,6 +133,11 @@ function CreateSubscription() {
   };
   const closePaymentFailedModal = () => {
     setPaymentFailedModal(false);
+  };
+
+  const selectSubscription = (id, amount) => {
+    setSelectedPriceId(id);
+    setSelectedPrice(amount);
   };
 
   return (
@@ -215,6 +226,7 @@ function CreateSubscription() {
       >
         Go on free plan
       </div>
+
       <div className="laptop-lg:px-32 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16">
         <div className="flex flex-col justify-center text-center">
           <h3 className="text-4xl font-medium tracking-widest">
@@ -227,6 +239,38 @@ function CreateSubscription() {
             </span>
             Today.
           </p>
+
+          <div className="flex items-center justify-center m-auto mt-3 mobile:gap-7 mobile:flex-col">
+            {isLoading ? (
+              <>
+                <SkeletonLoader />
+                <SkeletonLoader />
+                <SkeletonLoader />
+              </>
+            ) : (
+              <>
+                {prices &&
+                  prices.map((price, i) => (
+                    <div
+                      onClick={() => selectSubscription(price.id, price.amount)}
+                      className="cursor-pointer"
+                      key={i}
+                    >
+                      <PricingCard
+                        key={i}
+                        // bgColor={price.bgColor}
+                        header={price.name}
+                        price={price.amount}
+                        btnName="Pay"
+                        selected={priceId === price.id ? "selected" : ""}
+                        description={price.features}
+                        // features={price.features}
+                      />
+                    </div>
+                  ))}
+              </>
+            )}
+          </div>
         </div>
         <div className="flex items-center justify-between">
           <div className="p-16 bg-slate-100 rounded-2xl">
@@ -235,22 +279,14 @@ function CreateSubscription() {
                 <h3>
                   <span className="text-2xl">R</span>ester
                 </h3>
+                <small>Selected price:</small>
                 <div className="flex items-center ">
                   <div className="mr-1 text-3xl font-medium">
-                    GHS {prices && prices[3].amount}
+                    {selectedPrice ? `GHS ${selectedPrice}` : "SELECT A PLAN"}
                   </div>
                   <div className="text-xs text-green-500 underline uppercase">
                     monthly
                   </div>
-                </div>
-                <h3 className="mt-2 text-sm font-medium">Package Details</h3>
-                <div>
-                  <ul className="text-sm text-gray-400 list-disc">
-                    <li>Ability to download payroll</li>
-                    <li>Ability to download reports</li>
-                    <li>Ability to onboard unlimited employees</li>
-                    <li>Free Training</li>
-                  </ul>
                 </div>
               </div>
               <div></div>
@@ -308,38 +344,6 @@ function CreateSubscription() {
               </button>
             </div>
           </div>
-        </div>
-
-        <div className="flex items-center justify-center m-auto mb-12 mobile:gap-7 mobile:flex-col">
-          {isLoading ? (
-            <>
-              <SkeletonLoader />
-              <SkeletonLoader />
-              <SkeletonLoader />
-            </>
-          ) : (
-            <>
-              {prices &&
-                prices.map((price, i) => (
-                  <div
-                    onClick={() => selectSubscription(price.id)}
-                    className="cursor-pointer"
-                    key={i}
-                  >
-                    <PricingCard
-                      key={i}
-                      // bgColor={price.bgColor}
-                      header={price.name}
-                      price={price.amount}
-                      btnName="Pay"
-                      selected={priceId === price.id ? "selected" : ""}
-                      description={price.features}
-                      // features={price.features}
-                    />
-                  </div>
-                ))}
-            </>
-          )}
         </div>
       </div>
     </>
