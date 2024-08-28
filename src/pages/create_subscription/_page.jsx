@@ -239,8 +239,8 @@ function CreateSubscription() {
             </span>
             Today.
           </p>
-
-          <div className="flex items-center justify-center m-auto mt-3 mobile:gap-7 mobile:flex-col">
+          <small className="mt-8">Please select a plan to make payment</small>
+          <div className="flex items-center justify-center m-auto mobile:gap-7 mobile:flex-col">
             {isLoading ? (
               <>
                 <SkeletonLoader />
