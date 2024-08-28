@@ -53,8 +53,12 @@ const MySpreadsheet = () => {
   };
 
   const validate = () => {
-    if (!selectedStartDate || !selectedEndDate || !selectedEffectiveFromDate) {
-      showToast("All dates required, except Effective To", false);
+    // if (!selectedStartDate || !selectedEndDate || !selectedEffectiveFromDate) {
+    //   showToast("All dates required, except Effective To", false);
+    //   return;
+    // }
+    if (!selectedStartDate || !selectedEndDate) {
+      showToast("All dates required", false);
       return;
     }
     setDurationIsConfirmed(true);
