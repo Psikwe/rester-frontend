@@ -3,8 +3,10 @@ import { pricingPackages } from "../../core/data";
 import PricingCard from "../../components/pricing_card/_component";
 import { GetPricing } from "../../core/services/pricing.service";
 import SkeletonLoader from "../../components/skeleton_loading/_component";
+import { useNavigate } from "react-router-dom";
 
 function Pricing() {
+  const navigate = useNavigate();
   const [prices, setPrices] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -52,24 +54,23 @@ function Pricing() {
                     header={price.name}
                     price={price.amount}
                     btnName="Pay"
-                    // description={price.description}
+                    description={price.features}
                     // features={price.features}
                   />
                 ))}
             </>
           )}
-
-          {/* {pricingPackages.map((pp, i) => (
-            <PricingCard
-              key={i}
-              bgColor={pp.bgColor}
-              header={pp.title}
-              price={pp.price}
-              description={pp.description}
-              features={pp.features}
-              btnName={pp.btnName}
-            />
-          ))} */}
+        </div>
+        <div className="flex justify-center">
+          <h3>
+            <span
+              className="cursor-pointer  animate-pulse font-medium text-[#22c55e]"
+              onClick={() => navigate("/signup")}
+            >
+              Sign up
+            </span>{" "}
+            to get started
+          </h3>
         </div>
       </div>
     </>
