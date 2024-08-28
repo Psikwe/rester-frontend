@@ -1,6 +1,5 @@
 import React from "react";
 import DOMPurify from "dompurify";
-import arrow from "../../assets/tree.svg";
 
 function PricingCard(props) {
   return (
@@ -10,12 +9,16 @@ function PricingCard(props) {
       >
         <h3 className="py-3 text-4xl">{props.header}</h3>
         <h3 className="pt-3 text-2xl">GHS {props.price}</h3>
-        <div
-          className="my-8 font-thin"
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(props.description),
-          }}
-        ></div>
+        <div className="my-8">
+          <div
+            className="font-thin"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(props.description),
+            }}
+            style={{ listStyleType: "disc", paddingLeft: "20px" }}
+          ></div>
+        </div>
+
         {/* <ul className="mt-5">
           <span className="flex items-center mb-2">
             <span>

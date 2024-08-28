@@ -126,13 +126,13 @@ function DeactivatedEmployees() {
             <div className="flex mx-2 mt-6">
               <button
                 onClick={closeDeleteModal}
-                className="w-full py-3 mr-2 text-white mt-9 primary mobile:w-full"
+                className="w-full py-2 mr-2 text-white rounded-full mt-9 primary mobile:w-full"
               >
                 No
               </button>
               <button
                 onClick={confirmActivation}
-                className="w-full py-3 text-white bg-red-500 mt-9 mobile:w-full"
+                className="w-full py-2 text-white bg-red-500 rounded-full mt-9 mobile:w-full"
               >
                 Yes
               </button>

@@ -19,7 +19,7 @@ function CompanyCard(props) {
               <span className="mr-1">
                 <IoEyeSharp />
               </span>
-              View Details
+              Operate
             </button>
           </div>
         </div>

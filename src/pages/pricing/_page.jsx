@@ -1,5 +1,4 @@
 import React from "react";
-import { pricingPackages } from "../../core/data";
 import PricingCard from "../../components/pricing_card/_component";
 import { GetPricing } from "../../core/services/pricing.service";
 import SkeletonLoader from "../../components/skeleton_loading/_component";
@@ -15,6 +14,7 @@ function Pricing() {
     GetPricing()
       .then((response) => {
         setIsLoading(false);
+        console.log("rr: ", response?.data.prices);
         setPrices(response?.data.prices);
       })
       .catch((error) => {

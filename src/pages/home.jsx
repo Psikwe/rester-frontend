@@ -194,7 +194,10 @@ function Home() {
         </div>
       </section>
       <section className="flex laptop-lg:px-40 laptop-xl:px-72 features mobile:p-9 column">
-        <div className="flex mobile:flex-col row center">
+        <div
+          id="calculator-section"
+          className="flex mobile:flex-col row center"
+        >
           <button
             className={
               calculator === "incomeTax"

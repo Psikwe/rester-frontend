@@ -23,7 +23,7 @@ export default function Navbar() {
     },
     {
       name: "Reverse Calculator",
-      href: "#",
+      href: "#calculator-section",
       logo: <IoCalculator className="icon-color" />,
     },
     {
@@ -34,7 +34,7 @@ export default function Navbar() {
 
     {
       name: "Mini Calculator",
-      href: "#",
+      href: "#calculator-section",
       logo: <IoCalculator className="icon-color" />,
     },
   ];
@@ -175,14 +175,14 @@ export default function Navbar() {
           <div className="flex flex-col p-4 overflow-y-auto">
             <div className={`${styles.menu} flex flex-col`}>
               {navigation.map((link, i) => (
-                <NavLink key={i} to={link.href}>
+                <a key={i} href={link.href}>
                   <div className="flex items-center mr-6">
                     <div className="mr-1 text-blue-400">{link.logo}</div>
                     <span className="hover:text-[#31708E] duration-700">
                       {link.name}
                     </span>
                   </div>
-                </NavLink>
+                </a>
               ))}
             </div>
             <div
