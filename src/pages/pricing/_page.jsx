@@ -21,6 +21,7 @@ function Pricing() {
         console.log(error);
       });
   }, []);
+
   return (
     <>
       <div className="laptop-lg:px-32 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16">

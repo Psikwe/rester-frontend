@@ -13,29 +13,19 @@ import { BsExclamationCircleFill } from "react-icons/bs";
 import {
   AddPrice,
   DeletePrice,
+  GetPrice,
   GetPricing,
   UpdatePrice,
 } from "../../core/services/pricing.service";
 import { currencies } from "../../core/data";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import {
-  ClassicEditor,
-  Bold,
-  Essentials,
-  Heading,
-  Indent,
-  IndentBlock,
-  Italic,
-  Link,
-  List,
-  MediaEmbed,
-  Paragraph,
-  Table,
-  Undo,
-} from "ckeditor5";
 import "ckeditor5/ckeditor5.css";
+import DOMPurify from "dompurify";
+import { usePricing } from "../../core/hooks/pricing";
 
 function CreatePrice() {
+  const { pricingQuery } = usePricing();
+  const pricingRows =
+    pricingQuery && pricingQuery.data && pricingQuery.data.data.prices;
   const [isLoading, setIsLoading] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [isPricingModalModalOpen, setPricingModalOpen] = React.useState(false);
@@ -44,26 +34,29 @@ function CreatePrice() {
   const [deleteId, setDeleteId] = React.useState("");
   const [updateId, setUpdateId] = React.useState("");
   const [selectedCurrency, setSelectedCurrency] = React.useState(null);
+  const [hasCurrencyChanged, setHasCurrencyChanged] = React.useState(false);
   const [isOperationLoading, setOperationLoading] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const [deleteDone, setDeleteDone] = React.useState(false);
+  const [additionDone, setAdditionDone] = React.useState(false);
   const [updateDone, setUpdateDone] = React.useState(false);
   const [updateModalOpen, setUpdateModalOpen] = React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState("");
+  const [populatePriceItems, setPopulatePriceItems] = React.useState();
 
   const handlePriceSubmit = (e) => {
-    // setIsLoading(true);
+    setIsLoading(true);
     e.preventDefault();
     if (selectedCurrency.value == null || selectedCurrency.value == "") {
       showToast("Please select a currency", false);
       return;
     }
     const pricingForm = document.getElementById("pricing-form");
-
+    const feature = document.getElementById("features").value;
     const payload = {
       ...formToJSON(pricingForm),
       currency: selectedCurrency.value,
-      features: [editorContent],
+      features: [feature],
     };
 
     AddPrice(payload)
@@ -72,9 +65,7 @@ function CreatePrice() {
         showToast(res?.data.message, true);
         pricingForm?.reset();
         setPricingModalOpen(false);
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        pricingQuery.refetch();
       })
       .catch((error) => {
         setIsLoading(false);
@@ -88,20 +79,24 @@ function CreatePrice() {
       showToast("Please select a currency", false);
       return;
     }
-    const pricingForm = document.getElementById("pricing-form");
 
+    const pricingForm = document.getElementById("update-pricing-form");
+    const updatedFeatures = document.getElementById("updated-features").value;
     const payload = {
       ...formToJSON(pricingForm),
-      currency: selectedCurrency.value,
-      features: [editorContent],
+      currency: hasCurrencyChanged
+        ? selectedCurrency.value
+        : populatePriceItems && populatePriceItems.currency,
+      features: [updatedFeatures],
+      price_id: updateId,
     };
 
-    UpdatePrice(updateId, payload)
+    UpdatePrice(payload)
       .then((res) => {
         setIsLoading(false);
         showToast(res?.data.message, true);
         pricingForm?.reset();
-        setUpdateDone(true);
+        pricingQuery.refetch();
         setUpdateModalOpen(false);
       })
       .catch((error) => {
@@ -123,7 +118,7 @@ function CreatePrice() {
 
   const renderActionsRow = (data) => {
     const { id, name } = data.row;
-    console.log("price_id: ", data.row);
+    console.log("aaa: ", data.row);
     return (
       <div className="flex items-center mt-4">
         <button
@@ -153,6 +148,8 @@ function CreatePrice() {
     },
     { key: "name", name: "Name" },
     { key: "amount", name: "Amount" },
+    { key: "currency", name: "Currency" },
+    { key: "billing_frequency", name: "Billing Frequency" },
   ];
 
   React.useEffect(() => {
@@ -163,7 +160,19 @@ function CreatePrice() {
       .catch((error) => {
         console.log(error);
       });
-  }, [updateDone, deleteDone]);
+  }, []);
+
+  React.useEffect(() => {
+    if (updateId) {
+      GetPrice(updateId)
+        .then((response) => {
+          setPopulatePriceItems(response && response?.data);
+        })
+        .catch((error) => {
+          showToast(error.response.data.error, false);
+        });
+    }
+  }, [updateId]);
 
   const filteredData = prices?.filter((e) => {
     if (query === "") return e.name;
@@ -198,7 +207,7 @@ function CreatePrice() {
     DeletePrice(deleteId)
       .then((response) => {
         console.log(response);
-        setDeleteDone(true);
+        pricingQuery.refetch();
         showToast(response.data.message, true);
         setOperationLoading(false);
       })
@@ -210,8 +219,12 @@ function CreatePrice() {
 
   const handleCurrencyChange = (selectedRangeOption) => {
     setSelectedCurrency(selectedRangeOption);
+    setHasCurrencyChanged(true);
   };
-
+  const sanitizedContent =
+    populatePriceItems &&
+    populatePriceItems.features &&
+    DOMPurify.sanitize(populatePriceItems.features[0]);
   return (
     <>
       <Modal open={deleteModalOpen} close={closeDeleteModal} closeOnOverlay>
@@ -252,7 +265,7 @@ function CreatePrice() {
           className="p-8 bg-white"
           onSubmit={handleUpdatePriceSubmit}
         >
-          <h3 className="text-sm mt-9">Pricasding</h3>
+          <h3 className="text-sm mt-9">Pricing</h3>
 
           <div className="flex justify-between">
             <div className="w-full">
@@ -262,6 +275,7 @@ function CreatePrice() {
                   required
                   className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                   type="text"
+                  defaultValue={populatePriceItems && populatePriceItems.name}
                   placeholder=" Name"
                   name="name"
                 />
@@ -275,6 +289,7 @@ function CreatePrice() {
                   required
                   className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                   type="number"
+                  defaultValue={populatePriceItems && populatePriceItems.amount}
                   placeholder="Amount"
                   name="amount"
                 />
@@ -290,7 +305,9 @@ function CreatePrice() {
                   value={selectedCurrency}
                   onChange={handleCurrencyChange}
                   options={currencies}
-                  placeholder="Currency"
+                  placeholder={
+                    populatePriceItems && populatePriceItems.currency
+                  }
                 />
               </div>
             </div>
@@ -304,6 +321,9 @@ function CreatePrice() {
                   className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
                   type="number"
                   placeholder="Billing Frequency"
+                  defaultValue={
+                    populatePriceItems && populatePriceItems.billing_frequency
+                  }
                   name="billing_frequency"
                 />
               </div>
@@ -312,47 +332,14 @@ function CreatePrice() {
 
           <label className="text-sm label bold">Enter features</label>
 
-          <CKEditor
-            editor={ClassicEditor}
-            config={{
-              toolbar: [
-                "undo",
-                "redo",
-                "|",
-                "heading",
-                "|",
-                "bold",
-                "italic",
-                "|",
-                // "link",
-                // "insertTable",
-                "|",
-                // "bulletedList",
-                "numberedList",
-                // "indent",
-                // "outdent",
-              ],
-              plugins: [
-                Bold,
-                Essentials,
-                Heading,
-                Indent,
-                IndentBlock,
-                Italic,
-                Link,
-                List,
-                MediaEmbed,
-                Paragraph,
-                Table,
-                Undo,
-              ],
-              placeholder: "Enter content here",
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              setEditorContent(data);
-              console.log({ event, editor, data });
-            }}
+          <textarea
+            id="updated-features"
+            className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+            rows={4}
+            defaultValue={
+              populatePriceItems &&
+              DOMPurify.sanitize(populatePriceItems.features[0])
+            }
           />
 
           <button
@@ -435,10 +422,14 @@ function CreatePrice() {
               </div>
             </div>
           </div>
-
           <label className="text-sm label bold">Enter features</label>
-
-          <CKEditor
+          <textarea
+            required
+            id="features"
+            className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+            rows={4}
+          />
+          {/* <CKEditor
             editor={ClassicEditor}
             config={{
               toolbar: [
@@ -472,15 +463,12 @@ function CreatePrice() {
                 Table,
                 Undo,
               ],
-              placeholder: "Enter content here",
             }}
             onChange={(event, editor) => {
               const data = editor.getData();
               setEditorContent(data);
-              console.log({ event, editor, data });
             }}
-          />
-
+          /> */}
           <button
             disabled={isLoading}
             type="submit"
@@ -508,16 +496,22 @@ function CreatePrice() {
           </>
         ) : (
           <>
-            <DataGrid
-              className="text-sm rdg-light grid-container"
-              columns={columns}
-              rows={prices || []}
-              bottomSummaryRows={summaryRows}
-              rowHeight={50}
-            />
-            <strong className="text-sm">
-              {/* Totals: {filteredData?.length} records */}
-            </strong>
+            {pricingRows && pricingRows.length < 1 ? (
+              <h3 className="mt-8">No Data</h3>
+            ) : (
+              <>
+                <DataGrid
+                  className="text-sm rdg-light grid-container"
+                  columns={columns}
+                  rows={pricingRows || []}
+                  bottomSummaryRows={summaryRows}
+                  rowHeight={50}
+                />
+                <strong className="text-sm">
+                  {/* Totals: {filteredData?.length} records */}
+                </strong>
+              </>
+            )}
           </>
         )}
       </>

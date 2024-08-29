@@ -228,19 +228,22 @@ function CreateSubscription() {
       </div>
 
       <div className="laptop-lg:px-32 laptop-xl:px-72 from-laptop-to-laptop-xl:my-16">
-        <div className="flex flex-col justify-center text-center">
-          <h3 className="text-4xl font-medium tracking-widest">
-            Make payment and get started!
-          </h3>
-          <p className="w-1/2 m-auto mt-4 text-lg font-thin">
-            Start and Grow with
-            <span className="mx-1 animate-pulse font-medium text-[#22c55e]">
-              Rester
-            </span>
-            Today.
-          </p>
-          <small className="mt-8">Please select a plan to make payment</small>
-          <div className="flex items-center justify-center m-auto mobile:gap-7 mobile:flex-col">
+        <div className="flex flex-col justify-center">
+          <div className="text-center ">
+            <h3 className="text-4xl font-medium tracking-widest text-center">
+              Make payment and get started!
+            </h3>
+            <p className="w-1/2 m-auto mt-4 text-lg font-thin">
+              Start and Grow with
+              <span className="mx-1 animate-pulse font-medium text-[#22c55e]">
+                Rester
+              </span>
+              Today.
+            </p>
+            <small className="mt-8">Please select a plan to make payment</small>
+          </div>
+
+          <div className="flex items-center justify-center m-auto mt-8 mobile:gap-7 mobile:flex-col">
             {isLoading ? (
               <>
                 <SkeletonLoader />
