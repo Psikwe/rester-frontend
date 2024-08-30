@@ -1,9 +1,9 @@
 import { formToJSON } from "axios";
 import React from "react";
-import { oast } from "../../core/hooks/alert";
 import Loader from "../../components/loader/_component";
 import { SubmitEmployeeLoan } from "../../core/services/employee.service";
 import { useParams } from "react-router-dom";
+import { showToast } from "../../core/hooks/alert";
 
 function CreateEmployeeLoan() {
   const { id } = useParams();
@@ -27,12 +27,12 @@ function CreateEmployeeLoan() {
     SubmitEmployeeLoan(payload)
       .then((res) => {
         setIsLoading(false);
-        oast(res?.data.message, true);
+        showToast(res?.data.message, true);
         loanForm?.reset();
       })
       .catch((error) => {
         setIsLoading(false);
-        oast(error.response.data.error, false);
+        showToast(error.response.data.error, false);
       });
   };
   return (
