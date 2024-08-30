@@ -27,12 +27,14 @@ function ResetPassword() {
     setIsLoading(true);
     UserResetPassword(payload)
       .then((response) => {
+        setIsLoading(false);
         showToast(response?.data.message, true);
         setTimeout(() => {
           navigate("/login");
         }, 2000);
       })
       .catch((error) => {
+        setIsLoading(true);
         showToast(error.response.data.error, false);
       });
   };
