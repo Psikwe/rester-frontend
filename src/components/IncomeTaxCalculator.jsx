@@ -96,7 +96,7 @@ export default function IncomeTaxCalculator() {
         </div>
 
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Social Security (SSNIT Tier 1)</b>¬
+          <b>Social Security (SSNIT Tier 1)</b>
           <input
             name="tier_1"
             type="number"

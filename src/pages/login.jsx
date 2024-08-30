@@ -43,8 +43,8 @@ function Login() {
     UserForgotPassword(forgotPasswordData)
       .then((res) => {
         setForgotIsLoading(false);
-        console.log(res);
         forgotPasswordForm?.reset();
+        setIsForgotPassowrdModalOpen(false);
         showToast(res?.data.message, true);
       })
       .catch((error) => {

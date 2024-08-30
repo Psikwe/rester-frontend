@@ -129,7 +129,7 @@ function CreateEmployee() {
         }, 2000);
       })
       .catch((error) => {
-        showToast(error.response.data.error, false);
+        oast(error.response.data.error, false);
         setIsLoading(false);
       });
   };

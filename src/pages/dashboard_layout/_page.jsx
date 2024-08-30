@@ -6,9 +6,6 @@ import { IoMdSettings } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import { Dropdown, Ripple, initTWE } from "tw-elements";
 import { CiLogout } from "react-icons/ci";
-import { RiLockPasswordLine } from "react-icons/ri";
-import { MdCurrencyExchange } from "react-icons/md";
-import { MdOutlineLanguage } from "react-icons/md";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
 import { BsExclamationCircle } from "react-icons/bs";
@@ -326,19 +323,7 @@ const DashboardLayout = () => {
                   aria-labelledby="dropdownMenuButton1"
                   data-twe-dropdown-menu-ref
                 >
-                  <li>
-                    <span
-                      className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
-                      data-twe-dropdown-item-ref
-                      onClick={openModal}
-                    >
-                      <span className="mr-1">
-                        <RiLockPasswordLine color="#687864" size={20} />
-                      </span>
-                      Change Password
-                    </span>
-                  </li>
-                  <li>
+                  {/* <li>
                     <span
                       className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
                       data-twe-dropdown-item-ref
@@ -349,7 +334,7 @@ const DashboardLayout = () => {
                       </span>
                       Reset
                     </span>
-                  </li>
+                  </li> */}
                   <li>
                     <span
                       onClick={openLogoutModal}

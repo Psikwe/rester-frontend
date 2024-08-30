@@ -1,6 +1,6 @@
 import { formToJSON } from "axios";
 import React from "react";
-import { showToast } from "../../core/hooks/alert";
+import { oast } from "../../core/hooks/alert";
 import Loader from "../../components/loader/_component";
 import { SubmitEmployeeLoan } from "../../core/services/employee.service";
 import { useParams } from "react-router-dom";
@@ -27,12 +27,12 @@ function CreateEmployeeLoan() {
     SubmitEmployeeLoan(payload)
       .then((res) => {
         setIsLoading(false);
-        showToast(res?.data.message, true);
+        oast(res?.data.message, true);
         loanForm?.reset();
       })
       .catch((error) => {
         setIsLoading(false);
-        showToast(error.response.data.error, false);
+        oast(error.response.data.error, false);
       });
   };
   return (

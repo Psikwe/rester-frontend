@@ -5,6 +5,7 @@ import verify from "../../assets/verify.svg";
 import Loader from "../../components/loader/_component";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
+import { showToast } from "../../core/hooks/alert";
 
 function ResetPassword() {
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
@@ -25,10 +26,11 @@ function ResetPassword() {
     setIsLoading(true);
     UserResetPassword(payload)
       .then((response) => {
+        showToast(response?.data.message, true);
         setVerifyDone(true);
       })
       .catch((error) => {
-        console.log("veriErr: ", error);
+        showToast(error.response.data.error, false);
       });
   };
 
