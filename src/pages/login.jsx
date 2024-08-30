@@ -54,27 +54,6 @@ function Login() {
       });
   };
 
-  const handleResetPassword = (event) => {
-    setResetIsLoading(true);
-    event.preventDefault();
-    const resetPasswordForm = document.getElementById("reset-password-form");
-    const resetPasswordData = {
-      ...formToJSON(resetPasswordForm),
-      verification_key: key,
-    };
-    UserResetPassword(resetPasswordData)
-      .then((res) => {
-        console.log(res);
-        setResetIsLoading(false);
-        resetPasswordForm?.reset();
-      })
-      .catch((error) => {
-        console.log(error);
-        setResetIsLoading(false);
-        showToast(error.response.data.error, false);
-      });
-  };
-
   const handleLogin = (event) => {
     setIsLoading(true);
     event.preventDefault();
@@ -210,72 +189,6 @@ function Login() {
         </form>
       </Modal>
 
-      <Modal
-        showCloseBtn={true}
-        open={isResetPassowrdModalOpen}
-        close={closeResetPasswordModal}
-      >
-        <form
-          id="reset-password-form"
-          onSubmit={handleResetPassword}
-          className="p-16 bg-white"
-        >
-          <div className="relative w-96">
-            <label className="text-sm label bold">New Password</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type={showNewPasswordType ? "text" : "password"}
-                placeholder="Password"
-                name="password"
-              />
-            </div>
-            <div className="absolute top-9 right-3">
-              <span onClick={newPasswordToggle} className="cursor-pointer">
-                {showNewPasswordType ? (
-                  <HiMiniEyeSlash size={20} />
-                ) : (
-                  <IoEyeSharp size={20} />
-                )}
-              </span>
-            </div>
-          </div>
-
-          <div className="relative mt-8 w-96">
-            <label className="text-sm label bold">Confirm Password</label>
-            <div className="control">
-              <input
-                required
-                className="bg-gray-50 mr-2 border outline-0 border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
-                type={showNewPasswordType ? "text" : "password"}
-                placeholder="Password"
-                name="password_confirmation"
-              />
-            </div>
-            <div className="absolute top-9 right-3">
-              <span onClick={newPasswordToggle} className="cursor-pointer">
-                {showNewPasswordType ? (
-                  <HiMiniEyeSlash size={20} />
-                ) : (
-                  <IoEyeSharp size={20} />
-                )}
-              </span>
-            </div>
-          </div>
-          <button
-            disabled={isLoading}
-            type="submit"
-            className={
-              isLoading
-                ? `animate-pulse w-full py-3 text-white mt-9 primary mobile:w-full`
-                : `w-full py-3 text-white mt-9 primary mobile:w-full`
-            }
-          >
-            {isResetLoading ? <Loader /> : "Submit"}
-          </button>
-        </form>
-      </Modal>
       <Modal showCloseBtn={false} open={adminSuperRole}>
         <div className="w-full bg-white p-14">
           <div className="flex justify-center mb-2">

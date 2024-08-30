@@ -1,7 +1,5 @@
 import React from "react";
 import { UserResetPassword } from "../../core/services/auth.service";
-import Modal from "../../components/modal/_component";
-import verify from "../../assets/verify.svg";
 import Loader from "../../components/loader/_component";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
@@ -15,14 +13,15 @@ function ResetPassword() {
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const queryParams = new URLSearchParams(location.search);
+
   const verificationKey = queryParams.get("vk");
-  const resetForm = document.getElementById("reset-password-form");
-  const payload = {
-    ...formToJSON(resetForm),
-    verification_key: verificationKey,
-  };
 
   const handleResetPassword = (e) => {
+    const resetForm = document.getElementById("reset-password");
+    const payload = {
+      ...formToJSON(resetForm),
+      verification_key: verificationKey,
+    };
     e.preventDefault();
     setIsLoading(true);
     UserResetPassword(payload)
@@ -34,7 +33,7 @@ function ResetPassword() {
         }, 2000);
       })
       .catch((error) => {
-        setIsLoading(true);
+        setIsLoading(false);
         showToast(error.response.data.error, false);
       });
   };
@@ -50,7 +49,7 @@ function ResetPassword() {
   return (
     <>
       <form
-        id="reset-password-form"
+        id="reset-password"
         onSubmit={handleResetPassword}
         className="mobile:border-2 mt-32 mb-80 bg-slate-200 m-auto flex justify-center mobile:border-[#687864] mobile:p-9 from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30vw] h-[31rem] mobile-h-full"
       >
