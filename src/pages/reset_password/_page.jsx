@@ -6,18 +6,19 @@ import Loader from "../../components/loader/_component";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
 import { showToast } from "../../core/hooks/alert";
+import { formToJSON } from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ResetPassword() {
+  const navigate = useNavigate();
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [isChecked, setIsChecked] = React.useState(false);
-
   const queryParams = new URLSearchParams(location.search);
-  const [verifyDone, setVerifyDone] = React.useState(false);
   const verificationKey = queryParams.get("vk");
-  console.log("vk: ", verificationKey);
+  const resetForm = document.getElementById("reset-password-form");
   const payload = {
+    ...formToJSON(resetForm),
     verification_key: verificationKey,
   };
 
@@ -27,7 +28,9 @@ function ResetPassword() {
     UserResetPassword(payload)
       .then((response) => {
         showToast(response?.data.message, true);
-        setVerifyDone(true);
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
       })
       .catch((error) => {
         showToast(error.response.data.error, false);
@@ -44,16 +47,10 @@ function ResetPassword() {
 
   return (
     <>
-      <div
-        className={` flex justify-center items-center mt-52 loaderContainer center`}
-      >
-        <div className="loader"></div>
-      </div>
-      <h3 className="flex justify-center mt-3"> Verifying User</h3>
       <form
-        id="login-form"
+        id="reset-password-form"
         onSubmit={handleResetPassword}
-        className="mobile:border-2 bg-white mobile:border-[#687864] mobile:p-9 flex from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30vw] h-[31rem] mobile-h-full"
+        className="mobile:border-2 mt-32 mb-80 bg-slate-200 m-auto flex justify-center mobile:border-[#687864] mobile:p-9 from-laptop-to-laptop-xl:p-9 flex-col gap-6 from-laptop-to-laptop-xl:w-[30vw] h-[31rem] mobile-h-full"
       >
         <div className="relative field">
           <label className="text-sm label bold">Enter Password</label>
@@ -102,36 +99,16 @@ function ResetPassword() {
 
         <button
           type="submit"
-          disabled={!isLoading}
+          disabled={isLoading}
           className={
             isLoading
-              ? "w-1/2 py-3 m-auto mt-8 text-white rounded-full primary mobile:w-full "
-              : "w-1/2 py-3 m-auto mt-8 text-white rounded-full primary mobile:w-full bg-[#c9edff] cursor-not-allowed"
+              ? "w-1/2 py-3 m-auto mt-8 text-white rounded-full primary mobile:w-full bg-[#c9edff] cursor-not-allowed"
+              : "w-1/2 py-3 m-auto mt-8 text-white rounded-full primary mobile:w-full"
           }
         >
           {isLoading ? <Loader /> : "Reset Password"}
         </button>
       </form>
-      {/* <div className="w-full bg-white p-14">
-          <div className="flex justify-center mb-2">
-            <img
-              width={90}
-              className="text-green-500"
-              color="green"
-              src={verify}
-            />
-          </div>
-
-          <p>Verification Done Successfully. Please login</p>
-          <div className="flex">
-            <button
-              onClick={handleLogin}
-              className="w-full py-2 text-white bg-[#2062fe] rounded-full mt-9 mobile:w-full"
-            >
-              Login
-            </button>
-          </div>
-        </div> */}
     </>
   );
 }
