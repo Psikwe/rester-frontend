@@ -13,6 +13,12 @@ export const GetAllEmployees = async (entity_id) => {
   );
 };
 
+export const GetEmployeePayroll = async () => {
+  return await getAxios().get(
+    "https://rester-82c60dc37022.herokuapp.com/get_payslip"
+  );
+};
+
 export const GetOneEmployee = async (employee_id) => {
   return await getAxios().get(
     `https://rester-82c60dc37022.herokuapp.com/get_employee/${employee_id}`

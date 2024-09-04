@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  DownloadTaxReport,
   GenerateTaxReport,
   SaveTaxReport,
 } from "../../core/services/report.service";
@@ -8,11 +7,8 @@ import moment from "moment";
 import Modal from "../../components/modal/_component";
 import { showToast } from "../../core/hooks/alert";
 import DataGrid from "react-data-grid";
-import { SiCashapp } from "react-icons/si";
 import Loader from "../../components/loader/_component";
-import Select from "react-select";
 import Flatpickr from "react-flatpickr";
-import { categories, categoriesNumber } from "../../core/data";
 
 const MySpreadsheet = () => {
   const entity_id = localStorage.getItem("entity_id");
@@ -21,17 +17,7 @@ const MySpreadsheet = () => {
   const [reportResponse, setReportResponse] = React.useState("");
   const [selectedStartDate, setSelectedStartDate] = React.useState(null);
   const [grandReport, setGrandReport] = React.useState();
-  const [selectedIndustry, setSelectedIndustry] = React.useState(null);
-  const [selectedCategory, setSelectedCategory] = React.useState(null);
-  const [selectedCategoryNumber, setSelectedCategoryNumber] =
-    React.useState(null);
-  const [selectedPayrollDuration, setSelectedPayrollDuration] =
-    React.useState(null);
   const [selectedEndDate, setSelectedEndDate] = React.useState(null);
-  const [selectedEffectiveFromDate, setSelectedFromEffectiveDate] =
-    React.useState(null);
-  const [selectedEffectiveToDate, setSelectedToEffectiveDate] =
-    React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [durationIsConfirmed, setDurationIsConfirmed] = React.useState(false);
   const [openDurationModal, setOpenDurationModal] = React.useState(true);
@@ -41,22 +27,12 @@ const MySpreadsheet = () => {
   };
   let formattedStartDate = moment(selectedStartDate).format("YYYY-MM-DD");
   let formattedEndDate = moment(selectedEndDate).format("YYYY-MM-DD");
-  let formattedEffectiveFromDate = moment(selectedEffectiveFromDate).format(
-    "YYYY-MM-DD"
-  );
-  let formattedEffectiveToDate = moment(selectedEffectiveToDate).format(
-    "YYYY-MM-DD"
-  );
 
   const closeDurationModal = () => {
     setOpenDurationModal(false);
   };
 
   const validate = () => {
-    // if (!selectedStartDate || !selectedEndDate || !selectedEffectiveFromDate) {
-    //   showToast("All dates required, except Effective To", false);
-    //   return;
-    // }
     if (!selectedStartDate || !selectedEndDate) {
       showToast("All dates required", false);
       return;
@@ -67,12 +43,6 @@ const MySpreadsheet = () => {
 
   const handleEndDateChange = (date) => {
     setSelectedEndDate(date[0]);
-  };
-  const handleEffectiveFromDateChange = (date) => {
-    setSelectedFromEffectiveDate(date[0]);
-  };
-  const handleEffectiveToDateChange = (date) => {
-    setSelectedToEffectiveDate(date[0]);
   };
 
   const transformArray = (arr) => {
@@ -112,51 +82,6 @@ const MySpreadsheet = () => {
 
     return reshaped;
   }
-  function extendDataWithEmptyCells(data, totalColumns, totalRows) {
-    // Ensure each row has the required number of columns
-    const extendedData = data.map((row) => {
-      const emptyCells = Array.from(
-        { length: totalColumns - row.length },
-        () => ({ value: "", readOnly: true })
-      );
-      return [...row, ...emptyCells];
-    });
-
-    // Add additional rows if needed
-    const additionalRows = Array.from(
-      { length: totalRows - extendedData.length },
-      () => {
-        return Array.from({ length: totalColumns }, () => ({
-          value: "",
-          readOnly: true,
-        }));
-      }
-    );
-
-    return [...extendedData, ...additionalRows];
-  }
-  const handleNavigateToEmployeeLoan = (id) => {
-    // window.location.href = "/dashboard/create-employee-loan/" + id;
-  };
-  const renderActionsRow = (data) => {
-    const { id, first_name } = data.row;
-    console.log(id);
-    return (
-      <div className="grid grid-cols-2 mt-1">
-        {/* <button title="Delete" onClick={() => handleDeleteClick(id, name)}>
-          <MdDelete color="red" size={18} />
-        </button> */}
-
-        <button
-          className="mb-2 ml-3"
-          title="Create Employee Loan"
-          onClick={() => handleNavigateToEmployeeLoan(id, first_name)}
-        >
-          <SiCashapp color="blue" size={18} />
-        </button>
-      </div>
-    );
-  };
 
   const columns = [
     // {
@@ -198,28 +123,15 @@ const MySpreadsheet = () => {
     if (durationIsConfirmed) {
       GenerateTaxReport(entity_id, formattedStartDate, formattedEndDate)
         .then((response) => {
-          console.log("oh: ", response?.data);
           setGrandReport(response?.data);
           let result = response.data.entries;
           setReport(result);
         })
         .catch((error) => {
-          console.log("eee: ", error);
           setReportResponse(error.response.data.error);
         });
     }
   }, [durationIsConfirmed]);
-
-  // React.useEffect(() => {
-  //   DownloadTaxReport(entity_id, formattedStartDate, formattedEndDate)
-  //     .then((response) => {
-  //       let result = response.data.entries;
-  //       setReport(result);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
 
   const saveReport = () => {
     setIsLoading(true);
@@ -240,19 +152,7 @@ const MySpreadsheet = () => {
   };
   const hello = transformArray(report);
   const transposedData = reshapeArray(hello, 11);
-  const extendedData = extendDataWithEmptyCells(transposedData, 5, 10);
-  const handleIndustryChange = (selectedRangeOption) => {
-    setSelectedIndustry(selectedRangeOption);
-  };
-  const handleCategoryChange = (selectedRangeOption) => {
-    setSelectedCategory(selectedRangeOption);
-  };
-  const handleCategoryNumberChange = (selectedRangeOption) => {
-    setSelectedCategoryNumber(selectedRangeOption);
-  };
-  const handlePayrollDurationChange = (selectedRangeOption) => {
-    setSelectedPayrollDuration(selectedRangeOption);
-  };
+
   return (
     <>
       <Modal
@@ -304,34 +204,6 @@ const MySpreadsheet = () => {
               </button>
             </div>
           </div>
-          {/* <div className="flex">
-            <div className="mt-3 w-96">
-              <label className="text-sm label">Select Category</label>
-              <div className="flex w-full row mobile:w-full">
-                <Select
-                  className="w-full"
-                  value={selectedCategory}
-                  onChange={handleCategoryChange}
-                  options={categories}
-                  placeholder="Category"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex">
-            <div className="w-full mt-3 ">
-              <label className="text-sm label">Select Category Number</label>
-              <div className="flex w-full row mobile:w-full">
-                <Select
-                  className="w-full"
-                  value={selectedCategoryNumber}
-                  onChange={handleCategoryNumberChange}
-                  options={categoriesNumber}
-                  placeholder="Category Number"
-                />
-              </div>
-            </div>
-          </div> */}
 
           <div className="flex">
             <button

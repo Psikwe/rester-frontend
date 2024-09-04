@@ -2,13 +2,28 @@ import React from "react";
 import Select from "react-select";
 import { MdDownload } from "react-icons/md";
 import { payslipDates } from "../../core/data";
+import { GetEmployeePayroll } from "../../core/services/employee.service";
+import { showToast } from "../../core/hooks/alert";
 
 function Payslip() {
+  const [employeePayroll, setEmployeePayroll] = React.useState();
   const [selectedPayslipDate, setSelectedPayslipDate] = React.useState(null);
 
   const handleCategoryNumberChange = (selectedRangeOption) => {
     setSelectedPayslipDate(selectedRangeOption);
   };
+
+  React.useEffect(() => {
+    GetEmployeePayroll()
+      .then((response) => {
+        setEmployeePayroll(response.data);
+        console.log("aa: ", employeePayroll && employeePayroll);
+      })
+      .catch((error) => {
+        console.log(error);
+        // showToast(error.response.data.error, false);
+      });
+  }, []);
   return (
     <>
       <div>
@@ -37,8 +52,8 @@ function Payslip() {
         <div className="grid grid-cols-2 gap-3 mobile:grid-cols-1">
           <div>
             <h3>
-              <span className="mr-5 font-bold">Employee Name:</span> Dennis
-              Boateng
+              <span className="mr-5 font-bold">Employee Name:</span>
+              {employeePayroll && employeePayroll.employee.name}
             </h3>
             <h3>
               <span className="mr-5 font-bold">Job Title:</span> Developer
@@ -48,7 +63,8 @@ function Payslip() {
               2023
             </h3>
             <h3>
-              <span className="mr-5 font-bold">Employee Id: </span>12345678
+              <span className="mr-5 font-bold">Employee email: </span>{" "}
+              {employeePayroll && employeePayroll.employee.email}
             </h3>
           </div>
 
@@ -103,17 +119,22 @@ function Payslip() {
             <div className="flex justify-center text-white bg-gray-400">
               Deductions
             </div>
-            <div className="flex justify-between text-gray-500 bg-green-200">
-              <div>SSNIT Tier-1</div>
-              <div>GHS 3</div>
-            </div>
-            <div className="flex justify-between">
-              <div>PAYE Income Tax</div>
-              <div>GHS 12</div>
-            </div>
+            {employeePayroll &&
+              employeePayroll.deductions.map((value, key) => (
+                <div
+                  key={key}
+                  className="flex justify-between text-gray-500 bg-green-200"
+                >
+                  <div>{value.name}</div>
+                  <div>GHS {value.amount}</div>
+                </div>
+              ))}
+
             <div className="flex justify-between bg-blue-300">
               <div>TOTAL</div>
-              <div>GHS 15.00</div>
+              <div>
+                GHS {employeePayroll && employeePayroll.total_deductions}
+              </div>
             </div>
           </div>
           <div>
