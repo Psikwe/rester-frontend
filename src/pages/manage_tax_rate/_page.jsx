@@ -57,7 +57,7 @@ function ManageTaxRate() {
   };
 
   const handleUpdateClick = (id) => {
-    navigate("update-tax-rate/" + id);
+    navigate("/tax-operator/update-tax-rate/" + id);
   };
 
   const handleDelete = (id, name) => {

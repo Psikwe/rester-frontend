@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  adminDashboardMenus,
-  superDashboardMenus,
-  taxOperatorMenus,
-} from "../../core/data";
+import { taxOperatorMenus } from "../../core/data";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
@@ -263,18 +259,6 @@ const TaxOperatorLayout = () => {
                   aria-labelledby="dropdownMenuButton1"
                   data-twe-dropdown-menu-ref
                 >
-                  <li>
-                    <span
-                      className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
-                      data-twe-dropdown-item-ref
-                      onClick={openModal}
-                    >
-                      <span className="mr-1">
-                        <RiLockPasswordLine color="#687864" size={20} />
-                      </span>
-                      Change Password
-                    </span>
-                  </li>
                   <li>
                     <span
                       onClick={openLogoutModal}

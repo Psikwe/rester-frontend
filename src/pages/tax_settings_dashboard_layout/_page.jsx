@@ -315,30 +315,6 @@ const TaxSettingsDashboardLayout = () => {
                 >
                   <li>
                     <span
-                      className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
-                      data-twe-dropdown-item-ref
-                      onClick={openModal}
-                    >
-                      <span className="mr-1">
-                        <RiLockPasswordLine color="#687864" size={20} />
-                      </span>
-                      Change Password
-                    </span>
-                  </li>
-                  <li>
-                    <span
-                      className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
-                      data-twe-dropdown-item-ref
-                      onClick={openModal}
-                    >
-                      <span className="mr-1">
-                        <RiLockPasswordLine color="#687864" size={20} />
-                      </span>
-                      Reset
-                    </span>
-                  </li>
-                  <li>
-                    <span
                       onClick={openLogoutModal}
                       className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
                       data-twe-dropdown-item-ref

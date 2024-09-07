@@ -21,7 +21,6 @@ import { clearUserSession } from "../../core/utilities";
 const SuperAdminDashboardLayout = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState(false);
-  const [selectedMenu, setSelectedMenu] = React.useState(0);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [showOldPasswordType, setShowOldPasswordType] = React.useState(false);
 
@@ -283,30 +282,6 @@ const SuperAdminDashboardLayout = () => {
                   aria-labelledby="dropdownMenuButton1"
                   data-twe-dropdown-menu-ref
                 >
-                  <li>
-                    <span
-                      className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
-                      data-twe-dropdown-item-ref
-                      onClick={openModal}
-                    >
-                      <span className="mr-1">
-                        <RiLockPasswordLine color="#687864" size={20} />
-                      </span>
-                      Change Password
-                    </span>
-                  </li>
-                  <li>
-                    <span
-                      className="flex items-center w-full px-4 py-2 text-sm font-normal bg-white whitespace-nowrap text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none"
-                      data-twe-dropdown-item-ref
-                      onClick={openModal}
-                    >
-                      <span className="mr-1">
-                        <RiLockPasswordLine color="#687864" size={20} />
-                      </span>
-                      Reset
-                    </span>
-                  </li>
                   <li>
                     <span
                       onClick={openLogoutModal}

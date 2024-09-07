@@ -79,6 +79,10 @@ export default function AppRoutes() {
     }
   }, []);
 
+  document.addEventListener("DOMContentLoaded", () => {
+    alert("done");
+  });
+
   return (
     <BrowserRouter>
       <ToastContainer progressClassName="toast-progress" />
