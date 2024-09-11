@@ -9,11 +9,7 @@ import { useDispatch } from "react-redux";
 import { cacheUserRole, cacheUserSession } from "../core/utilities";
 import { setUser } from "../core/stores/slices/user_slice";
 import Loader from "../components/loader/_component";
-import {
-  UserForgotPassword,
-  UserLogin,
-  UserResetPassword,
-} from "../core/services/auth.service";
+import { UserForgotPassword, UserLogin } from "../core/services/auth.service";
 import moment from "moment";
 import { FaCircleInfo } from "react-icons/fa6";
 
@@ -21,7 +17,6 @@ function Login() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isForgotLoading, setForgotIsLoading] = React.useState(false);
-  const [isResetLoading, setResetIsLoading] = React.useState(false);
   const [showNewPasswordType, setShowNewPasswordType] = React.useState(false);
   const [isForgotPassowrdModalOpen, setIsForgotPassowrdModalOpen] =
     React.useState(false);
@@ -243,6 +238,7 @@ function Login() {
           </div>
         </div>
       </Modal>
+
       <section className="bg-slate-200">
         <div className="login-container">
           <div className="flex mb-24">
