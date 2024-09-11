@@ -100,7 +100,7 @@ export default function AppRoutes() {
 
   return (
     <>
-      {appLoading && (
+      {!appLoading && (
         <div className="absolute inset-0 z-30 flex items-center justify-center bg-gray-100 bg-opacity-70">
           <div className="h-auto rounded-md w-52">
             <small className="flex justify-center">
