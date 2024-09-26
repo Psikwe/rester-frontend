@@ -118,9 +118,6 @@ function Login() {
   const closeForgotPasswordModal = () => {
     setIsForgotPassowrdModalOpen(false);
   };
-  const closeResetPasswordModal = () => {
-    setIsResetPassowrdModalOpen(false);
-  };
 
   const closeConfirmRoleModal = () => {
     setConfirmRole(false);

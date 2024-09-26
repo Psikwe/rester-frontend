@@ -30,13 +30,6 @@
   background-color: var(--sprimary);
 }
 
-#root {
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%; */
-}
-
 *,
 *::before,
 *::after {

@@ -24,13 +24,8 @@ function Signup() {
     setShowNewPasswordType(!showNewPasswordType);
   };
 
-  const handleIndustryChange = (selectedIndustryValue) => {
-    setSelectedIndustry(selectedIndustryValue);
-  };
-
   const handleSignup = (event) => {
     event.preventDefault();
-
     setIsLoading(true);
     const signupForm = document.getElementById("signup-form");
     const signupData = {

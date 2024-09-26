@@ -86,7 +86,7 @@ function CreateIncomeType() {
   };
 
   const handleUpdateClick = (id) => {
-    navigate("update-income-type/" + id);
+    navigate("/dashboard/update-income-type/" + id);
   };
 
   const renderActionsRow = (data) => {
