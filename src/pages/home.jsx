@@ -43,20 +43,18 @@ function Home() {
 
                 <div className="cursive">Ghanaian Businesses!</div>
               </div>
-              <p className="text-[#F7F9FB] mobile:text-base subtitle">
+              <p className="text-[#F7F9FB] mobile:text-base text-[20px] subtitle">
                 Empower your business with Rester, the ultimate tool to
                 effortlessly compute PAYE and generate reports compliant with
                 Ghanaian tax laws.
               </p>
-              {/* <div className="flex from-laptop-to-laptop-xl:hidden hero-image-container">
-                <img alt="dashboard image" src="/african-woman.jpg" />
-              </div> */}
+
               <div className="mt-8 rounded-full hero-buttons">
                 <button
                   onClick={handleSignupNavigation}
-                  className="text-sm duration-700 rounded-full mobile:w-1/2 button primary"
+                  className="text-[12px] duration-700 rounded-full mobile:w-1/2 py-2.5 px-5 primary"
                 >
-                  Get Starte &#8599;
+                  Get Started &#8599;
                 </button>
               </div>
             </div>
@@ -67,8 +65,8 @@ function Home() {
         <div className="flex justify-center">
           Find the ideal payroll solution for your business:
         </div>
-        <div className="flex justify-center">
-          <ul className="text-lg list-disc">
+        <div className="flex justify-center mt-2">
+          <ul className="text-[18px] list-disc leading-6">
             <li>Create up to 1 company for free</li>
             <li>Onboard up to 10 employees for free</li>
           </ul>
@@ -82,8 +80,8 @@ function Home() {
           <button
             className={
               calculator === "incomeTax"
-                ? "border-[#33b655] border-2 rounded-full mobile:w-full text-black p-3"
-                : "border-2 rounded-full mobile:w-full border-[primary] p-3"
+                ? "border-[#33b655] border-2 rounded-full mobile:w-full text-black p-3 text-sm"
+                : "border-2 rounded-full mobile:w-full border-[primary] p-3 text-sm"
             }
             onClick={() => setCalculator("incomeTax")}
           >
@@ -92,8 +90,8 @@ function Home() {
           <button
             className={
               calculator === "grossIncome"
-                ? "border-[#33b655] border-2 rounded-full mobile:mt-6 mobile:w-full text-black p-3"
-                : "border-2 rounded-full mobile:mt-6 mobile:w-full border-[primary] p-3"
+                ? "border-[#33b655] border-2 rounded-full mobile:mt-6 mobile:w-full text-black p-3 text-sm"
+                : "border-2 rounded-full mobile:mt-6 mobile:w-full border-[primary] p-3 text-sm"
             }
             onClick={() => setCalculator("grossIncome")}
           >

@@ -296,7 +296,7 @@ function CreateIncomeType() {
             className={
               isLoading
                 ? `animate-pulse w-1/2 py-3 mb-3 text-white primary rounded-full mt-9 mobile:w-full`
-                : `w-1/2 py-3 mb-3 text-white primary rounded-full mt-9 mobile:w-full`
+                : `w-1/3 text-xs py-3 mb-3 text-white primary rounded-full mt-9 mobile:w-full`
             }
           >
             {isLoading ? <Loader /> : " Add Employee Income Type"}
@@ -305,7 +305,7 @@ function CreateIncomeType() {
       </Modal>
       <button
         onClick={() => setIsCreateIncomeTypeModalOpen(true)}
-        className="w-1/6 py-3 mb-3 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
+        className="w-1/6 py-3 mb-3 text-xs text-sm text-white bg-blue-500 rounded-full mobile:w-full"
       >
         Create Income Type
       </button>

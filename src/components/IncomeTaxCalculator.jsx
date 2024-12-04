@@ -47,7 +47,7 @@ export default function IncomeTaxCalculator() {
           {/* <button className="outline "> */}
           {/*   <FaCediSign /> */}
           {/* </button> */}
-          <b>Basic Salary (GHS)</b>
+          <b className="text-[12px]">Basic Salary (GHS)</b>
           <input
             name="basic_salary"
             type="number"
@@ -61,7 +61,7 @@ export default function IncomeTaxCalculator() {
           />
         </div>
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Cash Allowances (GHS)</b>
+          <b className="text-[12px]">Cash Allowances (GHS)</b>
           <input
             name="cash_allowances"
             type="number"
@@ -72,7 +72,7 @@ export default function IncomeTaxCalculator() {
           />
         </div>
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Bonus (GHS)</b>
+          <b className="text-[12px]">Bonus (GHS)</b>
           <input
             name="bonus"
             type="number"
@@ -84,7 +84,7 @@ export default function IncomeTaxCalculator() {
         </div>
 
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Overtime (GHS)</b>
+          <b className="text-sm">Overtime (GHS)</b>
           <input
             name="overtime"
             type="number"
@@ -96,7 +96,7 @@ export default function IncomeTaxCalculator() {
         </div>
 
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Social Security (SSNIT Tier 1)</b>
+          <b className="text-[12px]">Social Security (SSNIT Tier 1)</b>
           <input
             name="tier_1"
             type="number"
@@ -108,7 +108,7 @@ export default function IncomeTaxCalculator() {
           />
         </div>
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Private Pension (Tier 2)</b>
+          <b className="text-[12px]">Private Pension (Tier 2)</b>
           <input
             name="tier_2"
             type="number"
@@ -119,7 +119,7 @@ export default function IncomeTaxCalculator() {
           />
         </div>
         <div className="flex w-1/2 column mobile:w-full">
-          <b>Voluntary Provident Fund (SNNIT Tier 3)</b>
+          <b className="text-[12px]">Voluntary Provident Fund (SNNIT Tier 3)</b>
           <input
             name="tier_3"
             type="number"
@@ -164,7 +164,7 @@ export default function IncomeTaxCalculator() {
         <div className="flex p-3 from-laptop-to-laptop-xl:w-1/2 column">
           <button
             disabled={loading}
-            className="w-full py-3 text-white rounded-full primary"
+            className="w-full text-[14px] py-3 text-white rounded-full primary"
           >
             Calculate Income Tax
           </button>

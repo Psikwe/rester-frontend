@@ -153,13 +153,13 @@ function ViewCompany() {
           <div className="flex">
             <button
               onClick={closeLogoutModal}
-              className="w-full py-2 mr-2 text-white rounded-full mt-9 primary mobile:w-full"
+              className="w-full py-2 mr-2 text-xs text-white rounded-full mt-9 primary mobile:w-full"
             >
               No
             </button>
             <button
               onClick={handleLogout}
-              className="w-full py-2 text-white bg-red-500 rounded-full mt-9 mobile:w-full"
+              className="w-full py-2 text-xs text-white bg-red-500 rounded-full mt-9 mobile:w-full"
             >
               Yes
             </button>
@@ -320,7 +320,7 @@ function ViewCompany() {
             <hr className="my-8 border-gray-300 border-1" />
             <button
               type="submit"
-              className="w-1/3 py-3 mt-8 text-white rounded-full primary mobile:w-full"
+              className="w-1/3 py-2.5 mt-8 text-xs text-white rounded-full primary mobile:w-full"
             >
               {isLoading ? <Loader /> : "Create Company"}
             </button>

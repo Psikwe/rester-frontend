@@ -133,10 +133,10 @@ function UpdateIncomeType() {
             className={
               isLoading
                 ? `animate-pulse w-1/2 py-3 mb-3 text-white primary rounded-full mt-9 mobile:w-full`
-                : `w-1/2 py-3 mb-3 text-white primary rounded-full mt-9 mobile:w-full`
+                : `w-1/3 text-xs py-3 mb-3 text-white primary rounded-full mt-9 mobile:w-full`
             }
           >
-            {isLoading ? <Loader /> : " Add Employee Income Type"}
+            {isLoading ? <Loader /> : " Update Employee Income Type"}
           </button>
         </form>
       </div>

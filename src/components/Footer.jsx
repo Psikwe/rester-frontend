@@ -57,12 +57,12 @@ export default function Footer() {
       {pathname === "/verify_user" ? (
         ""
       ) : (
-        <footer className="flex flex-col mobile:flex-col row space-around ">
+        <footer className="flex flex-col mt-48 mobile:flex-col row space-around">
           <div className="flex mobile:flex-col row space-around">
             <div className="flex column">
               <div className={`${styles.start} mobile:mb-2`}>Rester</div>
               {navigation.map((item) => (
-                <a key={item.name} href={item.href}>
+                <a className="font-thin" key={item.name} href={item.href}>
                   {item.name}
                 </a>
               ))}
@@ -73,7 +73,7 @@ export default function Footer() {
                 Support
               </div>
               {support.map((item) => (
-                <a key={item.name} href={item.href}>
+                <a className="font-thin" key={item.name} href={item.href}>
                   {item.name}
                 </a>
               ))}
@@ -84,7 +84,7 @@ export default function Footer() {
                 Contact
               </div>
               {contact.map((item) => (
-                <a key={item.name} href={item.href}>
+                <a className="font-thin" key={item.name} href={item.href}>
                   {item.name}
                 </a>
               ))}

@@ -87,7 +87,7 @@ const TaxReportDetails = () => {
       <div className="overflow-y-hidden">
         <button
           onClick={download}
-          className="w-1/6 py-3 mb-3 text-sm text-white bg-blue-500 rounded-full mobile:w-full"
+          className="w-1/6 py-3 mb-3 text-xs text-white bg-blue-500 rounded-full mobile:w-full"
         >
           Download Payroll
         </button>

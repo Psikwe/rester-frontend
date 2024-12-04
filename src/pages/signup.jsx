@@ -66,7 +66,9 @@ function Signup() {
           >
             <div className="flex w-full">
               <div className="w-full mr-3 field">
-                <label className="text-sm label bold">Enter First Name</label>
+                <label className="text-[12px] label bold">
+                  Enter First Name
+                </label>
                 <div className="control">
                   <input
                     required
@@ -80,7 +82,9 @@ function Signup() {
               </div>
 
               <div className="w-full field">
-                <label className="text-sm label bold">Enter Last Name</label>
+                <label className="text-[12px] label bold">
+                  Enter Last Name
+                </label>
                 <div className="control">
                   <input
                     required
@@ -96,7 +100,7 @@ function Signup() {
 
             <div className="flex">
               <div className="w-full mr-3 field">
-                <label className="text-sm label bold">Enter Email</label>
+                <label className="text-[12px] label bold">Enter Email</label>
                 <div className="control">
                   <input
                     required
@@ -123,7 +127,7 @@ function Signup() {
             </div> */}
 
             <div className="relative field">
-              <label className="text-sm label bold">Enter Password</label>
+              <label className="text-[12px] label bold">Enter Password</label>
               <div className="control">
                 <input
                   required
@@ -144,7 +148,7 @@ function Signup() {
               </div>
             </div>
             <div className="relative field">
-              <label className="text-sm label bold">
+              <label className="text-[12px] label bold">
                 Enter Password Confirmation
               </label>
               <div className="control">

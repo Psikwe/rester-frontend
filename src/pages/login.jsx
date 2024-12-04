@@ -186,20 +186,20 @@ function Login() {
           <div className="flex justify-center mb-2">
             <FaCircleInfo color="gray" size={70} className="mr-2" />
           </div>
-          <p className="text-gray-500">
+          <p className="text-sm text-gray-500">
             Multiple roles are detected for this user. <br /> Do you want to
             login as super admin or admin?
           </p>
           <div className="flex">
             <button
               onClick={handleSuperAdmin}
-              className="w-full mr-2 rounded-full text-white mt-9 bg-[#2062fe] mobile:w-full"
+              className="w-full text-xs mr-2 rounded-full text-white mt-9 bg-[#2062fe] mobile:w-full"
             >
               As Super Admin
             </button>
             <button
               onClick={handleAdminNavigation}
-              className="w-full py-2 text-white bg-[#33b655] rounded-full mt-9 mobile:w-full"
+              className="w-full py-2 text-xs text-white bg-[#33b655] rounded-full mt-9 mobile:w-full"
             >
               As Admin
             </button>
@@ -215,20 +215,20 @@ function Login() {
           <div className="flex justify-center mb-2">
             <FaCircleInfo color="gray" size={70} className="mr-2" />
           </div>
-          <p className="text-gray-500">
+          <p className="text-sm text-gray-500">
             Multiple roles are detected for this user. <br /> Do you want to
             login as employee or admin?
           </p>
           <div className="flex">
             <button
               onClick={handleEmployeeNavigation}
-              className="w-full mr-2 rounded-full text-white mt-9 bg-[#2062fe] mobile:w-full"
+              className="w-full text-xs mr-2 rounded-full text-white mt-9 bg-[#2062fe] mobile:w-full"
             >
               As Employee
             </button>
             <button
               onClick={handleAdminNavigation}
-              className="w-full py-2 text-white bg-[#33b655] rounded-full mt-9 mobile:w-full"
+              className="w-full text-xs py-2 text-white bg-[#33b655] rounded-full mt-9 mobile:w-full"
             >
               As Admin
             </button>

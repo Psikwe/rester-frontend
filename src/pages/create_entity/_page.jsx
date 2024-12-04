@@ -220,7 +220,7 @@ function CreateEntity() {
           <hr className="my-8 border-gray-300 border-1" />
           <button
             type="submit"
-            className="w-1/3 py-3 my-8 text-white rounded-full primary mobile:w-full"
+            className="w-1/3 py-2.5 my-8 text-xs text-white rounded-full primary mobile:w-full"
           >
             {isLoading ? <Loader /> : "Create Company"}
           </button>

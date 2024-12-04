@@ -87,7 +87,7 @@ function CreateAllowableDeductions() {
         </div>
         <button
           type="submit"
-          className="w-1/2 py-3 mb-3 text-white rounded-full primary mt-9 mobile:w-full"
+          className="w-1/4 py-3 mb-3 text-xs text-white rounded-full primary mt-9 mobile:w-full"
         >
           {isLoading ? <Loader /> : "  Create Allowable Deduction"}
         </button>
